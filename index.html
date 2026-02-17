@@ -1,144 +1,214 @@
+from flask import Flask, request, jsonify, render_template_string
+from datetime import datetime
+
+app = Flask(__name__)
+
+# =========================
+# SIMPLE AI RISK ENGINE
+# =========================
+def calculate_risk(age, symptom, bp, sugar, heart_rate):
+    score = 0
+
+    if age >= 60:
+        score += 2
+
+    if symptom.lower() in ["chest pain", "breathing issue"]:
+        score += 3
+    elif symptom.lower() in ["fever", "cough"]:
+        score += 1
+
+    if bp >= 140:
+        score += 2
+
+    if sugar >= 180:
+        score += 2
+
+    if heart_rate >= 110:
+        score += 2
+
+    if score >= 7:
+        return "HIGH RISK – Immediate hospital referral required."
+    elif score >= 4:
+        return "MODERATE RISK – Doctor consultation recommended."
+    else:
+        return "LOW RISK – Monitor and basic care advised."
+
+
+# =========================
+# SINGLE PAGE FRONTEND
+# =========================
+HTML = """
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RuralCare AI</title>
-
-<style>
-/* ===================== styles.css ===================== */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    background: #f4f7fa;
-}
-
-header {
-    background: #2e7d32;
-    color: white;
-    padding: 15px;
-    text-align: center;
-}
-
-.container {
-    padding: 20px;
-}
-
-.card {
-    background: white;
-    padding: 15px;
-    margin-bottom: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-button {
-    background: #2e7d32;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-button:hover {
-    background: #1b5e20;
-}
-
-input, select {
-    width: 100%;
-    padding: 8px;
-    margin: 5px 0 10px 0;
-}
-</style>
+    <title>RuralCare AI - Complete System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial;
+            margin: 0;
+            background: #f4f7fa;
+        }
+        header {
+            background: #1b5e20;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+        .container {
+            padding: 20px;
+            max-width: 600px;
+            margin: auto;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 12px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #2e7d32;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #145a1c;
+        }
+        #result {
+            font-weight: bold;
+            font-size: 18px;
+        }
+        footer {
+            text-align: center;
+            font-size: 12px;
+            padding: 10px;
+            color: gray;
+        }
+    </style>
 </head>
-
 <body>
 
 <header>
-    <h1>RuralCare AI</h1>
-    <p>Offline Health Screening for Rural Areas</p>
+    <h2>RuralCare AI – Offline Health Screening</h2>
 </header>
 
 <div class="container">
 
     <div class="card">
-        <h3>Patient Details</h3>
-        <input type="text" id="name" placeholder="Patient Name">
+        <h3>Patient Information</h3>
+
         <input type="number" id="age" placeholder="Age">
+        
         <select id="symptom">
             <option value="">Select Symptom</option>
-            <option value="fever">Fever</option>
-            <option value="cough">Cough</option>
-            <option value="fatigue">Fatigue</option>
+            <option>Fever</option>
+            <option>Cough</option>
+            <option>Chest Pain</option>
+            <option>Breathing Issue</option>
         </select>
-        <button onclick="runAI()">Screen Patient</button>
+
+        <input type="number" id="bp" placeholder="Blood Pressure (e.g. 120)">
+        <input type="number" id="sugar" placeholder="Blood Sugar (e.g. 100)">
+        <input type="number" id="heart_rate" placeholder="Heart Rate (e.g. 80)">
+
+        <button onclick="runScreening()">Run AI Screening</button>
     </div>
 
     <div class="card">
-        <h3>AI Result</h3>
-        <p id="result">No screening yet.</p>
+        <h3>Screening Result</h3>
+        <p id="result">No screening performed yet.</p>
     </div>
 
 </div>
 
+<footer>
+    RuralCare AI © 2026 | Offline Demo Version
+</footer>
+
 <script>
-/* ===================== storage.js ===================== */
-function savePatient(data) {
-    let patients = JSON.parse(localStorage.getItem("patients")) || [];
-    patients.push(data);
-    localStorage.setItem("patients", JSON.stringify(patients));
-}
-
-/* ===================== ai.js ===================== */
-function analyze(symptom, age) {
-    if (!symptom) return "Please select symptom.";
-
-    if (symptom === "fever" && age > 60) {
-        return "High risk. Refer to doctor immediately.";
-    }
-
-    if (symptom === "cough") {
-        return "Monitor for 3 days. If worsens, visit clinic.";
-    }
-
-    return "Low risk. Basic medication recommended.";
-}
-
-/* ===================== analytics.js ===================== */
-function logScreening(data) {
-    console.log("Screening Logged:", data);
-}
-
-/* ===================== voice.js ===================== */
-function speak(text) {
-    if ('speechSynthesis' in window) {
-        const utterance = new SpeechSynthesisUtterance(text);
-        speechSynthesis.speak(utterance);
-    }
-}
-
-/* ===================== main.js ===================== */
-function runAI() {
-    const name = document.getElementById("name").value;
-    const age = parseInt(document.getElementById("age").value);
+function runScreening() {
+    const age = document.getElementById("age").value;
     const symptom = document.getElementById("symptom").value;
+    const bp = document.getElementById("bp").value;
+    const sugar = document.getElementById("sugar").value;
+    const heart_rate = document.getElementById("heart_rate").value;
 
-    if (!name || !age || !symptom) {
-        alert("Fill all fields.");
+    if (!age || !symptom || !bp || !sugar || !heart_rate) {
+        alert("All fields are required.");
         return;
     }
 
-    const result = analyze(symptom, age);
+    fetch("/analyze", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            age: parseInt(age),
+            symptom: symptom,
+            bp: parseInt(bp),
+            sugar: parseInt(sugar),
+            heart_rate: parseInt(heart_rate)
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById("result").innerText = data.result;
+        speak(data.result);
+    });
+}
 
-    document.getElementById("result").innerText = result;
-
-    const patientData = { name, age, symptom, result };
-    savePatient(patientData);
-    logScreening(patientData);
-    speak(result);
+function speak(text) {
+    if ('speechSynthesis' in window) {
+        const msg = new SpeechSynthesisUtterance(text);
+        speechSynthesis.speak(msg);
+    }
 }
 </script>
 
 </body>
 </html>
+"""
+
+
+# =========================
+# ROUTES
+# =========================
+@app.route("/")
+def home():
+    return render_template_string(HTML)
+
+@app.route("/analyze", methods=["POST"])
+def analyze():
+    data = request.get_json()
+
+    result = calculate_risk(
+        data["age"],
+        data["symptom"],
+        data["bp"],
+        data["sugar"],
+        data["heart_rate"]
+    )
+
+    return jsonify({
+        "result": result,
+        "timestamp": str(datetime.now())
+    })
+
+
+# =========================
+# RUN SERVER
+# =========================
+if __name__ == "__main__":
+    app.run(debug=True)

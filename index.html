@@ -1,243 +1,148 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RuralCare AI - NLP Assistant</title>
+    <title>RuralCare AI - Offline Version</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fa;
+            margin: 0;
+        }
 
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Segoe UI,Arial;background:#f4f6f7;padding:20px}
-.container{max-width:1200px;margin:auto}
-.section{background:white;padding:25px;border-radius:12px;margin-bottom:20px;box-shadow:0 4px 8px rgba(0,0,0,.08)}
-h2{color:#1b5e20;margin-bottom:15px}
-input,textarea,select{width:100%;padding:10px;margin-bottom:12px;border:1px solid #ccc;border-radius:6px}
-button{padding:10px 18px;border:none;border-radius:6px;cursor:pointer;font-weight:bold}
-.btn-primary{background:#1b5e20;color:white}
-.btn-warning{background:#ef6c00;color:white}
-.hidden{display:none}
-table{width:100%;border-collapse:collapse}
-th,td{padding:10px;border-bottom:1px solid #ddd;text-align:left}
-th{background:#1b5e20;color:white}
-</style>
+        header {
+            background: #1b5e20;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 12px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #2e7d32;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #145a1c;
+        }
+
+        #result {
+            font-weight: bold;
+            font-size: 18px;
+        }
+    </style>
 </head>
 
 <body>
+
+<header>
+    <h2>RuralCare AI – Offline Health Screening</h2>
+</header>
+
 <div class="container">
 
-<!-- LOGIN -->
-<div id="loginSection" class="section">
-<h2>🔐 Login</h2>
-<select id="role">
-<option value="patient">Patient</option>
-<option value="doctor">Doctor</option>
-</select>
-<input type="text" id="username" placeholder="Username">
-<input type="password" id="password" placeholder="Password">
-<button class="btn-primary" onclick="login()">Login</button>
-</div>
+    <div class="card">
+        <h3>Patient Information</h3>
 
-<!-- PATIENT PANEL -->
-<div id="patientPanel" class="hidden">
+        <input type="number" id="age" placeholder="Age">
 
-<div class="section">
-<h2>👤 Personal Information</h2>
-<input type="text" id="p_name" placeholder="Full Name">
-<input type="number" id="p_age" placeholder="Age">
-<select id="p_gender">
-<option value="male">Male</option>
-<option value="female">Female</option>
-<option value="other">Other</option>
-</select>
-<input type="text" id="p_village" placeholder="Village">
-</div>
+        <select id="symptom">
+            <option value="">Select Symptom</option>
+            <option value="fever">Fever</option>
+            <option value="cough">Cough</option>
+            <option value="chest pain">Chest Pain</option>
+            <option value="breathing issue">Breathing Issue</option>
+        </select>
 
-<div class="section">
-<h2>🩺 Describe Your Symptoms</h2>
-<textarea id="p_symptoms" rows="5" placeholder="Example: I have fever and cough for 2 days and feeling weak"></textarea>
-<button class="btn-warning" onclick="analyzePatient()">Get AI Suggestion</button>
-</div>
+        <input type="number" id="bp" placeholder="Blood Pressure (e.g. 120)">
+        <input type="number" id="sugar" placeholder="Blood Sugar (e.g. 100)">
+        <input type="number" id="heart_rate" placeholder="Heart Rate (e.g. 80)">
 
-<div id="patientResult" class="section hidden">
-<h2>🤖 AI Suggestion</h2>
-<p id="ai_condition"></p>
-<p id="ai_steps"></p>
-<p id="ai_avoid"></p>
-<p id="ai_when"></p>
-</div>
+        <button onclick="runScreening()">Run AI Screening</button>
+    </div>
 
-</div>
-
-<!-- DOCTOR PANEL -->
-<div id="doctorPanel" class="hidden">
-<div class="section">
-<h2>📋 Patient Records</h2>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Age</th>
-<th>Village</th>
-<th>Symptoms</th>
-<th>AI Suggestion</th>
-<th>Doctor Advice</th>
-</tr>
-</thead>
-<tbody id="doctorTable"></tbody>
-</table>
-</div>
-</div>
+    <div class="card">
+        <h3>Screening Result</h3>
+        <p id="result">No screening performed yet.</p>
+    </div>
 
 </div>
 
 <script>
+function calculateRisk(age, symptom, bp, sugar, heart_rate) {
+    let score = 0;
 
-let records = JSON.parse(localStorage.getItem("records")||"[]");
+    if (age >= 60) score += 2;
 
-// ================= LOGIN =================
-function login(){
-const role=document.getElementById("role").value;
-const username=document.getElementById("username").value.trim();
-const password=document.getElementById("password").value.trim();
-if(!username||!password){alert("Enter credentials");return;}
-localStorage.setItem("role",role);
-document.getElementById("loginSection").classList.add("hidden");
-if(role==="patient"){
-document.getElementById("patientPanel").classList.remove("hidden");
-loadPatientInfo();
-}else{
-document.getElementById("doctorPanel").classList.remove("hidden");
-renderDoctorTable();
-}
-}
+    if (symptom === "chest pain" || symptom === "breathing issue") {
+        score += 3;
+    } else if (symptom === "fever" || symptom === "cough") {
+        score += 1;
+    }
 
-// ================= AUTO SAVE =================
-function loadPatientInfo(){
-const saved=JSON.parse(localStorage.getItem("patientInfo")||"{}");
-if(saved.name){
-document.getElementById("p_name").value=saved.name;
-document.getElementById("p_age").value=saved.age;
-document.getElementById("p_gender").value=saved.gender;
-document.getElementById("p_village").value=saved.village;
-}
+    if (bp >= 140) score += 2;
+    if (sugar >= 180) score += 2;
+    if (heart_rate >= 110) score += 2;
+
+    if (score >= 7) {
+        return "HIGH RISK – Immediate hospital referral required.";
+    } else if (score >= 4) {
+        return "MODERATE RISK – Doctor consultation recommended.";
+    } else {
+        return "LOW RISK – Monitor and basic care advised.";
+    }
 }
 
-// ================= NLP ENGINE =================
+function runScreening() {
+    const age = parseInt(document.getElementById("age").value);
+    const symptom = document.getElementById("symptom").value;
+    const bp = parseInt(document.getElementById("bp").value) || 0;
+    const sugar = parseInt(document.getElementById("sugar").value) || 0;
+    const heart_rate = parseInt(document.getElementById("heart_rate").value) || 0;
 
-function analyzePatient(){
+    if (!age || !symptom) {
+        alert("Age and symptom are required.");
+        return;
+    }
 
-const name=document.getElementById("p_name").value.trim();
-const age=parseInt(document.getElementById("p_age").value);
-const gender=document.getElementById("p_gender").value;
-const village=document.getElementById("p_village").value.trim();
-const text=document.getElementById("p_symptoms").value.toLowerCase();
+    const result = calculateRisk(age, symptom, bp, sugar, heart_rate);
 
-if(!name||!age||!village||!text){alert("Fill all fields");return;}
+    document.getElementById("result").innerText = result;
 
-localStorage.setItem("patientInfo",JSON.stringify({name,age,gender,village}));
-
-// Tokenization
-const tokens=text.replace(/[^\w\s]/gi,'').split(/\s+/);
-
-// Symptom Clusters
-const clusters={
-respiratory:["cough","breath","breathing","chest","asthma","cold","wheezing"],
-viral:["fever","temperature","chills","bodypain","weakness","fatigue"],
-gastro:["stomach","vomit","vomiting","diarrhea","loosemotion","nausea","abdomen"],
-cardiac:["chestpain","pressure","tightness","palpitation","heart"],
-neuro:["headache","dizziness","faint","blurred","seizure"]
-};
-
-let matched=[];
-
-for(let category in clusters){
-for(let word of clusters[category]){
-if(text.includes(word)){
-matched.push(category);
-break;
+    if ('speechSynthesis' in window) {
+        const msg = new SpeechSynthesisUtterance(result);
+        speechSynthesis.speak(msg);
+    }
 }
-}
-}
-
-let condition="General health observation";
-let steps="Maintain hydration and rest.";
-let avoid="Avoid heavy physical work.";
-let when="If symptoms persist beyond 3 days, consult a health center.";
-
-if(matched.includes("viral")){
-condition="Your symptoms may relate to a viral infection.";
-steps="Take rest, drink warm fluids, monitor temperature.";
-avoid="Avoid cold exposure and dehydration.";
-}
-
-if(matched.includes("respiratory")){
-condition="Your symptoms may relate to a respiratory irritation or infection.";
-steps="Use steam inhalation, stay warm, monitor breathing.";
-avoid="Avoid dust, smoke and cold air.";
-}
-
-if(matched.includes("gastro")){
-condition="Your symptoms may relate to digestive disturbance.";
-steps="Use ORS solution, light food like rice and curd.";
-avoid="Avoid oily, spicy and street food.";
-}
-
-if(matched.includes("cardiac")){
-condition="Your symptoms may require cardiac evaluation.";
-steps="Seek medical attention soon and avoid exertion.";
-avoid="Avoid stress and physical strain.";
-when="Seek immediate medical help if pain spreads to arm or jaw.";
-}
-
-if(matched.includes("neuro")){
-condition="Your symptoms may relate to neurological strain.";
-steps="Rest in quiet environment and hydrate.";
-avoid="Avoid bright screens and noise.";
-}
-
-// Display Suggestion
-document.getElementById("patientResult").classList.remove("hidden");
-document.getElementById("ai_condition").innerHTML="<strong>It may relate to:</strong> "+condition;
-document.getElementById("ai_steps").innerHTML="<strong>Steps to take now:</strong> "+steps;
-document.getElementById("ai_avoid").innerHTML="<strong>Things to avoid:</strong> "+avoid;
-document.getElementById("ai_when").innerHTML="<strong>When to seek care:</strong> "+when;
-
-// Save Record
-const record={
-name,age,village,
-symptoms:text,
-aiSuggestion:condition,
-doctorAdvice:"Pending"
-};
-
-records.unshift(record);
-localStorage.setItem("records",JSON.stringify(records));
-}
-
-// ================= DOCTOR PANEL =================
-function renderDoctorTable(){
-const tbody=document.getElementById("doctorTable");
-if(records.length===0){
-tbody.innerHTML="<tr><td colspan='6'>No records</td></tr>";
-return;
-}
-tbody.innerHTML=records.map((r,i)=>`
-<tr>
-<td>${r.name}</td>
-<td>${r.age}</td>
-<td>${r.village}</td>
-<td>${r.symptoms}</td>
-<td>${r.aiSuggestion}</td>
-<td><textarea onchange="saveAdvice(${i},this.value)">${r.doctorAdvice}</textarea></td>
-</tr>
-`).join("");
-}
-
-function saveAdvice(i,value){
-records[i].doctorAdvice=value;
-localStorage.setItem("records",JSON.stringify(records));
-}
-
 </script>
 
 </body>

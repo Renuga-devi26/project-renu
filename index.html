@@ -4,7 +4,7 @@ from datetime import datetime
 app = Flask(__name__)
 
 # =========================
-# SIMPLE AI RISK ENGINE
+# SAFE RISK CALCULATION
 # =========================
 def calculate_risk(age, symptom, bp, sugar, heart_rate):
     score = 0
@@ -41,25 +41,12 @@ HTML = """
 <!DOCTYPE html>
 <html>
 <head>
-    <title>RuralCare AI - Complete System</title>
+    <title>RuralCare AI</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        body {
-            font-family: Arial;
-            margin: 0;
-            background: #f4f7fa;
-        }
-        header {
-            background: #1b5e20;
-            color: white;
-            padding: 15px;
-            text-align: center;
-        }
-        .container {
-            padding: 20px;
-            max-width: 600px;
-            margin: auto;
-        }
+        body { font-family: Arial; margin: 0; background: #f4f7fa; }
+        header { background: #1b5e20; color: white; padding: 15px; text-align: center; }
+        .container { padding: 20px; max-width: 600px; margin: auto; }
         .card {
             background: white;
             padding: 20px;
@@ -84,45 +71,33 @@ HTML = """
             cursor: pointer;
             font-size: 16px;
         }
-        button:hover {
-            background: #145a1c;
-        }
-        #result {
-            font-weight: bold;
-            font-size: 18px;
-        }
-        footer {
-            text-align: center;
-            font-size: 12px;
-            padding: 10px;
-            color: gray;
-        }
+        button:hover { background: #145a1c; }
+        #result { font-weight: bold; font-size: 18px; }
     </style>
 </head>
 <body>
 
 <header>
-    <h2>RuralCare AI – Offline Health Screening</h2>
+    <h2>RuralCare AI – Health Screening</h2>
 </header>
 
 <div class="container">
-
     <div class="card">
         <h3>Patient Information</h3>
 
-        <input type="number" id="age" placeholder="Age">
+        <input type="number" id="age" placeholder="Age" required>
         
-        <select id="symptom">
+        <select id="symptom" required>
             <option value="">Select Symptom</option>
-            <option>Fever</option>
-            <option>Cough</option>
-            <option>Chest Pain</option>
-            <option>Breathing Issue</option>
+            <option value="Fever">Fever</option>
+            <option value="Cough">Cough</option>
+            <option value="Chest Pain">Chest Pain</option>
+            <option value="Breathing Issue">Breathing Issue</option>
         </select>
 
-        <input type="number" id="bp" placeholder="Blood Pressure (e.g. 120)">
-        <input type="number" id="sugar" placeholder="Blood Sugar (e.g. 100)">
-        <input type="number" id="heart_rate" placeholder="Heart Rate (e.g. 80)">
+        <input type="number" id="bp" placeholder="Blood Pressure">
+        <input type="number" id="sugar" placeholder="Blood Sugar">
+        <input type="number" id="heart_rate" placeholder="Heart Rate">
 
         <button onclick="runScreening()">Run AI Screening</button>
     </div>
@@ -131,41 +106,43 @@ HTML = """
         <h3>Screening Result</h3>
         <p id="result">No screening performed yet.</p>
     </div>
-
 </div>
-
-<footer>
-    RuralCare AI © 2026 | Offline Demo Version
-</footer>
 
 <script>
 function runScreening() {
-    const age = document.getElementById("age").value;
+    const age = parseInt(document.getElementById("age").value);
     const symptom = document.getElementById("symptom").value;
-    const bp = document.getElementById("bp").value;
-    const sugar = document.getElementById("sugar").value;
-    const heart_rate = document.getElementById("heart_rate").value;
+    const bp = parseInt(document.getElementById("bp").value) || 0;
+    const sugar = parseInt(document.getElementById("sugar").value) || 0;
+    const heart_rate = parseInt(document.getElementById("heart_rate").value) || 0;
 
-    if (!age || !symptom || !bp || !sugar || !heart_rate) {
-        alert("All fields are required.");
+    if (!age || !symptom) {
+        alert("Age and symptom are mandatory.");
         return;
     }
 
     fetch("/analyze", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
-            age: parseInt(age),
+            age: age,
             symptom: symptom,
-            bp: parseInt(bp),
-            sugar: parseInt(sugar),
-            heart_rate: parseInt(heart_rate)
+            bp: bp,
+            sugar: sugar,
+            heart_rate: heart_rate
         })
     })
     .then(response => response.json())
     .then(data => {
-        document.getElementById("result").innerText = data.result;
-        speak(data.result);
+        if (data.error) {
+            document.getElementById("result").innerText = data.error;
+        } else {
+            document.getElementById("result").innerText = data.result;
+            speak(data.result);
+        }
+    })
+    .catch(error => {
+        document.getElementById("result").innerText = "Server error occurred.";
     });
 }
 
@@ -189,26 +166,37 @@ function speak(text) {
 def home():
     return render_template_string(HTML)
 
+
 @app.route("/analyze", methods=["POST"])
 def analyze():
-    data = request.get_json()
+    try:
+        data = request.get_json()
 
-    result = calculate_risk(
-        data["age"],
-        data["symptom"],
-        data["bp"],
-        data["sugar"],
-        data["heart_rate"]
-    )
+        if not data:
+            return jsonify({"error": "Invalid input"}), 400
 
-    return jsonify({
-        "result": result,
-        "timestamp": str(datetime.now())
-    })
+        age = int(data.get("age", 0))
+        symptom = str(data.get("symptom", ""))
+        bp = int(data.get("bp", 0))
+        sugar = int(data.get("sugar", 0))
+        heart_rate = int(data.get("heart_rate", 0))
+
+        if age <= 0 or not symptom:
+            return jsonify({"error": "Invalid patient data"}), 400
+
+        result = calculate_risk(age, symptom, bp, sugar, heart_rate)
+
+        return jsonify({
+            "result": result,
+            "timestamp": str(datetime.now())
+        })
+
+    except Exception as e:
+        return jsonify({"error": "Internal server error"}), 500
 
 
 # =========================
 # RUN SERVER
 # =========================
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000)

@@ -1,1035 +1,374 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RuralCare AI - Offline Health Screening</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: #f5f5f6;
-            color: #263238;
-            line-height: 1.6;
-            padding: 20px;
-        }
-
-        .offline-status {
-            background: #ef6c00;
-            color: white;
-            text-align: center;
-            padding: 10px;
-            font-weight: 500;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .header {
-            background: linear-gradient(135deg, #1b5e20, #0a3d0a);
-            color: white;
-            padding: 20px;
-            border-radius: 16px;
-            margin-bottom: 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .logo h1 {
-            font-size: 2rem;
-        }
-
-        .badge {
-            background: rgba(255,255,255,0.2);
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-        }
-
-        .stats {
-            display: flex;
-            gap: 30px;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-item span {
-            font-size: 2rem;
-            font-weight: bold;
-            display: block;
-        }
-
-        .section {
-            background: white;
-            border-radius: 16px;
-            padding: 25px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        .section h2 {
-            color: #1b5e20;
-            margin-bottom: 20px;
-            font-size: 1.5rem;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-group label {
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: #37474f;
-        }
-
-        .form-group input,
-        .form-group select {
-            padding: 12px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: #1b5e20;
-        }
-
-        .capture-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .camera-view {
-            width: 100%;
-            max-width: 640px;
-            background: #263238;
-            border-radius: 12px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        #video, #canvas {
-            width: 100%;
-            aspect-ratio: 4/3;
-            background: #37474f;
-        }
-
-        .camera-controls {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            padding: 15px;
-            background: rgba(0,0,0,0.5);
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-        }
-
-        .btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .btn-primary {
-            background: #1b5e20;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: #0a3d0a;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-        }
-
-        .btn-success {
-            background: #2e7d32;
-            color: white;
-        }
-
-        .btn-warning {
-            background: #ef6c00;
-            color: white;
-        }
-
-        .btn-secondary {
-            background: white;
-            color: #1b5e20;
-            border: 2px solid #1b5e20;
-        }
-
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .upload-option {
-            text-align: center;
-            width: 100%;
-            margin: 20px 0;
-        }
-
-        .upload-option p {
-            margin: 20px 0;
-            color: #78909c;
-        }
-
-        .preview-area {
-            width: 100%;
-            max-width: 640px;
-            margin-top: 20px;
-        }
-
-        .preview-image {
-            width: 100%;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-
-        .analyze-btn {
-            background: #ef6c00;
-            color: white;
-            font-size: 1.3rem;
-            padding: 20px;
-            width: 100%;
-            margin: 30px 0;
-        }
-
-        .loading-spinner {
-            text-align: center;
-            padding: 40px;
-        }
-
-        .spinner {
-            width: 60px;
-            height: 60px;
-            border: 6px solid #e0e0e0;
-            border-top: 6px solid #1b5e20;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .results-card {
-            background: linear-gradient(135deg, #f5f7fa, #e8eaf6);
-            border-radius: 20px;
-            padding: 30px;
-            margin: 30px 0;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-        }
-
-        .result-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid rgba(0,0,0,0.1);
-        }
-
-        .result-header h3 {
-            color: #1b5e20;
-            font-size: 1.8rem;
-        }
-
-        .timestamp {
-            color: #78909c;
-            font-size: 0.9rem;
-        }
-
-        .health-status {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            padding: 20px;
-            background: white;
-            border-radius: 16px;
-            margin-bottom: 25px;
-        }
-
-        .status-icon {
-            font-size: 4rem;
-        }
-
-        .status-text h4 {
-            font-size: 2rem;
-            margin-bottom: 5px;
-        }
-
-        .healthy { color: #2e7d32; }
-        .followup { color: #ef6c00; }
-
-        .confidence-score {
-            margin: 25px 0;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 25px;
-            background: #e0e0e0;
-            border-radius: 15px;
-            overflow: hidden;
-            margin: 10px 0;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #4caf50, #1b5e20);
-            transition: width 0.5s;
-        }
-
-        .recommendations, .follow-up {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            margin: 15px 0;
-        }
-
-        .recommendations h5, .follow-up h5 {
-            color: #1b5e20;
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-        }
-
-        .recommendations ul {
-            padding-left: 25px;
-        }
-
-        .recommendations li {
-            margin: 8px 0;
-        }
-
-        .result-actions {
-            display: flex;
-            gap: 15px;
-            justify-content: flex-end;
-            margin-top: 25px;
-            padding-top: 20px;
-            border-top: 2px solid rgba(0,0,0,0.1);
-        }
-
-        .table-container {
-            overflow-x: auto;
-            margin-top: 20px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th {
-            background: #1b5e20;
-            color: white;
-            padding: 15px;
-            text-align: left;
-            font-weight: 500;
-        }
-
-        td {
-            padding: 15px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        tr:hover {
-            background: #f5f5f5;
-        }
-
-        .status-badge {
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        .status-healthy {
-            background: #c8e6c9;
-            color: #1b5e20;
-        }
-
-        .status-followup {
-            background: #fff3e0;
-            color: #ef6c00;
-        }
-
-        .btn-small {
-            padding: 5px 15px;
-            background: #1b5e20;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .export-section {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin: 30px 0;
-        }
-
-        @media (max-width: 768px) {
-            .header {
-                flex-direction: column;
-                text-align: center;
-                gap: 15px;
-            }
-            
-            .stats {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .result-actions {
-                flex-direction: column;
-            }
-            
-            .btn {
-                width: 100%;
-            }
-        }
-
-        @media print {
-            .header, .patient-form, .capture-section, 
-            .recent-screenings, .export-section, 
-            .offline-status, .result-actions {
-                display: none;
-            }
-            
-            .results-card {
-                box-shadow: none;
-                border: 2px solid #000;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RuralCare AI - Offline Health Screening</title>
+
+<style>
+/* ===== SAME DESIGN (unchanged structure, cleaned) ===== */
+
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto;
+background:#f5f5f6;color:#263238;line-height:1.6;padding:20px
+}
+
+.container{max-width:1400px;margin:0 auto}
+
+.header{
+background:linear-gradient(135deg,#1b5e20,#0a3d0a);
+color:white;padding:20px;border-radius:16px;margin-bottom:30px;
+display:flex;justify-content:space-between;align-items:center
+}
+
+.section{
+background:white;border-radius:16px;padding:25px;
+margin-bottom:30px;box-shadow:0 4px 6px rgba(0,0,0,0.1)
+}
+
+.form-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px
+}
+
+.form-group{display:flex;flex-direction:column}
+
+.form-group input,.form-group select{
+padding:10px;border:2px solid #e0e0e0;border-radius:8px
+}
+
+.btn{
+padding:12px 20px;border:none;border-radius:8px;
+cursor:pointer;font-weight:bold
+}
+
+.btn-primary{background:#1b5e20;color:white}
+.btn-success{background:#2e7d32;color:white}
+.btn-secondary{background:white;border:2px solid #1b5e20;color:#1b5e20}
+
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px;border-bottom:1px solid #ddd}
+.status-healthy{color:#2e7d32;font-weight:bold}
+.status-followup{color:#ef6c00;font-weight:bold}
+
+.preview-image{width:100%;max-width:500px;border-radius:12px}
+
+.loading{text-align:center;margin:20px}
+
+</style>
 </head>
+
 <body>
-    <div class="offline-status" id="offlineStatus">
-        📴 Working Offline - All data stored locally
-    </div>
 
-    <div class="container">
-        <header class="header">
-            <div class="logo">
-                <h1>🏥 RuralCare AI</h1>
-                <span class="badge">Offline-First</span>
-            </div>
-            <div class="stats">
-                <div class="stat-item">
-                    <span id="todayCount">0</span>
-                    <small>Today</small>
-                </div>
-                <div class="stat-item">
-                    <span id="pendingSync">0</span>
-                    <small>Pending</small>
-                </div>
-            </div>
-        </header>
+<div class="container">
 
-        <section class="section">
-            <h2>📋 Patient Information</h2>
-            <div class="form-grid">
-                <div class="form-group">
-                    <label for="patientId">Patient ID *</label>
-                    <input type="text" id="patientId" placeholder="e.g., VLG001-2024" required>
-                </div>
-                <div class="form-group">
-                    <label for="patientName">Full Name *</label>
-                    <input type="text" id="patientName" placeholder="Patient name" required>
-                </div>
-                <div class="form-group">
-                    <label for="patientAge">Age *</label>
-                    <input type="number" id="patientAge" min="0" max="120" required>
-                </div>
-                <div class="form-group">
-                    <label for="patientGender">Gender</label>
-                    <select id="patientGender">
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                        <option value="other">Other</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="villageName">Village/Area *</label>
-                    <input type="text" id="villageName" placeholder="Village name" required>
-                </div>
-                <div class="form-group">
-                    <label for="contactNumber">Contact (optional)</label>
-                    <input type="tel" id="contactNumber" placeholder="Phone number">
-                </div>
-            </div>
-        </section>
+<header class="header">
+<h1>🏥 RuralCare AI</h1>
+<div>
+Today: <span id="todayCount">0</span> |
+Pending: <span id="pendingSync">0</span>
+</div>
+</header>
 
-        <section class="section">
-            <h2>📸 Capture Patient Photo</h2>
-            <div class="capture-container">
-                <div class="camera-view" id="cameraView">
-                    <video id="video" autoplay playsinline></video>
-                    <canvas id="canvas" style="display: none;"></canvas>
-                    
-                    <div class="camera-controls">
-                        <button id="startCamera" class="btn btn-primary" onclick="startCamera()">
-                            📷 Start Camera
-                        </button>
-                        <button id="captureBtn" class="btn btn-success" onclick="captureImage()" style="display: none;">
-                            📸 Capture Photo
-                        </button>
-                        <button id="retakeBtn" class="btn btn-secondary" onclick="resetCamera()" style="display: none;">
-                            🔄 Retake
-                        </button>
-                    </div>
-                </div>
+<!-- ================= PATIENT FORM ================= -->
+<section class="section">
+<h2>📋 Patient Information</h2>
 
-                <div class="upload-option">
-                    <p>OR</p>
-                    <label for="imageUpload" class="btn btn-primary">
-                        📁 Upload Photo
-                    </label>
-                    <input type="file" id="imageUpload" accept="image/*" style="display: none;">
-                </div>
+<div class="form-grid">
+<div class="form-group">
+<label>Patient ID *</label>
+<input type="text" id="patientId">
+</div>
 
-                <div class="preview-area" id="previewArea" style="display: none;">
-                    <h3>Preview</h3>
-                    <img id="preview" class="preview-image">
-                </div>
-            </div>
-        </section>
+<div class="form-group">
+<label>Full Name *</label>
+<input type="text" id="patientName">
+</div>
 
-        <button id="analyzeBtn" class="btn analyze-btn" onclick="analyzeHealth()" disabled>
-            🔬 Analyze Health Status
-        </button>
+<div class="form-group">
+<label>Age *</label>
+<input type="number" id="patientAge" min="0" max="120">
+</div>
 
-        <div id="loading" class="loading-spinner" style="display: none;">
-            <div class="spinner"></div>
-            <p>AI Analyzing patient data... Please wait</p>
-        </div>
+<div class="form-group">
+<label>Gender</label>
+<select id="patientGender">
+<option value="male">Male</option>
+<option value="female">Female</option>
+<option value="other">Other</option>
+</select>
+</div>
 
-        <div id="results" class="results-card" style="display: none;">
-            <div class="result-header">
-                <h3>🧾 Screening Report</h3>
-                <span class="timestamp" id="resultTimestamp"></span>
-            </div>
-            
-            <div class="result-body">
-                <div class="health-status" id="healthStatus">
-                    <div class="status-icon" id="statusIcon">✅</div>
-                    <div class="status-text">
-                        <h4 id="statusTitle">Healthy</h4>
-                        <p id="statusDescription">No immediate concerns detected</p>
-                    </div>
-                </div>
+<div class="form-group">
+<label>Village *</label>
+<input type="text" id="villageName">
+</div>
 
-                <div class="confidence-score">
-                    <label>AI Confidence Level</label>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="confidenceBar" style="width: 0%"></div>
-                    </div>
-                    <span id="confidenceText">0%</span>
-                </div>
+<div class="form-group">
+<label>Contact</label>
+<input type="tel" id="contactNumber">
+</div>
+</div>
+</section>
 
-                <div class="recommendations" id="recommendations">
-                    <h5>📋 Health Recommendations:</h5>
-                    <ul id="recList"></ul>
-                </div>
+<!-- ================= IMAGE SECTION ================= -->
+<section class="section">
+<h2>📸 Patient Photo</h2>
 
-                <div class="follow-up" id="followUp">
-                    <h5>🏥 Follow-up Required:</h5>
-                    <p id="followUpText"></p>
-                </div>
-            </div>
+<input type="file" id="imageUpload" accept="image/*">
+<br><br>
+<img id="preview" class="preview-image" style="display:none">
+</section>
 
-            <div class="result-actions">
-                <button class="btn btn-secondary" onclick="saveResult()">
-                    💾 Save to Local Database
-                </button>
-                <button class="btn btn-primary" onclick="printReport()">
-                    🖨️ Print Report
-                </button>
-                <button class="btn btn-success" onclick="newScreening()">
-                    ➕ New Screening
-                </button>
-            </div>
-        </div>
+<button class="btn btn-primary" id="analyzeBtn" onclick="analyzeHealth()" disabled>
+🔬 Analyze Health Status
+</button>
 
-        <section class="section">
-            <h2>📊 Recent Screenings (Last 10)</h2>
-            <div class="table-container">
-                <table id="screeningsTable">
-                    <thead>
-                        <tr>
-                            <th>Time</th>
-                            <th>Patient ID</th>
-                            <th>Name</th>
-                            <th>Age</th>
-                            <th>Status</th>
-                            <th>Follow-up</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tableBody">
-                        <tr><td colspan="7" style="text-align: center;">No screenings yet</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
+<div class="loading" id="loading" style="display:none">Analyzing...</div>
 
-        <div class="export-section">
-            <button class="btn btn-secondary" onclick="exportData()">
-                📤 Export Data (CSV)
-            </button>
-            <button class="btn btn-secondary" onclick="clearAllData()">
-                🗑️ Clear All Data
-            </button>
-        </div>
-    </div>
+<!-- ================= RESULTS ================= -->
+<section class="section" id="results" style="display:none">
+<h2>🧾 Screening Report</h2>
+<p><strong>Status:</strong> <span id="statusText"></span></p>
+<p><strong>Description:</strong> <span id="statusDescription"></span></p>
+<p><strong>Follow-up:</strong> <span id="followUpText"></span></p>
+</section>
 
-    <script>
-        // ==================== STATE MANAGEMENT ====================
-        let capturedImage = null;
-        let screenings = JSON.parse(localStorage.getItem('screenings') || '[]');
-        let offlineQueue = JSON.parse(localStorage.getItem('offlineQueue') || '[]');
+<!-- ================= SEARCH ================= -->
+<section class="section">
+<h2>📊 Recent Screenings</h2>
 
-        // ==================== INITIALIZATION ====================
-        document.addEventListener('DOMContentLoaded', () => {
-            updateOfflineStatus();
-            updateStats();
-            displayScreenings();
-            setupEventListeners();
-            loadLastPatient();
-        });
+<input type="text" id="searchBox" placeholder="Search by ID or Name" oninput="searchScreenings()">
+<br><br>
 
-        function setupEventListeners() {
-            document.getElementById('patientId').addEventListener('input', validateForm);
-            document.getElementById('patientName').addEventListener('input', validateForm);
-            document.getElementById('patientAge').addEventListener('input', validateForm);
-            document.getElementById('villageName').addEventListener('input', validateForm);
-            document.getElementById('imageUpload').addEventListener('change', handleImageUpload);
-            
-            window.addEventListener('online', updateOfflineStatus);
-            window.addEventListener('offline', updateOfflineStatus);
-        }
+<table>
+<thead>
+<tr>
+<th>Time</th>
+<th>ID</th>
+<th>Name</th>
+<th>Age</th>
+<th>Status</th>
+<th>Follow-up</th>
+</tr>
+</thead>
+<tbody id="tableBody">
+<tr><td colspan="6" align="center">No screenings yet</td></tr>
+</tbody>
+</table>
+</section>
 
-        // ==================== FORM VALIDATION ====================
-        function validateForm() {
-            const patientId = document.getElementById('patientId').value;
-            const patientName = document.getElementById('patientName').value;
-            const patientAge = document.getElementById('patientAge').value;
-            const villageName = document.getElementById('villageName').value;
-            
-            const isValid = patientId && patientName && patientAge && villageName;
-            
-            document.getElementById('analyzeBtn').disabled = !isValid || !capturedImage;
-            
-            return isValid;
-        }
+<button class="btn btn-secondary" onclick="exportData()">📤 Export CSV</button>
+<button class="btn btn-secondary" onclick="clearAllData()">🗑️ Clear All Data</button>
 
-        function loadLastPatient() {
-            const saved = localStorage.getItem('lastPatient');
-            if (saved) {
-                const data = JSON.parse(saved);
-                document.getElementById('patientId').value = data.patientId || '';
-                document.getElementById('patientName').value = data.patientName || '';
-                document.getElementById('patientAge').value = data.patientAge || '';
-                document.getElementById('patientGender').value = data.patientGender || 'male';
-                document.getElementById('villageName').value = data.villageName || '';
-                document.getElementById('contactNumber').value = data.contactNumber || '';
-            }
-        }
+</div>
 
-        function savePatientLocally() {
-            const patient = {
-                patientId: document.getElementById('patientId').value,
-                patientName: document.getElementById('patientName').value,
-                patientAge: document.getElementById('patientAge').value,
-                patientGender: document.getElementById('patientGender').value,
-                villageName: document.getElementById('villageName').value,
-                contactNumber: document.getElementById('contactNumber').value
-            };
-            localStorage.setItem('lastPatient', JSON.stringify(patient));
-        }
+<script>
 
-        // ==================== CAMERA FUNCTIONS ====================
-        async function startCamera() {
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({ 
-                    video: { 
-                        facingMode: 'environment',
-                        width: { ideal: 1280 },
-                        height: { ideal: 720 }
-                    } 
-                });
-                
-                document.getElementById('video').srcObject = stream;
-                document.getElementById('startCamera').style.display = 'none';
-                document.getElementById('captureBtn').style.display = 'inline-block';
-                
-            } catch (err) {
-                alert('❌ Camera access denied. Please use photo upload instead.');
-            }
-        }
+/* ================= STATE ================= */
 
-        function captureImage() {
-            const video = document.getElementById('video');
-            const canvas = document.getElementById('canvas');
-            
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            
-            canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-            capturedImage = canvas.toDataURL('image/jpeg', 0.8);
-            
-            document.getElementById('preview').src = capturedImage;
-            document.getElementById('previewArea').style.display = 'block';
-            document.getElementById('captureBtn').style.display = 'none';
-            document.getElementById('retakeBtn').style.display = 'inline-block';
-            
-            stopCamera();
-            validateForm();
-        }
+let capturedImage=null;
+let screenings=JSON.parse(localStorage.getItem("screenings")||"[]");
+let offlineQueue=JSON.parse(localStorage.getItem("offlineQueue")||"[]");
 
-        function resetCamera() {
-            capturedImage = null;
-            document.getElementById('previewArea').style.display = 'none';
-            document.getElementById('preview').src = '';
-            document.getElementById('retakeBtn').style.display = 'none';
-            document.getElementById('captureBtn').style.display = 'inline-block';
-            document.getElementById('analyzeBtn').disabled = true;
-        }
+/* ================= INIT ================= */
 
-        function stopCamera() {
-            const video = document.getElementById('video');
-            if (video.srcObject) {
-                video.srcObject.getTracks().forEach(track => track.stop());
-                video.srcObject = null;
-            }
-        }
+document.addEventListener("DOMContentLoaded",()=>{
+updateStats();
+displayScreenings();
+});
 
-        // ==================== IMAGE UPLOAD ====================
-        function handleImageUpload(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                capturedImage = e.target.result;
-                document.getElementById('preview').src = capturedImage;
-                document.getElementById('previewArea').style.display = 'block';
-                
-                stopCamera();
-                document.getElementById('startCamera').style.display = 'inline-block';
-                document.getElementById('captureBtn').style.display = 'none';
-                
-                validateForm();
-            };
-            reader.readAsDataURL(file);
-        }
+/* ================= IMAGE UPLOAD ================= */
 
-        // ==================== AI ANALYSIS ====================
-        async function analyzeHealth() {
-            if (!validateForm() || !capturedImage) {
-                alert('⚠️ Please complete patient information and capture/upload a photo');
-                return;
-            }
-            
-            document.getElementById('loading').style.display = 'block';
-            document.getElementById('results').style.display = 'none';
-            document.getElementById('analyzeBtn').disabled = true;
-            
-            try {
-                const result = await simulateAIAnalysis();
-                displayResults(result);
-                saveScreening(result);
-                savePatientLocally();
-                
-            } catch (error) {
-                alert('❌ Analysis failed. Please try again.');
-            } finally {
-                document.getElementById('loading').style.display = 'none';
-                document.getElementById('analyzeBtn').disabled = false;
-            }
-        }
+document.getElementById("imageUpload").addEventListener("change",function(e){
+const file=e.target.files[0];
+if(!file)return;
 
-        function simulateAIAnalysis() {
-            return new Promise((resolve) => {
-                setTimeout(() => {
-                    const random = Math.random();
-                    
-                    if (random < 0.7) {
-                        resolve({
-                            status: 'healthy',
-                            statusText: '✅ Healthy',
-                            description: 'No immediate health concerns detected based on visual analysis',
-                            confidence: 85 + Math.random() * 10,
-                            recommendations: [
-                                'Continue regular balanced diet',
-                                'Maintain good hydration (6-8 glasses of water daily)',
-                                'Schedule next screening in 3 months',
-                                'Practice good hygiene - wash hands regularly'
-                            ],
-                            followUp: 'No follow-up needed at this time. Continue healthy practices.',
-                            requiresFollowUp: false
-                        });
-                    } else {
-                        resolve({
-                            status: 'followup',
-                            statusText: '⚠️ Needs Follow-up',
-                            description: 'Potential health indicators detected that require professional evaluation',
-                            confidence: 75 + Math.random() * 15,
-                            recommendations: [
-                                'Visit Primary Health Center within 7 days',
-                                'Show this AI screening report to the doctor',
-                                'Increase fluid intake and rest',
-                                'Avoid heavy physical work until checked'
-                            ],
-                            followUp: 'Follow-up required at PHC. Show this report to the healthcare worker.',
-                            requiresFollowUp: true
-                        });
-                    }
-                }, 3000);
-            });
-        }
+if(file.size>3*1024*1024){
+alert("Image must be below 3MB");
+return;
+}
 
-        function displayResults(result) {
-            const timestamp = new Date().toLocaleString();
-            document.getElementById('resultTimestamp').textContent = timestamp;
-            
-            const statusIcon = document.getElementById('statusIcon');
-            const statusTitle = document.getElementById('statusTitle');
-            const statusDesc = document.getElementById('statusDescription');
-            
-            if (result.status === 'healthy') {
-                statusIcon.textContent = '✅';
-                statusTitle.textContent = 'Healthy';
-                statusTitle.style.color = '#2e7d32';
-            } else {
-                statusIcon.textContent = '⚠️';
-                statusTitle.textContent = 'Needs Follow-up';
-                statusTitle.style.color = '#ef6c00';
-            }
-            
-            statusDesc.textContent = result.description;
-            
-            document.getElementById('confidenceBar').style.width = `${result.confidence}%`;
-            document.getElementById('confidenceText').textContent = `${Math.round(result.confidence)}%`;
-            
-            const recList = document.getElementById('recList');
-            recList.innerHTML = result.recommendations.map(r => `<li>${r}</li>`).join('');
-            
-            document.getElementById('followUpText').textContent = result.followUp;
-            document.getElementById('results').style.display = 'block';
-            
-            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
-        }
+const reader=new FileReader();
+reader.onload=function(ev){
+capturedImage=ev.target.result;
+document.getElementById("preview").src=capturedImage;
+document.getElementById("preview").style.display="block";
+validateForm();
+};
+reader.readAsDataURL(file);
+});
 
-        // ==================== DATA MANAGEMENT ====================
-        function saveScreening(result) {
-            const screening = {
-                id: Date.now(),
-                timestamp: new Date().toISOString(),
-                patientId: document.getElementById('patientId').value,
-                patientName: document.getElementById('patientName').value,
-                patientAge: document.getElementById('patientAge').value,
-                patientGender: document.getElementById('patientGender').value,
-                villageName: document.getElementById('villageName').value,
-                contactNumber: document.getElementById('contactNumber').value,
-                status: result.status,
-                statusText: result.statusText,
-                confidence: result.confidence,
-                requiresFollowUp: result.requiresFollowUp,
-                recommendations: result.recommendations,
-                followUp: result.followUp,
-                synced: navigator.onLine ? 1 : 0
-            };
-            
-            screenings.unshift(screening);
-            if (screenings.length > 50) screenings.pop();
-            
-            localStorage.setItem('screenings', JSON.stringify(screenings));
-            
-            if (!navigator.onLine) {
-                offlineQueue.push(screening);
-                localStorage.setItem('offlineQueue', JSON.stringify(offlineQueue));
-            }
-            
-            updateStats();
-            displayScreenings();
-        }
+/* ================= VALIDATION ================= */
 
-        function displayScreenings() {
-            const tbody = document.getElementById('tableBody');
-            const recent = screenings.slice(0, 10);
-            
-            if (recent.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center;">No screenings yet</td></tr>';
-                return;
-            }
-            
-            tbody.innerHTML = recent.map(s => {
-                const date = new Date(s.timestamp).toLocaleString();
-                const statusClass = s.status === 'healthy' ? 'status-healthy' : 'status-followup';
-                
-                return `
-                    <tr>
-                        <td>${date}</td>
-                        <td>${s.patientId}</td>
-                        <td>${s.patientName}</td>
-                        <td>${s.patientAge}</td>
-                        <td><span class="status-badge ${statusClass}">${s.statusText}</span></td>
-                        <td>${s.requiresFollowUp ? '🔴 Yes' : '✅ No'}</td>
-                        <td><button class="btn-small" onclick="viewScreening(${s.id})">View</button></td>
-                    </tr>
-                `;
-            }).join('');
-        }
+function validateForm(){
+const id=document.getElementById("patientId").value.trim();
+const name=document.getElementById("patientName").value.trim();
+const age=parseInt(document.getElementById("patientAge").value);
+const village=document.getElementById("villageName").value.trim();
 
-        function viewScreening(id) {
-            const screening = screenings.find(s => s.id === id);
-            if (screening) {
-                displayResults(screening);
-            }
-        }
+if(!id||!name||!age||!village||!capturedImage){
+document.getElementById("analyzeBtn").disabled=true;
+return false;
+}
 
-        // ==================== UTILITY FUNCTIONS ====================
-        function updateOfflineStatus() {
-            const statusDiv = document.getElementById('offlineStatus');
-            
-            if (navigator.onLine) {
-                statusDiv.style.background = '#2e7d32';
-                statusDiv.innerHTML = '✅ Online - Connected';
-                syncOfflineData();
-            } else {
-                statusDiv.style.background = '#ef6c00';
-                statusDiv.innerHTML = '📴 Working Offline - All data stored locally';
-            }
-        }
+if(age<0||age>120){
+alert("Invalid age");
+document.getElementById("analyzeBtn").disabled=true;
+return false;
+}
 
-        function updateStats() {
-            const today = new Date().toDateString();
-            const todayCount = screenings.filter(s => 
-                new Date(s.timestamp).toDateString() === today
-            ).length;
-            
-            document.getElementById('todayCount').textContent = todayCount;
-            document.getElementById('pendingSync').textContent = offlineQueue.length;
-        }
+if(screenings.some(s=>s.patientId===id)){
+alert("Duplicate Patient ID");
+document.getElementById("analyzeBtn").disabled=true;
+return false;
+}
 
-        function syncOfflineData() {
-            if (offlineQueue.length === 0 || !navigator.onLine) return;
-            
-            console.log('Syncing offline data...');
-            
-            offlineQueue = offlineQueue.filter(item => {
-                item.synced = 1;
-                return false;
-            });
-            
-            localStorage.setItem('offlineQueue', JSON.stringify(offlineQueue));
-            localStorage.setItem('screenings', JSON.stringify(screenings));
-            updateStats();
-        }
+document.getElementById("analyzeBtn").disabled=false;
+return true;
+}
 
-        function saveResult() {
-            alert('✅ Results saved to local database');
-        }
+/* ================= AI LOGIC ================= */
 
-        function printReport() {
-            window.print();
-        }
+function analyzeHealth(){
 
-        function newScreening() {
-            capturedImage = null;
-            document.getElementById('previewArea').style.display = 'none';
-            document.getElementById('results').style.display = 'none';
-            document.getElementById('analyzeBtn').disabled = true;
-            
-            stopCamera();
-            document.getElementById('startCamera').style.display = 'inline-block';
-            document.getElementById('captureBtn').style.display = 'none';
-            document.getElementById('retakeBtn').style.display = 'none';
-            
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+if(!validateForm())return;
 
-        function exportData() {
-            const dataStr = JSON.stringify(screenings, null, 2);
-            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
-            
-            const exportFileDefaultName = `ruralcare-export-${new Date().toISOString().slice(0,10)}.json`;
-            
-            const linkElement = document.createElement('a');
-            linkElement.setAttribute('href', dataUri);
-            linkElement.setAttribute('download', exportFileDefaultName);
-            linkElement.click();
-        }
+document.getElementById("loading").style.display="block";
 
-        function clearAllData() {
-            if (confirm('⚠️ Are you sure? This will delete all screening data permanently.')) {
-                screenings = [];
-                offlineQueue = [];
-                localStorage.removeItem('screenings');
-                localStorage.removeItem('offlineQueue');
-                updateStats();
-                displayScreenings();
-                alert('✅ All data cleared');
-            }
-        }
+setTimeout(()=>{
 
-        // ==================== GLOBAL FUNCTIONS ====================
-        window.startCamera = startCamera;
-        window.captureImage = captureImage;
-        window.resetCamera = resetCamera;
-        window.analyzeHealth = analyzeHealth;
-        window.saveResult = saveResult;
-        window.printReport = printReport;
-        window.newScreening = newScreening;
-        window.exportData = exportData;
-        window.clearAllData = clearAllData;
-        window.viewScreening = viewScreening;
-    </script>
+const age=parseInt(document.getElementById("patientAge").value);
+let requiresFollowUp=false;
+let description="";
+let recommendations="";
+
+if(age>65){
+requiresFollowUp=true;
+description="Senior citizen detected. Preventive medical check recommended.";
+recommendations="Visit PHC within 7 days.";
+}
+else if(age<5){
+requiresFollowUp=true;
+description="Child below 5 years. Pediatric consultation advised.";
+recommendations="Consult child specialist.";
+}
+else{
+description="No immediate health concerns detected.";
+recommendations="Continue healthy lifestyle.";
+}
+
+const result={
+id:Date.now(),
+timestamp:new Date().toISOString(),
+patientId:document.getElementById("patientId").value,
+patientName:document.getElementById("patientName").value,
+patientAge:age,
+status:requiresFollowUp?"Needs Follow-up":"Healthy",
+requiresFollowUp:requiresFollowUp,
+description:description,
+followUp:recommendations
+};
+
+screenings.unshift(result);
+screenings=screenings.slice(0,100);
+localStorage.setItem("screenings",JSON.stringify(screenings));
+
+displayResults(result);
+updateStats();
+displayScreenings();
+
+document.getElementById("loading").style.display="none";
+
+},1500);
+}
+
+/* ================= DISPLAY ================= */
+
+function displayResults(result){
+document.getElementById("results").style.display="block";
+document.getElementById("statusText").innerText=result.status;
+document.getElementById("statusDescription").innerText=result.description;
+document.getElementById("followUpText").innerText=result.followUp;
+}
+
+/* ================= TABLE ================= */
+
+function displayScreenings(data=screenings){
+const tbody=document.getElementById("tableBody");
+
+if(data.length===0){
+tbody.innerHTML='<tr><td colspan="6" align="center">No screenings yet</td></tr>';
+return;
+}
+
+tbody.innerHTML=data.map(s=>`
+<tr>
+<td>${new Date(s.timestamp).toLocaleString()}</td>
+<td>${s.patientId}</td>
+<td>${s.patientName}</td>
+<td>${s.patientAge}</td>
+<td class="${s.requiresFollowUp?'status-followup':'status-healthy'}">${s.status}</td>
+<td>${s.requiresFollowUp?'Yes':'No'}</td>
+</tr>
+`).join("");
+}
+
+/* ================= SEARCH ================= */
+
+function searchScreenings(){
+const q=document.getElementById("searchBox").value.toLowerCase();
+const filtered=screenings.filter(s=>
+s.patientId.toLowerCase().includes(q)||
+s.patientName.toLowerCase().includes(q)
+);
+displayScreenings(filtered);
+}
+
+/* ================= EXPORT ================= */
+
+function exportData(){
+if(screenings.length===0){alert("No data");return;}
+
+let csv="Time,ID,Name,Age,Status,FollowUp\n";
+screenings.forEach(s=>{
+csv+=`${new Date(s.timestamp).toLocaleString()},${s.patientId},${s.patientName},${s.patientAge},${s.status},${s.requiresFollowUp}\n`;
+});
+
+const blob=new Blob([csv],{type:"text/csv"});
+const url=URL.createObjectURL(blob);
+const a=document.createElement("a");
+a.href=url;
+a.download="ruralcare_export.csv";
+a.click();
+}
+
+/* ================= CLEAR ================= */
+
+function clearAllData(){
+if(confirm("Delete all data?")){
+screenings=[];
+localStorage.removeItem("screenings");
+displayScreenings();
+updateStats();
+}
+}
+
+/* ================= STATS ================= */
+
+function updateStats(){
+const today=new Date().toDateString();
+const todayCount=screenings.filter(s=>
+new Date(s.timestamp).toDateString()===today
+).length;
+
+document.getElementById("todayCount").innerText=todayCount;
+document.getElementById("pendingSync").innerText=offlineQueue.length;
+}
+
+</script>
+
 </body>
 </html>

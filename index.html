@@ -1,123 +1,130 @@
 from flask import Flask, request, jsonify, render_template_string
-from datetime import datetime
 
 app = Flask(__name__)
 
 # =========================
-# SAFE RISK CALCULATION
+# AI ENGINE (from ai_engine.py)
 # =========================
-def calculate_risk(age, symptom, bp, sugar, heart_rate):
-    score = 0
+def analyze_patient(age, symptom, bp, sugar):
+    risk_score = 0
 
-    if age >= 60:
-        score += 2
+    if age > 60:
+        risk_score += 2
 
     if symptom.lower() in ["chest pain", "breathing issue"]:
-        score += 3
-    elif symptom.lower() in ["fever", "cough"]:
-        score += 1
+        risk_score += 3
 
-    if bp >= 140:
-        score += 2
+    if bp > 140:
+        risk_score += 2
 
-    if sugar >= 180:
-        score += 2
+    if sugar > 180:
+        risk_score += 2
 
-    if heart_rate >= 110:
-        score += 2
-
-    if score >= 7:
-        return "HIGH RISK – Immediate hospital referral required."
-    elif score >= 4:
+    if risk_score >= 6:
+        return "HIGH RISK – Immediate medical attention required."
+    elif risk_score >= 3:
         return "MODERATE RISK – Doctor consultation recommended."
     else:
-        return "LOW RISK – Monitor and basic care advised."
+        return "LOW RISK – Basic monitoring advised."
 
 
 # =========================
-# SINGLE PAGE FRONTEND
+# FULL HTML (index.html + styles.css + main.js merged)
 # =========================
-HTML = """
+HTML_PAGE = """
 <!DOCTYPE html>
 <html>
 <head>
-    <title>RuralCare AI</title>
+    <title>RuralCare AI - Advanced</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <style>
-        body { font-family: Arial; margin: 0; background: #f4f7fa; }
-        header { background: #1b5e20; color: white; padding: 15px; text-align: center; }
-        .container { padding: 20px; max-width: 600px; margin: auto; }
+        body {
+            font-family: Arial;
+            background: #f4f7fa;
+            margin: 0;
+        }
+        header {
+            background: #2e7d32;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+        .container {
+            padding: 20px;
+            max-width: 600px;
+            margin: auto;
+        }
         .card {
             background: white;
             padding: 20px;
             margin-bottom: 20px;
-            border-radius: 10px;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
         }
         input, select {
             width: 100%;
             padding: 10px;
-            margin-bottom: 12px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
+            margin-bottom: 10px;
         }
         button {
-            width: 100%;
-            padding: 12px;
             background: #2e7d32;
             color: white;
+            padding: 10px;
             border: none;
-            border-radius: 5px;
             cursor: pointer;
-            font-size: 16px;
+            width: 100%;
         }
-        button:hover { background: #145a1c; }
-        #result { font-weight: bold; font-size: 18px; }
+        button:hover {
+            background: #1b5e20;
+        }
+        #result {
+            font-weight: bold;
+            font-size: 18px;
+        }
     </style>
 </head>
 <body>
 
 <header>
-    <h2>RuralCare AI – Health Screening</h2>
+    <h2>RuralCare AI – Advanced Screening</h2>
 </header>
 
 <div class="container">
     <div class="card">
-        <h3>Patient Information</h3>
+        <h3>Patient Details</h3>
 
-        <input type="number" id="age" placeholder="Age" required>
-        
-        <select id="symptom" required>
+        <input type="number" id="age" placeholder="Age">
+
+        <select id="symptom">
             <option value="">Select Symptom</option>
-            <option value="Fever">Fever</option>
-            <option value="Cough">Cough</option>
-            <option value="Chest Pain">Chest Pain</option>
-            <option value="Breathing Issue">Breathing Issue</option>
+            <option>Fever</option>
+            <option>Chest Pain</option>
+            <option>Breathing Issue</option>
+            <option>Cough</option>
         </select>
 
         <input type="number" id="bp" placeholder="Blood Pressure">
         <input type="number" id="sugar" placeholder="Blood Sugar">
-        <input type="number" id="heart_rate" placeholder="Heart Rate">
 
-        <button onclick="runScreening()">Run AI Screening</button>
+        <button onclick="screenPatient()">Run AI Screening</button>
     </div>
 
     <div class="card">
-        <h3>Screening Result</h3>
-        <p id="result">No screening performed yet.</p>
+        <h3>AI Result</h3>
+        <p id="result">No screening yet.</p>
     </div>
 </div>
 
 <script>
-function runScreening() {
-    const age = parseInt(document.getElementById("age").value);
+function screenPatient() {
+    const age = document.getElementById("age").value;
     const symptom = document.getElementById("symptom").value;
-    const bp = parseInt(document.getElementById("bp").value) || 0;
-    const sugar = parseInt(document.getElementById("sugar").value) || 0;
-    const heart_rate = parseInt(document.getElementById("heart_rate").value) || 0;
+    const bp = document.getElementById("bp").value;
+    const sugar = document.getElementById("sugar").value;
 
-    if (!age || !symptom) {
-        alert("Age and symptom are mandatory.");
+    if (!age || !symptom || !bp || !sugar) {
+        alert("Fill all fields.");
         return;
     }
 
@@ -125,32 +132,19 @@ function runScreening() {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
-            age: age,
+            age: parseInt(age),
             symptom: symptom,
-            bp: bp,
-            sugar: sugar,
-            heart_rate: heart_rate
+            bp: parseInt(bp),
+            sugar: parseInt(sugar)
         })
     })
     .then(response => response.json())
     .then(data => {
-        if (data.error) {
-            document.getElementById("result").innerText = data.error;
-        } else {
-            document.getElementById("result").innerText = data.result;
-            speak(data.result);
-        }
+        document.getElementById("result").innerText = data.result;
     })
     .catch(error => {
-        document.getElementById("result").innerText = "Server error occurred.";
+        document.getElementById("result").innerText = "Server error.";
     });
-}
-
-function speak(text) {
-    if ('speechSynthesis' in window) {
-        const msg = new SpeechSynthesisUtterance(text);
-        speechSynthesis.speak(msg);
-    }
 }
 </script>
 
@@ -160,11 +154,11 @@ function speak(text) {
 
 
 # =========================
-# ROUTES
+# ROUTES (from app.py)
 # =========================
 @app.route("/")
 def home():
-    return render_template_string(HTML)
+    return render_template_string(HTML_PAGE)
 
 
 @app.route("/analyze", methods=["POST"])
@@ -172,31 +166,24 @@ def analyze():
     try:
         data = request.get_json()
 
-        if not data:
-            return jsonify({"error": "Invalid input"}), 400
-
         age = int(data.get("age", 0))
-        symptom = str(data.get("symptom", ""))
+        symptom = data.get("symptom", "")
         bp = int(data.get("bp", 0))
         sugar = int(data.get("sugar", 0))
-        heart_rate = int(data.get("heart_rate", 0))
 
         if age <= 0 or not symptom:
-            return jsonify({"error": "Invalid patient data"}), 400
+            return jsonify({"result": "Invalid input."}), 400
 
-        result = calculate_risk(age, symptom, bp, sugar, heart_rate)
+        result = analyze_patient(age, symptom, bp, sugar)
 
-        return jsonify({
-            "result": result,
-            "timestamp": str(datetime.now())
-        })
+        return jsonify({"result": result})
 
-    except Exception as e:
-        return jsonify({"error": "Internal server error"}), 500
+    except Exception:
+        return jsonify({"result": "Internal server error."}), 500
 
 
 # =========================
-# RUN SERVER
+# RUN
 # =========================
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run(debug=True)

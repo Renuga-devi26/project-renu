@@ -3,378 +3,141 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RuralCare AI - Ultimate Hackathon Edition</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<title>RuralCare AI</title>
 
 <style>
-:root{
---bg:#0f2027;
---card:rgba(255,255,255,0.08);
---text:#ffffff;
---accent:#00c9a7;
---danger:#ff4d4d;
+/* ===================== styles.css ===================== */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #f4f7fa;
 }
 
-body.light{
---bg:#f4f6f7;
---card:white;
---text:#222;
+header {
+    background: #2e7d32;
+    color: white;
+    padding: 15px;
+    text-align: center;
 }
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
+.container {
+    padding: 20px;
 }
 
-body{
-background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-min-height:100vh;
-display:flex;
-align-items:center;
-justify-content:center;
-transition:.3s;
+.card {
+    background: white;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-body.light{
-background:#f4f6f7;
+button {
+    background: #2e7d32;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
-.container{
-width:95%;
-max-width:1200px;
+button:hover {
+    background: #1b5e20;
 }
 
-.glass{
-background:var(--card);
-backdrop-filter:blur(15px);
-padding:35px;
-border-radius:20px;
-box-shadow:0 10px 40px rgba(0,0,0,0.3);
-color:var(--text);
-animation:fadeIn .6s ease;
+input, select {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0 10px 0;
 }
-
-@keyframes fadeIn{
-from{opacity:0;transform:translateY(20px)}
-to{opacity:1;transform:translateY(0)}
-}
-
-input,textarea,select{
-width:100%;
-padding:12px;
-margin-bottom:15px;
-border:none;
-border-radius:12px;
-background:rgba(255,255,255,0.15);
-color:var(--text);
-outline:none;
-}
-
-button{
-width:100%;
-padding:12px;
-border:none;
-border-radius:12px;
-background:var(--accent);
-color:#000;
-font-weight:600;
-cursor:pointer;
-margin-bottom:10px;
-transition:.3s;
-}
-
-button:hover{transform:scale(1.03)}
-
-.hidden{display:none}
-.logout-btn{background:var(--danger);color:white}
-.toggle{position:absolute;top:20px;right:20px;cursor:pointer;font-size:18px}
-
-.chat-box{
-margin-top:15px;
-padding:15px;
-background:rgba(255,255,255,0.12);
-border-radius:12px;
-white-space:pre-line;
-}
-
-table{width:100%;border-collapse:collapse;margin-top:15px}
-th,td{padding:8px;border-bottom:1px solid rgba(255,255,255,.2)}
 </style>
 </head>
 
 <body>
 
-<div class="toggle" onclick="toggleMode()">🌓</div>
+<header>
+    <h1>RuralCare AI</h1>
+    <p>Offline Health Screening for Rural Areas</p>
+</header>
 
 <div class="container">
 
-<!-- LOGIN -->
-<div id="loginView" class="glass">
-<h1>🚀 RuralCare AI</h1>
-<p>Smart Rural Health Intelligence Platform</p>
+    <div class="card">
+        <h3>Patient Details</h3>
+        <input type="text" id="name" placeholder="Patient Name">
+        <input type="number" id="age" placeholder="Age">
+        <select id="symptom">
+            <option value="">Select Symptom</option>
+            <option value="fever">Fever</option>
+            <option value="cough">Cough</option>
+            <option value="fatigue">Fatigue</option>
+        </select>
+        <button onclick="runAI()">Screen Patient</button>
+    </div>
 
-<select id="role">
-<option value="patient">Patient</option>
-<option value="doctor">Doctor</option>
-</select>
-
-<input type="text" id="identity" placeholder="Username / Email / Phone">
-<input type="password" id="password" placeholder="Password">
-
-<button onclick="login()">Enter Dashboard</button>
-<p id="errorMsg" style="color:red;"></p>
-</div>
-
-<!-- DASHBOARD -->
-<div id="dashboardView" class="glass hidden">
-
-<h2 id="welcomeText"></h2>
-
-<!-- PATIENT PANEL -->
-<div id="patientPanel" class="hidden">
-
-<textarea id="symptomInput" rows="4" placeholder="Describe symptoms..."></textarea>
-
-<button onclick="startVoice()">🎤 Voice</button>
-<button onclick="analyzeSymptoms()">Analyze with AI</button>
-
-<div id="emergencyBanner" style="display:none;color:red;font-weight:bold;">
-⚠ Urgent medical attention recommended!
-</div>
-
-<div id="chatBox" class="chat-box"></div>
-
-<h3>📅 Health Timeline</h3>
-<div id="timeline"></div>
-
-</div>
-
-<!-- DOCTOR PANEL -->
-<div id="doctorPanel" class="hidden">
-
-<h3>📊 Case Distribution</h3>
-<canvas id="caseChart"></canvas>
-
-<h3>📍 Village Distribution</h3>
-<canvas id="heatmapChart"></canvas>
-
-<h3>📋 Patient Records</h3>
-<table>
-<thead>
-<tr>
-<th>Time</th>
-<th>Symptoms</th>
-<th>AI Summary</th>
-<th>Emergency</th>
-</tr>
-</thead>
-<tbody id="doctorTable"></tbody>
-</table>
-
-<button onclick="installApp()">📱 Install App</button>
-
-</div>
-
-<button class="logout-btn" onclick="logout()">Logout</button>
-
-</div>
+    <div class="card">
+        <h3>AI Result</h3>
+        <p id="result">No screening yet.</p>
+    </div>
 
 </div>
 
 <script>
-
-// THEME
-function toggleMode(){document.body.classList.toggle("light");}
-
-// ENCRYPTION
-function encrypt(data){return btoa(data);}
-function decrypt(data){return atob(data);}
-
-// LOGIN
-function login(){
-const role=document.getElementById("role").value;
-const identity=document.getElementById("identity").value.trim();
-const password=document.getElementById("password").value.trim();
-if(!identity||!password){
-document.getElementById("errorMsg").innerText="Fill all fields";
-return;
-}
-const user={role,identity};
-localStorage.setItem("session",encrypt(JSON.stringify(user)));
-loadDashboard(user);
+/* ===================== storage.js ===================== */
+function savePatient(data) {
+    let patients = JSON.parse(localStorage.getItem("patients")) || [];
+    patients.push(data);
+    localStorage.setItem("patients", JSON.stringify(patients));
 }
 
-function loadDashboard(user){
-document.getElementById("loginView").classList.add("hidden");
-document.getElementById("dashboardView").classList.remove("hidden");
-document.getElementById("welcomeText").innerText="Welcome, "+user.identity;
+/* ===================== ai.js ===================== */
+function analyze(symptom, age) {
+    if (!symptom) return "Please select symptom.";
 
-if(user.role==="patient"){
-document.getElementById("patientPanel").classList.remove("hidden");
-}else{
-document.getElementById("doctorPanel").classList.remove("hidden");
-renderDoctorData();
-}
-}
+    if (symptom === "fever" && age > 60) {
+        return "High risk. Refer to doctor immediately.";
+    }
 
-window.onload=function(){
-const session=localStorage.getItem("session");
-if(session){loadDashboard(JSON.parse(decrypt(session)));}
-};
+    if (symptom === "cough") {
+        return "Monitor for 3 days. If worsens, visit clinic.";
+    }
 
-// NLP + AI
-function analyzeSymptoms(){
-const text=document.getElementById("symptomInput").value.toLowerCase();
-if(!text){alert("Enter symptoms");return;}
-
-let emergency=false;
-let summary="General health discomfort.";
-let explanation="";
-
-if(text.includes("chest pain")&&text.includes("breath")){
-emergency=true;
-summary="Possible cardiac stress.";
-}
-if(text.includes("fever")&&text.includes("cough")){
-summary="Possible respiratory infection.";
-}
-if(text.includes("stomach")||text.includes("diarrhea")){
-summary="Possible digestive disturbance.";
+    return "Low risk. Basic medication recommended.";
 }
 
-let durationMatch=text.match(/(\d+)\s*(day|days|week|weeks)/);
-let duration=durationMatch?durationMatch[0]:"unspecified duration";
-let severe=text.includes("severe")||text.includes("persistent");
-
-explanation=`AI analyzed duration (${duration}), severity (${severe?"high":"normal"}), and symptom clusters.`;
-
-document.getElementById("emergencyBanner").style.display=emergency?"block":"none";
-typeWriter(summary+"\n\n"+explanation);
-
-saveRecord(text,summary,emergency);
+/* ===================== analytics.js ===================== */
+function logScreening(data) {
+    console.log("Screening Logged:", data);
 }
 
-// TYPEWRITER
-function typeWriter(text){
-let box=document.getElementById("chatBox");
-box.innerHTML="";
-let i=0;
-function typing(){
-if(i<text.length){
-box.innerHTML+=text.charAt(i);
-i++;
-setTimeout(typing,15);
-}
-}
-typing();
+/* ===================== voice.js ===================== */
+function speak(text) {
+    if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(text);
+        speechSynthesis.speak(utterance);
+    }
 }
 
-// STORAGE
-function saveRecord(symptoms,summary,emergency){
-let records=JSON.parse(localStorage.getItem("records")||"[]");
-records.unshift({
-time:new Date().toLocaleString(),
-symptoms,summary,emergency
-});
-localStorage.setItem("records",JSON.stringify(records));
-updateTimeline();
+/* ===================== main.js ===================== */
+function runAI() {
+    const name = document.getElementById("name").value;
+    const age = parseInt(document.getElementById("age").value);
+    const symptom = document.getElementById("symptom").value;
+
+    if (!name || !age || !symptom) {
+        alert("Fill all fields.");
+        return;
+    }
+
+    const result = analyze(symptom, age);
+
+    document.getElementById("result").innerText = result;
+
+    const patientData = { name, age, symptom, result };
+    savePatient(patientData);
+    logScreening(patientData);
+    speak(result);
 }
-
-function updateTimeline(){
-let records=JSON.parse(localStorage.getItem("records")||"[]");
-document.getElementById("timeline").innerHTML=
-records.slice(0,5).map(r=>`<div class="chat-box">${r.symptoms}</div>`).join("");
-}
-
-// DOCTOR ANALYTICS
-function renderDoctorData(){
-let records=JSON.parse(localStorage.getItem("records")||"[]");
-let emergencyCount=records.filter(r=>r.emergency).length;
-let normalCount=records.length-emergencyCount;
-
-new Chart(document.getElementById("caseChart"),{
-type:'bar',
-data:{
-labels:['Normal','Emergency'],
-datasets:[{
-data:[normalCount,emergencyCount],
-backgroundColor:['#00c9a7','#ff4d4d']
-}]
-}
-});
-
-let villageData={"VillageA":0,"VillageB":0,"VillageC":0};
-records.forEach(r=>{
-villageData["VillageA"]++;
-});
-
-new Chart(document.getElementById("heatmapChart"),{
-type:'doughnut',
-data:{
-labels:Object.keys(villageData),
-datasets:[{
-data:Object.values(villageData),
-backgroundColor:['#ff6b6b','#ffa94d','#69db7c']
-}]
-}
-});
-
-document.getElementById("doctorTable").innerHTML=
-records.map(r=>`
-<tr>
-<td>${r.time}</td>
-<td>${r.symptoms}</td>
-<td>${r.summary}</td>
-<td>${r.emergency?"⚠ Yes":"No"}</td>
-</tr>
-`).join("");
-}
-
-// VOICE
-function startVoice(){
-if(!('webkitSpeechRecognition'in window)){
-alert("Voice not supported");return;
-}
-let rec=new webkitSpeechRecognition();
-rec.lang="en-IN";
-rec.start();
-rec.onresult=function(e){
-document.getElementById("symptomInput").value=e.results[0][0].transcript;
-};
-}
-
-// SMART ALERT
-setInterval(()=>{
-let records=JSON.parse(localStorage.getItem("records")||"[]");
-let recent=records.slice(0,5).filter(r=>r.emergency).length;
-if(recent>=3){alert("⚠ Possible outbreak detected!");}
-},30000);
-
-// LOGOUT
-function logout(){
-localStorage.removeItem("session");
-location.reload();
-}
-
-// PWA
-if('serviceWorker'in navigator){
-navigator.serviceWorker.register('service-worker.js');
-}
-
-let deferredPrompt;
-window.addEventListener('beforeinstallprompt',(e)=>{
-e.preventDefault();
-deferredPrompt=e;
-});
-
-function installApp(){
-if(deferredPrompt){deferredPrompt.prompt();}
-}
-
 </script>
 
 </body>

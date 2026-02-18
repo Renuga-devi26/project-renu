@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RuralCare Pro · LIVE Voice + Smart AI</title>
+  <title>RuralCare Pro · complete wellness AI + doctor portal</title>
   <!-- Font Awesome 6 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
@@ -11,7 +11,7 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
     body {
@@ -119,7 +119,7 @@
       gap: 18px;
     }
 
-    /* 🌟 WORKING VOICE BAR */
+    /* VOICE BAR */
     .voice-premium {
       background: linear-gradient(95deg, #dcffe9, #ffffff);
       border-radius: 100px;
@@ -250,7 +250,43 @@
       margin: 12px 0;
       border-left: 12px solid #166b41;
     }
+    .food-tip {
+      background: #fff4e0;
+      border-left-color: #e68a2e;
+    }
+    .sleep-tip {
+      background: #e0f0fd;
+      border-left-color: #2e5f8a;
+    }
 
+    /* Doctor link (hidden at bottom) */
+    .doctor-link-container {
+      text-align: center;
+      margin: 40px 0 20px;
+    }
+    .doctor-trigger {
+      background: none;
+      border: none;
+      color: #2a6b4a;
+      font-size: 1rem;
+      text-decoration: underline;
+      cursor: pointer;
+      opacity: 0.7;
+    }
+    .doctor-trigger:hover {
+      opacity: 1;
+      color: #0a3b2a;
+    }
+
+    /* Doctor panel (hidden by default, shown via login) */
+    #doctorSection {
+      display: none;
+      margin-top: 30px;
+    }
+    .doctor-card {
+      background: #e4f1f5;
+      border-left: 12px solid #11577a;
+    }
     .doctor-table {
       width: 100%;
       border-collapse: collapse;
@@ -304,7 +340,7 @@
       <div class="input-icon"><i class="fas fa-heartbeat"></i><input type="text" id="bp" placeholder="BP (e.g., 140/90)" value="142/88"></div>
     </div>
 
-    <!-- ✅ FULLY WORKING MULTILINGUAL VOICE SECTION -->
+    <!-- WORKING VOICE SECTION -->
     <div class="voice-premium">
       <button class="voice-btn" id="voiceBtn" onclick="startVoiceRecognition()"><i class="fas fa-microphone-alt"></i> <span id="voiceBtnText">🎤 Voice input</span></button>
       <span id="voiceStatus"><i class="fas fa-info-circle"></i> Click and speak in your language</span>
@@ -320,7 +356,7 @@
     </div>
   </div>
 
-  <!-- symptoms card (condensed but all essential) -->
+  <!-- symptoms card -->
   <div class="card">
     <h2><i class="fas fa-stethoscope"></i> <span data-i18n="symptom_checker">Symptom checker</span></h2>
     <div class="input-icon" style="margin-bottom:20px;"><i class="fas fa-search"></i><input type="text" id="symptomSearch" placeholder="filter symptoms..." onkeyup="filterSymptoms()"></div>
@@ -363,11 +399,11 @@
   </div>
 
   <!-- loader -->
-  <div id="loader" class="loader"><div class="loader-spinner"></div><p style="font-size:1.3rem;" data-i18n="analyzing">AI analyzing with deep symptom variance...</p></div>
+  <div id="loader" class="loader"><div class="loader-spinner"></div><p style="font-size:1.3rem;" data-i18n="analyzing">AI analyzing with deep wellness insights...</p></div>
 
-  <!-- results -->
+  <!-- results (now with food, sleep, lifestyle tips) -->
   <div id="results" class="card">
-    <h2><i class="fas fa-file-waveform"></i> <span data-i18n="report">AI diagnosis & care plan</span></h2>
+    <h2><i class="fas fa-file-waveform"></i> <span data-i18n="report">AI wellness report</span></h2>
     <div id="emergencyAlert" style="display:none; background:#ffefed; border-radius:48px; padding:28px; border:3px solid #b13e3e; margin-bottom:22px;">
       <span style="color:#b13e3e; font-size:2rem; font-weight:800;"><i class="fas fa-exclamation"></i> EMERGENCY</span>
       <p id="emergencyMessage"></p>
@@ -377,36 +413,24 @@
       <p id="description" style="font-size:1.3rem;"></p>
     </div>
     <div style="background:#f2faf5; border-radius:40px; padding:26px; margin:25px 0;">
-      <h3><i class="fas fa-clipboard-list"></i> <span data-i18n="your_symptoms">Symptom set (incl. free text & voice)</span></h3>
+      <h3><i class="fas fa-clipboard-list"></i> <span data-i18n="your_symptoms">Your symptoms</span></h3>
       <div id="symptomList" style="line-height:2;"></div>
     </div>
-    <h3><i class="fas fa-lightbulb"></i> <span data-i18n="solutions">Personalized recommendations</span></h3>
+    
+    <!-- Detailed recommendations now include food, sleep, lifestyle -->
+    <h3><i class="fas fa-utensils"></i> 🍎 Food & nutrition tips</h3>
+    <div id="foodTips" style="margin-bottom:20px;"></div>
+    
+    <h3><i class="fas fa-bed"></i> 😴 Sleep & rest advice</h3>
+    <div id="sleepTips" style="margin-bottom:20px;"></div>
+    
+    <h3><i class="fas fa-heart"></i> 💪 Lifestyle & home care</h3>
     <div id="solutionsList"></div>
+    
     <div style="background:#e0f3e6; border-radius:60px; padding:22px; margin-top:28px; font-weight:600;" id="followUp"></div>
   </div>
 
-  <!-- doctor panel -->
-  <div class="card" style="border-left:12px solid #11577a;">
-    <h2><i class="fas fa-user-md"></i> <span data-i18n="doctor_panel">Doctor’s secure portal</span></h2>
-    <div id="doctorLoginBox" style="background:white; border-radius:48px; padding:36px; max-width:460px; margin:0 auto;">
-      <p style="font-weight:600; margin-bottom:20px;"><i class="fas fa-lock"></i> <span data-i18n="doctor_login">Doctor login (doctor/123)</span></p>
-      <div class="input-icon"><i class="fas fa-user-md"></i><input type="text" id="docUser" placeholder="Username" value="doctor"></div>
-      <div class="input-icon" style="margin:16px 0;"><i class="fas fa-key"></i><input type="password" id="docPass" placeholder="Password" value="123"></div>
-      <button class="btn-primary" onclick="doctorLogin()" style="width:100%;"><i class="fas fa-sign-in-alt"></i> <span data-i18n="login">Access all records</span></button>
-    </div>
-    <div id="doctorRecords" class="hidden" style="margin-top:28px;">
-      <div style="display:flex; justify-content:space-between;">
-        <h3><i class="fas fa-database"></i> <span data-i18n="all_patient_records">Complete history</span></h3>
-        <button class="btn-secondary" onclick="logoutDoctor()"><i class="fas fa-sign-out-alt"></i> Logout</button>
-      </div>
-      <table class="doctor-table">
-        <thead><tr><th>Time</th><th>Name</th><th>Age</th><th>Diagnosis</th><th>Status</th></tr></thead>
-        <tbody id="doctorTableBody"></tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- public history -->
+  <!-- public history (stays visible) -->
   <div class="card">
     <h2><i class="fas fa-clock-rotate-left"></i> <span data-i18n="recent">Last consultations</span></h2>
     <table style="width:100%; border-collapse:collapse; background:white; border-radius:32px; overflow:hidden;">
@@ -414,19 +438,52 @@
       <tbody id="tableBody"></tbody>
     </table>
   </div>
+
+  <!-- 🔗 HIDDEN DOCTOR LINK (at bottom) - click to show portal -->
+  <div class="doctor-link-container">
+    <button class="doctor-trigger" onclick="toggleDoctorSection()"><i class="fas fa-user-md"></i> Doctor's portal (secure access)</button>
+  </div>
+
+  <!-- 👨‍⚕️ DOCTOR SECTION (hidden by default, appears after clicking link) -->
+  <div id="doctorSection">
+    <div class="card doctor-card">
+      <h2><i class="fas fa-user-md"></i> <span>Doctor’s secure panel</span></h2>
+      <div id="doctorLoginBox" style="background:white; border-radius:48px; padding:36px; max-width:460px; margin:0 auto;">
+        <p style="font-weight:600; margin-bottom:20px;"><i class="fas fa-lock"></i> Doctor login (demo: doctor/123)</p>
+        <div class="input-icon"><i class="fas fa-user-md"></i><input type="text" id="docUser" placeholder="Username" value="doctor"></div>
+        <div class="input-icon" style="margin:16px 0;"><i class="fas fa-key"></i><input type="password" id="docPass" placeholder="Password" value="123"></div>
+        <button class="btn-primary" onclick="doctorLogin()" style="width:100%;"><i class="fas fa-sign-in-alt"></i> Access all records</button>
+      </div>
+      <div id="doctorRecords" class="hidden" style="margin-top:28px;">
+        <div style="display:flex; justify-content:space-between;">
+          <h3><i class="fas fa-database"></i> Complete patient history</h3>
+          <button class="btn-secondary" onclick="logoutDoctor()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        </div>
+        <table class="doctor-table">
+          <thead><tr><th>Time</th><th>Name</th><th>Age</th><th>Diagnosis</th><th>Status</th></tr></thead>
+          <tbody id="doctorTableBody"></tbody>
+        </table>
+        <div style="margin-top:20px;">
+          <h4>Doctor's recommendations for selected patient:</h4>
+          <textarea id="doctorRecommendation" placeholder="Write advice, prescriptions, follow-up..." rows="3" style="width:100%; padding:16px; border-radius:40px; border:2px solid #b1e7ca;"></textarea>
+          <button class="btn-primary" style="margin-top:12px;" onclick="sendDoctorAdvice()">Send advice to patient</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
-  // ---------- GLOBAL DATA & I18n ----------
-  let screenings = JSON.parse(localStorage.getItem('ruralVoiceAI') || '[]');
+  // ---------- GLOBAL DATA ----------
+  let screenings = JSON.parse(localStorage.getItem('ruralWellnessAI') || '[]');
   let currentLang = 'en';
   const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
   let isListening = false;
 
-  // i18n dictionary (simplified for demo)
+  // i18n dictionary (simplified)
   const i18n = {
-    en: { fever:'Fever', chills:'Chills', fatigue:'Fatigue', cough:'Cough', dryCough:'Dry cough', wetCough:'Wet cough', bloodCough:'Blood cough', shortBreath:'Short of breath', chestPain:'Chest pain', nausea:'Nausea', vomiting:'Vomiting', diarrhea:'Diarrhea', abdominalPain:'Abdominal pain', headache:'Headache', dizziness:'Dizziness', fainting:'Fainting', confusion:'Confusion', analyze:'Run AI analysis', clear:'Reset', emergency:'SOS emergency', analyzing:'AI analyzing...', report:'AI diagnosis', your_symptoms:'Your symptoms', solutions:'Recommendations', doctor_panel:'Doctor panel', doctor_login:'Doctor login', login:'Login', all_patient_records:'All records', logout:'Logout', recent:'Recent', extra_note:'Symptom not listed?', add:'Add' },
-    hi: { fever:'बुखार', chills:'ठंड लगना', fatigue:'थकान', cough:'खांसी', dryCough:'सूखी खांसी', wetCough:'गीली खांसी', bloodCough:'खून वाली खांसी', shortBreath:'सांस फूलना', chestPain:'सीने में दर्द', nausea:'मतली', vomiting:'उल्टी', diarrhea:'दस्त', abdominalPain:'पेट दर्द', headache:'सिरदर्द', dizziness:'चक्कर', fainting:'बेहोशी', confusion:'भ्रम', analyze:'AI विश्लेषण', clear:'रीसेट', emergency:'आपातकाल', analyzing:'AI विश्लेषण...', report:'AI निदान', your_symptoms:'आपके लक्षण', solutions:'सुझाव', doctor_panel:'डॉक्टर पैनल', doctor_login:'डॉक्टर लॉगिन', login:'लॉगिन', all_patient_records:'सभी रिकॉर्ड', logout:'लॉगआउट', recent:'हालिया', extra_note:'लक्षण नहीं है?', add:'जोड़ें' }
+    en: { fever:'Fever', chills:'Chills', fatigue:'Fatigue', cough:'Cough', dryCough:'Dry cough', wetCough:'Wet cough', bloodCough:'Blood cough', shortBreath:'Short of breath', chestPain:'Chest pain', nausea:'Nausea', vomiting:'Vomiting', diarrhea:'Diarrhea', abdominalPain:'Abdominal pain', headache:'Headache', dizziness:'Dizziness', fainting:'Fainting', confusion:'Confusion', analyze:'Run AI analysis', clear:'Reset', emergency:'SOS emergency', analyzing:'AI analyzing...', report:'AI wellness report', your_symptoms:'Your symptoms', solutions:'Lifestyle tips', doctor_panel:'Doctor panel', extra_note:'Symptom not listed?', add:'Add' },
+    hi: { fever:'बुखार', chills:'ठंड लगना', fatigue:'थकान', cough:'खांसी', dryCough:'सूखी खांसी', wetCough:'गीली खांसी', bloodCough:'खून वाली खांसी', shortBreath:'सांस फूलना', chestPain:'सीने में दर्द', nausea:'मतली', vomiting:'उल्टी', diarrhea:'दस्त', abdominalPain:'पेट दर्द', headache:'सिरदर्द', dizziness:'चक्कर', fainting:'बेहोशी', confusion:'भ्रम', analyze:'AI विश्लेषण', clear:'रीसेट', emergency:'आपातकाल', analyzing:'AI विश्लेषण...', report:'AI रिपोर्ट', your_symptoms:'आपके लक्षण', solutions:'सुझाव', doctor_panel:'डॉक्टर पैनल', extra_note:'लक्षण नहीं है?', add:'जोड़ें' }
   };
 
   function switchLang(lang) {
@@ -434,82 +491,44 @@
     document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
     event.target.classList.add('active');
     document.getElementById('voiceLangIndicator').innerText = lang==='en'?'🇬🇧 English':lang==='hi'?'🇮🇳 हिन्दी':lang==='te'?'🇮🇳 తెలుగు':lang==='ta'?'🇮🇳 தமிழ்':'🇮🇳 বাংলা';
-    // update visible labels (short demo)
     document.querySelectorAll('[data-i18n]').forEach(el => {
       let key = el.getAttribute('data-i18n');
       if(i18n[lang] && i18n[lang][key]) el.innerText = i18n[lang][key];
     });
   }
 
-  // ✅ WORKING VOICE RECOGNITION (multi-language)
+  // VOICE RECOGNITION
   function startVoiceRecognition() {
     if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
       alert('Voice not supported in this browser. Please use Chrome, Edge, or Safari.');
       return;
     }
-
     const btn = document.getElementById('voiceBtn');
-    if (isListening) {
-      recognition.stop();
-      return;
-    }
-
-    // set language based on currentLang
-    recognition.lang = currentLang === 'en' ? 'en-IN' : 
-                       currentLang === 'hi' ? 'hi-IN' :
-                       currentLang === 'te' ? 'te-IN' :
-                       currentLang === 'ta' ? 'ta-IN' : 'bn-IN';
-    
-    recognition.continuous = false;
-    recognition.interimResults = false;
-    recognition.maxAlternatives = 1;
-
-    btn.classList.add('listening');
-    btn.disabled = true;
+    if (isListening) { recognition.stop(); return; }
+    recognition.lang = currentLang === 'en' ? 'en-IN' : currentLang === 'hi' ? 'hi-IN' : currentLang === 'te' ? 'te-IN' : currentLang === 'ta' ? 'ta-IN' : 'bn-IN';
+    recognition.continuous = false; recognition.interimResults = false;
+    btn.classList.add('listening'); btn.disabled = true;
     document.getElementById('voiceStatus').innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Listening... speak now';
     isListening = true;
-
     recognition.start();
 
     recognition.onresult = (event) => {
       const speechText = event.results[0][0].transcript.toLowerCase();
       document.getElementById('voiceStatus').innerHTML = `✅ You said: "${speechText}"`;
-      
-      // intelligent mapping: check for keywords and tick boxes
-      if (speechText.includes('fever') || speechText.includes('बुखार') || speechText.includes('ज्वर') || speechText.includes('জ্বর')) 
-        document.getElementById('fever').checked = true;
-      if (speechText.includes('cough') || speechText.includes('खांसी') || speechText.includes('దగ్గు') || speechText.includes('இருமல்') || speechText.includes('কাশি')) 
-        document.getElementById('cough').checked = true;
-      if (speechText.includes('headache') || speechText.includes('सिरदर्द') || speechText.includes('తలనొప్పి') || speechText.includes('தலைவலி')) 
-        document.getElementById('headache').checked = true;
-      if (speechText.includes('chest pain') || speechText.includes('सीने में दर्द') || speechText.includes('ఛాతీ నొప్పి')) 
-        document.getElementById('chestPain').checked = true;
-      if (speechText.includes('vomit') || speechText.includes('उल्टी') || speechText.includes('వాంతులు') || speechText.includes('வாந்தி')) 
-        document.getElementById('vomiting').checked = true;
-      if (speechText.includes('diarrhea') || speechText.includes('दस्त') || speechText.includes('అతిసారం') || speechText.includes('வயிற்றுப்போக்கு')) 
-        document.getElementById('diarrhea').checked = true;
+      if (speechText.includes('fever') || speechText.includes('बुखार')) document.getElementById('fever').checked = true;
+      if (speechText.includes('cough') || speechText.includes('खांसी')) document.getElementById('cough').checked = true;
+      if (speechText.includes('headache') || speechText.includes('सिरदर्द')) document.getElementById('headache').checked = true;
+      if (speechText.includes('chest pain') || speechText.includes('सीने में दर्द')) document.getElementById('chestPain').checked = true;
     };
-
-    recognition.onerror = (e) => {
-      document.getElementById('voiceStatus').innerHTML = '❌ Error: ' + e.error;
-      btn.classList.remove('listening');
-      btn.disabled = false;
-      isListening = false;
-    };
-
-    recognition.onend = () => {
-      btn.classList.remove('listening');
-      btn.disabled = false;
-      isListening = false;
-      if (document.getElementById('voiceStatus').innerHTML.includes('Listening'))
-        document.getElementById('voiceStatus').innerHTML = '⏹️ Stopped. Click to try again.';
-    };
+    recognition.onerror = () => { document.getElementById('voiceStatus').innerHTML = '❌ Error'; resetVoice(); };
+    recognition.onend = resetVoice;
   }
-
-  function addFreeSymptom() {
-    alert('Free symptom will be considered in analysis');
+  function resetVoice() {
+    document.getElementById('voiceBtn').classList.remove('listening');
+    document.getElementById('voiceBtn').disabled = false;
+    isListening = false;
   }
-
+  function addFreeSymptom() { alert('Free symptom will be considered in analysis'); }
   function filterSymptoms() {
     let val = document.getElementById('symptomSearch').value.toLowerCase();
     document.querySelectorAll('.symptom-item').forEach(e => {
@@ -517,7 +536,6 @@
       e.style.display = txt.includes(val) || val === '' ? 'flex' : 'none';
     });
   }
-
   function clearForm() {
     document.querySelectorAll('input:not([type=checkbox]), textarea').forEach(e => e.value='');
     document.querySelectorAll('input[type=checkbox]').forEach(c => c.checked=false);
@@ -525,7 +543,6 @@
     document.getElementById('emergencyAlert').style.display='none';
     filterSymptoms();
   }
-
   function emergencyOverride() {
     let name = document.getElementById('patientName').value || 'Unknown';
     let age = document.getElementById('patientAge').value || '?';
@@ -543,30 +560,64 @@
     return Object.keys(map).filter(id => document.getElementById(id)?.checked).map(id => map[id]);
   }
 
-  // 🧠 SMART VARIANT AI (different results based on combos)
+  // 🧠 ENHANCED AI with FOOD, SLEEP, LIFESTYLE tips
   function getAIDiagnosis(symptoms, age, temp, bp, freeText) {
     if (symptoms.includes('Chest pain') || symptoms.includes('Blood cough') || symptoms.includes('Fainting') || symptoms.includes('Confusion')) 
-      return { emergency:true, message:'High risk symptom – urgent', diagnosis:'EMERGENCY – URGENT CARE', solutions:['Call ambulance','Hospital now'] };
+      return { emergency:true, message:'High risk symptom – urgent', diagnosis:'EMERGENCY – URGENT CARE', solutions:['Call ambulance','Hospital now'], food:[], sleep:[] };
     if (temp > 39.5 && symptoms.includes('Confusion')) 
-      return { emergency:true, message:'Hyperthermia with confusion', diagnosis:'EMERGENCY – SEVERE INFECTION', solutions:['Immediate hospital','Cooling measures'] };
+      return { emergency:true, message:'Hyperthermia with confusion', diagnosis:'EMERGENCY – SEVERE INFECTION', solutions:['Immediate hospital','Cooling measures'], food:[], sleep:[] };
     
-    // Variant rules
-    if (symptoms.includes('Fever') && symptoms.includes('Cough') && age > 50)
-      return { emergency:false, diagnosis:'Viral fever with age risk', solutions:['Paracetamol if needed','Hydration','Monitor BP'] };
-    if (symptoms.includes('Fever') && symptoms.includes('Cough') && age <= 30)
-      return { emergency:false, diagnosis:'Common cold / viral', solutions:['Rest','Warm fluids','Steam'] };
-    if (symptoms.includes('Wet cough') && symptoms.includes('Fever'))
-      return { emergency:false, diagnosis:'Acute bronchitis', solutions:['Steam inhalation','Avoid smoke','Doctor if worsens'] };
-    if (symptoms.includes('Diarrhea') && symptoms.includes('Vomiting') && age < 10)
-      return { emergency:false, diagnosis:'Pediatric gastroenteritis', solutions:['ORS','Zinc','Light diet'] };
-    if (symptoms.includes('Headache') && symptoms.includes('Dizziness') && bp.includes('140'))
-      return { emergency:false, diagnosis:'BP fluctuation', solutions:['Monitor BP','Reduce salt','Rest'] };
-    if (freeText && freeText.toLowerCase().includes('tingling'))
-      return { emergency:false, diagnosis:'Neuropathic sensation', solutions:['B12 rich foods','Neurology consult'] };
-    if (symptoms.length === 0) 
-      return { emergency:false, diagnosis:'No symptoms', solutions:['Balanced diet','Exercise','Sleep'] };
+    let diagnosis = '', solutions = [], foodTips = [], sleepTips = [];
     
-    return { emergency:false, diagnosis:'General symptoms', solutions:['Monitor','Clinic if persists'] };
+    if (symptoms.includes('Fever') && symptoms.includes('Cough') && age > 50) {
+      diagnosis = 'Viral fever with age risk';
+      solutions = ['Monitor BP', 'Keep warm', 'Avoid exertion'];
+      foodTips = ['Warm soups (chicken/vegetable)', 'Herbal tea with honey', 'Light khichdi', 'Avoid cold drinks'];
+      sleepTips = ['Elevate head while sleeping', 'Take short naps', 'Rest in well-ventilated room', 'Try to sleep 8 hours'];
+    }
+    else if (symptoms.includes('Fever') && symptoms.includes('Cough') && age <= 30) {
+      diagnosis = 'Common cold / viral';
+      solutions = ['Steam inhalation', 'Warm water gargle', 'Rest'];
+      foodTips = ['Ginger tea', 'Hot milk with turmeric', 'Fresh fruits', 'Avoid fried food'];
+      sleepTips = ['Take adequate rest', 'Sleep with extra pillow', 'Keep room humidified'];
+    }
+    else if (symptoms.includes('Wet cough') && symptoms.includes('Fever')) {
+      diagnosis = 'Acute bronchitis';
+      solutions = ['Steam 3-4 times daily', 'Avoid smoke', 'Consult if worsens'];
+      foodTips = ['Warm turmeric milk', 'Honey with lukewarm water', 'Light dal rice', 'Avoid dairy if mucus increases'];
+      sleepTips = ['Sleep on side', 'Keep head elevated', 'Rest in clean air'];
+    }
+    else if (symptoms.includes('Diarrhea') && symptoms.includes('Vomiting') && age < 10) {
+      diagnosis = 'Pediatric gastroenteritis';
+      solutions = ['ORS frequently', 'Zinc supplements', 'Monitor urine'];
+      foodTips = ['Banana mashed', 'Rice gruel', 'Apple sauce', 'Avoid milk products'];
+      sleepTips = ['Let child sleep as needed', 'Keep cool', 'Quiet environment'];
+    }
+    else if (symptoms.includes('Headache') && symptoms.includes('Dizziness') && bp.includes('140')) {
+      diagnosis = 'BP fluctuation';
+      solutions = ['Monitor BP twice daily', 'Reduce salt', 'Light walking'];
+      foodTips = ['Less salt', 'Fresh vegetables', 'Avoid pickles', 'Coconut water'];
+      sleepTips = ['Sleep 7-8 hours', 'Avoid screen before bed', 'Dark quiet room'];
+    }
+    else if (freeText && freeText.toLowerCase().includes('tingling')) {
+      diagnosis = 'Neuropathic sensation';
+      solutions = ['B12 rich foods', 'Neurology consult', 'Gentle stretching'];
+      foodTips = ['Spinach', 'Eggs', 'Dairy', 'Fortified cereals'];
+      sleepTips = ['Elevate limbs', 'Comfortable mattress', 'Relaxation before bed'];
+    }
+    else if (symptoms.length === 0) {
+      diagnosis = 'No symptoms – healthy';
+      solutions = ['Regular exercise', 'Stay hydrated', 'Routine checkup'];
+      foodTips = ['Eat rainbow fruits/veg', 'Whole grains', 'Nuts & seeds', 'Limit sugar'];
+      sleepTips = ['7-9 hours sleep', 'Consistent schedule', 'No phone 1hr before bed'];
+    }
+    else {
+      diagnosis = 'General symptoms';
+      solutions = ['Monitor for 2 days', 'Clinic if persists', 'Rest'];
+      foodTips = ['Light home-cooked meals', 'Avoid spicy/oily', 'Drink water'];
+      sleepTips = ['Take rest', 'Sleep on time', 'Reduce stress'];
+    }
+    return { emergency:false, diagnosis, solutions, foodTips, sleepTips };
   }
 
   function analyzeHealth() {
@@ -585,11 +636,9 @@
       let analysis = getAIDiagnosis(symptoms, age, temp, bp, freeText);
       let result;
       if (analysis.emergency) {
-        result = { status:'emergency', statusText:'🚨 EMERGENCY', diagnosis:analysis.diagnosis, description:analysis.message||'Urgent', solutions:analysis.solutions, symptoms:symptoms.join(', ')+(freeText? ' + note: "'+freeText+'"':''), followUp:'IMMEDIATE CARE' };
-      } else if (symptoms.length || freeText) {
-        result = { status:'followup', statusText:'⚠️ Needs attention', diagnosis:analysis.diagnosis, description:'AI advice based on your profile.', solutions:analysis.solutions, symptoms:symptoms.join(', ')+(freeText? ' + note: "'+freeText+'"':''), followUp:'review if not improving in 2-3 days' };
+        result = { status:'emergency', statusText:'🚨 EMERGENCY', diagnosis:analysis.diagnosis, description:analysis.message||'Urgent', solutions:analysis.solutions, foodTips:[], sleepTips:[], symptoms:symptoms.join(', ')+(freeText? ' + note: "'+freeText+'"':''), followUp:'IMMEDIATE CARE' };
       } else {
-        result = { status:'healthy', statusText:'✅ Healthy', diagnosis:'No issues', description:'maintain healthy routine', solutions:analysis.solutions, symptoms:'none', followUp:'regular checkup' };
+        result = { status:symptoms.length?'followup':'healthy', statusText:symptoms.length?'⚠️ Needs attention':'✅ Healthy', diagnosis:analysis.diagnosis, description:'Personalized wellness plan below.', solutions:analysis.solutions, foodTips:analysis.foodTips || [], sleepTips:analysis.sleepTips || [], symptoms:symptoms.join(', ')+(freeText? ' + "'+freeText+'"':''), followUp:symptoms.length?'review in 2-3 days':'regular checkup' };
       }
       displayResults(result);
       saveScreening(name, age, result);
@@ -605,7 +654,15 @@
     if(sym && sym!=='none') sym.split(', ').forEach(s=>symHtml+=`<span style="background:#e6f4ea; padding:8px 22px; border-radius:60px; margin:5px; display:inline-block;">${s}</span> `);
     else symHtml = 'none';
     document.getElementById('symptomList').innerHTML = symHtml;
-    let solHtml=''; r.solutions.forEach(s=>solHtml+=`<div class="recommendation-item"><i class="fas fa-check-circle"></i> ${s}</div>`);
+
+    // food tips
+    let foodHtml = ''; (r.foodTips || []).forEach(f => foodHtml+=`<div class="recommendation-item food-tip"><i class="fas fa-apple-alt"></i> ${f}</div>`);
+    document.getElementById('foodTips').innerHTML = foodHtml || '<div class="recommendation-item">General healthy eating</div>';
+    // sleep tips
+    let sleepHtml = ''; (r.sleepTips || []).forEach(s => sleepHtml+=`<div class="recommendation-item sleep-tip"><i class="fas fa-moon"></i> ${s}</div>`);
+    document.getElementById('sleepTips').innerHTML = sleepHtml || '<div class="recommendation-item">Maintain regular sleep</div>';
+    // lifestyle
+    let solHtml=''; (r.solutions || []).forEach(s => solHtml+=`<div class="recommendation-item"><i class="fas fa-heart"></i> ${s}</div>`);
     document.getElementById('solutionsList').innerHTML = solHtml;
     document.getElementById('followUp').innerHTML = `<i class="fas fa-clock"></i> ${r.followUp}`;
     if(r.status==='emergency') { 
@@ -617,7 +674,7 @@
   function saveScreening(name, age, result) {
     let rec = { time:new Date().toLocaleString(), name, age, diagnosis:result.diagnosis, status:result.statusText };
     screenings.unshift(rec); if(screenings.length>30) screenings.pop();
-    localStorage.setItem('ruralVoiceAI', JSON.stringify(screenings));
+    localStorage.setItem('ruralWellnessAI', JSON.stringify(screenings));
     renderTables();
   }
 
@@ -633,6 +690,11 @@
     if(docBody) docBody.innerHTML = screenings.map(s => `<tr><td>${s.time}</td><td>${s.name}</td><td>${s.age}</td><td>${s.diagnosis}</td><td>${s.status}</td></tr>`).join('');
   }
 
+  // DOCTOR PORTAL (hidden, appears via link)
+  function toggleDoctorSection() {
+    let sec = document.getElementById('doctorSection');
+    sec.style.display = sec.style.display === 'none' ? 'block' : 'none';
+  }
   function doctorLogin() {
     if(document.getElementById('docUser').value === 'doctor' && document.getElementById('docPass').value === '123') {
       document.getElementById('doctorLoginBox').classList.add('hidden');
@@ -643,6 +705,10 @@
   function logoutDoctor() {
     document.getElementById('doctorLoginBox').classList.remove('hidden');
     document.getElementById('doctorRecords').classList.add('hidden');
+  }
+  function sendDoctorAdvice() {
+    let advice = document.getElementById('doctorRecommendation').value;
+    if(advice) alert('Advice sent to patient (demo): ' + advice);
   }
 
   window.onload = function() { renderTables(); switchLang('en'); };

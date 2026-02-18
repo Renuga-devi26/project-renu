@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RuralCare AI - Tamil Nadu Health Screening with Voice Recording</title>
+    <title>RuralCare AI - Tamil Nadu Health Screening with AI Disease Diagnosis</title>
     <style>
         * {
             margin: 0;
@@ -18,6 +18,8 @@
             --secondary: #eab308;
             --danger: #dc2626;
             --success: #16a34a;
+            --info: #0891b2;
+            --warning: #f97316;
             --background: #f0fdfa;
             --text: #1e293b;
             --gray: #64748b;
@@ -42,6 +44,7 @@
             justify-content: flex-end;
             gap: 10px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            flex-wrap: wrap;
         }
 
         .lang-btn {
@@ -173,6 +176,41 @@
             opacity: 0.9;
         }
 
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: white;
+            color: var(--gray);
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
         /* Form Section */
         .form-section {
             background: white;
@@ -226,6 +264,102 @@
             outline: none;
             border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1);
+        }
+
+        /* Symptom Checker */
+        .symptom-checker {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border-radius: 16px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .symptom-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .category-btn {
+            padding: 10px;
+            border: 2px solid var(--info);
+            background: white;
+            color: var(--info);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .category-btn.active {
+            background: var(--info);
+            color: white;
+        }
+
+        .symptoms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 10px;
+            margin: 15px 0;
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+        }
+
+        .symptom-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px;
+            background: var(--light);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .symptom-item:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .symptom-item.selected {
+            background: var(--primary);
+            color: white;
+        }
+
+        .symptom-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .selected-symptoms {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .symptom-tag {
+            display: inline-block;
+            padding: 5px 12px;
+            background: var(--primary);
+            color: white;
+            border-radius: 20px;
+            margin: 5px;
+            font-size: 0.9rem;
+        }
+
+        .symptom-tag button {
+            background: none;
+            border: none;
+            color: white;
+            margin-left: 8px;
+            cursor: pointer;
+            font-weight: bold;
         }
 
         /* Vitals Grid */
@@ -384,19 +518,6 @@
             font-family: monospace;
         }
 
-        .symptoms-text {
-            margin-top: 10px;
-        }
-
-        .symptoms-text textarea {
-            width: 100%;
-            padding: 10px;
-            border: 2px solid var(--border);
-            border-radius: 8px;
-            font-size: 0.95rem;
-            resize: vertical;
-        }
-
         /* Buttons */
         .btn {
             padding: 10px 20px;
@@ -429,6 +550,11 @@
 
         .btn-success {
             background: var(--success);
+            color: white;
+        }
+
+        .btn-info {
+            background: var(--info);
             color: white;
         }
 
@@ -471,7 +597,7 @@
             border-left: 5px solid var(--primary);
         }
 
-        .health-status {
+        .diagnosis-header {
             display: flex;
             align-items: center;
             gap: 15px;
@@ -481,22 +607,47 @@
             margin-bottom: 15px;
         }
 
-        .status-icon {
-            font-size: 2.8rem;
+        .diagnosis-icon {
+            font-size: 3rem;
         }
 
-        .status-text h3 {
+        .diagnosis-info {
+            flex: 1;
+        }
+
+        .diagnosis-info h3 {
             font-size: 1.5rem;
-            margin-bottom: 3px;
+            margin-bottom: 5px;
         }
 
-        .status-text p {
+        .diagnosis-info .probability {
+            font-size: 1.1rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .severity-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
             font-size: 0.9rem;
-            color: var(--gray);
+            font-weight: 600;
         }
 
-        .healthy { color: var(--success); }
-        .followup { color: var(--danger); }
+        .severity-low {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .severity-medium {
+            background: #fed7aa;
+            color: #9a3412;
+        }
+
+        .severity-high {
+            background: #fee2e2;
+            color: #991b1b;
+        }
 
         .confidence-bar {
             width: 100%;
@@ -513,14 +664,44 @@
             transition: width 0.5s;
         }
 
-        .voice-player {
+        .disease-info {
             background: white;
-            padding: 12px;
+            padding: 15px;
             border-radius: 8px;
             margin: 12px 0;
+        }
+
+        .disease-info h4 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .symptom-match {
             display: flex;
-            align-items: center;
-            gap: 12px;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .match-tag {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .match-high {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .match-medium {
+            background: #fed7aa;
+            color: #9a3412;
+        }
+
+        .match-low {
+            background: #fee2e2;
+            color: #991b1b;
         }
 
         .recommendations {
@@ -540,11 +721,72 @@
             font-size: 0.95rem;
         }
 
+        .voice-player {
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            margin: 12px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
         .result-actions {
             display: flex;
             gap: 10px;
             justify-content: flex-end;
             margin-top: 15px;
+        }
+
+        /* Disease Library */
+        .disease-library {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+
+        .disease-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            max-height: 500px;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        .disease-card {
+            background: var(--light);
+            border-radius: 12px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .disease-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border-color: var(--primary);
+        }
+
+        .disease-card h4 {
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .disease-card .common-symptoms {
+            font-size: 0.9rem;
+            color: var(--gray);
         }
 
         /* Recent Screenings Table */
@@ -590,12 +832,17 @@
             font-weight: 500;
         }
 
-        .status-badge.healthy {
+        .status-badge.low {
             background: #dcfce7;
             color: #166534;
         }
 
-        .status-badge.followup {
+        .status-badge.medium {
+            background: #fed7aa;
+            color: #9a3412;
+        }
+
+        .status-badge.high {
             background: #fee2e2;
             color: #991b1b;
         }
@@ -668,12 +915,13 @@
             .vitals-grid { grid-template-columns: repeat(2, 1fr); }
             .result-actions { flex-direction: column; }
             .btn { width: 100%; }
+            .tab-btn { min-width: 100%; }
         }
 
         /* Print */
         @media print {
             .language-bar, .status-bar, .camera-section, .voice-section,
-            .btn, .analyze-btn, .result-actions {
+            .btn, .analyze-btn, .result-actions, .tabs, .disease-library {
                 display: none;
             }
         }
@@ -701,7 +949,7 @@
     <!-- Header -->
     <header class="header">
         <h1>🏥 <span data-i18n="appName">RuralCare AI</span></h1>
-        <p data-i18n="subtitle">Tamil Nadu Health Screening with Voice Recording</p>
+        <p data-i18n="subtitle">Tamil Nadu AI-Powered Disease Diagnosis with Voice Recording</p>
         <span class="tamil-nadu-badge">📍 38 <span data-i18n="districts">Districts</span> • <span data-i18n="worksOffline">Works Offline</span></span>
         
         <div class="stats-grid" id="dashboardStats">
@@ -714,8 +962,8 @@
                 <span class="label" data-i18n="today">Today</span>
             </div>
             <div class="stat-card">
-                <span class="number" id="followUps">0</span>
-                <span class="label" data-i18n="followups">Follow-ups</span>
+                <span class="number" id="highRisk">0</span>
+                <span class="label" data-i18n="highRisk">High Risk</span>
             </div>
             <div class="stat-card">
                 <span class="number" id="avgConfidence">0%</span>
@@ -724,159 +972,197 @@
         </div>
     </header>
 
-    <!-- Main Form -->
-    <div class="form-section">
-        <h2>📋 <span data-i18n="patientInfo">Patient Information</span></h2>
-        
-        <div class="form-grid">
-            <div class="form-group">
-                <label data-i18n="fullName">Full Name *</label>
-                <input type="text" id="patientName" placeholder="Enter full name">
-            </div>
-            <div class="form-group">
-                <label data-i18n="age">Age *</label>
-                <input type="number" id="patientAge" min="0" max="120" placeholder="Years">
-            </div>
-            <div class="form-group">
-                <label data-i18n="gender">Gender</label>
-                <select id="patientGender">
-                    <option value="male" data-i18n="male">Male</option>
-                    <option value="female" data-i18n="female">Female</option>
-                    <option value="other" data-i18n="other">Other</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label data-i18n="district">District *</label>
-                <select id="patientDistrict">
-                    <option value="" data-i18n="selectDistrict">Select District</option>
-                </select>
-            </div>
-        </div>
+    <!-- Tabs -->
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('screening')" id="tabScreening">🩺 Patient Screening</button>
+        <button class="tab-btn" onclick="switchTab('library')" id="tabLibrary">📚 Disease Library</button>
+    </div>
 
-        <h2>🩺 <span data-i18n="vitals">Vitals</span></h2>
-        
-        <div class="vitals-grid">
-            <div class="vital-item">
-                <label data-i18n="weight">Weight (kg)</label>
-                <input type="number" id="weight" step="0.1" min="0" max="200" placeholder="kg">
-            </div>
-            <div class="vital-item">
-                <label data-i18n="height">Height (cm)</label>
-                <input type="number" id="height" step="0.1" min="0" max="250" placeholder="cm">
-            </div>
-            <div class="vital-item">
-                <label data-i18n="temperature">Temperature (°C)</label>
-                <input type="number" id="temperature" step="0.1" min="35" max="42" placeholder="°C">
-            </div>
-            <div class="vital-item">
-                <label data-i18n="bp">BP (Systolic/Diastolic)</label>
-                <div style="display: flex; gap: 5px;">
-                    <input type="number" id="bpSystolic" min="70" max="200" placeholder="Sys" style="width: 50%;">
-                    <input type="number" id="bpDiastolic" min="40" max="130" placeholder="Dias" style="width: 50%;">
+    <!-- Screening Tab -->
+    <div id="screeningTab" class="tab-content active">
+        <!-- Patient Information -->
+        <div class="form-section">
+            <h2>📋 <span data-i18n="patientInfo">Patient Information</span></h2>
+            
+            <div class="form-grid">
+                <div class="form-group">
+                    <label data-i18n="fullName">Full Name *</label>
+                    <input type="text" id="patientName" placeholder="Enter full name" oninput="validateForm()">
+                </div>
+                <div class="form-group">
+                    <label data-i18n="age">Age *</label>
+                    <input type="number" id="patientAge" min="0" max="120" placeholder="Years" oninput="validateForm()">
+                </div>
+                <div class="form-group">
+                    <label data-i18n="gender">Gender</label>
+                    <select id="patientGender">
+                        <option value="male" data-i18n="male">Male</option>
+                        <option value="female" data-i18n="female">Female</option>
+                        <option value="other" data-i18n="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label data-i18n="district">District *</label>
+                    <select id="patientDistrict" onchange="validateForm()">
+                        <option value="" data-i18n="selectDistrict">Select District</option>
+                    </select>
                 </div>
             </div>
-            <div class="vital-item">
-                <label data-i18n="heartRate">Heart Rate (bpm)</label>
-                <input type="number" id="heartRate" min="40" max="200" placeholder="bpm">
+        </div>
+
+        <!-- Symptom Checker -->
+        <div class="form-section">
+            <h2>🔍 <span data-i18n="symptomChecker">AI Symptom Checker</span></h2>
+            
+            <div class="symptom-checker">
+                <div class="symptom-categories" id="symptomCategories">
+                    <button class="category-btn active" onclick="filterSymptoms('all')">All Symptoms</button>
+                    <button class="category-btn" onclick="filterSymptoms('respiratory')">Respiratory</button>
+                    <button class="category-btn" onclick="filterSymptoms('digestive')">Digestive</button>
+                    <button class="category-btn" onclick="filterSymptoms('neurological')">Neurological</button>
+                    <button class="category-btn" onclick="filterSymptoms('muscular')">Muscular</button>
+                    <button class="category-btn" onclick="filterSymptoms('skin')">Skin</button>
+                    <button class="category-btn" onclick="filterSymptoms('general')">General</button>
+                </div>
+
+                <div class="symptoms-grid" id="symptomsGrid">
+                    <!-- Symptoms will be populated by JavaScript -->
+                </div>
+
+                <div class="selected-symptoms" id="selectedSymptoms">
+                    <strong data-i18n="selectedSymptoms">Selected Symptoms:</strong>
+                    <div id="symptomTags"></div>
+                </div>
+
+                <button class="btn btn-info" onclick="analyzeSymptoms()" id="analyzeSymptomsBtn">
+                    🔬 <span data-i18n="analyzeSymptoms">Analyze Symptoms</span>
+                </button>
             </div>
         </div>
 
-        <h2>📸 <span data-i18n="photoCapture">Photo Capture</span></h2>
-        
-        <!-- Camera Section -->
-        <div class="camera-section">
-            <div class="camera-preview">
-                <video id="video" autoplay playsinline></video>
-                <canvas id="canvas" style="display: none;"></canvas>
-            </div>
+        <!-- Vitals -->
+        <div class="form-section">
+            <h2>🩺 <span data-i18n="vitals">Vitals</span></h2>
             
-            <div class="camera-controls">
-                <button class="btn btn-primary" onclick="startCamera()" id="startCameraBtn">
-                    📷 <span data-i18n="startCamera">Start Camera</span>
-                </button>
-                <button class="btn btn-success" onclick="captureImage()" id="captureBtn" style="display: none;">
-                    📸 <span data-i18n="capture">Capture</span>
-                </button>
-                <button class="btn btn-secondary" onclick="resetCamera()" id="retakeBtn" style="display: none;">
-                    🔄 <span data-i18n="retake">Retake</span>
-                </button>
-                <label class="btn btn-secondary">
-                    📁 <span data-i18n="upload">Upload</span>
-                    <input type="file" id="imageUpload" accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
-                </label>
-            </div>
-
-            <div id="previewArea" style="display: none;">
-                <img id="preview" class="preview-image">
-            </div>
-        </div>
-
-        <h2>🎤 <span data-i18n="voiceRecording">Voice Recording</span></h2>
-        
-        <!-- Voice Recording Section -->
-        <div class="voice-section">
-            <h3>🎙️ <span data-i18n="recordSymptoms">Record Symptoms</span></h3>
-            
-            <div class="voice-controls">
-                <button class="record-btn" id="recordBtn" onclick="toggleRecording()">
-                    ⏺️
-                </button>
-                <button class="play-btn" id="playBtn" onclick="playRecording()" disabled>
-                    ▶️
-                </button>
-                <div class="audio-wave" id="audioWave">
-                    <span class="timer" id="timer">00:00</span>
+            <div class="vitals-grid">
+                <div class="vital-item">
+                    <label data-i18n="weight">Weight (kg)</label>
+                    <input type="number" id="weight" step="0.1" min="0" max="200" placeholder="kg">
+                </div>
+                <div class="vital-item">
+                    <label data-i18n="height">Height (cm)</label>
+                    <input type="number" id="height" step="0.1" min="0" max="250" placeholder="cm">
+                </div>
+                <div class="vital-item">
+                    <label data-i18n="temperature">Temperature (°C)</label>
+                    <input type="number" id="temperature" step="0.1" min="35" max="42" placeholder="°C">
+                </div>
+                <div class="vital-item">
+                    <label data-i18n="bp">BP (Systolic/Diastolic)</label>
+                    <div style="display: flex; gap: 5px;">
+                        <input type="number" id="bpSystolic" min="70" max="200" placeholder="Sys" style="width: 50%;">
+                        <input type="number" id="bpDiastolic" min="40" max="130" placeholder="Dias" style="width: 50%;">
+                    </div>
+                </div>
+                <div class="vital-item">
+                    <label data-i18n="heartRate">Heart Rate (bpm)</label>
+                    <input type="number" id="heartRate" min="40" max="200" placeholder="bpm">
+                </div>
+                <div class="vital-item">
+                    <label data-i18n="oxygen">Oxygen Saturation (%)</label>
+                    <input type="number" id="oxygen" min="70" max="100" placeholder="SpO2">
+                </div>
+                <div class="vital-item">
+                    <label data-i18n="bloodSugar">Blood Sugar (mg/dL)</label>
+                    <input type="number" id="bloodSugar" min="40" max="500" placeholder="Glucose">
                 </div>
             </div>
+        </div>
 
-            <div class="symptoms-text">
-                <textarea id="symptomsText" placeholder="Or type symptoms here..." rows="3"></textarea>
+        <!-- Photo Capture -->
+        <div class="form-section">
+            <h2>📸 <span data-i18n="photoCapture">Photo Capture</span></h2>
+            
+            <div class="camera-section">
+                <div class="camera-preview">
+                    <video id="video" autoplay playsinline></video>
+                    <canvas id="canvas" style="display: none;"></canvas>
+                </div>
+                
+                <div class="camera-controls">
+                    <button class="btn btn-primary" onclick="startCamera()" id="startCameraBtn">
+                        📷 <span data-i18n="startCamera">Start Camera</span>
+                    </button>
+                    <button class="btn btn-success" onclick="captureImage()" id="captureBtn" style="display: none;">
+                        📸 <span data-i18n="capture">Capture</span>
+                    </button>
+                    <button class="btn btn-secondary" onclick="resetCamera()" id="retakeBtn" style="display: none;">
+                        🔄 <span data-i18n="retake">Retake</span>
+                    </button>
+                    <label class="btn btn-secondary">
+                        📁 <span data-i18n="upload">Upload</span>
+                        <input type="file" id="imageUpload" accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
+                    </label>
+                </div>
+
+                <div id="previewArea" style="display: none;">
+                    <img id="preview" class="preview-image">
+                </div>
             </div>
         </div>
 
+        <!-- Voice Recording -->
+        <div class="form-section">
+            <h2>🎤 <span data-i18n="voiceRecording">Voice Recording</span></h2>
+            
+            <div class="voice-section">
+                <h3>🎙️ <span data-i18n="recordSymptoms">Record Symptoms Description</span></h3>
+                
+                <div class="voice-controls">
+                    <button class="record-btn" id="recordBtn" onclick="toggleRecording()">
+                        ⏺️
+                    </button>
+                    <button class="play-btn" id="playBtn" onclick="playRecording()" disabled>
+                        ▶️
+                    </button>
+                    <div class="audio-wave" id="audioWave">
+                        <span class="timer" id="timer">00:00</span>
+                    </div>
+                </div>
+
+                <div class="symptoms-text">
+                    <textarea id="symptomsText" placeholder="Or type detailed symptoms here..." rows="3"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analyze Button -->
         <button class="analyze-btn" onclick="analyzeHealth()" id="analyzeBtn" disabled>
-            🔬 <span data-i18n="analyze">Analyze Health Status</span>
+            🔬 <span data-i18n="analyze">AI Diagnosis & Health Analysis</span>
         </button>
 
         <!-- Results Card -->
         <div id="results" class="results-card" style="display: none;">
-            <div class="health-status">
-                <div class="status-icon" id="statusIcon">✅</div>
-                <div class="status-text">
-                    <h3 id="statusTitle"><span data-i18n="healthy">Healthy</span></h3>
-                    <p id="statusDescription" data-i18n="noConcerns">No immediate concerns detected</p>
-                </div>
-            </div>
+            <!-- Results will be populated by JavaScript -->
+        </div>
+    </div>
 
-            <div class="confidence-score">
-                <label data-i18n="confidence">AI Confidence</label>
-                <div class="confidence-bar">
-                    <div class="confidence-fill" id="confidenceBar" style="width: 0%"></div>
-                </div>
-                <span id="confidenceText">0%</span>
-            </div>
+    <!-- Disease Library Tab -->
+    <div id="libraryTab" class="tab-content">
+        <div class="disease-library">
+            <h2>📚 <span data-i18n="diseaseLibrary">Disease Library</span></h2>
+            
+            <input type="text" class="search-box" id="diseaseSearch" placeholder="🔍 Search diseases..." onkeyup="searchDiseases()">
 
-            <div class="voice-player" id="voicePlayer" style="display: none;">
-                <button class="play-btn" onclick="playResultAudio()">▶️</button>
-                <span data-i18n="recordedSymptoms">Recorded symptoms available</span>
-            </div>
-
-            <div class="recommendations" id="recommendations">
-                <strong data-i18n="recommendations">📋 Recommendations:</strong>
-                <ul id="recList"></ul>
-            </div>
-
-            <div class="result-actions">
-                <button class="btn btn-secondary" onclick="saveResult()">💾 <span data-i18n="save">Save</span></button>
-                <button class="btn btn-primary" onclick="printReport()">🖨️ <span data-i18n="print">Print</span></button>
-                <button class="btn btn-success" onclick="newScreening()">➕ <span data-i18n="new">New</span></button>
+            <div class="disease-grid" id="diseaseGrid">
+                <!-- Diseases will be populated by JavaScript -->
             </div>
         </div>
     </div>
 
-    <!-- Recent Screenings Section -->
+    <!-- Recent Screenings -->
     <div class="recent-section">
-        <h2>📊 <span data-i18n="recentScreenings">Recent Screenings</span></h2>
+        <h2>📊 <span data-i18n="recentScreenings">Recent Diagnoses</span></h2>
         <div class="table-container">
             <table id="screeningsTable">
                 <thead>
@@ -885,13 +1171,14 @@
                         <th data-i18n="name">Name</th>
                         <th data-i18n="age">Age</th>
                         <th data-i18n="district">District</th>
-                        <th data-i18n="status">Status</th>
+                        <th data-i18n="diagnosis">Diagnosis</th>
+                        <th data-i18n="severity">Severity</th>
                         <th data-i18n="confidence">Confidence</th>
                         <th data-i18n="action">Action</th>
                     </tr>
                 </thead>
                 <tbody id="tableBody">
-                    <tr><td colspan="7" style="text-align: center;" data-i18n="noScreenings">No screenings yet</td></tr>
+                    <tr><td colspan="8" style="text-align: center;" data-i18n="noScreenings">No diagnoses yet</td></tr>
                 </tbody>
             </table>
         </div>
@@ -905,12 +1192,12 @@
         const translations = {
             en: {
                 appName: 'RuralCare AI',
-                subtitle: 'Tamil Nadu Health Screening with Voice Recording',
+                subtitle: 'Tamil Nadu AI-Powered Disease Diagnosis with Voice Recording',
                 districts: 'Districts',
                 worksOffline: 'Works Offline',
-                screenings: 'Screenings',
+                screenings: 'Diagnoses',
                 today: 'Today',
-                followups: 'Follow-ups',
+                highRisk: 'High Risk',
                 avgConfidence: 'Avg Confidence',
                 patientInfo: 'Patient Information',
                 fullName: 'Full Name *',
@@ -921,49 +1208,58 @@
                 other: 'Other',
                 district: 'District *',
                 selectDistrict: 'Select District',
+                symptomChecker: 'AI Symptom Checker',
+                selectedSymptoms: 'Selected Symptoms:',
+                analyzeSymptoms: 'Analyze Symptoms',
                 vitals: 'Vitals',
                 weight: 'Weight (kg)',
                 height: 'Height (cm)',
                 temperature: 'Temperature (°C)',
                 bp: 'BP (Systolic/Diastolic)',
                 heartRate: 'Heart Rate (bpm)',
+                oxygen: 'Oxygen Saturation (%)',
+                bloodSugar: 'Blood Sugar (mg/dL)',
                 photoCapture: 'Photo Capture',
                 startCamera: 'Start Camera',
                 capture: 'Capture',
                 retake: 'Retake',
                 upload: 'Upload',
                 voiceRecording: 'Voice Recording',
-                recordSymptoms: 'Record Symptoms',
-                analyze: 'Analyze Health Status',
-                healthy: 'Healthy',
-                noConcerns: 'No immediate concerns detected',
-                confidence: 'AI Confidence',
-                recommendations: '📋 Recommendations:',
-                recordedSymptoms: 'Recorded symptoms available',
-                save: 'Save',
-                print: 'Print',
-                new: 'New',
-                recentScreenings: 'Recent Screenings',
+                recordSymptoms: 'Record Symptoms Description',
+                analyze: 'AI Diagnosis & Health Analysis',
+                diseaseLibrary: 'Disease Library',
+                recentScreenings: 'Recent Diagnoses',
                 date: 'Date',
                 name: 'Name',
-                status: 'Status',
+                diagnosis: 'Diagnosis',
+                severity: 'Severity',
+                confidence: 'Confidence',
                 action: 'Action',
-                noScreenings: 'No screenings yet',
+                noScreenings: 'No diagnoses yet',
                 offline: 'Working Offline',
                 online: 'Connected',
                 pending: 'pending',
                 sync: 'Sync',
-                followUp: 'Needs Follow-up',
-                potentialIssues: 'Potential health indicators detected'
+                possibleDiagnosis: 'Possible Diagnosis',
+                probability: 'Probability',
+                matchingSymptoms: 'Matching Symptoms',
+                recommendations: 'Recommendations',
+                save: 'Save',
+                print: 'Print',
+                new: 'New Diagnosis',
+                viewDetails: 'View Details',
+                commonSymptoms: 'Common Symptoms',
+                riskFactors: 'Risk Factors',
+                prevention: 'Prevention Tips'
             },
             ta: {
                 appName: 'ரூரல்கேர் ஏஐ',
-                subtitle: 'தமிழ்நாடு சுகாதார பரிசோதனை குரல் பதிவுடன்',
+                subtitle: 'தமிழ்நாடு AI-இயங்கும் நோய் கண்டறிதல் குரல் பதிவுடன்',
                 districts: 'மாவட்டங்கள்',
                 worksOffline: 'ஆஃப்லைனில் வேலை செய்கிறது',
-                screenings: 'பரிசோதனைகள்',
+                screenings: 'கண்டறிதல்கள்',
                 today: 'இன்று',
-                followups: 'பின்தொடர்தல்',
+                highRisk: 'அதிக ஆபத்து',
                 avgConfidence: 'சராசரி நம்பிக்கை',
                 patientInfo: 'நோயாளி தகவல்',
                 fullName: 'முழு பெயர் *',
@@ -974,12 +1270,17 @@
                 other: 'மற்றவை',
                 district: 'மாவட்டம் *',
                 selectDistrict: 'மாவட்டத்தைத் தேர்ந்தெடுக்கவும்',
+                symptomChecker: 'AI அறிகுறி சரிபார்ப்பு',
+                selectedSymptoms: 'தேர்ந்தெடுக்கப்பட்ட அறிகுறிகள்:',
+                analyzeSymptoms: 'அறிகுறிகளை பகுப்பாய்வு செய்',
                 vitals: 'உயிர்குறிகள்',
                 weight: 'எடை (கிலோ)',
                 height: 'உயரம் (செ.மீ)',
                 temperature: 'வெப்பநிலை (°C)',
                 bp: 'இரத்த அழுத்தம்',
                 heartRate: 'இதய துடிப்பு',
+                oxygen: 'ஆக்ஸிஜன் செறிவு (%)',
+                bloodSugar: 'இரத்த சர்க்கரை (mg/dL)',
                 photoCapture: 'புகைப்பட பிடிப்பு',
                 startCamera: 'கேமராவைத் தொடங்கு',
                 capture: 'பிடி',
@@ -987,36 +1288,37 @@
                 upload: 'பதிவேற்று',
                 voiceRecording: 'குரல் பதிவு',
                 recordSymptoms: 'அறிகுறிகளை பதிவு செய்',
-                analyze: 'சுகாதார நிலையை பகுப்பாய்வு செய்',
-                healthy: 'ஆரோக்கியமானது',
-                noConcerns: 'உடனடி கவலைகள் எதுவும் இல்லை',
-                confidence: 'AI நம்பிக்கை',
-                recommendations: '📋 பரிந்துரைகள்:',
-                recordedSymptoms: 'பதிவு செய்யப்பட்ட அறிகுறிகள்',
-                save: 'சேமி',
-                print: 'அச்சிடு',
-                new: 'புதியது',
-                recentScreenings: 'சமீபத்திய பரிசோதனைகள்',
+                analyze: 'AI நோய் கண்டறிதல் & சுகாதார பகுப்பாய்வு',
+                diseaseLibrary: 'நோய் நூலகம்',
+                recentScreenings: 'சமீபத்திய கண்டறிதல்கள்',
                 date: 'தேதி',
                 name: 'பெயர்',
-                status: 'நிலை',
+                diagnosis: 'நோய் கண்டறிதல்',
+                severity: 'தீவிரம்',
+                confidence: 'நம்பிக்கை',
                 action: 'செயல்',
-                noScreenings: 'இதுவரை பரிசோதனைகள் இல்லை',
+                noScreenings: 'இதுவரை கண்டறிதல்கள் இல்லை',
                 offline: 'ஆஃப்லைனில் வேலை செய்கிறது',
                 online: 'இணைக்கப்பட்டது',
                 pending: 'நிலுவையில்',
                 sync: 'ஒத்திசை',
-                followUp: 'பின்தொடர்தல் தேவை',
-                potentialIssues: 'சாத்தியமான சுகாதார குறிகாட்டிகள் கண்டறியப்பட்டன'
+                possibleDiagnosis: 'சாத்தியமான நோய் கண்டறிதல்',
+                probability: 'நிகழ்தகவு',
+                matchingSymptoms: 'பொருந்தும் அறிகுறிகள்',
+                recommendations: 'பரிந்துரைகள்',
+                save: 'சேமி',
+                print: 'அச்சிடு',
+                new: 'புதிய கண்டறிதல்',
+                viewDetails: 'விவரங்களைக் காண்க'
             },
             te: {
                 appName: 'రూరల్‌కేర్ AI',
-                subtitle: 'వాయిస్ రికార్డింగ్‌తో తమిళనాడు ఆరోగ్య స్క్రీనింగ్',
+                subtitle: 'తమిళనాడు AI-ఆధారిత వ్యాధి నిర్ధారణ వాయిస్ రికార్డింగ్‌తో',
                 districts: 'జిల్లాలు',
                 worksOffline: 'ఆఫ్‌లైన్‌లో పనిచేస్తుంది',
-                screenings: 'స్క్రీనింగ్‌లు',
+                screenings: 'నిర్ధారణలు',
                 today: 'ఈరోజు',
-                followups: 'ఫాలో-అప్‌లు',
+                highRisk: 'అధిక ప్రమాదం',
                 avgConfidence: 'సగటు విశ్వాసం',
                 patientInfo: 'రోగి సమాచారం',
                 fullName: 'పూర్తి పేరు *',
@@ -1027,12 +1329,17 @@
                 other: 'ఇతర',
                 district: 'జిల్లా *',
                 selectDistrict: 'జిల్లాను ఎంచుకోండి',
+                symptomChecker: 'AI లక్షణాల పరీక్ష',
+                selectedSymptoms: 'ఎంచుకున్న లక్షణాలు:',
+                analyzeSymptoms: 'లక్షణాలను విశ్లేషించండి',
                 vitals: 'ముఖ్యమైన సూచికలు',
                 weight: 'బరువు (కిలో)',
                 height: 'ఎత్తు (సెం.మీ)',
                 temperature: 'ఉష్ణోగ్రత (°C)',
                 bp: 'రక్తపోటు',
                 heartRate: 'హృదయ స్పందన రేటు',
+                oxygen: 'ఆక్సిజన్ సంతృప్తత (%)',
+                bloodSugar: 'రక్త చక్కెర (mg/dL)',
                 photoCapture: 'ఫోటో క్యాప్చర్',
                 startCamera: 'కెమెరాను ప్రారంభించండి',
                 capture: 'సంగ్రహించండి',
@@ -1040,36 +1347,37 @@
                 upload: 'అప్‌లోడ్',
                 voiceRecording: 'వాయిస్ రికార్డింగ్',
                 recordSymptoms: 'లక్షణాలను రికార్డ్ చేయండి',
-                analyze: 'ఆరోగ్య స్థితిని విశ్లేషించండి',
-                healthy: 'ఆరోగ్యకరమైన',
-                noConcerns: 'తక్షణ ఆందోళనలు ఏవీ లేవు',
-                confidence: 'AI విశ్వాసం',
-                recommendations: '📋 సిఫార్సులు:',
-                recordedSymptoms: 'రికార్డ్ చేసిన లక్షణాలు',
-                save: 'సేవ్ చేయండి',
-                print: 'ప్రింట్',
-                new: 'కొత్త',
-                recentScreenings: 'ఇటీవలి స్క్రీనింగ్‌లు',
+                analyze: 'AI వ్యాధి నిర్ధారణ & ఆరోగ్య విశ్లేషణ',
+                diseaseLibrary: 'వ్యాధి గ్రంథాలయం',
+                recentScreenings: 'ఇటీవలి నిర్ధారణలు',
                 date: 'తేదీ',
                 name: 'పేరు',
-                status: 'స్థితి',
+                diagnosis: 'నిర్ధారణ',
+                severity: 'తీవ్రత',
+                confidence: 'విశ్వాసం',
                 action: 'చర్య',
-                noScreenings: 'ఇంకా స్క్రీనింగ్‌లు లేవు',
+                noScreenings: 'ఇంకా నిర్ధారణలు లేవు',
                 offline: 'ఆఫ్‌లైన్‌లో పనిచేస్తుంది',
                 online: 'కనెక్ట్ అయ్యింది',
                 pending: 'పెండింగ్',
                 sync: 'సమకాలీకరించు',
-                followUp: 'ఫాలో-అప్ అవసరం',
-                potentialIssues: 'సంభావ్య ఆరోగ్య సూచికలు కనుగొనబడ్డాయి'
+                possibleDiagnosis: 'సంభావ్య నిర్ధారణ',
+                probability: 'సంభావ్యత',
+                matchingSymptoms: 'సరిపోలే లక్షణాలు',
+                recommendations: 'సిఫార్సులు',
+                save: 'సేవ్ చేయండి',
+                print: 'ప్రింట్',
+                new: 'కొత్త నిర్ధారణ',
+                viewDetails: 'వివరాలు చూడండి'
             },
             kn: {
                 appName: 'ರೂರಲ್‌ಕೇರ್ AI',
-                subtitle: 'ಧ್ವನಿ ರೆಕಾರ್ಡಿಂಗ್‌ನೊಂದಿಗೆ ತಮಿಳುನಾಡು ಆರೋಗ್ಯ ತಪಾಸಣೆ',
+                subtitle: 'ತಮಿಳುನಾಡು AI-ಚಾಲಿತ ರೋಗ ನಿರ್ಣಯ ಧ್ವನಿ ರೆಕಾರ್ಡಿಂಗ್‌ನೊಂದಿಗೆ',
                 districts: 'ಜಿಲ್ಲೆಗಳು',
                 worksOffline: 'ಆಫ್‌ಲೈನ್‌ನಲ್ಲಿ ಕಾರ್ಯನಿರ್ವಹಿಸುತ್ತದೆ',
-                screenings: 'ತಪಾಸಣೆಗಳು',
+                screenings: 'ನಿರ್ಣಯಗಳು',
                 today: 'ಇಂದು',
-                followups: 'ಅನುಸರಣೆ',
+                highRisk: 'ಹೆಚ್ಚಿನ ಅಪಾಯ',
                 avgConfidence: 'ಸರಾಸರಿ ವಿಶ್ವಾಸ',
                 patientInfo: 'ರೋಗಿಯ ಮಾಹಿತಿ',
                 fullName: 'ಪೂರ್ಣ ಹೆಸರು *',
@@ -1080,40 +1388,46 @@
                 other: 'ಇತರೆ',
                 district: 'ಜಿಲ್ಲೆ *',
                 selectDistrict: 'ಜಿಲ್ಲೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ',
+                symptomChecker: 'AI ರೋಗಲಕ್ಷಣ ಪರೀಕ್ಷಕ',
+                selectedSymptoms: 'ಆಯ್ಕೆಮಾಡಿದ ರೋಗಲಕ್ಷಣಗಳು:',
+                analyzeSymptoms: 'ರೋಗಲಕ್ಷಣಗಳನ್ನು ವಿಶ್ಲೇಷಿಸಿ',
                 vitals: 'ಪ್ರಮುಖ ಸೂಚಕಗಳು',
                 weight: 'ತೂಕ (ಕೆಜಿ)',
                 height: 'ಎತ್ತರ (ಸೆಂ.ಮೀ)',
                 temperature: 'ತಾಪಮಾನ (°C)',
                 bp: 'ರಕ್ತದೊತ್ತಡ',
                 heartRate: 'ಹೃದಯ ಬಡಿತ',
+                oxygen: 'ಆಮ್ಲಜನಕ ಶುದ್ಧತ್ವ (%)',
+                bloodSugar: 'ರಕ್ತದ ಸಕ್ಕರೆ (mg/dL)',
                 photoCapture: 'ಫೋಟೋ ಸೆರೆಹಿಡಿಯುವಿಕೆ',
                 startCamera: 'ಕ್ಯಾಮೆರಾ ಪ್ರಾರಂಭಿಸಿ',
                 capture: 'ಸೆರೆಹಿಡಿ',
                 retake: 'ಮರು ತೆಗೆದುಕೊಳ್ಳಿ',
                 upload: 'ಅಪ್‌ಲೋಡ್',
                 voiceRecording: 'ಧ್ವನಿ ರೆಕಾರ್ಡಿಂಗ್',
-                recordSymptoms: 'ಲಕ್ಷಣಗಳನ್ನು ರೆಕಾರ್ಡ್ ಮಾಡಿ',
-                analyze: 'ಆರೋಗ್ಯ ಸ್ಥಿತಿಯನ್ನು ವಿಶ್ಲೇಷಿಸಿ',
-                healthy: 'ಆರೋಗ್ಯಕರ',
-                noConcerns: 'ತಕ್ಷಣದ ಕಳವಳಗಳಿಲ್ಲ',
-                confidence: 'AI ವಿಶ್ವಾಸ',
-                recommendations: '📋 ಶಿಫಾರಸುಗಳು:',
-                recordedSymptoms: 'ರೆಕಾರ್ಡ್ ಮಾಡಿದ ಲಕ್ಷಣಗಳು',
-                save: 'ಉಳಿಸಿ',
-                print: 'ಮುದ್ರಿಸಿ',
-                new: 'ಹೊಸದು',
-                recentScreenings: 'ಇತ್ತೀಚಿನ ತಪಾಸಣೆಗಳು',
+                recordSymptoms: 'ರೋಗಲಕ್ಷಣಗಳನ್ನು ರೆಕಾರ್ಡ್ ಮಾಡಿ',
+                analyze: 'AI ರೋಗ ನಿರ್ಣಯ & ಆರೋಗ್ಯ ವಿಶ್ಲೇಷಣೆ',
+                diseaseLibrary: 'ರೋಗ ಗ್ರಂಥಾಲಯ',
+                recentScreenings: 'ಇತ್ತೀಚಿನ ನಿರ್ಣಯಗಳು',
                 date: 'ದಿನಾಂಕ',
                 name: 'ಹೆಸರು',
-                status: 'ಸ್ಥಿತಿ',
+                diagnosis: 'ನಿರ್ಣಯ',
+                severity: 'ತೀವ್ರತೆ',
+                confidence: 'ವಿಶ್ವಾಸ',
                 action: 'ಕ್ರಿಯೆ',
-                noScreenings: 'ಇನ್ನೂ ತಪಾಸಣೆಗಳಿಲ್ಲ',
+                noScreenings: 'ಇನ್ನೂ ನಿರ್ಣಯಗಳಿಲ್ಲ',
                 offline: 'ಆಫ್‌ಲೈನ್‌ನಲ್ಲಿ ಕಾರ್ಯನಿರ್ವಹಿಸುತ್ತಿದೆ',
                 online: 'ಸಂಪರ್ಕಗೊಂಡಿದೆ',
                 pending: 'ಬಾಕಿ ಇದೆ',
                 sync: 'ಸಿಂಕ್',
-                followUp: 'ಅನುಸರಣೆ ಅಗತ್ಯವಿದೆ',
-                potentialIssues: 'ಸಂಭಾವ್ಯ ಆರೋಗ್ಯ ಸೂಚಕಗಳು ಪತ್ತೆಯಾಗಿವೆ'
+                possibleDiagnosis: 'ಸಂಭವನೀಯ ನಿರ್ಣಯ',
+                probability: 'ಸಂಭವನೀಯತೆ',
+                matchingSymptoms: 'ಹೊಂದಾಣಿಕೆಯ ರೋಗಲಕ್ಷಣಗಳು',
+                recommendations: 'ಶಿಫಾರಸುಗಳು',
+                save: 'ಉಳಿಸಿ',
+                print: 'ಮುದ್ರಿಸಿ',
+                new: 'ಹೊಸ ನಿರ್ಣಯ',
+                viewDetails: 'ವಿವರಗಳನ್ನು ನೋಡಿ'
             }
         };
 
@@ -1122,13 +1436,11 @@
         function switchLanguage(lang) {
             currentLanguage = lang;
             
-            // Update active button
             document.querySelectorAll('.lang-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
             document.getElementById(`lang${lang.charAt(0).toUpperCase() + lang.slice(1)}`).classList.add('active');
             
-            // Update all elements with data-i18n
             document.querySelectorAll('[data-i18n]').forEach(element => {
                 const key = element.getAttribute('data-i18n');
                 if (translations[lang][key]) {
@@ -1136,7 +1448,6 @@
                 }
             });
             
-            // Update placeholders
             updatePlaceholders();
         }
 
@@ -1151,7 +1462,9 @@
                     bpSystolic: 'Sys',
                     bpDiastolic: 'Dias',
                     heartRate: 'bpm',
-                    symptoms: 'Or type symptoms here...'
+                    oxygen: 'SpO2',
+                    bloodSugar: 'Glucose',
+                    symptoms: 'Or type detailed symptoms here...'
                 },
                 ta: {
                     patientName: 'முழு பெயரை உள்ளிடவும்',
@@ -1162,7 +1475,9 @@
                     bpSystolic: 'சிஸ்',
                     bpDiastolic: 'டயஸ்',
                     heartRate: 'பிபிஎம்',
-                    symptoms: 'அல்லது அறிகுறிகளை இங்கே தட்டச்சு செய்யவும்...'
+                    oxygen: 'SpO2',
+                    bloodSugar: 'குளுக்கோஸ்',
+                    symptoms: 'அல்லது விரிவான அறிகுறிகளை இங்கே தட்டச்சு செய்யவும்...'
                 },
                 te: {
                     patientName: 'పూర్తి పేరు నమోదు చేయండి',
@@ -1173,7 +1488,9 @@
                     bpSystolic: 'సిస్',
                     bpDiastolic: 'డయాస్',
                     heartRate: 'బిపిఎం',
-                    symptoms: 'లేదా లక్షణాలను ఇక్కడ టైప్ చేయండి...'
+                    oxygen: 'SpO2',
+                    bloodSugar: 'గ్లూకోజ్',
+                    symptoms: 'లేదా వివరణాత్మక లక్షణాలను ఇక్కడ టైప్ చేయండి...'
                 },
                 kn: {
                     patientName: 'ಪೂರ್ಣ ಹೆಸರನ್ನು ನಮೂದಿಸಿ',
@@ -1184,7 +1501,9 @@
                     bpSystolic: 'ಸಿಸ್',
                     bpDiastolic: 'ಡಯಾಸ್',
                     heartRate: 'ಬಿಪಿಎಂ',
-                    symptoms: 'ಅಥವಾ ರೋಗಲಕ್ಷಣಗಳನ್ನು ಇಲ್ಲಿ ಟೈಪ್ ಮಾಡಿ...'
+                    oxygen: 'SpO2',
+                    bloodSugar: 'ಗ್ಲೂಕೋಸ್',
+                    symptoms: 'ಅಥವಾ ವಿವರವಾದ ರೋಗಲಕ್ಷಣಗಳನ್ನು ಇಲ್ಲಿ ಟೈಪ್ ಮಾಡಿ...'
                 }
             };
             
@@ -1196,6 +1515,8 @@
             document.getElementById('bpSystolic').placeholder = placeholders[currentLanguage].bpSystolic;
             document.getElementById('bpDiastolic').placeholder = placeholders[currentLanguage].bpDiastolic;
             document.getElementById('heartRate').placeholder = placeholders[currentLanguage].heartRate;
+            document.getElementById('oxygen').placeholder = placeholders[currentLanguage].oxygen;
+            document.getElementById('bloodSugar').placeholder = placeholders[currentLanguage].bloodSugar;
             document.getElementById('symptomsText').placeholder = placeholders[currentLanguage].symptoms;
         }
 
@@ -1211,6 +1532,271 @@
             'Vellore', 'Viluppuram', 'Virudhunagar'
         ];
 
+        // ==================== SYMPTOMS DATABASE ====================
+        const symptomsDatabase = [
+            // Respiratory
+            { id: 1, name: 'Cough', category: 'respiratory' },
+            { id: 2, name: 'Shortness of breath', category: 'respiratory' },
+            { id: 3, name: 'Wheezing', category: 'respiratory' },
+            { id: 4, name: 'Chest pain', category: 'respiratory' },
+            { id: 5, name: 'Sore throat', category: 'respiratory' },
+            { id: 6, name: 'Runny nose', category: 'respiratory' },
+            { id: 7, name: 'Sneezing', category: 'respiratory' },
+            { id: 8, name: 'Nasal congestion', category: 'respiratory' },
+            
+            // Digestive
+            { id: 9, name: 'Nausea', category: 'digestive' },
+            { id: 10, name: 'Vomiting', category: 'digestive' },
+            { id: 11, name: 'Diarrhea', category: 'digestive' },
+            { id: 12, name: 'Constipation', category: 'digestive' },
+            { id: 13, name: 'Abdominal pain', category: 'digestive' },
+            { id: 14, name: 'Bloating', category: 'digestive' },
+            { id: 15, name: 'Heartburn', category: 'digestive' },
+            { id: 16, name: 'Loss of appetite', category: 'digestive' },
+            
+            // Neurological
+            { id: 17, name: 'Headache', category: 'neurological' },
+            { id: 18, name: 'Dizziness', category: 'neurological' },
+            { id: 19, name: 'Confusion', category: 'neurological' },
+            { id: 20, name: 'Seizures', category: 'neurological' },
+            { id: 21, name: 'Tremors', category: 'neurological' },
+            { id: 22, name: 'Numbness', category: 'neurological' },
+            { id: 23, name: 'Weakness', category: 'neurological' },
+            { id: 24, name: 'Memory loss', category: 'neurological' },
+            
+            // Muscular
+            { id: 25, name: 'Joint pain', category: 'muscular' },
+            { id: 26, name: 'Muscle pain', category: 'muscular' },
+            { id: 27, name: 'Back pain', category: 'muscular' },
+            { id: 28, name: 'Neck pain', category: 'muscular' },
+            { id: 29, name: 'Swelling', category: 'muscular' },
+            { id: 30, name: 'Stiffness', category: 'muscular' },
+            
+            // Skin
+            { id: 31, name: 'Rash', category: 'skin' },
+            { id: 32, name: 'Itching', category: 'skin' },
+            { id: 33, name: 'Hives', category: 'skin' },
+            { id: 34, name: 'Dry skin', category: 'skin' },
+            { id: 35, name: 'Blisters', category: 'skin' },
+            { id: 36, name: 'Redness', category: 'skin' },
+            
+            // General
+            { id: 37, name: 'Fever', category: 'general' },
+            { id: 38, name: 'Fatigue', category: 'general' },
+            { id: 39, name: 'Chills', category: 'general' },
+            { id: 40, name: 'Night sweats', category: 'general' },
+            { id: 41, name: 'Weight loss', category: 'general' },
+            { id: 42, name: 'Weight gain', category: 'general' },
+            { id: 43, name: 'Dehydration', category: 'general' }
+        ];
+
+        // ==================== DISEASE DATABASE ====================
+        const diseaseDatabase = [
+            {
+                id: 1,
+                name: 'Common Cold',
+                category: 'respiratory',
+                symptoms: [1, 5, 6, 7, 8, 37], // Cough, Sore throat, Runny nose, Sneezing, Nasal congestion, Fever
+                severity: 'low',
+                description: 'Viral infection of upper respiratory tract',
+                recommendations: [
+                    'Rest and stay hydrated',
+                    'Take over-the-counter cold medications',
+                    'Use saline nasal spray',
+                    'Consult doctor if symptoms worsen'
+                ],
+                riskFactors: ['Close contact with infected persons', 'Weakened immune system'],
+                prevention: ['Wash hands frequently', 'Avoid close contact with sick people', 'Cover mouth when coughing']
+            },
+            {
+                id: 2,
+                name: 'Influenza (Flu)',
+                category: 'respiratory',
+                symptoms: [1, 2, 37, 38, 39, 40], // Cough, Shortness of breath, Fever, Fatigue, Chills, Night sweats
+                severity: 'medium',
+                description: 'Viral infection affecting respiratory system',
+                recommendations: [
+                    'Rest and isolate',
+                    'Take antiviral medications if prescribed',
+                    'Stay hydrated',
+                    'Monitor temperature',
+                    'Seek immediate care if breathing difficulties'
+                ],
+                riskFactors: ['Elderly', 'Pregnant women', 'Chronic medical conditions'],
+                prevention: ['Annual flu vaccine', 'Hand hygiene', 'Avoid crowded places']
+            },
+            {
+                id: 3,
+                name: 'Pneumonia',
+                category: 'respiratory',
+                symptoms: [1, 2, 4, 37, 38], // Cough, Shortness of breath, Chest pain, Fever, Fatigue
+                severity: 'high',
+                description: 'Infection of lung tissue',
+                recommendations: [
+                    'Immediate medical attention required',
+                    'Take prescribed antibiotics',
+                    'Rest and stay hydrated',
+                    'Use humidifier',
+                    'Follow up with doctor'
+                ],
+                riskFactors: ['Smoking', 'Chronic lung disease', 'Weakened immune system'],
+                prevention: ['Vaccination', 'No smoking', 'Good hygiene']
+            },
+            {
+                id: 4,
+                name: 'Gastroenteritis',
+                category: 'digestive',
+                symptoms: [9, 10, 11, 13, 37], // Nausea, Vomiting, Diarrhea, Abdominal pain, Fever
+                severity: 'medium',
+                description: 'Inflammation of stomach and intestines',
+                recommendations: [
+                    'Stay hydrated with ORS',
+                    'Bland diet',
+                    'Rest',
+                    'Avoid dairy and spicy foods',
+                    'Seek care if severe dehydration'
+                ],
+                riskFactors: ['Contaminated food/water', 'Poor hygiene'],
+                prevention: ['Hand washing', 'Food safety', 'Clean water']
+            },
+            {
+                id: 5,
+                name: 'Hypertension',
+                category: 'cardiovascular',
+                symptoms: [17, 18, 23], // Headache, Dizziness, Weakness
+                severity: 'high',
+                description: 'High blood pressure',
+                recommendations: [
+                    'Regular BP monitoring',
+                    'Reduce salt intake',
+                    'Regular exercise',
+                    'Medication as prescribed',
+                    'Stress management'
+                ],
+                riskFactors: ['Family history', 'Obesity', 'Sedentary lifestyle', 'High salt diet'],
+                prevention: ['Healthy diet', 'Regular exercise', 'Limit alcohol', 'No smoking']
+            },
+            {
+                id: 6,
+                name: 'Diabetes Type 2',
+                category: 'metabolic',
+                symptoms: [23, 41, 42, 38], // Weakness, Weight loss, Weight gain, Fatigue
+                severity: 'high',
+                description: 'Chronic condition affecting blood sugar regulation',
+                recommendations: [
+                    'Monitor blood sugar regularly',
+                    'Follow diabetic diet',
+                    'Regular exercise',
+                    'Take prescribed medication',
+                    'Regular checkups'
+                ],
+                riskFactors: ['Obesity', 'Family history', 'Sedentary lifestyle'],
+                prevention: ['Healthy weight', 'Regular exercise', 'Balanced diet']
+            },
+            {
+                id: 7,
+                name: 'Migraine',
+                category: 'neurological',
+                symptoms: [17, 9, 38, 18], // Headache, Nausea, Fatigue, Dizziness
+                severity: 'medium',
+                description: 'Severe recurring headaches',
+                recommendations: [
+                    'Rest in dark quiet room',
+                    'Identify triggers',
+                    'Pain medication',
+                    'Stay hydrated',
+                    'Stress management'
+                ],
+                riskFactors: ['Stress', 'Hormonal changes', 'Certain foods'],
+                prevention: ['Regular sleep', 'Avoid triggers', 'Stress reduction']
+            },
+            {
+                id: 8,
+                name: 'Arthritis',
+                category: 'muscular',
+                symptoms: [25, 26, 29, 30], // Joint pain, Muscle pain, Swelling, Stiffness
+                severity: 'medium',
+                description: 'Inflammation of joints',
+                recommendations: [
+                    'Pain management',
+                    'Gentle exercise',
+                    'Hot/cold therapy',
+                    'Maintain healthy weight',
+                    'Consult rheumatologist'
+                ],
+                riskFactors: ['Age', 'Family history', 'Previous joint injury'],
+                prevention: ['Regular exercise', 'Healthy weight', 'Joint protection']
+            },
+            {
+                id: 9,
+                name: 'Dengue Fever',
+                category: 'infectious',
+                symptoms: [37, 38, 17, 26, 31], // Fever, Fatigue, Headache, Muscle pain, Rash
+                severity: 'high',
+                description: 'Mosquito-borne viral infection',
+                recommendations: [
+                    'Immediate medical attention',
+                    'Rest and hydration',
+                    'Monitor platelet count',
+                    'Pain management',
+                    'Watch for warning signs'
+                ],
+                riskFactors: ['Mosquito exposure', 'Travel to endemic areas'],
+                prevention: ['Mosquito repellent', 'Remove standing water', 'Mosquito nets']
+            },
+            {
+                id: 10,
+                name: 'Malaria',
+                category: 'infectious',
+                symptoms: [37, 38, 17, 39, 40], // Fever, Fatigue, Headache, Chills, Night sweats
+                severity: 'high',
+                description: 'Mosquito-borne parasitic infection',
+                recommendations: [
+                    'Urgent medical care',
+                    'Antimalarial medication',
+                    'Rest',
+                    'Hydration',
+                    'Follow-up testing'
+                ],
+                riskFactors: ['Mosquito exposure', 'Travel to endemic areas'],
+                prevention: ['Antimalarial prophylaxis', 'Mosquito protection', 'Bed nets']
+            },
+            {
+                id: 11,
+                name: 'Tuberculosis',
+                category: 'respiratory',
+                symptoms: [1, 2, 4, 37, 38, 41], // Cough, Shortness of breath, Chest pain, Fever, Fatigue, Weight loss
+                severity: 'high',
+                description: 'Bacterial infection affecting lungs',
+                recommendations: [
+                    'Complete course of TB medication',
+                    'Isolation during infectious period',
+                    'Regular follow-up',
+                    'Nutritional support',
+                    'Family screening'
+                ],
+                riskFactors: ['Close contact with TB patient', 'Weakened immune system', 'Malnutrition'],
+                prevention: ['BCG vaccine', 'Good ventilation', 'Early detection']
+            },
+            {
+                id: 12,
+                name: 'Typhoid',
+                category: 'digestive',
+                symptoms: [37, 38, 13, 14, 41], // Fever, Fatigue, Abdominal pain, Bloating, Weight loss
+                severity: 'high',
+                description: 'Bacterial infection from contaminated food/water',
+                recommendations: [
+                    'Medical treatment with antibiotics',
+                    'Hydration',
+                    'Rest',
+                    'Hygiene precautions',
+                    'Follow-up tests'
+                ],
+                riskFactors: ['Contaminated food/water', 'Poor sanitation'],
+                prevention: ['Vaccination', 'Safe water', 'Food hygiene', 'Hand washing']
+            }
+        ];
+
         // ==================== STATE VARIABLES ====================
         let capturedImage = null;
         let audioChunks = [];
@@ -1222,38 +1808,35 @@
         let recordingSeconds = 0;
         let db = null;
         let screenings = [];
+        let selectedSymptoms = [];
+        let currentSymptomCategory = 'all';
 
         // ==================== INITIALIZATION ====================
         document.addEventListener('DOMContentLoaded', async () => {
             console.log('🚀 RuralCare AI Initializing...');
             
-            // Load districts
             loadDistricts();
+            loadSymptoms();
+            loadDiseaseLibrary();
             
-            // Initialize IndexedDB
             await initDatabase();
-            
-            // Load data
             await loadScreenings();
             
-            // Update UI
             updateStats();
             displayScreenings();
             updateOfflineStatus();
             updateSyncBadge();
             
-            // Check online status
             window.addEventListener('online', updateOfflineStatus);
             window.addEventListener('offline', updateOfflineStatus);
             
-            // Set default language
             switchLanguage('en');
         });
 
         // ==================== DATABASE SETUP ====================
         async function initDatabase() {
             return new Promise((resolve, reject) => {
-                const request = indexedDB.open('RuralCareDB', 2);
+                const request = indexedDB.open('RuralCareDB', 3);
                 
                 request.onerror = () => {
                     console.error('Database error');
@@ -1269,12 +1852,11 @@
                 request.onupgradeneeded = (event) => {
                     const db = event.target.result;
                     
-                    // Screenings store
                     if (!db.objectStoreNames.contains('screenings')) {
                         const screeningStore = db.createObjectStore('screenings', { keyPath: 'id', autoIncrement: true });
                         screeningStore.createIndex('created_at', 'created_at', { unique: false });
                         screeningStore.createIndex('district', 'district', { unique: false });
-                        screeningStore.createIndex('status', 'prediction', { unique: false });
+                        screeningStore.createIndex('severity', 'severity', { unique: false });
                     }
                 };
             });
@@ -1292,105 +1874,237 @@
             });
         }
 
-        // ==================== SCREENING CRUD ====================
-        async function saveScreening(result) {
-            const patientName = document.getElementById('patientName').value;
-            const patientAge = document.getElementById('patientAge').value;
-            const patientGender = document.getElementById('patientGender').value;
-            const patientDistrict = document.getElementById('patientDistrict').value;
-            const weight = document.getElementById('weight').value;
-            const height = document.getElementById('height').value;
-            const temperature = document.getElementById('temperature').value;
-            const bpSystolic = document.getElementById('bpSystolic').value;
-            const bpDiastolic = document.getElementById('bpDiastolic').value;
-            const heartRate = document.getElementById('heartRate').value;
-            const symptomsText = document.getElementById('symptomsText').value;
+        // ==================== SYMPTOM CHECKER ====================
+        function loadSymptoms() {
+            const grid = document.getElementById('symptomsGrid');
+            grid.innerHTML = '';
             
-            // Calculate BMI if weight and height provided
-            let bmi = null;
-            if (weight && height) {
-                bmi = (weight / ((height/100) * (height/100))).toFixed(1);
-            }
-            
-            const screening = {
-                patient_name: patientName,
-                age: parseInt(patientAge) || null,
-                gender: patientGender,
-                district: patientDistrict,
-                vitals: {
-                    weight: weight ? parseFloat(weight) : null,
-                    height: height ? parseFloat(height) : null,
-                    bmi: bmi ? parseFloat(bmi) : null,
-                    temperature: temperature ? parseFloat(temperature) : null,
-                    bp_systolic: bpSystolic ? parseInt(bpSystolic) : null,
-                    bp_diastolic: bpDiastolic ? parseInt(bpDiastolic) : null,
-                    heart_rate: heartRate ? parseInt(heartRate) : null
-                },
-                photo_path: capturedImage,
-                audio_data: audioBlob ? URL.createObjectURL(audioBlob) : null,
-                symptoms_text: symptomsText,
-                symptoms_duration: recordingSeconds,
-                prediction: result.status,
-                confidence: result.confidence,
-                risk_level: result.riskLevel,
-                recommendations: JSON.stringify(result.recommendations),
-                follow_up_required: result.requiresFollowUp ? 1 : 0,
-                created_at: new Date().toISOString(),
-                offline_sync: 0
-            };
-            
-            return new Promise((resolve, reject) => {
-                const transaction = db.transaction(['screenings'], 'readwrite');
-                const store = transaction.objectStore('screenings');
-                
-                const request = store.add(screening);
-                
-                request.onsuccess = () => {
-                    showToast(translations[currentLanguage].save || 'Saved successfully');
-                    screenings.push({...screening, id: request.result});
+            symptomsDatabase.forEach(symptom => {
+                if (currentSymptomCategory === 'all' || symptom.category === currentSymptomCategory) {
+                    const item = document.createElement('div');
+                    item.className = 'symptom-item';
+                    item.onclick = () => toggleSymptom(symptom.id, symptom.name);
                     
-                    // Add to offline queue if offline
-                    if (!navigator.onLine) {
-                        let offlineQueue = JSON.parse(localStorage.getItem('offlineQueue') || '[]');
-                        offlineQueue.push({
-                            type: 'screening',
-                            data: screening,
-                            timestamp: new Date().toISOString()
-                        });
-                        localStorage.setItem('offlineQueue', JSON.stringify(offlineQueue));
-                        updateSyncBadge();
-                    }
+                    item.innerHTML = `
+                        <input type="checkbox" ${selectedSymptoms.includes(symptom.id) ? 'checked' : ''}>
+                        <span>${symptom.name}</span>
+                    `;
                     
-                    displayScreenings();
-                    updateStats();
-                    resolve();
-                };
-                
-                request.onerror = () => {
-                    showToast('Error saving screening', 'error');
-                    reject();
-                };
+                    grid.appendChild(item);
+                }
             });
         }
 
-        async function loadScreenings() {
-            return new Promise((resolve) => {
-                if (!db) return resolve();
-                
-                const transaction = db.transaction(['screenings'], 'readonly');
-                const store = transaction.objectStore('screenings');
-                const request = store.getAll();
-                
-                request.onsuccess = () => {
-                    screenings = request.result || [];
-                    resolve();
-                };
-                
-                request.onerror = () => {
-                    screenings = [];
-                    resolve();
-                };
+        function filterSymptoms(category) {
+            currentSymptomCategory = category;
+            
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active');
             });
+            event.target.classList.add('active');
+            
+            loadSymptoms();
+        }
+
+        function toggleSymptom(id, name) {
+            const index = selectedSymptoms.indexOf(id);
+            if (index === -1) {
+                selectedSymptoms.push(id);
+            } else {
+                selectedSymptoms.splice(index, 1);
+            }
+            
+            updateSymptomTags();
+            loadSymptoms(); // Refresh to update checkboxes
+        }
+
+        function updateSymptomTags() {
+            const container = document.getElementById('symptomTags');
+            
+            if (selectedSymptoms.length === 0) {
+                container.innerHTML = '<p>No symptoms selected</p>';
+                return;
+            }
+            
+            container.innerHTML = '';
+            selectedSymptoms.forEach(id => {
+                const symptom = symptomsDatabase.find(s => s.id === id);
+                if (symptom) {
+                    const tag = document.createElement('span');
+                    tag.className = 'symptom-tag';
+                    tag.innerHTML = `${symptom.name} <button onclick="removeSymptom(${id})">×</button>`;
+                    container.appendChild(tag);
+                }
+            });
+        }
+
+        function removeSymptom(id) {
+            const index = selectedSymptoms.indexOf(id);
+            if (index !== -1) {
+                selectedSymptoms.splice(index, 1);
+                updateSymptomTags();
+                loadSymptoms();
+            }
+        }
+
+        function analyzeSymptoms() {
+            if (selectedSymptoms.length === 0) {
+                showToast('Please select at least one symptom', 'error');
+                return;
+            }
+            
+            // Find matching diseases
+            const matches = diseaseDatabase.map(disease => {
+                const matchingSymptoms = disease.symptoms.filter(s => selectedSymptoms.includes(s));
+                const matchPercentage = (matchingSymptoms.length / disease.symptoms.length) * 100;
+                
+                return {
+                    ...disease,
+                    matchingSymptoms: matchingSymptoms.length,
+                    matchPercentage: matchPercentage
+                };
+            }).filter(d => d.matchPercentage > 20)
+              .sort((a, b) => b.matchPercentage - a.matchPercentage)
+              .slice(0, 3);
+            
+            displaySymptomAnalysis(matches);
+        }
+
+        function displaySymptomAnalysis(matches) {
+            const resultsDiv = document.getElementById('results');
+            
+            let html = `
+                <div class="diagnosis-header">
+                    <div class="diagnosis-icon">🔍</div>
+                    <div class="diagnosis-info">
+                        <h3>${translations[currentLanguage].possibleDiagnosis || 'Possible Diagnosis'}</h3>
+                        <p>Based on ${selectedSymptoms.length} selected symptoms</p>
+                    </div>
+                </div>
+            `;
+            
+            matches.forEach((disease, index) => {
+                const severityClass = disease.severity === 'low' ? 'severity-low' : 
+                                    disease.severity === 'medium' ? 'severity-medium' : 'severity-high';
+                
+                html += `
+                    <div class="disease-info">
+                        <h4>${index + 1}. ${disease.name}</h4>
+                        <span class="severity-badge ${severityClass}">${disease.severity.toUpperCase()} SEVERITY</span>
+                        <p style="margin-top: 10px;">${disease.description}</p>
+                        
+                        <div class="confidence-bar">
+                            <div class="confidence-fill" style="width: ${disease.matchPercentage}%"></div>
+                        </div>
+                        <p><strong>${translations[currentLanguage].probability || 'Probability'}:</strong> ${Math.round(disease.matchPercentage)}%</p>
+                        
+                        <p><strong>${translations[currentLanguage].matchingSymptoms || 'Matching Symptoms'}:</strong> ${disease.matchingSymptoms}/${disease.symptoms.length}</p>
+                        
+                        <div class="symptom-match">
+                            ${disease.symptoms.slice(0, 5).map(s => {
+                                const symptom = symptomsDatabase.find(sym => sym.id === s);
+                                const isSelected = selectedSymptoms.includes(s);
+                                const matchClass = isSelected ? 'match-high' : 'match-low';
+                                return `<span class="match-tag ${matchClass}">${symptom ? symptom.name : ''}</span>`;
+                            }).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += `
+                <div class="result-actions">
+                    <button class="btn btn-secondary" onclick="saveResult()">💾 ${translations[currentLanguage].save || 'Save'}</button>
+                    <button class="btn btn-primary" onclick="proceedToFullDiagnosis()">🩺 Full Diagnosis</button>
+                </div>
+            `;
+            
+            resultsDiv.innerHTML = html;
+            resultsDiv.style.display = 'block';
+        }
+
+        // ==================== DISEASE LIBRARY ====================
+        function loadDiseaseLibrary() {
+            const grid = document.getElementById('diseaseGrid');
+            grid.innerHTML = '';
+            
+            diseaseDatabase.forEach(disease => {
+                const card = document.createElement('div');
+                card.className = 'disease-card';
+                card.onclick = () => showDiseaseDetails(disease);
+                
+                const severityClass = disease.severity === 'low' ? 'severity-low' : 
+                                    disease.severity === 'medium' ? 'severity-medium' : 'severity-high';
+                
+                const commonSymptomNames = disease.symptoms.slice(0, 3).map(id => {
+                    const symptom = symptomsDatabase.find(s => s.id === id);
+                    return symptom ? symptom.name : '';
+                }).join(', ');
+                
+                card.innerHTML = `
+                    <h4>${disease.name}</h4>
+                    <span class="severity-badge ${severityClass}" style="margin: 5px 0; display: inline-block;">${disease.severity.toUpperCase()}</span>
+                    <p class="common-symptoms"><strong>Common:</strong> ${commonSymptomNames}...</p>
+                `;
+                
+                grid.appendChild(card);
+            });
+        }
+
+        function searchDiseases() {
+            const searchTerm = document.getElementById('diseaseSearch').value.toLowerCase();
+            const grid = document.getElementById('diseaseGrid');
+            
+            const filtered = diseaseDatabase.filter(d => 
+                d.name.toLowerCase().includes(searchTerm) ||
+                d.description.toLowerCase().includes(searchTerm)
+            );
+            
+            grid.innerHTML = '';
+            
+            filtered.forEach(disease => {
+                const card = document.createElement('div');
+                card.className = 'disease-card';
+                card.onclick = () => showDiseaseDetails(disease);
+                
+                const severityClass = disease.severity === 'low' ? 'severity-low' : 
+                                    disease.severity === 'medium' ? 'severity-medium' : 'severity-high';
+                
+                card.innerHTML = `
+                    <h4>${disease.name}</h4>
+                    <span class="severity-badge ${severityClass}" style="margin: 5px 0; display: inline-block;">${disease.severity.toUpperCase()}</span>
+                    <p>${disease.description.substring(0, 100)}...</p>
+                `;
+                
+                grid.appendChild(card);
+            });
+        }
+
+        function showDiseaseDetails(disease) {
+            const severityClass = disease.severity === 'low' ? 'severity-low' : 
+                                disease.severity === 'medium' ? 'severity-medium' : 'severity-high';
+            
+            const symptomNames = disease.symptoms.map(id => {
+                const symptom = symptomsDatabase.find(s => s.id === id);
+                return symptom ? symptom.name : '';
+            }).join(', ');
+            
+            alert(`
+                ${disease.name}
+                Severity: ${disease.severity.toUpperCase()}
+                
+                Description: ${disease.description}
+                
+                Common Symptoms: ${symptomNames}
+                
+                Risk Factors: ${disease.riskFactors.join(', ')}
+                
+                Recommendations:
+                ${disease.recommendations.map(r => '• ' + r).join('\n')}
+                
+                Prevention:
+                ${disease.prevention.map(p => '• ' + p).join('\n')}
+            `);
         }
 
         // ==================== CAMERA FUNCTIONS ====================
@@ -1525,7 +2239,7 @@
             return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
         }
 
-        // ==================== AI ANALYSIS ====================
+        // ==================== AI DIAGNOSIS ====================
         function validateForm() {
             const patientName = document.getElementById('patientName').value;
             const patientAge = document.getElementById('patientAge').value;
@@ -1542,109 +2256,265 @@
             }
             
             document.getElementById('analyzeBtn').disabled = true;
-            document.getElementById('analyzeBtn').textContent = '⏳ ' + (currentLanguage === 'en' ? 'Analyzing...' : 
-                currentLanguage === 'ta' ? 'பகுப்பாய்வு செய்கிறது...' :
-                currentLanguage === 'te' ? 'విశ్లేషిస్తోంది...' : 'ವಿಶ್ಲೇಷಿಸಲಾಗುತ್ತಿದೆ...');
+            document.getElementById('analyzeBtn').textContent = '⏳ ' + (currentLanguage === 'en' ? 'Diagnosing...' : 
+                currentLanguage === 'ta' ? 'கண்டறிகிறது...' :
+                currentLanguage === 'te' ? 'నిర్ధారిస్తోంది...' : 'ನಿರ್ಣಯಿಸಲಾಗುತ್ತಿದೆ...');
             
             setTimeout(async () => {
-                // Simulate AI analysis based on vitals
-                const temperature = parseFloat(document.getElementById('temperature').value);
-                const heartRate = parseInt(document.getElementById('heartRate').value);
-                const bpSystolic = parseInt(document.getElementById('bpSystolic').value);
-                
-                let riskFactors = 0;
-                
-                // Check for abnormal vitals
-                if (temperature && (temperature < 36.1 || temperature > 37.2)) riskFactors++;
-                if (heartRate && (heartRate < 60 || heartRate > 100)) riskFactors++;
-                if (bpSystolic && (bpSystolic < 90 || bpSystolic > 140)) riskFactors++;
-                
-                const random = Math.random();
-                let result;
-                
-                if (riskFactors > 1 || random < 0.3) {
-                    result = {
-                        status: 'followup',
-                        statusText: translations[currentLanguage].followUp || '⚠️ Needs Follow-up',
-                        description: translations[currentLanguage].potentialIssues || 'Potential health indicators detected',
-                        confidence: 75 + Math.random() * 15,
-                        riskLevel: 'Medium',
-                        requiresFollowUp: true,
-                        recommendations: [
-                            'Visit Primary Health Center within 7 days',
-                            'Show this report to the doctor',
-                            'Increase fluid intake',
-                            'Rest adequately'
-                        ]
-                    };
-                } else {
-                    result = {
-                        status: 'healthy',
-                        statusText: '✅ ' + (translations[currentLanguage].healthy || 'Healthy'),
-                        description: translations[currentLanguage].noConcerns || 'No immediate health concerns detected',
-                        confidence: 85 + Math.random() * 10,
-                        riskLevel: 'Low',
-                        requiresFollowUp: false,
-                        recommendations: [
-                            'Continue regular diet',
-                            'Stay hydrated',
-                            'Schedule next screening in 3 months',
-                            'Maintain good hygiene'
-                        ]
-                    };
-                }
-                
-                displayResults(result);
-                
-                // Save to database
-                await saveScreening(result);
+                const diagnosis = performAIDiagnosis();
+                displayDiagnosis(diagnosis);
+                await saveDiagnosis(diagnosis);
                 
                 document.getElementById('analyzeBtn').disabled = false;
-                document.getElementById('analyzeBtn').textContent = '🔬 ' + (translations[currentLanguage].analyze || 'Analyze Health Status');
+                document.getElementById('analyzeBtn').textContent = '🔬 ' + (translations[currentLanguage].analyze || 'AI Diagnosis & Health Analysis');
             }, 3000);
         }
 
-        function displayResults(result) {
-            document.getElementById('results').style.display = 'block';
+        function performAIDiagnosis() {
+            const age = parseInt(document.getElementById('patientAge').value);
+            const temperature = parseFloat(document.getElementById('temperature').value);
+            const heartRate = parseInt(document.getElementById('heartRate').value);
+            const bpSystolic = parseInt(document.getElementById('bpSystolic').value);
+            const oxygen = parseInt(document.getElementById('oxygen').value);
+            const bloodSugar = parseInt(document.getElementById('bloodSugar').value);
             
-            document.getElementById('statusIcon').textContent = result.status === 'healthy' ? '✅' : '⚠️';
-            document.getElementById('statusTitle').textContent = result.statusText;
-            document.getElementById('statusTitle').style.color = result.status === 'healthy' ? '#16a34a' : '#dc2626';
-            document.getElementById('statusDescription').textContent = result.description;
+            // Find matching diseases based on symptoms
+            const matches = diseaseDatabase.map(disease => {
+                const matchingSymptoms = disease.symptoms.filter(s => selectedSymptoms.includes(s));
+                const symptomScore = (matchingSymptoms.length / Math.max(disease.symptoms.length, 1)) * 40; // 40% weight
+                
+                // Vital-based scoring
+                let vitalScore = 0;
+                
+                if (temperature) {
+                    if (temperature > 38) vitalScore += disease.category === 'infectious' ? 15 : 5;
+                    if (temperature < 36) vitalScore += 5;
+                }
+                
+                if (heartRate) {
+                    if (heartRate > 100) vitalScore += 10;
+                    if (heartRate < 60) vitalScore += 5;
+                }
+                
+                if (bpSystolic) {
+                    if (bpSystolic > 140) vitalScore += disease.category === 'cardiovascular' ? 15 : 10;
+                    if (bpSystolic < 90) vitalScore += 10;
+                }
+                
+                if (oxygen && oxygen < 95) {
+                    vitalScore += disease.category === 'respiratory' ? 20 : 10;
+                }
+                
+                if (bloodSugar) {
+                    if (bloodSugar > 140) vitalScore += disease.category === 'metabolic' ? 15 : 5;
+                    if (bloodSugar < 70) vitalScore += 10;
+                }
+                
+                const totalScore = symptomScore + vitalScore;
+                
+                return {
+                    ...disease,
+                    matchScore: totalScore,
+                    matchingSymptoms: matchingSymptoms.length,
+                    symptomScore: symptomScore,
+                    vitalScore: vitalScore
+                };
+            }).filter(d => d.matchScore > 20)
+              .sort((a, b) => b.matchScore - a.matchScore);
             
-            document.getElementById('confidenceBar').style.width = `${result.confidence}%`;
-            document.getElementById('confidenceText').textContent = `${Math.round(result.confidence)}%`;
-            
-            const recList = document.getElementById('recList');
-            recList.innerHTML = '';
-            result.recommendations.forEach(rec => {
-                const li = document.createElement('li');
-                li.textContent = rec;
-                recList.appendChild(li);
+            // Age-based adjustments
+            matches.forEach(d => {
+                if (age > 60 && d.severity === 'high') {
+                    d.matchScore += 10;
+                }
+                if (age < 5 && d.category === 'respiratory') {
+                    d.matchScore += 10;
+                }
             });
             
+            matches.sort((a, b) => b.matchScore - a.matchScore);
+            
+            return matches[0] || {
+                name: 'Unknown',
+                description: 'Unable to determine specific condition',
+                severity: 'low',
+                matchScore: 50,
+                recommendations: ['Consult a healthcare provider', 'Monitor symptoms', 'Rest and hydrate'],
+                riskFactors: ['Insufficient data'],
+                prevention: ['Regular checkups', 'Healthy lifestyle']
+            };
+        }
+
+        function displayDiagnosis(diagnosis) {
+            const resultsDiv = document.getElementById('results');
+            const severityClass = diagnosis.severity === 'low' ? 'severity-low' : 
+                                diagnosis.severity === 'medium' ? 'severity-medium' : 'severity-high';
+            
+            const matchPercentage = Math.min(99, Math.round(diagnosis.matchScore));
+            
+            let html = `
+                <div class="diagnosis-header">
+                    <div class="diagnosis-icon">🩺</div>
+                    <div class="diagnosis-info">
+                        <h3>${diagnosis.name}</h3>
+                        <span class="severity-badge ${severityClass}">${diagnosis.severity.toUpperCase()} SEVERITY</span>
+                        <p style="margin-top: 10px;">${diagnosis.description}</p>
+                    </div>
+                </div>
+                
+                <div class="confidence-bar">
+                    <div class="confidence-fill" style="width: ${matchPercentage}%"></div>
+                </div>
+                <p><strong>${translations[currentLanguage].confidence || 'Confidence'}:</strong> ${matchPercentage}%</p>
+                
+                <div class="disease-info">
+                    <h4>📋 ${translations[currentLanguage].recommendations || 'Recommendations'}</h4>
+                    <ul>
+                        ${diagnosis.recommendations.map(r => `<li>${r}</li>`).join('')}
+                    </ul>
+                </div>
+                
+                <div class="disease-info">
+                    <h4>⚠️ Risk Factors</h4>
+                    <ul>
+                        ${diagnosis.riskFactors.map(r => `<li>${r}</li>`).join('')}
+                    </ul>
+                </div>
+                
+                <div class="disease-info">
+                    <h4>🛡️ Prevention Tips</h4>
+                    <ul>
+                        ${diagnosis.prevention.map(p => `<li>${p}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+            
             if (audioBlob) {
-                document.getElementById('voicePlayer').style.display = 'flex';
+                html += `
+                    <div class="voice-player">
+                        <button class="play-btn" onclick="playResultAudio()">▶️</button>
+                        <span>${translations[currentLanguage].recordedSymptoms || 'Recorded symptoms available'}</span>
+                    </div>
+                `;
             }
+            
+            html += `
+                <div class="result-actions">
+                    <button class="btn btn-secondary" onclick="saveResult()">💾 ${translations[currentLanguage].save || 'Save'}</button>
+                    <button class="btn btn-primary" onclick="printReport()">🖨️ ${translations[currentLanguage].print || 'Print'}</button>
+                    <button class="btn btn-success" onclick="newScreening()">➕ ${translations[currentLanguage].new || 'New Diagnosis'}</button>
+                </div>
+            `;
+            
+            resultsDiv.innerHTML = html;
+            resultsDiv.style.display = 'block';
+        }
+
+        async function saveDiagnosis(diagnosis) {
+            const patientName = document.getElementById('patientName').value;
+            const patientAge = document.getElementById('patientAge').value;
+            const patientGender = document.getElementById('patientGender').value;
+            const patientDistrict = document.getElementById('patientDistrict').value;
+            const symptomsText = document.getElementById('symptomsText').value;
+            
+            const screening = {
+                patient_name: patientName,
+                age: parseInt(patientAge) || null,
+                gender: patientGender,
+                district: patientDistrict,
+                diagnosis: diagnosis.name,
+                severity: diagnosis.severity,
+                confidence: Math.min(99, Math.round(diagnosis.matchScore)),
+                symptoms: selectedSymptoms,
+                symptoms_text: symptomsText,
+                photo_path: capturedImage,
+                audio_data: audioBlob ? URL.createObjectURL(audioBlob) : null,
+                recommendations: diagnosis.recommendations,
+                risk_factors: diagnosis.riskFactors,
+                prevention: diagnosis.prevention,
+                created_at: new Date().toISOString(),
+                offline_sync: 0
+            };
+            
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction(['screenings'], 'readwrite');
+                const store = transaction.objectStore('screenings');
+                
+                const request = store.add(screening);
+                
+                request.onsuccess = () => {
+                    showToast(translations[currentLanguage].save || 'Saved successfully');
+                    screenings.push({...screening, id: request.result});
+                    
+                    if (!navigator.onLine) {
+                        let offlineQueue = JSON.parse(localStorage.getItem('offlineQueue') || '[]');
+                        offlineQueue.push({
+                            type: 'diagnosis',
+                            data: screening,
+                            timestamp: new Date().toISOString()
+                        });
+                        localStorage.setItem('offlineQueue', JSON.stringify(offlineQueue));
+                        updateSyncBadge();
+                    }
+                    
+                    displayScreenings();
+                    updateStats();
+                    resolve();
+                };
+                
+                request.onerror = () => {
+                    showToast('Error saving diagnosis', 'error');
+                    reject();
+                };
+            });
+        }
+
+        async function loadScreenings() {
+            return new Promise((resolve) => {
+                if (!db) return resolve();
+                
+                const transaction = db.transaction(['screenings'], 'readonly');
+                const store = transaction.objectStore('screenings');
+                const request = store.getAll();
+                
+                request.onsuccess = () => {
+                    screenings = request.result || [];
+                    resolve();
+                };
+                
+                request.onerror = () => {
+                    screenings = [];
+                    resolve();
+                };
+            });
         }
 
         // ==================== UI FUNCTIONS ====================
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(`tab${tab.charAt(0).toUpperCase() + tab.slice(1)}`).classList.add('active');
+            
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(`${tab}Tab`).classList.add('active');
+        }
+
         function displayScreenings() {
             const tbody = document.getElementById('tableBody');
             const recent = screenings.slice(-10).reverse();
             
             if (recent.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center;">' + 
-                    (translations[currentLanguage].noScreenings || 'No screenings yet') + '</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align: center;">' + 
+                    (translations[currentLanguage].noScreenings || 'No diagnoses yet') + '</td></tr>';
                 return;
             }
             
             tbody.innerHTML = recent.map(s => {
                 const date = new Date(s.created_at).toLocaleString();
-                const statusClass = s.prediction === 'healthy' ? 'healthy' : 'followup';
-                const statusText = s.prediction === 'healthy' ? 
-                    '✅ ' + (translations[currentLanguage].healthy || 'Healthy') : 
-                    '⚠️ ' + (translations[currentLanguage].followUp || 'Follow-up');
+                const severityClass = s.severity === 'low' ? 'low' : s.severity === 'medium' ? 'medium' : 'high';
                 
                 return `
                     <tr>
@@ -1652,9 +2522,10 @@
                         <td>${s.patient_name || 'N/A'}</td>
                         <td>${s.age || 'N/A'}</td>
                         <td>${s.district || 'N/A'}</td>
-                        <td><span class="status-badge ${statusClass}">${statusText}</span></td>
-                        <td>${Math.round(s.confidence || 0)}%</td>
-                        <td><button class="action-btn" onclick="viewScreening(${s.id})">${translations[currentLanguage].action || 'View'}</button></td>
+                        <td>${s.diagnosis || 'N/A'}</td>
+                        <td><span class="status-badge ${severityClass}">${s.severity ? s.severity.toUpperCase() : 'N/A'}</span></td>
+                        <td>${s.confidence || 0}%</td>
+                        <td><button class="action-btn" onclick="viewDiagnosis(${s.id})">${translations[currentLanguage].viewDetails || 'View'}</button></td>
                     </tr>
                 `;
             }).join('');
@@ -1669,8 +2540,8 @@
             ).length;
             document.getElementById('todayScreenings').textContent = todayCount;
             
-            const followUps = screenings.filter(s => s.follow_up_required === 1).length;
-            document.getElementById('followUps').textContent = followUps;
+            const highRisk = screenings.filter(s => s.severity === 'high').length;
+            document.getElementById('highRisk').textContent = highRisk;
             
             const avgConf = screenings.reduce((acc, s) => acc + (s.confidence || 0), 0) / (screenings.length || 1);
             document.getElementById('avgConfidence').textContent = Math.round(avgConf) + '%';
@@ -1742,6 +2613,7 @@
             audioBlob = null;
             audioUrl = null;
             recordingSeconds = 0;
+            selectedSymptoms = [];
             
             document.getElementById('results').style.display = 'none';
             document.getElementById('previewArea').style.display = 'none';
@@ -1758,6 +2630,12 @@
             document.getElementById('bpSystolic').value = '';
             document.getElementById('bpDiastolic').value = '';
             document.getElementById('heartRate').value = '';
+            document.getElementById('oxygen').value = '';
+            document.getElementById('bloodSugar').value = '';
+            
+            // Clear symptoms
+            updateSymptomTags();
+            loadSymptoms();
             
             stopCamera();
             document.getElementById('startCameraBtn').style.display = 'inline-block';
@@ -1767,16 +2645,20 @@
             validateForm();
         }
 
-        function viewScreening(id) {
+        function viewDiagnosis(id) {
             const screening = screenings.find(s => s.id === id);
             if (screening) {
-                alert(`Screening Details:
+                alert(`Diagnosis Details:
                     Patient: ${screening.patient_name}
                     Age: ${screening.age}
                     District: ${screening.district}
-                    Status: ${screening.prediction}
-                    Confidence: ${Math.round(screening.confidence)}%
-                    Date: ${new Date(screening.created_at).toLocaleString()}`);
+                    Diagnosis: ${screening.diagnosis}
+                    Severity: ${screening.severity}
+                    Confidence: ${screening.confidence}%
+                    Date: ${new Date(screening.created_at).toLocaleString()}
+                    
+                    Recommendations:
+                    ${Array.isArray(screening.recommendations) ? screening.recommendations.map(r => '• ' + r).join('\n') : ''}`);
             }
         }
 
@@ -1787,8 +2669,15 @@
             }
         }
 
+        function proceedToFullDiagnosis() {
+            // Switch to screening tab and scroll to vitals
+            switchTab('screening');
+            document.getElementById('vitals').scrollIntoView({ behavior: 'smooth' });
+        }
+
         // Make functions global
         window.switchLanguage = switchLanguage;
+        window.switchTab = switchTab;
         window.startCamera = startCamera;
         window.captureImage = captureImage;
         window.resetCamera = resetCamera;
@@ -1796,12 +2685,18 @@
         window.toggleRecording = toggleRecording;
         window.playRecording = playRecording;
         window.analyzeHealth = analyzeHealth;
+        window.analyzeSymptoms = analyzeSymptoms;
+        window.filterSymptoms = filterSymptoms;
+        window.toggleSymptom = toggleSymptom;
+        window.removeSymptom = removeSymptom;
+        window.searchDiseases = searchDiseases;
         window.saveResult = saveResult;
         window.printReport = printReport;
         window.newScreening = newScreening;
         window.syncNow = syncNow;
-        window.viewScreening = viewScreening;
+        window.viewDiagnosis = viewDiagnosis;
         window.playResultAudio = playResultAudio;
+        window.proceedToFullDiagnosis = proceedToFullDiagnosis;
     </script>
 </body>
 </html>

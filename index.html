@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RuralCare AI - Tamil Nadu Health Screening with AI Disease Diagnosis</title>
+    <title>RuralCare AI - AI Symptom Checker & Disease Diagnosis</title>
     <style>
         * {
             margin: 0;
@@ -31,124 +32,38 @@
             background: var(--background);
             color: var(--text);
             line-height: 1.6;
-            padding: 15px;
-        }
-
-        /* Language Switcher */
-        .language-bar {
-            background: white;
-            padding: 10px 20px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            flex-wrap: wrap;
-        }
-
-        .lang-btn {
-            padding: 6px 15px;
-            border: 2px solid var(--primary);
-            background: white;
-            color: var(--primary);
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        .lang-btn.active {
-            background: var(--primary);
-            color: white;
-        }
-
-        /* Status Bar */
-        .status-bar {
-            background: linear-gradient(135deg, #155e75, #164e63);
-            color: white;
-            padding: 12px 20px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-
-        .connection-status {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .status-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: #4ade80;
-            animation: pulse 2s infinite;
-        }
-
-        .status-dot.offline {
-            background: #f87171;
-        }
-
-        .sync-btn {
-            background: white;
-            color: #155e75;
-            border: none;
-            padding: 6px 15px;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .sync-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        .sync-badge {
-            background: rgba(255,255,255,0.2);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         /* Header */
         .header {
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
-            padding: 20px;
-            border-radius: 16px;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
         }
 
         .header h1 {
-            font-size: 2rem;
-            margin-bottom: 5px;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
         }
 
-        .tamil-nadu-badge {
-            display: inline-block;
-            background: rgba(255,255,255,0.2);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            margin-top: 5px;
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
         }
 
+        /* Stats Grid */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            margin-top: 20px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 30px 0;
         }
 
         @media (max-width: 600px) {
@@ -158,171 +73,103 @@
         }
 
         .stat-card {
-            background: rgba(255,255,255,0.1);
-            padding: 12px;
-            border-radius: 12px;
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
             text-align: center;
-            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--primary);
         }
 
         .stat-card .number {
-            font-size: 1.5rem;
+            font-size: 2rem;
             font-weight: bold;
+            color: var(--primary);
             display: block;
         }
 
         .stat-card .label {
-            font-size: 0.75rem;
-            opacity: 0.9;
-        }
-
-        /* Tabs */
-        .tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-
-        .tab-btn {
-            padding: 12px 25px;
-            border: none;
-            border-radius: 10px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            background: white;
+            font-size: 0.9rem;
             color: var(--gray);
-            flex: 1;
-            min-width: 150px;
         }
 
-        .tab-btn.active {
-            background: var(--primary);
-            color: white;
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        /* Form Section */
-        .form-section {
-            background: white;
-            border-radius: 16px;
-            padding: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            margin-bottom: 20px;
-        }
-
-        .form-section h2 {
-            color: var(--primary);
-            margin-bottom: 15px;
-            font-size: 1.3rem;
+        /* Section Headers */
+        .section-header {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            margin: 30px 0 20px;
         }
 
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 15px;
-            margin-bottom: 15px;
+        .section-header h2 {
+            color: var(--primary);
+            font-size: 1.8rem;
         }
 
-        .form-group {
-            display: flex;
-            flex-direction: column;
+        .section-header .icon {
+            font-size: 2rem;
         }
 
-        .form-group label {
-            font-weight: 600;
-            margin-bottom: 5px;
-            color: var(--gray);
-            font-size: 0.9rem;
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            padding: 10px;
-            border: 2px solid var(--border);
-            border-radius: 8px;
-            font-size: 0.95rem;
-            transition: all 0.3s;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1);
-        }
-
-        /* Symptom Checker */
+        /* AI Symptom Checker */
         .symptom-checker {
-            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
-            border-radius: 16px;
-            padding: 20px;
-            margin: 20px 0;
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
         }
 
         .symptom-categories {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            margin: 15px 0;
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
         }
 
         .category-btn {
-            padding: 10px;
-            border: 2px solid var(--info);
+            padding: 10px 20px;
+            border: 2px solid var(--primary);
             background: white;
-            color: var(--info);
-            border-radius: 8px;
+            color: var(--primary);
+            border-radius: 30px;
             cursor: pointer;
             font-weight: 600;
             transition: all 0.3s;
         }
 
         .category-btn.active {
-            background: var(--info);
+            background: var(--primary);
             color: white;
         }
 
         .symptoms-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 10px;
-            margin: 15px 0;
-            max-height: 300px;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 12px;
+            margin: 20px 0;
+            max-height: 400px;
             overflow-y: auto;
-            padding: 10px;
-            background: white;
-            border-radius: 8px;
+            padding: 15px;
+            background: var(--light);
+            border-radius: 12px;
         }
 
         .symptom-item {
             display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 8px;
-            background: var(--light);
-            border-radius: 6px;
+            gap: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
             cursor: pointer;
             transition: all 0.2s;
+            border: 2px solid transparent;
         }
 
         .symptom-item:hover {
-            background: var(--primary);
-            color: white;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
         .symptom-item.selected {
@@ -337,199 +184,376 @@
         }
 
         .selected-symptoms {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 15px 0;
+            background: var(--light);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+
+        .selected-symptoms h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .symptom-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .symptom-tag {
-            display: inline-block;
-            padding: 5px 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
             background: var(--primary);
             color: white;
-            border-radius: 20px;
-            margin: 5px;
-            font-size: 0.9rem;
+            border-radius: 30px;
+            font-size: 0.95rem;
         }
 
         .symptom-tag button {
             background: none;
             border: none;
             color: white;
-            margin-left: 8px;
             cursor: pointer;
             font-weight: bold;
+            font-size: 1.2rem;
         }
 
-        /* Vitals Grid */
+        /* Vitals Section */
+        .vitals-section {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
         .vitals-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 10px;
-            margin: 15px 0;
-            padding: 15px;
-            background: #f8fafc;
-            border-radius: 12px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
         }
 
-        .vital-item {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .vital-item label {
-            font-size: 0.8rem;
-            color: var(--gray);
-            margin-bottom: 3px;
-        }
-
-        .vital-item input {
-            padding: 8px;
+        .vital-card {
+            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+            padding: 20px;
+            border-radius: 16px;
+            text-align: center;
             border: 2px solid var(--border);
-            border-radius: 6px;
+        }
+
+        .vital-card label {
+            display: block;
             font-size: 0.9rem;
-        }
-
-        /* Camera Section */
-        .camera-section {
-            background: #1e293b;
-            border-radius: 12px;
-            padding: 15px;
-            margin: 15px 0;
-        }
-
-        .camera-preview {
-            width: 100%;
-            max-width: 400px;
-            margin: 0 auto;
-            position: relative;
-            background: #0f172a;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        #video, #canvas {
-            width: 100%;
-            aspect-ratio: 4/3;
-            display: block;
-        }
-
-        .camera-controls {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            margin-top: 15px;
-            flex-wrap: wrap;
-        }
-
-        .preview-image {
-            width: 100%;
-            max-width: 250px;
-            border-radius: 8px;
-            margin: 10px auto;
-            display: block;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
-
-        /* Voice Recording Section */
-        .voice-section {
-            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
-            border-radius: 12px;
-            padding: 15px;
-            margin: 15px 0;
-            border: 2px dashed #0284c7;
-        }
-
-        .voice-section h3 {
-            color: #0369a1;
+            color: var(--gray);
             margin-bottom: 10px;
+        }
+
+        .vital-card input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
             font-size: 1.1rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            text-align: center;
+            transition: all 0.3s;
         }
 
-        .voice-controls {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            flex-wrap: wrap;
+        .vital-card input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1);
         }
 
-        .record-btn {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: #dc2626;
+        .vital-unit {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-top: 5px;
+        }
+
+        /* Analyze Button */
+        .analyze-btn {
+            width: 100%;
+            padding: 20px;
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, #f97316, #dc2626);
             color: white;
             border: none;
-            font-size: 1.5rem;
+            border-radius: 50px;
+            font-weight: bold;
             cursor: pointer;
+            margin: 30px 0;
             transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 5px 15px rgba(220, 38, 38, 0.3);
+            box-shadow: 0 10px 30px rgba(249,115,22,0.3);
         }
 
-        .record-btn.recording {
-            animation: pulse 1s infinite;
-            background: #b91c1c;
+        .analyze-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(249,115,22,0.4);
         }
 
-        .record-btn:disabled {
+        .analyze-btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
         }
 
-        .play-btn {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: var(--primary);
-            color: white;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            box-shadow: 0 5px 15px rgba(13, 148, 136, 0.3);
+        /* Results Card */
+        .results-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border-left: 5px solid var(--primary);
         }
 
-        .audio-wave {
-            flex: 1;
-            height: 50px;
-            background: white;
-            border-radius: 25px;
+        .diagnosis-header {
             display: flex;
             align-items: center;
-            padding: 0 15px;
-            color: var(--gray);
-            border: 2px solid var(--border);
+            gap: 20px;
+            padding: 20px;
+            background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+            border-radius: 16px;
+            margin-bottom: 25px;
+        }
+
+        .diagnosis-icon {
+            font-size: 4rem;
+        }
+
+        .diagnosis-info {
+            flex: 1;
+        }
+
+        .diagnosis-info h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .severity-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin: 10px 0;
+        }
+
+        .severity-low {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .severity-medium {
+            background: #fed7aa;
+            color: #9a3412;
+        }
+
+        .severity-high {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .confidence-bar {
+            width: 100%;
+            height: 20px;
+            background: var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+
+        .confidence-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), #2dd4bf);
+            transition: width 0.5s;
+        }
+
+        .disease-info {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 15px 0;
+        }
+
+        .disease-info h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .symptom-match {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .match-tag {
+            padding: 6px 15px;
+            border-radius: 30px;
             font-size: 0.9rem;
         }
 
-        .timer {
-            font-size: 1.1rem;
-            font-weight: bold;
+        .match-high {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .match-medium {
+            background: #fed7aa;
+            color: #9a3412;
+        }
+
+        .match-low {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .recommendations {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 15px 0;
+        }
+
+        .recommendations ul {
+            padding-left: 25px;
+            margin-top: 10px;
+        }
+
+        .recommendations li {
+            margin: 8px 0;
+        }
+
+        .result-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+            margin-top: 25px;
+        }
+
+        /* Disease Library */
+        .disease-library {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin: 30px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            margin: 20px 0;
+            font-size: 1rem;
+        }
+
+        .disease-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            max-height: 500px;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        .disease-card {
+            background: var(--light);
+            border-radius: 16px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .disease-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            border-color: var(--primary);
+        }
+
+        .disease-card h3 {
             color: var(--primary);
-            font-family: monospace;
+            margin-bottom: 10px;
+        }
+
+        /* Recent Diagnoses Table */
+        .recent-section {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin: 30px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: var(--primary);
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .status-badge.low {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-badge.medium {
+            background: #fed7aa;
+            color: #9a3412;
+        }
+
+        .status-badge.high {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .action-btn {
+            padding: 6px 12px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
         }
 
         /* Buttons */
         .btn {
-            padding: 10px 20px;
+            padding: 12px 25px;
             border: none;
-            border-radius: 8px;
-            font-size: 0.95rem;
+            border-radius: 10px;
+            font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
         }
 
         .btn-primary {
@@ -553,324 +577,20 @@
             color: white;
         }
 
-        .btn-info {
-            background: var(--info);
-            color: white;
-        }
-
-        .btn-danger {
-            background: var(--danger);
-            color: white;
-        }
-
-        .analyze-btn {
-            width: 100%;
-            padding: 15px;
-            font-size: 1.2rem;
-            background: linear-gradient(135deg, #f97316, #dc2626);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-weight: bold;
-            cursor: pointer;
-            margin: 15px 0;
-            transition: all 0.3s;
-        }
-
-        .analyze-btn:hover:not(:disabled) {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(249,115,22,0.3);
-        }
-
-        .analyze-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        /* Results Card */
-        .results-card {
-            background: linear-gradient(135deg, #f0fdf4, #dcfce7);
-            border-radius: 16px;
-            padding: 20px;
-            margin: 20px 0;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            border-left: 5px solid var(--primary);
-        }
-
-        .diagnosis-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 15px;
-            background: white;
-            border-radius: 12px;
-            margin-bottom: 15px;
-        }
-
-        .diagnosis-icon {
-            font-size: 3rem;
-        }
-
-        .diagnosis-info {
-            flex: 1;
-        }
-
-        .diagnosis-info h3 {
-            font-size: 1.5rem;
-            margin-bottom: 5px;
-        }
-
-        .diagnosis-info .probability {
-            font-size: 1.1rem;
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        .severity-badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-
-        .severity-low {
-            background: #dcfce7;
-            color: #166534;
-        }
-
-        .severity-medium {
-            background: #fed7aa;
-            color: #9a3412;
-        }
-
-        .severity-high {
-            background: #fee2e2;
-            color: #991b1b;
-        }
-
-        .confidence-bar {
-            width: 100%;
-            height: 16px;
-            background: var(--border);
-            border-radius: 8px;
-            overflow: hidden;
-            margin: 12px 0;
-        }
-
-        .confidence-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), #2dd4bf);
-            transition: width 0.5s;
-        }
-
-        .disease-info {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 12px 0;
-        }
-
-        .disease-info h4 {
-            color: var(--primary);
-            margin-bottom: 10px;
-        }
-
-        .symptom-match {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin: 10px 0;
-        }
-
-        .match-tag {
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-        }
-
-        .match-high {
-            background: #dcfce7;
-            color: #166534;
-        }
-
-        .match-medium {
-            background: #fed7aa;
-            color: #9a3412;
-        }
-
-        .match-low {
-            background: #fee2e2;
-            color: #991b1b;
-        }
-
-        .recommendations {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 12px 0;
-        }
-
-        .recommendations ul {
-            padding-left: 20px;
-            margin-top: 8px;
-        }
-
-        .recommendations li {
-            margin: 5px 0;
-            font-size: 0.95rem;
-        }
-
-        .voice-player {
-            background: white;
-            padding: 12px;
-            border-radius: 8px;
-            margin: 12px 0;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .result-actions {
-            display: flex;
-            gap: 10px;
-            justify-content: flex-end;
-            margin-top: 15px;
-        }
-
-        /* Disease Library */
-        .disease-library {
-            background: white;
-            border-radius: 16px;
-            padding: 20px;
-            margin-top: 20px;
-        }
-
-        .search-box {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid var(--border);
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-size: 1rem;
-        }
-
-        .disease-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 15px;
-            max-height: 500px;
-            overflow-y: auto;
-            padding: 10px;
-        }
-
-        .disease-card {
-            background: var(--light);
-            border-radius: 12px;
-            padding: 15px;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: 2px solid transparent;
-        }
-
-        .disease-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            border-color: var(--primary);
-        }
-
-        .disease-card h4 {
-            color: var(--primary);
-            margin-bottom: 8px;
-        }
-
-        .disease-card .common-symptoms {
-            font-size: 0.9rem;
-            color: var(--gray);
-        }
-
-        /* Recent Screenings Table */
-        .recent-section {
-            background: white;
-            border-radius: 16px;
-            padding: 20px;
-            margin-top: 20px;
-        }
-
-        .recent-section h2 {
-            color: var(--primary);
-            margin-bottom: 15px;
-            font-size: 1.3rem;
-        }
-
-        .table-container {
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.9rem;
-        }
-
-        th {
-            background: var(--primary);
-            color: white;
-            padding: 12px;
-            text-align: left;
-        }
-
-        td {
-            padding: 10px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .status-badge {
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-
-        .status-badge.low {
-            background: #dcfce7;
-            color: #166534;
-        }
-
-        .status-badge.medium {
-            background: #fed7aa;
-            color: #9a3412;
-        }
-
-        .status-badge.high {
-            background: #fee2e2;
-            color: #991b1b;
-        }
-
-        .action-btn {
-            padding: 4px 8px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.8rem;
-        }
-
         /* Loading Spinner */
         .loading {
             text-align: center;
-            padding: 30px;
+            padding: 40px;
         }
 
         .spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid var(--border);
-            border-top: 4px solid var(--primary);
+            width: 50px;
+            height: 50px;
+            border: 5px solid var(--border);
+            border-top: 5px solid var(--primary);
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin: 0 auto 15px;
+            margin: 0 auto 20px;
         }
 
         @keyframes spin {
@@ -878,25 +598,19 @@
             100% { transform: rotate(360deg); }
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        /* Toast Notifications */
+        /* Toast Notification */
         .toast {
             position: fixed;
             bottom: 20px;
             right: 20px;
             background: var(--success);
             color: white;
-            padding: 12px 20px;
-            border-radius: 8px;
+            padding: 15px 25px;
+            border-radius: 10px;
             box-shadow: 0 5px 20px rgba(0,0,0,0.2);
             transform: translateX(400px);
             transition: transform 0.3s;
-            z-index: 1001;
-            font-size: 0.95rem;
+            z-index: 1000;
         }
 
         .toast.show {
@@ -908,277 +622,155 @@
         }
 
         /* Responsive */
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
             body { padding: 10px; }
-            .header h1 { font-size: 1.6rem; }
-            .form-grid { grid-template-columns: 1fr; }
-            .vitals-grid { grid-template-columns: repeat(2, 1fr); }
+            .header h1 { font-size: 2rem; }
+            .vitals-grid { grid-template-columns: 1fr; }
             .result-actions { flex-direction: column; }
             .btn { width: 100%; }
-            .tab-btn { min-width: 100%; }
         }
 
         /* Print */
         @media print {
-            .language-bar, .status-bar, .camera-section, .voice-section,
-            .btn, .analyze-btn, .result-actions, .tabs, .disease-library {
+            .analyze-btn, .result-actions, .disease-library {
                 display: none;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Language Switcher -->
-    <div class="language-bar">
-        <button class="lang-btn active" onclick="switchLanguage('en')" id="langEn">English</button>
-        <button class="lang-btn" onclick="switchLanguage('ta')" id="langTa">தமிழ்</button>
-        <button class="lang-btn" onclick="switchLanguage('te')" id="langTe">తెలుగు</button>
-        <button class="lang-btn" onclick="switchLanguage('kn')" id="langKn">ಕನ್ನಡ</button>
-    </div>
-
-    <!-- Status Bar -->
-    <div class="status-bar" id="statusBar">
-        <div class="connection-status">
-            <div class="status-dot offline" id="statusDot"></div>
-            <span id="connectionText" data-i18n="offline">Working Offline</span>
-        </div>
-        <div class="sync-badge" id="syncBadge">📤 0 <span data-i18n="pending">pending</span></div>
-        <button class="sync-btn" onclick="syncNow()" id="syncBtn">🔄 <span data-i18n="sync">Sync</span></button>
-    </div>
-
     <!-- Header -->
     <header class="header">
-        <h1>🏥 <span data-i18n="appName">RuralCare AI</span></h1>
-        <p data-i18n="subtitle">Tamil Nadu AI-Powered Disease Diagnosis with Voice Recording</p>
-        <span class="tamil-nadu-badge">📍 38 <span data-i18n="districts">Districts</span> • <span data-i18n="worksOffline">Works Offline</span></span>
-        
-        <div class="stats-grid" id="dashboardStats">
-            <div class="stat-card">
-                <span class="number" id="totalScreenings">0</span>
-                <span class="label" data-i18n="screenings">Screenings</span>
-            </div>
-            <div class="stat-card">
-                <span class="number" id="todayScreenings">0</span>
-                <span class="label" data-i18n="today">Today</span>
-            </div>
-            <div class="stat-card">
-                <span class="number" id="highRisk">0</span>
-                <span class="label" data-i18n="highRisk">High Risk</span>
-            </div>
-            <div class="stat-card">
-                <span class="number" id="avgConfidence">0%</span>
-                <span class="label" data-i18n="avgConfidence">Avg Confidence</span>
-            </div>
-        </div>
+        <h1>🏥 RuralCare AI</h1>
+        <p>AI-Powered Symptom Checker & Disease Diagnosis</p>
     </header>
 
-    <!-- Tabs -->
-    <div class="tabs">
-        <button class="tab-btn active" onclick="switchTab('screening')" id="tabScreening">🩺 Patient Screening</button>
-        <button class="tab-btn" onclick="switchTab('library')" id="tabLibrary">📚 Disease Library</button>
-    </div>
-
-    <!-- Screening Tab -->
-    <div id="screeningTab" class="tab-content active">
-        <!-- Patient Information -->
-        <div class="form-section">
-            <h2>📋 <span data-i18n="patientInfo">Patient Information</span></h2>
-            
-            <div class="form-grid">
-                <div class="form-group">
-                    <label data-i18n="fullName">Full Name *</label>
-                    <input type="text" id="patientName" placeholder="Enter full name" oninput="validateForm()">
-                </div>
-                <div class="form-group">
-                    <label data-i18n="age">Age *</label>
-                    <input type="number" id="patientAge" min="0" max="120" placeholder="Years" oninput="validateForm()">
-                </div>
-                <div class="form-group">
-                    <label data-i18n="gender">Gender</label>
-                    <select id="patientGender">
-                        <option value="male" data-i18n="male">Male</option>
-                        <option value="female" data-i18n="female">Female</option>
-                        <option value="other" data-i18n="other">Other</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label data-i18n="district">District *</label>
-                    <select id="patientDistrict" onchange="validateForm()">
-                        <option value="" data-i18n="selectDistrict">Select District</option>
-                    </select>
-                </div>
-            </div>
+    <!-- Stats -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <span class="number" id="totalDiagnoses">0</span>
+            <span class="label">Total Diagnoses</span>
         </div>
-
-        <!-- Symptom Checker -->
-        <div class="form-section">
-            <h2>🔍 <span data-i18n="symptomChecker">AI Symptom Checker</span></h2>
-            
-            <div class="symptom-checker">
-                <div class="symptom-categories" id="symptomCategories">
-                    <button class="category-btn active" onclick="filterSymptoms('all')">All Symptoms</button>
-                    <button class="category-btn" onclick="filterSymptoms('respiratory')">Respiratory</button>
-                    <button class="category-btn" onclick="filterSymptoms('digestive')">Digestive</button>
-                    <button class="category-btn" onclick="filterSymptoms('neurological')">Neurological</button>
-                    <button class="category-btn" onclick="filterSymptoms('muscular')">Muscular</button>
-                    <button class="category-btn" onclick="filterSymptoms('skin')">Skin</button>
-                    <button class="category-btn" onclick="filterSymptoms('general')">General</button>
-                </div>
-
-                <div class="symptoms-grid" id="symptomsGrid">
-                    <!-- Symptoms will be populated by JavaScript -->
-                </div>
-
-                <div class="selected-symptoms" id="selectedSymptoms">
-                    <strong data-i18n="selectedSymptoms">Selected Symptoms:</strong>
-                    <div id="symptomTags"></div>
-                </div>
-
-                <button class="btn btn-info" onclick="analyzeSymptoms()" id="analyzeSymptomsBtn">
-                    🔬 <span data-i18n="analyzeSymptoms">Analyze Symptoms</span>
-                </button>
-            </div>
+        <div class="stat-card">
+            <span class="number" id="todayDiagnoses">0</span>
+            <span class="label">Today</span>
         </div>
-
-        <!-- Vitals -->
-        <div class="form-section">
-            <h2>🩺 <span data-i18n="vitals">Vitals</span></h2>
-            
-            <div class="vitals-grid">
-                <div class="vital-item">
-                    <label data-i18n="weight">Weight (kg)</label>
-                    <input type="number" id="weight" step="0.1" min="0" max="200" placeholder="kg">
-                </div>
-                <div class="vital-item">
-                    <label data-i18n="height">Height (cm)</label>
-                    <input type="number" id="height" step="0.1" min="0" max="250" placeholder="cm">
-                </div>
-                <div class="vital-item">
-                    <label data-i18n="temperature">Temperature (°C)</label>
-                    <input type="number" id="temperature" step="0.1" min="35" max="42" placeholder="°C">
-                </div>
-                <div class="vital-item">
-                    <label data-i18n="bp">BP (Systolic/Diastolic)</label>
-                    <div style="display: flex; gap: 5px;">
-                        <input type="number" id="bpSystolic" min="70" max="200" placeholder="Sys" style="width: 50%;">
-                        <input type="number" id="bpDiastolic" min="40" max="130" placeholder="Dias" style="width: 50%;">
-                    </div>
-                </div>
-                <div class="vital-item">
-                    <label data-i18n="heartRate">Heart Rate (bpm)</label>
-                    <input type="number" id="heartRate" min="40" max="200" placeholder="bpm">
-                </div>
-                <div class="vital-item">
-                    <label data-i18n="oxygen">Oxygen Saturation (%)</label>
-                    <input type="number" id="oxygen" min="70" max="100" placeholder="SpO2">
-                </div>
-                <div class="vital-item">
-                    <label data-i18n="bloodSugar">Blood Sugar (mg/dL)</label>
-                    <input type="number" id="bloodSugar" min="40" max="500" placeholder="Glucose">
-                </div>
-            </div>
-        </div>
-
-        <!-- Photo Capture -->
-        <div class="form-section">
-            <h2>📸 <span data-i18n="photoCapture">Photo Capture</span></h2>
-            
-            <div class="camera-section">
-                <div class="camera-preview">
-                    <video id="video" autoplay playsinline></video>
-                    <canvas id="canvas" style="display: none;"></canvas>
-                </div>
-                
-                <div class="camera-controls">
-                    <button class="btn btn-primary" onclick="startCamera()" id="startCameraBtn">
-                        📷 <span data-i18n="startCamera">Start Camera</span>
-                    </button>
-                    <button class="btn btn-success" onclick="captureImage()" id="captureBtn" style="display: none;">
-                        📸 <span data-i18n="capture">Capture</span>
-                    </button>
-                    <button class="btn btn-secondary" onclick="resetCamera()" id="retakeBtn" style="display: none;">
-                        🔄 <span data-i18n="retake">Retake</span>
-                    </button>
-                    <label class="btn btn-secondary">
-                        📁 <span data-i18n="upload">Upload</span>
-                        <input type="file" id="imageUpload" accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
-                    </label>
-                </div>
-
-                <div id="previewArea" style="display: none;">
-                    <img id="preview" class="preview-image">
-                </div>
-            </div>
-        </div>
-
-        <!-- Voice Recording -->
-        <div class="form-section">
-            <h2>🎤 <span data-i18n="voiceRecording">Voice Recording</span></h2>
-            
-            <div class="voice-section">
-                <h3>🎙️ <span data-i18n="recordSymptoms">Record Symptoms Description</span></h3>
-                
-                <div class="voice-controls">
-                    <button class="record-btn" id="recordBtn" onclick="toggleRecording()">
-                        ⏺️
-                    </button>
-                    <button class="play-btn" id="playBtn" onclick="playRecording()" disabled>
-                        ▶️
-                    </button>
-                    <div class="audio-wave" id="audioWave">
-                        <span class="timer" id="timer">00:00</span>
-                    </div>
-                </div>
-
-                <div class="symptoms-text">
-                    <textarea id="symptomsText" placeholder="Or type detailed symptoms here..." rows="3"></textarea>
-                </div>
-            </div>
-        </div>
-
-        <!-- Analyze Button -->
-        <button class="analyze-btn" onclick="analyzeHealth()" id="analyzeBtn" disabled>
-            🔬 <span data-i18n="analyze">AI Diagnosis & Health Analysis</span>
-        </button>
-
-        <!-- Results Card -->
-        <div id="results" class="results-card" style="display: none;">
-            <!-- Results will be populated by JavaScript -->
+        <div class="stat-card">
+            <span class="number" id="highRisk">0</span>
+            <span class="label">High Risk</span>
         </div>
     </div>
 
-    <!-- Disease Library Tab -->
-    <div id="libraryTab" class="tab-content">
-        <div class="disease-library">
-            <h2>📚 <span data-i18n="diseaseLibrary">Disease Library</span></h2>
-            
-            <input type="text" class="search-box" id="diseaseSearch" placeholder="🔍 Search diseases..." onkeyup="searchDiseases()">
+    <!-- AI Symptom Checker -->
+    <div class="symptom-checker">
+        <div class="section-header">
+            <span class="icon">🔍</span>
+            <h2>AI Symptom Checker</h2>
+        </div>
+        
+        <div class="symptom-categories" id="symptomCategories">
+            <button class="category-btn active" onclick="filterSymptoms('all')">All Symptoms</button>
+            <button class="category-btn" onclick="filterSymptoms('respiratory')">Respiratory</button>
+            <button class="category-btn" onclick="filterSymptoms('digestive')">Digestive</button>
+            <button class="category-btn" onclick="filterSymptoms('neurological')">Neurological</button>
+            <button class="category-btn" onclick="filterSymptoms('muscular')">Muscular</button>
+            <button class="category-btn" onclick="filterSymptoms('skin')">Skin</button>
+            <button class="category-btn" onclick="filterSymptoms('general')">General</button>
+            <button class="category-btn" onclick="filterSymptoms('cardiovascular')">Cardiovascular</button>
+            <button class="category-btn" onclick="filterSymptoms('metabolic')">Metabolic</button>
+            <button class="category-btn" onclick="filterSymptoms('infectious')">Infectious</button>
+        </div>
 
-            <div class="disease-grid" id="diseaseGrid">
-                <!-- Diseases will be populated by JavaScript -->
+        <div class="symptoms-grid" id="symptomsGrid">
+            <!-- Symptoms will be populated by JavaScript -->
+        </div>
+
+        <div class="selected-symptoms">
+            <h3>Selected Symptoms:</h3>
+            <div class="symptom-tags" id="symptomTags">
+                <p style="color: var(--gray);">No symptoms selected</p>
             </div>
         </div>
     </div>
 
-    <!-- Recent Screenings -->
+    <!-- Vitals Section -->
+    <div class="vitals-section">
+        <div class="section-header">
+            <span class="icon">🩺</span>
+            <h2>Vitals</h2>
+        </div>
+
+        <div class="vitals-grid">
+            <div class="vital-card">
+                <label>Blood Pressure (BP)</label>
+                <input type="number" id="bp" min="70" max="200" placeholder="120">
+                <div class="vital-unit">mmHg</div>
+            </div>
+            <div class="vital-card">
+                <label>Heart Rate</label>
+                <input type="number" id="heartRate" min="40" max="200" placeholder="72">
+                <div class="vital-unit">bpm</div>
+            </div>
+            <div class="vital-card">
+                <label>Temperature</label>
+                <input type="number" id="temperature" step="0.1" min="35" max="42" placeholder="37.0">
+                <div class="vital-unit">°C</div>
+            </div>
+            <div class="vital-card">
+                <label>Oxygen Saturation</label>
+                <input type="number" id="oxygen" min="70" max="100" placeholder="98">
+                <div class="vital-unit">SpO2 %</div>
+            </div>
+            <div class="vital-card">
+                <label>Blood Sugar</label>
+                <input type="number" id="bloodSugar" min="40" max="500" placeholder="100">
+                <div class="vital-unit">mg/dL</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Analyze Button -->
+    <button class="analyze-btn" onclick="analyzeHealth()" id="analyzeBtn">
+        🔬 Analyze Health Status
+    </button>
+
+    <!-- Results Card -->
+    <div id="results" class="results-card" style="display: none;"></div>
+
+    <!-- Disease Library -->
+    <div class="disease-library">
+        <div class="section-header">
+            <span class="icon">📚</span>
+            <h2>Disease Library</h2>
+        </div>
+
+        <input type="text" class="search-box" id="diseaseSearch" placeholder="Search diseases..." onkeyup="searchDiseases()">
+
+        <div class="disease-grid" id="diseaseGrid">
+            <!-- Diseases will be populated by JavaScript -->
+        </div>
+    </div>
+
+    <!-- Recent Diagnoses -->
     <div class="recent-section">
-        <h2>📊 <span data-i18n="recentScreenings">Recent Diagnoses</span></h2>
+        <div class="section-header">
+            <span class="icon">📊</span>
+            <h2>Recent Diagnoses</h2>
+        </div>
+
         <div class="table-container">
-            <table id="screeningsTable">
+            <table id="diagnosesTable">
                 <thead>
                     <tr>
-                        <th data-i18n="date">Date</th>
-                        <th data-i18n="name">Name</th>
-                        <th data-i18n="age">Age</th>
-                        <th data-i18n="district">District</th>
-                        <th data-i18n="diagnosis">Diagnosis</th>
-                        <th data-i18n="severity">Severity</th>
-                        <th data-i18n="confidence">Confidence</th>
-                        <th data-i18n="action">Action</th>
+                        <th>Date</th>
+                        <th>Diagnosis</th>
+                        <th>Severity</th>
+                        <th>Confidence</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody id="tableBody">
-                    <tr><td colspan="8" style="text-align: center;" data-i18n="noScreenings">No diagnoses yet</td></tr>
+                    <tr><td colspan="5" style="text-align: center;">No diagnoses yet</td></tr>
                 </tbody>
             </table>
         </div>
@@ -1188,350 +780,6 @@
     <div class="toast" id="toast">Message</div>
 
     <script>
-        // ==================== MULTILINGUAL SUPPORT ====================
-        const translations = {
-            en: {
-                appName: 'RuralCare AI',
-                subtitle: 'Tamil Nadu AI-Powered Disease Diagnosis with Voice Recording',
-                districts: 'Districts',
-                worksOffline: 'Works Offline',
-                screenings: 'Diagnoses',
-                today: 'Today',
-                highRisk: 'High Risk',
-                avgConfidence: 'Avg Confidence',
-                patientInfo: 'Patient Information',
-                fullName: 'Full Name *',
-                age: 'Age *',
-                gender: 'Gender',
-                male: 'Male',
-                female: 'Female',
-                other: 'Other',
-                district: 'District *',
-                selectDistrict: 'Select District',
-                symptomChecker: 'AI Symptom Checker',
-                selectedSymptoms: 'Selected Symptoms:',
-                analyzeSymptoms: 'Analyze Symptoms',
-                vitals: 'Vitals',
-                weight: 'Weight (kg)',
-                height: 'Height (cm)',
-                temperature: 'Temperature (°C)',
-                bp: 'BP (Systolic/Diastolic)',
-                heartRate: 'Heart Rate (bpm)',
-                oxygen: 'Oxygen Saturation (%)',
-                bloodSugar: 'Blood Sugar (mg/dL)',
-                photoCapture: 'Photo Capture',
-                startCamera: 'Start Camera',
-                capture: 'Capture',
-                retake: 'Retake',
-                upload: 'Upload',
-                voiceRecording: 'Voice Recording',
-                recordSymptoms: 'Record Symptoms Description',
-                analyze: 'AI Diagnosis & Health Analysis',
-                diseaseLibrary: 'Disease Library',
-                recentScreenings: 'Recent Diagnoses',
-                date: 'Date',
-                name: 'Name',
-                diagnosis: 'Diagnosis',
-                severity: 'Severity',
-                confidence: 'Confidence',
-                action: 'Action',
-                noScreenings: 'No diagnoses yet',
-                offline: 'Working Offline',
-                online: 'Connected',
-                pending: 'pending',
-                sync: 'Sync',
-                possibleDiagnosis: 'Possible Diagnosis',
-                probability: 'Probability',
-                matchingSymptoms: 'Matching Symptoms',
-                recommendations: 'Recommendations',
-                save: 'Save',
-                print: 'Print',
-                new: 'New Diagnosis',
-                viewDetails: 'View Details',
-                commonSymptoms: 'Common Symptoms',
-                riskFactors: 'Risk Factors',
-                prevention: 'Prevention Tips'
-            },
-            ta: {
-                appName: 'ரூரல்கேர் ஏஐ',
-                subtitle: 'தமிழ்நாடு AI-இயங்கும் நோய் கண்டறிதல் குரல் பதிவுடன்',
-                districts: 'மாவட்டங்கள்',
-                worksOffline: 'ஆஃப்லைனில் வேலை செய்கிறது',
-                screenings: 'கண்டறிதல்கள்',
-                today: 'இன்று',
-                highRisk: 'அதிக ஆபத்து',
-                avgConfidence: 'சராசரி நம்பிக்கை',
-                patientInfo: 'நோயாளி தகவல்',
-                fullName: 'முழு பெயர் *',
-                age: 'வயது *',
-                gender: 'பாலினம்',
-                male: 'ஆண்',
-                female: 'பெண்',
-                other: 'மற்றவை',
-                district: 'மாவட்டம் *',
-                selectDistrict: 'மாவட்டத்தைத் தேர்ந்தெடுக்கவும்',
-                symptomChecker: 'AI அறிகுறி சரிபார்ப்பு',
-                selectedSymptoms: 'தேர்ந்தெடுக்கப்பட்ட அறிகுறிகள்:',
-                analyzeSymptoms: 'அறிகுறிகளை பகுப்பாய்வு செய்',
-                vitals: 'உயிர்குறிகள்',
-                weight: 'எடை (கிலோ)',
-                height: 'உயரம் (செ.மீ)',
-                temperature: 'வெப்பநிலை (°C)',
-                bp: 'இரத்த அழுத்தம்',
-                heartRate: 'இதய துடிப்பு',
-                oxygen: 'ஆக்ஸிஜன் செறிவு (%)',
-                bloodSugar: 'இரத்த சர்க்கரை (mg/dL)',
-                photoCapture: 'புகைப்பட பிடிப்பு',
-                startCamera: 'கேமராவைத் தொடங்கு',
-                capture: 'பிடி',
-                retake: 'மீண்டும் எடு',
-                upload: 'பதிவேற்று',
-                voiceRecording: 'குரல் பதிவு',
-                recordSymptoms: 'அறிகுறிகளை பதிவு செய்',
-                analyze: 'AI நோய் கண்டறிதல் & சுகாதார பகுப்பாய்வு',
-                diseaseLibrary: 'நோய் நூலகம்',
-                recentScreenings: 'சமீபத்திய கண்டறிதல்கள்',
-                date: 'தேதி',
-                name: 'பெயர்',
-                diagnosis: 'நோய் கண்டறிதல்',
-                severity: 'தீவிரம்',
-                confidence: 'நம்பிக்கை',
-                action: 'செயல்',
-                noScreenings: 'இதுவரை கண்டறிதல்கள் இல்லை',
-                offline: 'ஆஃப்லைனில் வேலை செய்கிறது',
-                online: 'இணைக்கப்பட்டது',
-                pending: 'நிலுவையில்',
-                sync: 'ஒத்திசை',
-                possibleDiagnosis: 'சாத்தியமான நோய் கண்டறிதல்',
-                probability: 'நிகழ்தகவு',
-                matchingSymptoms: 'பொருந்தும் அறிகுறிகள்',
-                recommendations: 'பரிந்துரைகள்',
-                save: 'சேமி',
-                print: 'அச்சிடு',
-                new: 'புதிய கண்டறிதல்',
-                viewDetails: 'விவரங்களைக் காண்க'
-            },
-            te: {
-                appName: 'రూరల్‌కేర్ AI',
-                subtitle: 'తమిళనాడు AI-ఆధారిత వ్యాధి నిర్ధారణ వాయిస్ రికార్డింగ్‌తో',
-                districts: 'జిల్లాలు',
-                worksOffline: 'ఆఫ్‌లైన్‌లో పనిచేస్తుంది',
-                screenings: 'నిర్ధారణలు',
-                today: 'ఈరోజు',
-                highRisk: 'అధిక ప్రమాదం',
-                avgConfidence: 'సగటు విశ్వాసం',
-                patientInfo: 'రోగి సమాచారం',
-                fullName: 'పూర్తి పేరు *',
-                age: 'వయస్సు *',
-                gender: 'లింగం',
-                male: 'పురుషుడు',
-                female: 'స్త్రీ',
-                other: 'ఇతర',
-                district: 'జిల్లా *',
-                selectDistrict: 'జిల్లాను ఎంచుకోండి',
-                symptomChecker: 'AI లక్షణాల పరీక్ష',
-                selectedSymptoms: 'ఎంచుకున్న లక్షణాలు:',
-                analyzeSymptoms: 'లక్షణాలను విశ్లేషించండి',
-                vitals: 'ముఖ్యమైన సూచికలు',
-                weight: 'బరువు (కిలో)',
-                height: 'ఎత్తు (సెం.మీ)',
-                temperature: 'ఉష్ణోగ్రత (°C)',
-                bp: 'రక్తపోటు',
-                heartRate: 'హృదయ స్పందన రేటు',
-                oxygen: 'ఆక్సిజన్ సంతృప్తత (%)',
-                bloodSugar: 'రక్త చక్కెర (mg/dL)',
-                photoCapture: 'ఫోటో క్యాప్చర్',
-                startCamera: 'కెమెరాను ప్రారంభించండి',
-                capture: 'సంగ్రహించండి',
-                retake: 'మళ్లీ తీయండి',
-                upload: 'అప్‌లోడ్',
-                voiceRecording: 'వాయిస్ రికార్డింగ్',
-                recordSymptoms: 'లక్షణాలను రికార్డ్ చేయండి',
-                analyze: 'AI వ్యాధి నిర్ధారణ & ఆరోగ్య విశ్లేషణ',
-                diseaseLibrary: 'వ్యాధి గ్రంథాలయం',
-                recentScreenings: 'ఇటీవలి నిర్ధారణలు',
-                date: 'తేదీ',
-                name: 'పేరు',
-                diagnosis: 'నిర్ధారణ',
-                severity: 'తీవ్రత',
-                confidence: 'విశ్వాసం',
-                action: 'చర్య',
-                noScreenings: 'ఇంకా నిర్ధారణలు లేవు',
-                offline: 'ఆఫ్‌లైన్‌లో పనిచేస్తుంది',
-                online: 'కనెక్ట్ అయ్యింది',
-                pending: 'పెండింగ్',
-                sync: 'సమకాలీకరించు',
-                possibleDiagnosis: 'సంభావ్య నిర్ధారణ',
-                probability: 'సంభావ్యత',
-                matchingSymptoms: 'సరిపోలే లక్షణాలు',
-                recommendations: 'సిఫార్సులు',
-                save: 'సేవ్ చేయండి',
-                print: 'ప్రింట్',
-                new: 'కొత్త నిర్ధారణ',
-                viewDetails: 'వివరాలు చూడండి'
-            },
-            kn: {
-                appName: 'ರೂರಲ್‌ಕೇರ್ AI',
-                subtitle: 'ತಮಿಳುನಾಡು AI-ಚಾಲಿತ ರೋಗ ನಿರ್ಣಯ ಧ್ವನಿ ರೆಕಾರ್ಡಿಂಗ್‌ನೊಂದಿಗೆ',
-                districts: 'ಜಿಲ್ಲೆಗಳು',
-                worksOffline: 'ಆಫ್‌ಲೈನ್‌ನಲ್ಲಿ ಕಾರ್ಯನಿರ್ವಹಿಸುತ್ತದೆ',
-                screenings: 'ನಿರ್ಣಯಗಳು',
-                today: 'ಇಂದು',
-                highRisk: 'ಹೆಚ್ಚಿನ ಅಪಾಯ',
-                avgConfidence: 'ಸರಾಸರಿ ವಿಶ್ವಾಸ',
-                patientInfo: 'ರೋಗಿಯ ಮಾಹಿತಿ',
-                fullName: 'ಪೂರ್ಣ ಹೆಸರು *',
-                age: 'ವಯಸ್ಸು *',
-                gender: 'ಲಿಂಗ',
-                male: 'ಪುರುಷ',
-                female: 'ಸ್ತ್ರೀ',
-                other: 'ಇತರೆ',
-                district: 'ಜಿಲ್ಲೆ *',
-                selectDistrict: 'ಜಿಲ್ಲೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ',
-                symptomChecker: 'AI ರೋಗಲಕ್ಷಣ ಪರೀಕ್ಷಕ',
-                selectedSymptoms: 'ಆಯ್ಕೆಮಾಡಿದ ರೋಗಲಕ್ಷಣಗಳು:',
-                analyzeSymptoms: 'ರೋಗಲಕ್ಷಣಗಳನ್ನು ವಿಶ್ಲೇಷಿಸಿ',
-                vitals: 'ಪ್ರಮುಖ ಸೂಚಕಗಳು',
-                weight: 'ತೂಕ (ಕೆಜಿ)',
-                height: 'ಎತ್ತರ (ಸೆಂ.ಮೀ)',
-                temperature: 'ತಾಪಮಾನ (°C)',
-                bp: 'ರಕ್ತದೊತ್ತಡ',
-                heartRate: 'ಹೃದಯ ಬಡಿತ',
-                oxygen: 'ಆಮ್ಲಜನಕ ಶುದ್ಧತ್ವ (%)',
-                bloodSugar: 'ರಕ್ತದ ಸಕ್ಕರೆ (mg/dL)',
-                photoCapture: 'ಫೋಟೋ ಸೆರೆಹಿಡಿಯುವಿಕೆ',
-                startCamera: 'ಕ್ಯಾಮೆರಾ ಪ್ರಾರಂಭಿಸಿ',
-                capture: 'ಸೆರೆಹಿಡಿ',
-                retake: 'ಮರು ತೆಗೆದುಕೊಳ್ಳಿ',
-                upload: 'ಅಪ್‌ಲೋಡ್',
-                voiceRecording: 'ಧ್ವನಿ ರೆಕಾರ್ಡಿಂಗ್',
-                recordSymptoms: 'ರೋಗಲಕ್ಷಣಗಳನ್ನು ರೆಕಾರ್ಡ್ ಮಾಡಿ',
-                analyze: 'AI ರೋಗ ನಿರ್ಣಯ & ಆರೋಗ್ಯ ವಿಶ್ಲೇಷಣೆ',
-                diseaseLibrary: 'ರೋಗ ಗ್ರಂಥಾಲಯ',
-                recentScreenings: 'ಇತ್ತೀಚಿನ ನಿರ್ಣಯಗಳು',
-                date: 'ದಿನಾಂಕ',
-                name: 'ಹೆಸರು',
-                diagnosis: 'ನಿರ್ಣಯ',
-                severity: 'ತೀವ್ರತೆ',
-                confidence: 'ವಿಶ್ವಾಸ',
-                action: 'ಕ್ರಿಯೆ',
-                noScreenings: 'ಇನ್ನೂ ನಿರ್ಣಯಗಳಿಲ್ಲ',
-                offline: 'ಆಫ್‌ಲೈನ್‌ನಲ್ಲಿ ಕಾರ್ಯನಿರ್ವಹಿಸುತ್ತಿದೆ',
-                online: 'ಸಂಪರ್ಕಗೊಂಡಿದೆ',
-                pending: 'ಬಾಕಿ ಇದೆ',
-                sync: 'ಸಿಂಕ್',
-                possibleDiagnosis: 'ಸಂಭವನೀಯ ನಿರ್ಣಯ',
-                probability: 'ಸಂಭವನೀಯತೆ',
-                matchingSymptoms: 'ಹೊಂದಾಣಿಕೆಯ ರೋಗಲಕ್ಷಣಗಳು',
-                recommendations: 'ಶಿಫಾರಸುಗಳು',
-                save: 'ಉಳಿಸಿ',
-                print: 'ಮುದ್ರಿಸಿ',
-                new: 'ಹೊಸ ನಿರ್ಣಯ',
-                viewDetails: 'ವಿವರಗಳನ್ನು ನೋಡಿ'
-            }
-        };
-
-        let currentLanguage = 'en';
-
-        function switchLanguage(lang) {
-            currentLanguage = lang;
-            
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            document.getElementById(`lang${lang.charAt(0).toUpperCase() + lang.slice(1)}`).classList.add('active');
-            
-            document.querySelectorAll('[data-i18n]').forEach(element => {
-                const key = element.getAttribute('data-i18n');
-                if (translations[lang][key]) {
-                    element.textContent = translations[lang][key];
-                }
-            });
-            
-            updatePlaceholders();
-        }
-
-        function updatePlaceholders() {
-            const placeholders = {
-                en: {
-                    patientName: 'Enter full name',
-                    patientAge: 'Years',
-                    weight: 'kg',
-                    height: 'cm',
-                    temperature: '°C',
-                    bpSystolic: 'Sys',
-                    bpDiastolic: 'Dias',
-                    heartRate: 'bpm',
-                    oxygen: 'SpO2',
-                    bloodSugar: 'Glucose',
-                    symptoms: 'Or type detailed symptoms here...'
-                },
-                ta: {
-                    patientName: 'முழு பெயரை உள்ளிடவும்',
-                    patientAge: 'வயது',
-                    weight: 'கிலோ',
-                    height: 'செ.மீ',
-                    temperature: '°C',
-                    bpSystolic: 'சிஸ்',
-                    bpDiastolic: 'டயஸ்',
-                    heartRate: 'பிபிஎம்',
-                    oxygen: 'SpO2',
-                    bloodSugar: 'குளுக்கோஸ்',
-                    symptoms: 'அல்லது விரிவான அறிகுறிகளை இங்கே தட்டச்சு செய்யவும்...'
-                },
-                te: {
-                    patientName: 'పూర్తి పేరు నమోదు చేయండి',
-                    patientAge: 'సంవత్సరాలు',
-                    weight: 'కిలో',
-                    height: 'సెం.మీ',
-                    temperature: '°C',
-                    bpSystolic: 'సిస్',
-                    bpDiastolic: 'డయాస్',
-                    heartRate: 'బిపిఎం',
-                    oxygen: 'SpO2',
-                    bloodSugar: 'గ్లూకోజ్',
-                    symptoms: 'లేదా వివరణాత్మక లక్షణాలను ఇక్కడ టైప్ చేయండి...'
-                },
-                kn: {
-                    patientName: 'ಪೂರ್ಣ ಹೆಸರನ್ನು ನಮೂದಿಸಿ',
-                    patientAge: 'ವರ್ಷಗಳು',
-                    weight: 'ಕೆಜಿ',
-                    height: 'ಸೆಂ.ಮೀ',
-                    temperature: '°C',
-                    bpSystolic: 'ಸಿಸ್',
-                    bpDiastolic: 'ಡಯಾಸ್',
-                    heartRate: 'ಬಿಪಿಎಂ',
-                    oxygen: 'SpO2',
-                    bloodSugar: 'ಗ್ಲೂಕೋಸ್',
-                    symptoms: 'ಅಥವಾ ವಿವರವಾದ ರೋಗಲಕ್ಷಣಗಳನ್ನು ಇಲ್ಲಿ ಟೈಪ್ ಮಾಡಿ...'
-                }
-            };
-            
-            document.getElementById('patientName').placeholder = placeholders[currentLanguage].patientName;
-            document.getElementById('patientAge').placeholder = placeholders[currentLanguage].patientAge;
-            document.getElementById('weight').placeholder = placeholders[currentLanguage].weight;
-            document.getElementById('height').placeholder = placeholders[currentLanguage].height;
-            document.getElementById('temperature').placeholder = placeholders[currentLanguage].temperature;
-            document.getElementById('bpSystolic').placeholder = placeholders[currentLanguage].bpSystolic;
-            document.getElementById('bpDiastolic').placeholder = placeholders[currentLanguage].bpDiastolic;
-            document.getElementById('heartRate').placeholder = placeholders[currentLanguage].heartRate;
-            document.getElementById('oxygen').placeholder = placeholders[currentLanguage].oxygen;
-            document.getElementById('bloodSugar').placeholder = placeholders[currentLanguage].bloodSugar;
-            document.getElementById('symptomsText').placeholder = placeholders[currentLanguage].symptoms;
-        }
-
-        // ==================== TAMIL NADU DISTRICTS ====================
-        const tamilNaduDistricts = [
-            'Ariyalur', 'Chengalpattu', 'Chennai', 'Coimbatore', 'Cuddalore',
-            'Dharmapuri', 'Dindigul', 'Erode', 'Kallakurichi', 'Kanchipuram',
-            'Kanyakumari', 'Karur', 'Krishnagiri', 'Madurai', 'Mayiladuthurai',
-            'Nagapattinam', 'Namakkal', 'Nilgiris', 'Perambalur', 'Pudukkottai',
-            'Ramanathapuram', 'Ranipet', 'Salem', 'Sivaganga', 'Tenkasi',
-            'Thanjavur', 'Theni', 'Thoothukkudi', 'Tiruchirappalli', 'Tirunelveli',
-            'Tirupathur', 'Tiruppur', 'Tiruvallur', 'Tiruvannamalai', 'Tiruvarur',
-            'Vellore', 'Viluppuram', 'Virudhunagar'
-        ];
-
         // ==================== SYMPTOMS DATABASE ====================
         const symptomsDatabase = [
             // Respiratory
@@ -1587,7 +835,21 @@
             { id: 40, name: 'Night sweats', category: 'general' },
             { id: 41, name: 'Weight loss', category: 'general' },
             { id: 42, name: 'Weight gain', category: 'general' },
-            { id: 43, name: 'Dehydration', category: 'general' }
+            { id: 43, name: 'Dehydration', category: 'general' },
+            
+            // Cardiovascular
+            { id: 44, name: 'Palpitations', category: 'cardiovascular' },
+            { id: 45, name: 'High BP', category: 'cardiovascular' },
+            { id: 46, name: 'Low BP', category: 'cardiovascular' },
+            
+            // Metabolic
+            { id: 47, name: 'Excessive thirst', category: 'metabolic' },
+            { id: 48, name: 'Frequent urination', category: 'metabolic' },
+            { id: 49, name: 'Blurred vision', category: 'metabolic' },
+            
+            // Infectious
+            { id: 50, name: 'Swollen lymph nodes', category: 'infectious' },
+            { id: 51, name: 'Body aches', category: 'infectious' }
         ];
 
         // ==================== DISEASE DATABASE ====================
@@ -1663,7 +925,7 @@
                 id: 5,
                 name: 'Hypertension',
                 category: 'cardiovascular',
-                symptoms: [17, 18, 23], // Headache, Dizziness, Weakness
+                symptoms: [17, 18, 23, 44, 45], // Headache, Dizziness, Weakness, Palpitations, High BP
                 severity: 'high',
                 description: 'High blood pressure',
                 recommendations: [
@@ -1680,7 +942,7 @@
                 id: 6,
                 name: 'Diabetes Type 2',
                 category: 'metabolic',
-                symptoms: [23, 41, 42, 38], // Weakness, Weight loss, Weight gain, Fatigue
+                symptoms: [23, 41, 42, 38, 47, 48, 49], // Weakness, Weight changes, Fatigue, Excessive thirst, Frequent urination, Blurred vision
                 severity: 'high',
                 description: 'Chronic condition affecting blood sugar regulation',
                 recommendations: [
@@ -1697,7 +959,7 @@
                 id: 7,
                 name: 'Migraine',
                 category: 'neurological',
-                symptoms: [17, 9, 38, 18], // Headache, Nausea, Fatigue, Dizziness
+                symptoms: [17, 9, 38, 18, 49], // Headache, Nausea, Fatigue, Dizziness, Blurred vision
                 severity: 'medium',
                 description: 'Severe recurring headaches',
                 recommendations: [
@@ -1731,7 +993,7 @@
                 id: 9,
                 name: 'Dengue Fever',
                 category: 'infectious',
-                symptoms: [37, 38, 17, 26, 31], // Fever, Fatigue, Headache, Muscle pain, Rash
+                symptoms: [37, 38, 17, 26, 31, 50], // Fever, Fatigue, Headache, Muscle pain, Rash, Swollen lymph nodes
                 severity: 'high',
                 description: 'Mosquito-borne viral infection',
                 recommendations: [
@@ -1748,7 +1010,7 @@
                 id: 10,
                 name: 'Malaria',
                 category: 'infectious',
-                symptoms: [37, 38, 17, 39, 40], // Fever, Fatigue, Headache, Chills, Night sweats
+                symptoms: [37, 38, 17, 39, 40, 51], // Fever, Fatigue, Headache, Chills, Night sweats, Body aches
                 severity: 'high',
                 description: 'Mosquito-borne parasitic infection',
                 recommendations: [
@@ -1765,7 +1027,7 @@
                 id: 11,
                 name: 'Tuberculosis',
                 category: 'respiratory',
-                symptoms: [1, 2, 4, 37, 38, 41], // Cough, Shortness of breath, Chest pain, Fever, Fatigue, Weight loss
+                symptoms: [1, 2, 4, 37, 38, 40, 41], // Cough, Shortness of breath, Chest pain, Fever, Fatigue, Night sweats, Weight loss
                 severity: 'high',
                 description: 'Bacterial infection affecting lungs',
                 recommendations: [
@@ -1781,8 +1043,8 @@
             {
                 id: 12,
                 name: 'Typhoid',
-                category: 'digestive',
-                symptoms: [37, 38, 13, 14, 41], // Fever, Fatigue, Abdominal pain, Bloating, Weight loss
+                category: 'infectious',
+                symptoms: [37, 38, 13, 14, 41, 50], // Fever, Fatigue, Abdominal pain, Bloating, Weight loss, Swollen lymph nodes
                 severity: 'high',
                 description: 'Bacterial infection from contaminated food/water',
                 recommendations: [
@@ -1798,81 +1060,17 @@
         ];
 
         // ==================== STATE VARIABLES ====================
-        let capturedImage = null;
-        let audioChunks = [];
-        let mediaRecorder = null;
-        let audioBlob = null;
-        let audioUrl = null;
-        let isRecording = false;
-        let recordingTimer = null;
-        let recordingSeconds = 0;
-        let db = null;
-        let screenings = [];
+        let diagnoses = JSON.parse(localStorage.getItem('diagnoses') || '[]');
         let selectedSymptoms = [];
         let currentSymptomCategory = 'all';
 
         // ==================== INITIALIZATION ====================
-        document.addEventListener('DOMContentLoaded', async () => {
-            console.log('🚀 RuralCare AI Initializing...');
-            
-            loadDistricts();
+        document.addEventListener('DOMContentLoaded', () => {
             loadSymptoms();
             loadDiseaseLibrary();
-            
-            await initDatabase();
-            await loadScreenings();
-            
             updateStats();
-            displayScreenings();
-            updateOfflineStatus();
-            updateSyncBadge();
-            
-            window.addEventListener('online', updateOfflineStatus);
-            window.addEventListener('offline', updateOfflineStatus);
-            
-            switchLanguage('en');
+            displayDiagnoses();
         });
-
-        // ==================== DATABASE SETUP ====================
-        async function initDatabase() {
-            return new Promise((resolve, reject) => {
-                const request = indexedDB.open('RuralCareDB', 3);
-                
-                request.onerror = () => {
-                    console.error('Database error');
-                    reject();
-                };
-                
-                request.onsuccess = (event) => {
-                    db = event.target.result;
-                    console.log('✅ Database connected');
-                    resolve();
-                };
-                
-                request.onupgradeneeded = (event) => {
-                    const db = event.target.result;
-                    
-                    if (!db.objectStoreNames.contains('screenings')) {
-                        const screeningStore = db.createObjectStore('screenings', { keyPath: 'id', autoIncrement: true });
-                        screeningStore.createIndex('created_at', 'created_at', { unique: false });
-                        screeningStore.createIndex('district', 'district', { unique: false });
-                        screeningStore.createIndex('severity', 'severity', { unique: false });
-                    }
-                };
-            });
-        }
-
-        // ==================== LOAD DISTRICTS ====================
-        function loadDistricts() {
-            const districtSelect = document.getElementById('patientDistrict');
-            
-            tamilNaduDistricts.forEach(district => {
-                const option = document.createElement('option');
-                option.value = district;
-                option.textContent = district;
-                districtSelect.appendChild(option);
-            });
-        }
 
         // ==================== SYMPTOM CHECKER ====================
         function loadSymptoms() {
@@ -1882,8 +1080,8 @@
             symptomsDatabase.forEach(symptom => {
                 if (currentSymptomCategory === 'all' || symptom.category === currentSymptomCategory) {
                     const item = document.createElement('div');
-                    item.className = 'symptom-item';
-                    item.onclick = () => toggleSymptom(symptom.id, symptom.name);
+                    item.className = `symptom-item ${selectedSymptoms.includes(symptom.id) ? 'selected' : ''}`;
+                    item.onclick = () => toggleSymptom(symptom.id);
                     
                     item.innerHTML = `
                         <input type="checkbox" ${selectedSymptoms.includes(symptom.id) ? 'checked' : ''}>
@@ -1906,7 +1104,7 @@
             loadSymptoms();
         }
 
-        function toggleSymptom(id, name) {
+        function toggleSymptom(id) {
             const index = selectedSymptoms.indexOf(id);
             if (index === -1) {
                 selectedSymptoms.push(id);
@@ -1915,14 +1113,14 @@
             }
             
             updateSymptomTags();
-            loadSymptoms(); // Refresh to update checkboxes
+            loadSymptoms();
         }
 
         function updateSymptomTags() {
             const container = document.getElementById('symptomTags');
             
             if (selectedSymptoms.length === 0) {
-                container.innerHTML = '<p>No symptoms selected</p>';
+                container.innerHTML = '<p style="color: var(--gray);">No symptoms selected</p>';
                 return;
             }
             
@@ -1947,80 +1145,188 @@
             }
         }
 
-        function analyzeSymptoms() {
+        // ==================== AI DIAGNOSIS ====================
+        function analyzeHealth() {
             if (selectedSymptoms.length === 0) {
                 showToast('Please select at least one symptom', 'error');
                 return;
             }
             
-            // Find matching diseases
+            document.getElementById('analyzeBtn').disabled = true;
+            document.getElementById('analyzeBtn').textContent = '⏳ Analyzing...';
+            
+            setTimeout(() => {
+                const diagnosis = performAIDiagnosis();
+                displayDiagnosis(diagnosis);
+                saveDiagnosis(diagnosis);
+                
+                document.getElementById('analyzeBtn').disabled = false;
+                document.getElementById('analyzeBtn').textContent = '🔬 Analyze Health Status';
+            }, 2000);
+        }
+
+        function performAIDiagnosis() {
+            const bp = parseInt(document.getElementById('bp').value);
+            const heartRate = parseInt(document.getElementById('heartRate').value);
+            const temperature = parseFloat(document.getElementById('temperature').value);
+            const oxygen = parseInt(document.getElementById('oxygen').value);
+            const bloodSugar = parseInt(document.getElementById('bloodSugar').value);
+            
+            // Calculate matches for each disease
             const matches = diseaseDatabase.map(disease => {
+                // Symptom matching (70% weight)
                 const matchingSymptoms = disease.symptoms.filter(s => selectedSymptoms.includes(s));
-                const matchPercentage = (matchingSymptoms.length / disease.symptoms.length) * 100;
+                const symptomScore = (matchingSymptoms.length / disease.symptoms.length) * 70;
+                
+                // Vital-based scoring (30% weight)
+                let vitalScore = 0;
+                
+                if (bp) {
+                    if (bp > 140 && disease.category === 'cardiovascular') vitalScore += 10;
+                    if (bp < 90) vitalScore += 5;
+                }
+                
+                if (heartRate) {
+                    if (heartRate > 100) vitalScore += 5;
+                    if (heartRate < 60) vitalScore += 3;
+                }
+                
+                if (temperature) {
+                    if (temperature > 38 && disease.category === 'infectious') vitalScore += 10;
+                    if (temperature > 38) vitalScore += 5;
+                }
+                
+                if (oxygen && oxygen < 95 && disease.category === 'respiratory') {
+                    vitalScore += 10;
+                }
+                
+                if (bloodSugar) {
+                    if (bloodSugar > 140 && disease.category === 'metabolic') vitalScore += 10;
+                    if (bloodSugar > 140) vitalScore += 5;
+                    if (bloodSugar < 70) vitalScore += 5;
+                }
+                
+                const totalScore = Math.min(99, Math.round(symptomScore + vitalScore));
                 
                 return {
                     ...disease,
+                    matchScore: totalScore,
                     matchingSymptoms: matchingSymptoms.length,
-                    matchPercentage: matchPercentage
+                    symptomScore: Math.round(symptomScore),
+                    vitalScore: Math.round(vitalScore)
                 };
-            }).filter(d => d.matchPercentage > 20)
-              .sort((a, b) => b.matchPercentage - a.matchPercentage)
-              .slice(0, 3);
+            }).filter(d => d.matchScore > 30)
+              .sort((a, b) => b.matchScore - a.matchScore);
             
-            displaySymptomAnalysis(matches);
+            return matches[0] || {
+                name: 'Unable to Determine',
+                description: 'Based on the selected symptoms, a specific condition could not be identified',
+                severity: 'low',
+                matchScore: 50,
+                recommendations: [
+                    'Consult a healthcare provider for proper diagnosis',
+                    'Monitor your symptoms',
+                    'Rest and stay hydrated',
+                    'Follow up if symptoms persist'
+                ],
+                riskFactors: ['Insufficient data for specific diagnosis'],
+                prevention: ['Regular health checkups', 'Healthy lifestyle', 'Balanced diet']
+            };
         }
 
-        function displaySymptomAnalysis(matches) {
+        function displayDiagnosis(diagnosis) {
             const resultsDiv = document.getElementById('results');
+            const severityClass = diagnosis.severity === 'low' ? 'severity-low' : 
+                                diagnosis.severity === 'medium' ? 'severity-medium' : 'severity-high';
+            
+            // Get matching symptom names
+            const matchingSymptomNames = diagnosis.symptoms ? 
+                diagnosis.symptoms.filter(id => selectedSymptoms.includes(id))
+                    .map(id => symptomsDatabase.find(s => s.id === id)?.name)
+                    .filter(name => name) : [];
             
             let html = `
                 <div class="diagnosis-header">
-                    <div class="diagnosis-icon">🔍</div>
+                    <div class="diagnosis-icon">🩺</div>
                     <div class="diagnosis-info">
-                        <h3>${translations[currentLanguage].possibleDiagnosis || 'Possible Diagnosis'}</h3>
-                        <p>Based on ${selectedSymptoms.length} selected symptoms</p>
+                        <h2>${diagnosis.name}</h2>
+                        <span class="severity-badge ${severityClass}">${diagnosis.severity.toUpperCase()} SEVERITY</span>
+                        <p style="margin-top: 10px;">${diagnosis.description}</p>
                     </div>
+                </div>
+                
+                <div style="margin: 20px 0;">
+                    <div class="confidence-bar">
+                        <div class="confidence-fill" style="width: ${diagnosis.matchScore}%"></div>
+                    </div>
+                    <p style="text-align: center;"><strong>Confidence:</strong> ${diagnosis.matchScore}%</p>
                 </div>
             `;
             
-            matches.forEach((disease, index) => {
-                const severityClass = disease.severity === 'low' ? 'severity-low' : 
-                                    disease.severity === 'medium' ? 'severity-medium' : 'severity-high';
-                
+            if (matchingSymptomNames.length > 0) {
                 html += `
                     <div class="disease-info">
-                        <h4>${index + 1}. ${disease.name}</h4>
-                        <span class="severity-badge ${severityClass}">${disease.severity.toUpperCase()} SEVERITY</span>
-                        <p style="margin-top: 10px;">${disease.description}</p>
-                        
-                        <div class="confidence-bar">
-                            <div class="confidence-fill" style="width: ${disease.matchPercentage}%"></div>
-                        </div>
-                        <p><strong>${translations[currentLanguage].probability || 'Probability'}:</strong> ${Math.round(disease.matchPercentage)}%</p>
-                        
-                        <p><strong>${translations[currentLanguage].matchingSymptoms || 'Matching Symptoms'}:</strong> ${disease.matchingSymptoms}/${disease.symptoms.length}</p>
-                        
+                        <h3>✅ Matching Symptoms</h3>
                         <div class="symptom-match">
-                            ${disease.symptoms.slice(0, 5).map(s => {
-                                const symptom = symptomsDatabase.find(sym => sym.id === s);
-                                const isSelected = selectedSymptoms.includes(s);
-                                const matchClass = isSelected ? 'match-high' : 'match-low';
-                                return `<span class="match-tag ${matchClass}">${symptom ? symptom.name : ''}</span>`;
-                            }).join('')}
+                            ${matchingSymptomNames.map(name => 
+                                `<span class="match-tag match-high">${name}</span>`
+                            ).join('')}
                         </div>
                     </div>
                 `;
-            });
+            }
             
             html += `
+                <div class="disease-info">
+                    <h3>📋 Recommendations</h3>
+                    <ul>
+                        ${diagnosis.recommendations.map(r => `<li>${r}</li>`).join('')}
+                    </ul>
+                </div>
+                
+                <div class="disease-info">
+                    <h3>⚠️ Risk Factors</h3>
+                    <ul>
+                        ${diagnosis.riskFactors.map(r => `<li>${r}</li>`).join('')}
+                    </ul>
+                </div>
+                
+                <div class="disease-info">
+                    <h3>🛡️ Prevention Tips</h3>
+                    <ul>
+                        ${diagnosis.prevention ? diagnosis.prevention.map(p => `<li>${p}</li>`).join('') : '<li>Maintain healthy lifestyle</li>'}
+                    </ul>
+                </div>
+                
                 <div class="result-actions">
-                    <button class="btn btn-secondary" onclick="saveResult()">💾 ${translations[currentLanguage].save || 'Save'}</button>
-                    <button class="btn btn-primary" onclick="proceedToFullDiagnosis()">🩺 Full Diagnosis</button>
+                    <button class="btn btn-secondary" onclick="saveToLocal()">💾 Save</button>
+                    <button class="btn btn-primary" onclick="printReport()">🖨️ Print</button>
+                    <button class="btn btn-success" onclick="newDiagnosis()">➕ New Diagnosis</button>
                 </div>
             `;
             
             resultsDiv.innerHTML = html;
             resultsDiv.style.display = 'block';
+            resultsDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function saveDiagnosis(diagnosis) {
+            const newDiagnosis = {
+                id: Date.now(),
+                diagnosis: diagnosis.name,
+                severity: diagnosis.severity,
+                confidence: diagnosis.matchScore,
+                date: new Date().toISOString()
+            };
+            
+            diagnoses.unshift(newDiagnosis);
+            if (diagnoses.length > 20) diagnoses.pop();
+            
+            localStorage.setItem('diagnoses', JSON.stringify(diagnoses));
+            
+            updateStats();
+            displayDiagnoses();
+            showToast('Diagnosis saved successfully');
         }
 
         // ==================== DISEASE LIBRARY ====================
@@ -2036,15 +1342,15 @@
                 const severityClass = disease.severity === 'low' ? 'severity-low' : 
                                     disease.severity === 'medium' ? 'severity-medium' : 'severity-high';
                 
-                const commonSymptomNames = disease.symptoms.slice(0, 3).map(id => {
+                const commonSymptomNames = disease.symptoms.slice(0, 4).map(id => {
                     const symptom = symptomsDatabase.find(s => s.id === id);
                     return symptom ? symptom.name : '';
-                }).join(', ');
+                }).filter(name => name).join(', ');
                 
                 card.innerHTML = `
-                    <h4>${disease.name}</h4>
-                    <span class="severity-badge ${severityClass}" style="margin: 5px 0; display: inline-block;">${disease.severity.toUpperCase()}</span>
-                    <p class="common-symptoms"><strong>Common:</strong> ${commonSymptomNames}...</p>
+                    <h3>${disease.name}</h3>
+                    <span class="severity-badge ${severityClass}" style="margin: 10px 0; display: inline-block;">${disease.severity.toUpperCase()}</span>
+                    <p style="color: var(--gray); margin-top: 10px;"><strong>Common symptoms:</strong> ${commonSymptomNames}</p>
                 `;
                 
                 grid.appendChild(card);
@@ -2071,9 +1377,9 @@
                                     disease.severity === 'medium' ? 'severity-medium' : 'severity-high';
                 
                 card.innerHTML = `
-                    <h4>${disease.name}</h4>
-                    <span class="severity-badge ${severityClass}" style="margin: 5px 0; display: inline-block;">${disease.severity.toUpperCase()}</span>
-                    <p>${disease.description.substring(0, 100)}...</p>
+                    <h3>${disease.name}</h3>
+                    <span class="severity-badge ${severityClass}" style="margin: 10px 0; display: inline-block;">${disease.severity.toUpperCase()}</span>
+                    <p style="margin-top: 10px;">${disease.description.substring(0, 100)}...</p>
                 `;
                 
                 grid.appendChild(card);
@@ -2087,508 +1393,125 @@
             const symptomNames = disease.symptoms.map(id => {
                 const symptom = symptomsDatabase.find(s => s.id === id);
                 return symptom ? symptom.name : '';
-            }).join(', ');
+            }).filter(name => name).join(', ');
             
-            alert(`
-                ${disease.name}
-                Severity: ${disease.severity.toUpperCase()}
-                
-                Description: ${disease.description}
-                
-                Common Symptoms: ${symptomNames}
-                
-                Risk Factors: ${disease.riskFactors.join(', ')}
-                
-                Recommendations:
-                ${disease.recommendations.map(r => '• ' + r).join('\n')}
-                
-                Prevention:
-                ${disease.prevention.map(p => '• ' + p).join('\n')}
-            `);
-        }
-
-        // ==================== CAMERA FUNCTIONS ====================
-        async function startCamera() {
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({ 
-                    video: { facingMode: 'environment' } 
-                });
-                
-                document.getElementById('video').srcObject = stream;
-                document.getElementById('startCameraBtn').style.display = 'none';
-                document.getElementById('captureBtn').style.display = 'inline-block';
-                
-            } catch (err) {
-                showToast('Camera access denied', 'error');
-            }
-        }
-
-        function captureImage() {
-            const video = document.getElementById('video');
-            const canvas = document.getElementById('canvas');
-            
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-            
-            capturedImage = canvas.toDataURL('image/jpeg', 0.8);
-            
-            document.getElementById('preview').src = capturedImage;
-            document.getElementById('previewArea').style.display = 'block';
-            document.getElementById('captureBtn').style.display = 'none';
-            document.getElementById('retakeBtn').style.display = 'inline-block';
-            
-            stopCamera();
-            validateForm();
-        }
-
-        function resetCamera() {
-            capturedImage = null;
-            document.getElementById('previewArea').style.display = 'none';
-            document.getElementById('preview').src = '';
-            document.getElementById('retakeBtn').style.display = 'none';
-            document.getElementById('captureBtn').style.display = 'inline-block';
-            document.getElementById('analyzeBtn').disabled = true;
-        }
-
-        function stopCamera() {
-            const video = document.getElementById('video');
-            if (video.srcObject) {
-                video.srcObject.getTracks().forEach(track => track.stop());
-                video.srcObject = null;
-            }
-        }
-
-        function handleImageUpload(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                capturedImage = e.target.result;
-                document.getElementById('preview').src = capturedImage;
-                document.getElementById('previewArea').style.display = 'block';
-                
-                stopCamera();
-                document.getElementById('startCameraBtn').style.display = 'inline-block';
-                document.getElementById('captureBtn').style.display = 'none';
-                
-                validateForm();
-            };
-            reader.readAsDataURL(file);
-        }
-
-        // ==================== VOICE RECORDING ====================
-        async function toggleRecording() {
-            if (!isRecording) {
-                try {
-                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                    mediaRecorder = new MediaRecorder(stream);
-                    audioChunks = [];
-                    
-                    mediaRecorder.ondataavailable = event => {
-                        audioChunks.push(event.data);
-                    };
-                    
-                    mediaRecorder.onstop = () => {
-                        audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
-                        audioUrl = URL.createObjectURL(audioBlob);
-                        document.getElementById('playBtn').disabled = false;
-                        document.getElementById('audioWave').innerHTML = `<span class="timer">${formatTime(recordingSeconds)}</span>`;
-                    };
-                    
-                    mediaRecorder.start();
-                    isRecording = true;
-                    
-                    document.getElementById('recordBtn').classList.add('recording');
-                    document.getElementById('recordBtn').textContent = '⏹️';
-                    
-                    recordingSeconds = 0;
-                    recordingTimer = setInterval(() => {
-                        recordingSeconds++;
-                        document.getElementById('timer').textContent = formatTime(recordingSeconds);
-                    }, 1000);
-                    
-                } catch (err) {
-                    showToast('Microphone access denied', 'error');
-                }
-            } else {
-                if (mediaRecorder && mediaRecorder.state !== 'inactive') {
-                    mediaRecorder.stop();
-                    mediaRecorder.stream.getTracks().forEach(track => track.stop());
-                }
-                
-                clearInterval(recordingTimer);
-                isRecording = false;
-                
-                document.getElementById('recordBtn').classList.remove('recording');
-                document.getElementById('recordBtn').textContent = '⏺️';
-            }
-        }
-
-        function playRecording() {
-            if (audioUrl) {
-                const audio = new Audio(audioUrl);
-                audio.play();
-            }
-        }
-
-        function formatTime(seconds) {
-            const mins = Math.floor(seconds / 60);
-            const secs = seconds % 60;
-            return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-        }
-
-        // ==================== AI DIAGNOSIS ====================
-        function validateForm() {
-            const patientName = document.getElementById('patientName').value;
-            const patientAge = document.getElementById('patientAge').value;
-            const patientDistrict = document.getElementById('patientDistrict').value;
-            
-            const isValid = patientName && patientAge && patientDistrict && capturedImage;
-            document.getElementById('analyzeBtn').disabled = !isValid;
-        }
-
-        async function analyzeHealth() {
-            if (!validateForm()) {
-                showToast('Please complete all required fields', 'error');
-                return;
-            }
-            
-            document.getElementById('analyzeBtn').disabled = true;
-            document.getElementById('analyzeBtn').textContent = '⏳ ' + (currentLanguage === 'en' ? 'Diagnosing...' : 
-                currentLanguage === 'ta' ? 'கண்டறிகிறது...' :
-                currentLanguage === 'te' ? 'నిర్ధారిస్తోంది...' : 'ನಿರ್ಣಯಿಸಲಾಗುತ್ತಿದೆ...');
-            
-            setTimeout(async () => {
-                const diagnosis = performAIDiagnosis();
-                displayDiagnosis(diagnosis);
-                await saveDiagnosis(diagnosis);
-                
-                document.getElementById('analyzeBtn').disabled = false;
-                document.getElementById('analyzeBtn').textContent = '🔬 ' + (translations[currentLanguage].analyze || 'AI Diagnosis & Health Analysis');
-            }, 3000);
-        }
-
-        function performAIDiagnosis() {
-            const age = parseInt(document.getElementById('patientAge').value);
-            const temperature = parseFloat(document.getElementById('temperature').value);
-            const heartRate = parseInt(document.getElementById('heartRate').value);
-            const bpSystolic = parseInt(document.getElementById('bpSystolic').value);
-            const oxygen = parseInt(document.getElementById('oxygen').value);
-            const bloodSugar = parseInt(document.getElementById('bloodSugar').value);
-            
-            // Find matching diseases based on symptoms
-            const matches = diseaseDatabase.map(disease => {
-                const matchingSymptoms = disease.symptoms.filter(s => selectedSymptoms.includes(s));
-                const symptomScore = (matchingSymptoms.length / Math.max(disease.symptoms.length, 1)) * 40; // 40% weight
-                
-                // Vital-based scoring
-                let vitalScore = 0;
-                
-                if (temperature) {
-                    if (temperature > 38) vitalScore += disease.category === 'infectious' ? 15 : 5;
-                    if (temperature < 36) vitalScore += 5;
-                }
-                
-                if (heartRate) {
-                    if (heartRate > 100) vitalScore += 10;
-                    if (heartRate < 60) vitalScore += 5;
-                }
-                
-                if (bpSystolic) {
-                    if (bpSystolic > 140) vitalScore += disease.category === 'cardiovascular' ? 15 : 10;
-                    if (bpSystolic < 90) vitalScore += 10;
-                }
-                
-                if (oxygen && oxygen < 95) {
-                    vitalScore += disease.category === 'respiratory' ? 20 : 10;
-                }
-                
-                if (bloodSugar) {
-                    if (bloodSugar > 140) vitalScore += disease.category === 'metabolic' ? 15 : 5;
-                    if (bloodSugar < 70) vitalScore += 10;
-                }
-                
-                const totalScore = symptomScore + vitalScore;
-                
-                return {
-                    ...disease,
-                    matchScore: totalScore,
-                    matchingSymptoms: matchingSymptoms.length,
-                    symptomScore: symptomScore,
-                    vitalScore: vitalScore
-                };
-            }).filter(d => d.matchScore > 20)
-              .sort((a, b) => b.matchScore - a.matchScore);
-            
-            // Age-based adjustments
-            matches.forEach(d => {
-                if (age > 60 && d.severity === 'high') {
-                    d.matchScore += 10;
-                }
-                if (age < 5 && d.category === 'respiratory') {
-                    d.matchScore += 10;
-                }
-            });
-            
-            matches.sort((a, b) => b.matchScore - a.matchScore);
-            
-            return matches[0] || {
-                name: 'Unknown',
-                description: 'Unable to determine specific condition',
-                severity: 'low',
-                matchScore: 50,
-                recommendations: ['Consult a healthcare provider', 'Monitor symptoms', 'Rest and hydrate'],
-                riskFactors: ['Insufficient data'],
-                prevention: ['Regular checkups', 'Healthy lifestyle']
-            };
-        }
-
-        function displayDiagnosis(diagnosis) {
             const resultsDiv = document.getElementById('results');
-            const severityClass = diagnosis.severity === 'low' ? 'severity-low' : 
-                                diagnosis.severity === 'medium' ? 'severity-medium' : 'severity-high';
             
-            const matchPercentage = Math.min(99, Math.round(diagnosis.matchScore));
-            
-            let html = `
+            resultsDiv.innerHTML = `
                 <div class="diagnosis-header">
-                    <div class="diagnosis-icon">🩺</div>
+                    <div class="diagnosis-icon">📚</div>
                     <div class="diagnosis-info">
-                        <h3>${diagnosis.name}</h3>
-                        <span class="severity-badge ${severityClass}">${diagnosis.severity.toUpperCase()} SEVERITY</span>
-                        <p style="margin-top: 10px;">${diagnosis.description}</p>
+                        <h2>${disease.name}</h2>
+                        <span class="severity-badge ${severityClass}">${disease.severity.toUpperCase()} SEVERITY</span>
+                        <p style="margin-top: 10px;">${disease.description}</p>
                     </div>
                 </div>
                 
-                <div class="confidence-bar">
-                    <div class="confidence-fill" style="width: ${matchPercentage}%"></div>
+                <div class="disease-info">
+                    <h3>Common Symptoms</h3>
+                    <p>${symptomNames}</p>
                 </div>
-                <p><strong>${translations[currentLanguage].confidence || 'Confidence'}:</strong> ${matchPercentage}%</p>
                 
                 <div class="disease-info">
-                    <h4>📋 ${translations[currentLanguage].recommendations || 'Recommendations'}</h4>
+                    <h3>📋 Recommendations</h3>
                     <ul>
-                        ${diagnosis.recommendations.map(r => `<li>${r}</li>`).join('')}
+                        ${disease.recommendations.map(r => `<li>${r}</li>`).join('')}
                     </ul>
                 </div>
                 
                 <div class="disease-info">
-                    <h4>⚠️ Risk Factors</h4>
+                    <h3>⚠️ Risk Factors</h3>
                     <ul>
-                        ${diagnosis.riskFactors.map(r => `<li>${r}</li>`).join('')}
+                        ${disease.riskFactors.map(r => `<li>${r}</li>`).join('')}
                     </ul>
                 </div>
                 
                 <div class="disease-info">
-                    <h4>🛡️ Prevention Tips</h4>
+                    <h3>🛡️ Prevention Tips</h3>
                     <ul>
-                        ${diagnosis.prevention.map(p => `<li>${p}</li>`).join('')}
+                        ${disease.prevention.map(p => `<li>${p}</li>`).join('')}
                     </ul>
                 </div>
-            `;
-            
-            if (audioBlob) {
-                html += `
-                    <div class="voice-player">
-                        <button class="play-btn" onclick="playResultAudio()">▶️</button>
-                        <span>${translations[currentLanguage].recordedSymptoms || 'Recorded symptoms available'}</span>
-                    </div>
-                `;
-            }
-            
-            html += `
+                
                 <div class="result-actions">
-                    <button class="btn btn-secondary" onclick="saveResult()">💾 ${translations[currentLanguage].save || 'Save'}</button>
-                    <button class="btn btn-primary" onclick="printReport()">🖨️ ${translations[currentLanguage].print || 'Print'}</button>
-                    <button class="btn btn-success" onclick="newScreening()">➕ ${translations[currentLanguage].new || 'New Diagnosis'}</button>
+                    <button class="btn btn-primary" onclick="document.getElementById('results').style.display='none'">Close</button>
                 </div>
             `;
             
-            resultsDiv.innerHTML = html;
             resultsDiv.style.display = 'block';
-        }
-
-        async function saveDiagnosis(diagnosis) {
-            const patientName = document.getElementById('patientName').value;
-            const patientAge = document.getElementById('patientAge').value;
-            const patientGender = document.getElementById('patientGender').value;
-            const patientDistrict = document.getElementById('patientDistrict').value;
-            const symptomsText = document.getElementById('symptomsText').value;
-            
-            const screening = {
-                patient_name: patientName,
-                age: parseInt(patientAge) || null,
-                gender: patientGender,
-                district: patientDistrict,
-                diagnosis: diagnosis.name,
-                severity: diagnosis.severity,
-                confidence: Math.min(99, Math.round(diagnosis.matchScore)),
-                symptoms: selectedSymptoms,
-                symptoms_text: symptomsText,
-                photo_path: capturedImage,
-                audio_data: audioBlob ? URL.createObjectURL(audioBlob) : null,
-                recommendations: diagnosis.recommendations,
-                risk_factors: diagnosis.riskFactors,
-                prevention: diagnosis.prevention,
-                created_at: new Date().toISOString(),
-                offline_sync: 0
-            };
-            
-            return new Promise((resolve, reject) => {
-                const transaction = db.transaction(['screenings'], 'readwrite');
-                const store = transaction.objectStore('screenings');
-                
-                const request = store.add(screening);
-                
-                request.onsuccess = () => {
-                    showToast(translations[currentLanguage].save || 'Saved successfully');
-                    screenings.push({...screening, id: request.result});
-                    
-                    if (!navigator.onLine) {
-                        let offlineQueue = JSON.parse(localStorage.getItem('offlineQueue') || '[]');
-                        offlineQueue.push({
-                            type: 'diagnosis',
-                            data: screening,
-                            timestamp: new Date().toISOString()
-                        });
-                        localStorage.setItem('offlineQueue', JSON.stringify(offlineQueue));
-                        updateSyncBadge();
-                    }
-                    
-                    displayScreenings();
-                    updateStats();
-                    resolve();
-                };
-                
-                request.onerror = () => {
-                    showToast('Error saving diagnosis', 'error');
-                    reject();
-                };
-            });
-        }
-
-        async function loadScreenings() {
-            return new Promise((resolve) => {
-                if (!db) return resolve();
-                
-                const transaction = db.transaction(['screenings'], 'readonly');
-                const store = transaction.objectStore('screenings');
-                const request = store.getAll();
-                
-                request.onsuccess = () => {
-                    screenings = request.result || [];
-                    resolve();
-                };
-                
-                request.onerror = () => {
-                    screenings = [];
-                    resolve();
-                };
-            });
+            resultsDiv.scrollIntoView({ behavior: 'smooth' });
         }
 
         // ==================== UI FUNCTIONS ====================
-        function switchTab(tab) {
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            document.getElementById(`tab${tab.charAt(0).toUpperCase() + tab.slice(1)}`).classList.add('active');
+        function updateStats() {
+            document.getElementById('totalDiagnoses').textContent = diagnoses.length;
             
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.remove('active');
-            });
-            document.getElementById(`${tab}Tab`).classList.add('active');
+            const today = new Date().toDateString();
+            const todayCount = diagnoses.filter(d => 
+                new Date(d.date).toDateString() === today
+            ).length;
+            document.getElementById('todayDiagnoses').textContent = todayCount;
+            
+            const highRisk = diagnoses.filter(d => d.severity === 'high').length;
+            document.getElementById('highRisk').textContent = highRisk;
         }
 
-        function displayScreenings() {
+        function displayDiagnoses() {
             const tbody = document.getElementById('tableBody');
-            const recent = screenings.slice(-10).reverse();
+            const recent = diagnoses.slice(0, 10);
             
             if (recent.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="8" style="text-align: center;">' + 
-                    (translations[currentLanguage].noScreenings || 'No diagnoses yet') + '</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align: center;">No diagnoses yet</td></tr>';
                 return;
             }
             
-            tbody.innerHTML = recent.map(s => {
-                const date = new Date(s.created_at).toLocaleString();
-                const severityClass = s.severity === 'low' ? 'low' : s.severity === 'medium' ? 'medium' : 'high';
+            tbody.innerHTML = recent.map(d => {
+                const date = new Date(d.date).toLocaleString();
+                const severityClass = d.severity === 'low' ? 'low' : d.severity === 'medium' ? 'medium' : 'high';
                 
                 return `
                     <tr>
                         <td>${date}</td>
-                        <td>${s.patient_name || 'N/A'}</td>
-                        <td>${s.age || 'N/A'}</td>
-                        <td>${s.district || 'N/A'}</td>
-                        <td>${s.diagnosis || 'N/A'}</td>
-                        <td><span class="status-badge ${severityClass}">${s.severity ? s.severity.toUpperCase() : 'N/A'}</span></td>
-                        <td>${s.confidence || 0}%</td>
-                        <td><button class="action-btn" onclick="viewDiagnosis(${s.id})">${translations[currentLanguage].viewDetails || 'View'}</button></td>
+                        <td>${d.diagnosis}</td>
+                        <td><span class="status-badge ${severityClass}">${d.severity.toUpperCase()}</span></td>
+                        <td>${d.confidence}%</td>
+                        <td><button class="action-btn" onclick="viewDiagnosis(${d.id})">View</button></td>
                     </tr>
                 `;
             }).join('');
         }
 
-        function updateStats() {
-            document.getElementById('totalScreenings').textContent = screenings.length;
-            
-            const today = new Date().toDateString();
-            const todayCount = screenings.filter(s => 
-                new Date(s.created_at).toDateString() === today
-            ).length;
-            document.getElementById('todayScreenings').textContent = todayCount;
-            
-            const highRisk = screenings.filter(s => s.severity === 'high').length;
-            document.getElementById('highRisk').textContent = highRisk;
-            
-            const avgConf = screenings.reduce((acc, s) => acc + (s.confidence || 0), 0) / (screenings.length || 1);
-            document.getElementById('avgConfidence').textContent = Math.round(avgConf) + '%';
-        }
-
-        function updateOfflineStatus() {
-            const dot = document.getElementById('statusDot');
-            const text = document.getElementById('connectionText');
-            
-            if (navigator.onLine) {
-                dot.classList.remove('offline');
-                text.textContent = translations[currentLanguage].online || 'Connected';
-            } else {
-                dot.classList.add('offline');
-                text.textContent = translations[currentLanguage].offline || 'Working Offline';
+        function viewDiagnosis(id) {
+            const diagnosis = diagnoses.find(d => d.id === id);
+            if (diagnosis) {
+                alert(`Diagnosis: ${diagnosis.diagnosis}\nSeverity: ${diagnosis.severity}\nConfidence: ${diagnosis.confidence}%\nDate: ${new Date(diagnosis.date).toLocaleString()}`);
             }
         }
 
-        function updateSyncBadge() {
-            const offlineQueue = JSON.parse(localStorage.getItem('offlineQueue') || '[]');
-            document.getElementById('syncBadge').textContent = `📤 ${offlineQueue.length} ${translations[currentLanguage].pending || 'pending'}`;
+        function newDiagnosis() {
+            selectedSymptoms = [];
+            updateSymptomTags();
+            loadSymptoms();
+            
+            document.getElementById('bp').value = '';
+            document.getElementById('heartRate').value = '';
+            document.getElementById('temperature').value = '';
+            document.getElementById('oxygen').value = '';
+            document.getElementById('bloodSugar').value = '';
+            
+            document.getElementById('results').style.display = 'none';
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // ==================== SYNC FUNCTION ====================
-        async function syncNow() {
-            if (!navigator.onLine) {
-                showToast('Cannot sync while offline', 'error');
-                return;
-            }
-            
-            const offlineQueue = JSON.parse(localStorage.getItem('offlineQueue') || '[]');
-            
-            if (offlineQueue.length === 0) {
-                showToast('Nothing to sync');
-                return;
-            }
-            
-            showToast(`Syncing ${offlineQueue.length} items...`);
-            
-            setTimeout(() => {
-                localStorage.setItem('offlineQueue', '[]');
-                updateSyncBadge();
-                showToast('Sync complete!');
-            }, 2000);
+        function saveToLocal() {
+            showToast('Diagnosis saved to local storage');
         }
 
-        // ==================== UTILITY FUNCTIONS ====================
+        function printReport() {
+            window.print();
+        }
+
         function showToast(message, type = 'success') {
             const toast = document.getElementById('toast');
             toast.textContent = message;
@@ -2600,103 +1523,16 @@
             }, 3000);
         }
 
-        function saveResult() {
-            showToast(translations[currentLanguage].save || 'Results saved');
-        }
-
-        function printReport() {
-            window.print();
-        }
-
-        function newScreening() {
-            capturedImage = null;
-            audioBlob = null;
-            audioUrl = null;
-            recordingSeconds = 0;
-            selectedSymptoms = [];
-            
-            document.getElementById('results').style.display = 'none';
-            document.getElementById('previewArea').style.display = 'none';
-            document.getElementById('preview').src = '';
-            document.getElementById('voicePlayer').style.display = 'none';
-            document.getElementById('symptomsText').value = '';
-            document.getElementById('timer').textContent = '00:00';
-            document.getElementById('playBtn').disabled = true;
-            
-            // Clear vitals
-            document.getElementById('weight').value = '';
-            document.getElementById('height').value = '';
-            document.getElementById('temperature').value = '';
-            document.getElementById('bpSystolic').value = '';
-            document.getElementById('bpDiastolic').value = '';
-            document.getElementById('heartRate').value = '';
-            document.getElementById('oxygen').value = '';
-            document.getElementById('bloodSugar').value = '';
-            
-            // Clear symptoms
-            updateSymptomTags();
-            loadSymptoms();
-            
-            stopCamera();
-            document.getElementById('startCameraBtn').style.display = 'inline-block';
-            document.getElementById('captureBtn').style.display = 'none';
-            document.getElementById('retakeBtn').style.display = 'none';
-            
-            validateForm();
-        }
-
-        function viewDiagnosis(id) {
-            const screening = screenings.find(s => s.id === id);
-            if (screening) {
-                alert(`Diagnosis Details:
-                    Patient: ${screening.patient_name}
-                    Age: ${screening.age}
-                    District: ${screening.district}
-                    Diagnosis: ${screening.diagnosis}
-                    Severity: ${screening.severity}
-                    Confidence: ${screening.confidence}%
-                    Date: ${new Date(screening.created_at).toLocaleString()}
-                    
-                    Recommendations:
-                    ${Array.isArray(screening.recommendations) ? screening.recommendations.map(r => '• ' + r).join('\n') : ''}`);
-            }
-        }
-
-        function playResultAudio() {
-            if (audioUrl) {
-                const audio = new Audio(audioUrl);
-                audio.play();
-            }
-        }
-
-        function proceedToFullDiagnosis() {
-            // Switch to screening tab and scroll to vitals
-            switchTab('screening');
-            document.getElementById('vitals').scrollIntoView({ behavior: 'smooth' });
-        }
-
         // Make functions global
-        window.switchLanguage = switchLanguage;
-        window.switchTab = switchTab;
-        window.startCamera = startCamera;
-        window.captureImage = captureImage;
-        window.resetCamera = resetCamera;
-        window.handleImageUpload = handleImageUpload;
-        window.toggleRecording = toggleRecording;
-        window.playRecording = playRecording;
-        window.analyzeHealth = analyzeHealth;
-        window.analyzeSymptoms = analyzeSymptoms;
         window.filterSymptoms = filterSymptoms;
         window.toggleSymptom = toggleSymptom;
         window.removeSymptom = removeSymptom;
+        window.analyzeHealth = analyzeHealth;
         window.searchDiseases = searchDiseases;
-        window.saveResult = saveResult;
+        window.saveToLocal = saveToLocal;
         window.printReport = printReport;
-        window.newScreening = newScreening;
-        window.syncNow = syncNow;
+        window.newDiagnosis = newDiagnosis;
         window.viewDiagnosis = viewDiagnosis;
-        window.playResultAudio = playResultAudio;
-        window.proceedToFullDiagnosis = proceedToFullDiagnosis;
     </script>
 </body>
 </html>

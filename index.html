@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>RuralCare Pro - Complete Healthcare Platform with 50+ Symptoms</title>
+    <title>RuralCare Pro - Complete Healthcare Platform with 60+ Symptoms</title>
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -363,7 +363,7 @@
             gap: 20px;
         }
 
-        /* Symptoms Section - With 50+ Symptoms */
+        /* Symptoms Section - With Multilingual Support */
         .symptoms-section {
             background: white;
             border-radius: 32px;
@@ -386,6 +386,7 @@
             border-radius: 30px;
             cursor: pointer;
             transition: all 0.3s;
+            font-size: 0.9rem;
         }
 
         .category-tab.active {
@@ -435,6 +436,10 @@
             flex-wrap: wrap;
             gap: 10px;
             margin-top: 15px;
+            min-height: 50px;
+            padding: 10px;
+            background: var(--background);
+            border-radius: 20px;
         }
 
         .symptom-tag {
@@ -445,6 +450,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            font-size: 0.9rem;
         }
 
         .symptom-tag button {
@@ -455,68 +461,181 @@
             font-size: 1.2rem;
         }
 
-        /* Voice Section */
+        /* Enhanced Voice Section */
         .voice-section {
             background: linear-gradient(135deg, #e0f2fe, #bae6fd);
             border-radius: 40px;
             padding: 30px;
             margin: 30px 0;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .voice-visualizer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
         }
 
         .voice-controls {
             display: flex;
-            gap: 20px;
+            gap: 15px;
             align-items: center;
-            flex-wrap: wrap;
         }
 
         .record-btn {
-            width: 80px;
-            height: 80px;
+            width: 90px;
+            height: 90px;
             border-radius: 50%;
-            background: var(--danger);
+            background: linear-gradient(135deg, var(--danger), #dc2626);
             color: white;
             border: none;
-            font-size: 2rem;
+            font-size: 2.2rem;
             cursor: pointer;
             transition: all 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 10px 20px rgba(220, 38, 38, 0.3);
+            position: relative;
+        }
+
+        .record-btn::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: rgba(220, 38, 38, 0.4);
+            animation: ripple 2s infinite;
+            z-index: -1;
         }
 
         .record-btn.recording {
+            background: linear-gradient(135deg, #b91c1c, #991b1b);
             animation: pulse 1.5s infinite;
-            background: #b91c1c;
+        }
+
+        .record-btn.recording::before {
+            animation: ripple 1s infinite;
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
         }
 
         @keyframes pulse {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .timer-display {
+            background: white;
+            border-radius: 60px;
+            padding: 15px 30px;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .timer {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            font-family: 'Courier New', monospace;
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .timer-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .waveform-container {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .waveform {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 50px;
+            gap: 3px;
+        }
+
+        .wave-bar {
+            flex: 1;
+            background: linear-gradient(to top, var(--primary), var(--primary-light));
+            border-radius: 20px;
+            transition: height 0.1s ease;
+            min-width: 3px;
         }
 
         .voice-status {
-            font-size: 0.9rem;
+            font-size: 1rem;
             color: var(--text-secondary);
-            margin-top: 10px;
-            padding: 10px;
+            margin: 15px 0;
+            padding: 12px 20px;
             background: white;
-            border-radius: 30px;
+            border-radius: 40px;
             text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: var(--shadow-sm);
         }
 
         .voice-transcript {
             background: white;
             border-radius: 30px;
-            padding: 20px;
+            padding: 25px;
             margin-top: 20px;
-            font-size: 1.1rem;
-            border: 2px solid var(--primary);
+            font-size: 1.2rem;
+            border: 3px solid var(--primary);
+            box-shadow: var(--shadow-md);
         }
 
-        .voice-transcript span {
+        .voice-transcript .label {
             color: var(--primary);
-            font-weight: 600;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .voice-transcript .text {
+            font-size: 1.3rem;
+            line-height: 1.6;
+            color: var(--text-primary);
+            min-height: 60px;
+            padding: 15px;
+            background: var(--background);
+            border-radius: 20px;
+        }
+
+        .language-indicator {
+            display: inline-block;
+            padding: 5px 15px;
+            background: var(--primary);
+            color: white;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            margin-left: 10px;
         }
 
         /* Analyze Button */
@@ -540,7 +659,7 @@
             box-shadow: 0 15px 40px -5px var(--accent);
         }
 
-        /* Results Card - Without Confidence */
+        /* Results Card */
         .results-card {
             background: white;
             border-radius: 32px;
@@ -671,6 +790,14 @@
                 margin-top: 20px;
                 width: 100%;
             }
+            
+            .voice-visualizer {
+                flex-direction: column;
+            }
+            
+            .waveform-container {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -759,7 +886,7 @@
     <!-- MAIN APPLICATION (Visible after patient login) -->
     <div class="main-app" id="mainApp">
         <div class="container">
-            <!-- Logout Button - Made More Visible -->
+            <!-- Logout Button -->
             <button class="logout-btn" onclick="handleLogout()">
                 <i class="fas fa-sign-out-alt"></i> Logout
             </button>
@@ -781,7 +908,7 @@
                         <i class="fas fa-leaf"></i>
                         <span data-i18n="appName">RuralCare Pro</span>
                     </h1>
-                    <p data-i18n="appSubtitle">AI-Powered Healthcare Assistant with 50+ Symptoms</p>
+                    <p data-i18n="appSubtitle">AI-Powered Healthcare Assistant with 60+ Symptoms</p>
                 </div>
             </header>
 
@@ -839,58 +966,67 @@
                 </div>
             </div>
 
-            <!-- Symptom Checker - With 50+ Symptoms -->
+            <!-- Symptom Checker - With 60+ Symptoms in Multiple Languages -->
             <div class="symptoms-section">
                 <h2 style="color: var(--primary); margin-bottom: 20px;">
                     <i class="fas fa-stethoscope"></i>
-                    <span data-i18n="symptomChecker">Symptom Checker (50+ Symptoms)</span>
+                    <span data-i18n="symptomChecker">Symptom Checker (60+ Symptoms)</span>
                 </h2>
 
                 <div class="category-tabs" id="symptomCategories">
-                    <button class="category-tab active" onclick="filterSymptoms('all')">All</button>
-                    <button class="category-tab" onclick="filterSymptoms('respiratory')">Respiratory</button>
-                    <button class="category-tab" onclick="filterSymptoms('digestive')">Digestive</button>
-                    <button class="category-tab" onclick="filterSymptoms('neurological')">Neurological</button>
-                    <button class="category-tab" onclick="filterSymptoms('muscular')">Muscular</button>
-                    <button class="category-tab" onclick="filterSymptoms('skin')">Skin</button>
-                    <button class="category-tab" onclick="filterSymptoms('general')">General</button>
-                    <button class="category-tab" onclick="filterSymptoms('cardiovascular')">Cardio</button>
-                    <button class="category-tab" onclick="filterSymptoms('urinary')">Urinary</button>
+                    <button class="category-tab active" onclick="filterSymptoms('all')" data-i18n="all">All</button>
+                    <button class="category-tab" onclick="filterSymptoms('respiratory')" data-i18n="respiratory">Respiratory</button>
+                    <button class="category-tab" onclick="filterSymptoms('digestive')" data-i18n="digestive">Digestive</button>
+                    <button class="category-tab" onclick="filterSymptoms('neurological')" data-i18n="neurological">Neurological</button>
+                    <button class="category-tab" onclick="filterSymptoms('muscular')" data-i18n="muscular">Muscular</button>
+                    <button class="category-tab" onclick="filterSymptoms('skin')" data-i18n="skin">Skin</button>
+                    <button class="category-tab" onclick="filterSymptoms('general')" data-i18n="general">General</button>
+                    <button class="category-tab" onclick="filterSymptoms('cardiovascular')" data-i18n="cardiovascular">Cardio</button>
+                    <button class="category-tab" onclick="filterSymptoms('urinary')" data-i18n="urinary">Urinary</button>
                 </div>
 
                 <div class="symptoms-grid" id="symptomsGrid"></div>
 
                 <div style="margin-top: 20px;">
-                    <h4>Selected Symptoms:</h4>
+                    <h4 data-i18n="selectedSymptoms">Selected Symptoms:</h4>
                     <div class="symptom-tags" id="symptomTags"></div>
                 </div>
             </div>
 
-            <!-- VOICE SECTION - BELOW SYMPTOM CHECKER -->
+            <!-- ENHANCED VOICE SECTION - WITH MULTILINGUAL SUPPORT -->
             <div class="voice-section">
                 <h2 style="color: var(--primary); margin-bottom: 20px;">
                     <i class="fas fa-microphone-alt"></i>
                     <span data-i18n="voiceTitle">Voice Symptom Recorder</span>
+                    <span class="language-indicator" id="currentLangIndicator">English</span>
                 </h2>
                 
-                <div class="voice-controls">
-                    <button class="record-btn" id="recordBtn" onclick="toggleRecording()">
-                        <i class="fas fa-microphone"></i>
-                    </button>
-                    <div style="flex: 1;">
-                        <div style="background: white; border-radius: 40px; padding: 15px; text-align: center;">
+                <div class="voice-visualizer">
+                    <div class="voice-controls">
+                        <button class="record-btn" id="recordBtn" onclick="toggleRecording()">
+                            <i class="fas fa-microphone"></i>
+                        </button>
+                        <div class="timer-display">
                             <span class="timer" id="timer">00:00</span>
+                            <span class="timer-label">min:sec</span>
+                        </div>
+                    </div>
+                    
+                    <div class="waveform-container">
+                        <div class="waveform" id="waveform">
+                            <!-- Wave bars will be generated by JavaScript -->
                         </div>
                     </div>
                 </div>
                 
                 <div class="voice-status" id="voiceStatus">
-                    <i class="fas fa-info-circle"></i> Click the microphone and speak in your language
+                    <i class="fas fa-info-circle"></i> <span data-i18n="microphoneClick">Click the microphone and speak in your language</span>
                 </div>
 
                 <!-- Voice Transcript Display -->
-                <div class="voice-transcript" id="voiceTranscript">
-                    <span>Recognized Speech:</span> <span id="recognizedText">None yet</span>
+                <div class="voice-transcript">
+                    <span class="label" data-i18n="recognizedSpeech">Recognized Speech:</span>
+                    <div class="text" id="recognizedText">None yet</div>
                 </div>
 
                 <div style="margin-top: 20px;">
@@ -908,7 +1044,7 @@
                 <span data-i18n="analyze">Run AI Diagnosis</span>
             </button>
 
-            <!-- Results - Without Confidence -->
+            <!-- Results -->
             <div class="results-card" id="results"></div>
 
             <!-- DOCTOR SECTION -->
@@ -916,40 +1052,40 @@
                 <div class="doctor-header">
                     <h2>
                         <i class="fas fa-user-md"></i>
-                        Doctor's Portal
+                        <span data-i18n="doctorPortal">Doctor's Portal</span>
                     </h2>
                     <button class="doctor-login-btn" onclick="toggleDoctorPanel()" id="doctorToggleBtn">
-                        <i class="fas fa-lock"></i> Login as Doctor
+                        <i class="fas fa-lock"></i> <span data-i18n="loginAsDoctor">Login as Doctor</span>
                     </button>
                 </div>
 
                 <!-- Doctor Login Panel -->
                 <div class="doctor-panel" id="doctorPanel">
-                    <h3 style="color: var(--primary); margin-bottom: 20px;">Doctor Login</h3>
+                    <h3 style="color: var(--primary); margin-bottom: 20px;" data-i18n="doctorLogin">Doctor Login</h3>
                     <div class="input-group">
                         <i class="fas fa-user-md"></i>
                         <input type="text" id="doctorUsername" placeholder=" " value="doctor">
-                        <label>Username</label>
+                        <label data-i18n="username">Username</label>
                     </div>
                     <div class="input-group">
                         <i class="fas fa-lock"></i>
                         <input type="password" id="doctorPassword" placeholder=" " value="123">
-                        <label>Password</label>
+                        <label data-i18n="password">Password</label>
                     </div>
                     <button class="login-btn" onclick="doctorLogin()" style="margin-bottom: 20px;">
-                        <i class="fas fa-sign-in-alt"></i> Access Doctor Dashboard
+                        <i class="fas fa-sign-in-alt"></i> <span data-i18n="accessDashboard">Access Doctor Dashboard</span>
                     </button>
 
                     <!-- Doctor Dashboard -->
                     <div id="doctorDashboard" style="display: none;">
-                        <h4 style="margin: 20px 0;">Patient Records</h4>
+                        <h4 style="margin: 20px 0;" data-i18n="patientRecords">Patient Records</h4>
                         <div class="doctor-grid" id="doctorPatientList"></div>
                         
-                        <h4 style="margin: 20px 0;">Add Clinical Note</h4>
+                        <h4 style="margin: 20px 0;" data-i18n="addClinicalNote">Add Clinical Note</h4>
                         <textarea class="doctor-note" id="doctorNote" placeholder="Write your recommendations..."></textarea>
-                        <button class="login-btn" onclick="saveDoctorNote()">Save Note</button>
+                        <button class="login-btn" onclick="saveDoctorNote()"><span data-i18n="saveNote">Save Note</span></button>
                         
-                        <button class="login-btn" onclick="doctorLogout()" style="background: var(--danger); margin-top: 20px;">Logout</button>
+                        <button class="login-btn" onclick="doctorLogout()" style="background: var(--danger); margin-top: 20px;"><span data-i18n="logout">Logout</span></button>
                     </div>
                 </div>
             </div>
@@ -966,13 +1102,25 @@
         let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
         let doctorLoggedIn = false;
 
+        // ==================== ALL TAMIL NADU DISTRICTS (38 Districts) ====================
+        const districts = [
+            'Ariyalur', 'Chengalpattu', 'Chennai', 'Coimbatore', 'Cuddalore',
+            'Dharmapuri', 'Dindigul', 'Erode', 'Kallakurichi', 'Kanchipuram',
+            'Kanyakumari', 'Karur', 'Krishnagiri', 'Madurai', 'Mayiladuthurai',
+            'Nagapattinam', 'Namakkal', 'Nilgiris', 'Perambalur', 'Pudukkottai',
+            'Ramanathapuram', 'Ranipet', 'Salem', 'Sivaganga', 'Tenkasi',
+            'Thanjavur', 'Theni', 'Thoothukkudi', 'Tiruchirappalli', 'Tirunelveli',
+            'Tirupathur', 'Tiruppur', 'Tiruvallur', 'Tiruvannamalai', 'Tiruvarur',
+            'Vellore', 'Viluppuram', 'Virudhunagar'
+        ];
+
         // ==================== MULTI-LANGUAGE SUPPORT ====================
         let currentLanguage = 'en';
         
         const translations = {
             en: {
                 appName: 'RuralCare Pro',
-                appSubtitle: 'AI-Powered Healthcare Assistant with 50+ Symptoms',
+                appSubtitle: 'AI-Powered Healthcare Assistant with 60+ Symptoms',
                 totalUsers: 'Total Users',
                 totalDiagnoses: 'Diagnoses',
                 highRisk: 'High Risk',
@@ -982,12 +1130,45 @@
                 age: 'Age',
                 voiceTitle: 'Voice Symptom Recorder',
                 typeSymptoms: 'Or type your symptoms (comma separated)',
-                symptomChecker: 'Symptom Checker (50+ Symptoms)',
-                analyze: 'Run AI Diagnosis'
+                symptomChecker: 'Symptom Checker (60+ Symptoms)',
+                analyze: 'Run AI Diagnosis',
+                all: 'All',
+                respiratory: 'Respiratory',
+                digestive: 'Digestive',
+                neurological: 'Neurological',
+                muscular: 'Muscular',
+                skin: 'Skin',
+                general: 'General',
+                cardiovascular: 'Cardio',
+                urinary: 'Urinary',
+                selectedSymptoms: 'Selected Symptoms:',
+                recognizedSpeech: 'Recognized Speech:',
+                doctorPortal: "Doctor's Portal",
+                loginAsDoctor: 'Login as Doctor',
+                doctorLogin: 'Doctor Login',
+                username: 'Username',
+                password: 'Password',
+                accessDashboard: 'Access Doctor Dashboard',
+                patientRecords: 'Patient Records',
+                addClinicalNote: 'Add Clinical Note',
+                saveNote: 'Save Note',
+                logout: 'Logout',
+                consultDoctor: 'Consult Doctor Immediately',
+                homeRemedies: 'Home Care & Remedies',
+                patientAdvice: 'Patient Advice',
+                recommendations: 'Professional Recommendations',
+                matchingSymptoms: 'Matching Symptoms',
+                printReport: 'Print Report',
+                noSymptoms: 'No symptoms selected',
+                recording: 'Recording... Speak now',
+                recordingCompleted: 'Recording completed',
+                microphoneClick: 'Click the microphone and speak in your language',
+                processing: 'Processing your voice...',
+                ready: 'Ready to record'
             },
             hi: {
                 appName: 'रूरलकेयर प्रो',
-                appSubtitle: '50+ लक्षणों के साथ एआई-संचालित स्वास्थ्य सहायक',
+                appSubtitle: '60+ लक्षणों के साथ एआई-संचालित स्वास्थ्य सहायक',
                 totalUsers: 'कुल उपयोगकर्ता',
                 totalDiagnoses: 'निदान',
                 highRisk: 'उच्च जोखिम',
@@ -996,13 +1177,46 @@
                 fullName: 'पूरा नाम',
                 age: 'आयु',
                 voiceTitle: 'आवाज लक्षण रिकॉर्डर',
-                typeSymptoms: 'या अपने लक्षण टाइप करें (अल्पविराम से)',
-                symptomChecker: 'लक्षण परीक्षक (50+ लक्षण)',
-                analyze: 'एआई निदान चलाएं'
+                typeSymptoms: 'या अपने लक्षण टाइप करें (अल्पविराम से अलग)',
+                symptomChecker: 'लक्षण परीक्षक (60+ लक्षण)',
+                analyze: 'एआई निदान चलाएं',
+                all: 'सभी',
+                respiratory: 'श्वसन',
+                digestive: 'पाचन',
+                neurological: 'तंत्रिका',
+                muscular: 'मांसपेशी',
+                skin: 'त्वचा',
+                general: 'सामान्य',
+                cardiovascular: 'हृदय',
+                urinary: 'मूत्र',
+                selectedSymptoms: 'चयनित लक्षण:',
+                recognizedSpeech: 'पहचानी गई आवाज:',
+                doctorPortal: 'डॉक्टर पोर्टल',
+                loginAsDoctor: 'डॉक्टर के रूप में लॉगिन',
+                doctorLogin: 'डॉक्टर लॉगिन',
+                username: 'उपयोगकर्ता नाम',
+                password: 'पासवर्ड',
+                accessDashboard: 'डॉक्टर डैशबोर्ड',
+                patientRecords: 'रोगी रिकॉर्ड',
+                addClinicalNote: 'क्लिनिकल नोट जोड़ें',
+                saveNote: 'नोट सहेजें',
+                logout: 'लॉगआउट',
+                consultDoctor: 'तुरंत डॉक्टर से मिलें',
+                homeRemedies: 'घरेलू उपचार',
+                patientAdvice: 'रोगी सलाह',
+                recommendations: 'पेशेवर सिफारिशें',
+                matchingSymptoms: 'मिलान लक्षण',
+                printReport: 'रिपोर्ट प्रिंट करें',
+                noSymptoms: 'कोई लक्षण चयनित नहीं',
+                recording: 'रिकॉर्डिंग... बोलें',
+                recordingCompleted: 'रिकॉर्डिंग पूरी हुई',
+                microphoneClick: 'माइक्रोफोन पर क्लिक करें और अपनी भाषा में बोलें',
+                processing: 'आपकी आवाज संसाधित हो रही है...',
+                ready: 'रिकॉर्ड करने के लिए तैयार'
             },
             ta: {
                 appName: 'ரூரல்கேர் புரோ',
-                appSubtitle: '50+ அறிகுறிகளுடன் ஏஐ-இயங்கும் சுகாதார உதவியாளர்',
+                appSubtitle: '60+ அறிகுறிகளுடன் ஏஐ-இயங்கும் சுகாதார உதவியாளர்',
                 totalUsers: 'மொத்த பயனர்கள்',
                 totalDiagnoses: 'நோயறிதல்கள்',
                 highRisk: 'அதிக ஆபத்து',
@@ -1012,12 +1226,45 @@
                 age: 'வயது',
                 voiceTitle: 'குரல் அறிகுறி பதிவி',
                 typeSymptoms: 'அல்லது உங்கள் அறிகுறிகளை தட்டச்சு செய்க (கமாவால் பிரிக்கவும்)',
-                symptomChecker: 'அறிகுறி சரிபார்ப்பான் (50+ அறிகுறிகள்)',
-                analyze: 'ஏஐ நோயறிதலை இயக்கு'
+                symptomChecker: 'அறிகுறி சரிபார்ப்பான் (60+ அறிகுறிகள்)',
+                analyze: 'ஏஐ நோயறிதலை இயக்கு',
+                all: 'அனைத்தும்',
+                respiratory: 'சுவாச',
+                digestive: 'செரிமான',
+                neurological: 'நரம்பியல்',
+                muscular: 'தசை',
+                skin: 'தோல்',
+                general: 'பொது',
+                cardiovascular: 'இதய',
+                urinary: 'சிறுநீர்',
+                selectedSymptoms: 'தேர்ந்தெடுக்கப்பட்ட அறிகுறிகள்:',
+                recognizedSpeech: 'அங்கீகரிக்கப்பட்ட பேச்சு:',
+                doctorPortal: 'மருத்துவர் போர்டல்',
+                loginAsDoctor: 'மருத்துவராக உள்நுழைக',
+                doctorLogin: 'மருத்துவர் உள்நுழைவு',
+                username: 'பயனர்பெயர்',
+                password: 'கடவுச்சொல்',
+                accessDashboard: 'மருத்துவர் டாஷ்போர்டு',
+                patientRecords: 'நோயாளி பதிவுகள்',
+                addClinicalNote: 'மருத்துவ குறிப்பு சேர்க்க',
+                saveNote: 'குறிப்பு சேமி',
+                logout: 'வெளியேறு',
+                consultDoctor: 'உடனடியாக மருத்துவரை அணுகவும்',
+                homeRemedies: 'வீட்டு வைத்தியம்',
+                patientAdvice: 'நோயாளி ஆலோசனை',
+                recommendations: 'தொழில்முறை பரிந்துரைகள்',
+                matchingSymptoms: 'பொருந்தும் அறிகுறிகள்',
+                printReport: 'அறிக்கை அச்சிடுக',
+                noSymptoms: 'அறிகுறிகள் எதுவும் தேர்ந்தெடுக்கப்படவில்லை',
+                recording: 'பதிவு செய்கிறது... பேசுங்கள்',
+                recordingCompleted: 'பதிவு முடிந்தது',
+                microphoneClick: 'மைக்ரோஃபோனை கிளிக் செய்து உங்கள் மொழியில் பேசுங்கள்',
+                processing: 'உங்கள் குரல் செயலாக்கப்படுகிறது...',
+                ready: 'பதிவு செய்ய தயார்'
             },
             te: {
                 appName: 'రూరల్కేర్ ప్రో',
-                appSubtitle: '50+ లక్షణాలతో AI-ఆధారిత ఆరోగ్య సహాయకుడు',
+                appSubtitle: '60+ లక్షణాలతో AI-ఆధారిత ఆరోగ్య సహాయకుడు',
                 totalUsers: 'మొత్తం వినియోగదారులు',
                 totalDiagnoses: 'రోగ నిర్ధారణలు',
                 highRisk: 'అధిక ప్రమాదం',
@@ -1027,12 +1274,45 @@
                 age: 'వయస్సు',
                 voiceTitle: 'వాయిస్ లక్షణం రికార్డర్',
                 typeSymptoms: 'లేదా మీ లక్షణాలను టైప్ చేయండి (కామాతో వేరు చేయండి)',
-                symptomChecker: 'లక్షణం పరిశీలకుడు (50+ లక్షణాలు)',
-                analyze: 'AI విశ్లేషణను రన్ చేయండి'
+                symptomChecker: 'లక్షణం పరిశీలకుడు (60+ లక్షణాలు)',
+                analyze: 'AI విశ్లేషణను రన్ చేయండి',
+                all: 'అన్నీ',
+                respiratory: 'శ్వాసకోశ',
+                digestive: 'జీర్ణ',
+                neurological: 'నాడీ',
+                muscular: 'కండరాల',
+                skin: 'చర్మం',
+                general: 'సాధారణ',
+                cardiovascular: 'గుండె',
+                urinary: 'మూత్ర',
+                selectedSymptoms: 'ఎంచుకున్న లక్షణాలు:',
+                recognizedSpeech: 'గుర్తించబడిన ప్రసంగం:',
+                doctorPortal: 'డాక్టర్ పోర్టల్',
+                loginAsDoctor: 'డాక్టర్‌గా లాగిన్',
+                doctorLogin: 'డాక్టర్ లాగిన్',
+                username: 'యూజర్‌నేమ్',
+                password: 'పాస్‌వర్డ్',
+                accessDashboard: 'డాక్టర్ డ్యాష్‌బోర్డ్',
+                patientRecords: 'రోగి రికార్డులు',
+                addClinicalNote: 'క్లినికల్ నోట్ జోడించండి',
+                saveNote: 'నోట్ సేవ్',
+                logout: 'లాగ్అవుట్',
+                consultDoctor: 'వెంటనే డాక్టర్‌ను సంప్రదించండి',
+                homeRemedies: 'ఇంటి నివారణలు',
+                patientAdvice: 'రోగి సలహా',
+                recommendations: 'వృత్తిపరమైన సిఫార్సులు',
+                matchingSymptoms: 'సరిపోలే లక్షణాలు',
+                printReport: 'నివేదికను ప్రింట్ చేయండి',
+                noSymptoms: 'లక్షణాలు ఏవీ ఎంచుకోలేదు',
+                recording: 'రికార్డింగ్... మాట్లాడండి',
+                recordingCompleted: 'రికార్డింగ్ పూర్తయింది',
+                microphoneClick: 'మైక్రోఫోన్ పై క్లిక్ చేసి మీ భాషలో మాట్లాడండి',
+                processing: 'మీ వాయిస్ ప్రాసెస్ అవుతోంది...',
+                ready: 'రికార్డ్ చేయడానికి సిద్ధంగా ఉంది'
             },
             kn: {
                 appName: 'ರೂರಲ್ಕೇರ್ ಪ್ರೋ',
-                appSubtitle: '50+ ರೋಗಲಕ್ಷಣಗಳೊಂದಿಗೆ AI-ಚಾಲಿತ ಆರೋಗ್ಯ ಸಹಾಯಕ',
+                appSubtitle: '60+ ರೋಗಲಕ್ಷಣಗಳೊಂದಿಗೆ AI-ಚಾಲಿತ ಆರೋಗ್ಯ ಸಹಾಯಕ',
                 totalUsers: 'ಒಟ್ಟು ಬಳಕೆದಾರರು',
                 totalDiagnoses: 'ರೋಗನಿರ್ಣಯಗಳು',
                 highRisk: 'ಹೆಚ್ಚಿನ ಅಪಾಯ',
@@ -1042,12 +1322,45 @@
                 age: 'ವಯಸ್ಸು',
                 voiceTitle: 'ಧ್ವನಿ ರೋಗಲಕ್ಷಣ ರೆಕಾರ್ಡರ್',
                 typeSymptoms: 'ಅಥವಾ ನಿಮ್ಮ ರೋಗಲಕ್ಷಣಗಳನ್ನು ಟೈಪ್ ಮಾಡಿ (ಅಲ್ಪವಿರಾಮದಿಂದ ಬೇರ್ಪಡಿಸಿ)',
-                symptomChecker: 'ರೋಗಲಕ್ಷಣ ಪರಿಶೀಲಕ (50+ ರೋಗಲಕ್ಷಣಗಳು)',
-                analyze: 'AI ರೋಗನಿರ್ಣಯವನ್ನು ರನ್ ಮಾಡಿ'
+                symptomChecker: 'ರೋಗಲಕ್ಷಣ ಪರಿಶೀಲಕ (60+ ರೋಗಲಕ್ಷಣಗಳು)',
+                analyze: 'AI ರೋಗನಿರ್ಣಯವನ್ನು ರನ್ ಮಾಡಿ',
+                all: 'ಎಲ್ಲಾ',
+                respiratory: 'ಉಸಿರಾಟ',
+                digestive: 'ಜೀರ್ಣಕಾರಿ',
+                neurological: 'ನರವೈಜ್ಞಾನಿಕ',
+                muscular: 'ಸ್ನಾಯು',
+                skin: 'ಚರ್ಮ',
+                general: 'ಸಾಮಾನ್ಯ',
+                cardiovascular: 'ಹೃದಯ',
+                urinary: 'ಮೂತ್ರ',
+                selectedSymptoms: 'ಆಯ್ದ ರೋಗಲಕ್ಷಣಗಳು:',
+                recognizedSpeech: 'ಗುರುತಿಸಲಾದ ಭಾಷಣ:',
+                doctorPortal: 'ವೈದ್ಯರ ಪೋರ್ಟಲ್',
+                loginAsDoctor: 'ವೈದ್ಯರಾಗಿ ಲಾಗಿನ್',
+                doctorLogin: 'ವೈದ್ಯರ ಲಾಗಿನ್',
+                username: 'ಬಳಕೆದಾರ ಹೆಸರು',
+                password: 'ಪಾಸ್‌ವರ್ಡ್',
+                accessDashboard: 'ವೈದ್ಯರ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್',
+                patientRecords: 'ರೋಗಿಯ ದಾಖಲೆಗಳು',
+                addClinicalNote: 'ಕ್ಲಿನಿಕಲ್ ಟಿಪ್ಪಣಿ ಸೇರಿಸಿ',
+                saveNote: 'ಟಿಪ್ಪಣಿ ಉಳಿಸಿ',
+                logout: 'ಲಾಗ್ ಔಟ್',
+                consultDoctor: 'ತಕ್ಷಣ ವೈದ್ಯರನ್ನು ಸಂಪರ್ಕಿಸಿ',
+                homeRemedies: 'ಮನೆಮದ್ದುಗಳು',
+                patientAdvice: 'ರೋಗಿಯ ಸಲಹೆ',
+                recommendations: 'ವೃತ್ತಿಪರ ಶಿಫಾರಸುಗಳು',
+                matchingSymptoms: 'ಹೊಂದಾಣಿಕೆಯ ರೋಗಲಕ್ಷಣಗಳು',
+                printReport: 'ವರದಿಯನ್ನು ಮುದ್ರಿಸಿ',
+                noSymptoms: 'ಯಾವುದೇ ರೋಗಲಕ್ಷಣಗಳನ್ನು ಆಯ್ಕೆ ಮಾಡಿಲ್ಲ',
+                recording: 'ರೆಕಾರ್ಡಿಂಗ್... ಮಾತನಾಡಿ',
+                recordingCompleted: 'ರೆಕಾರ್ಡಿಂಗ್ ಪೂರ್ಣಗೊಂಡಿದೆ',
+                microphoneClick: 'ಮೈಕ್ರೊಫೋನ್ ಕ್ಲಿಕ್ ಮಾಡಿ ಮತ್ತು ನಿಮ್ಮ ಭಾಷೆಯಲ್ಲಿ ಮಾತನಾಡಿ',
+                processing: 'ನಿಮ್ಮ ಧ್ವನಿಯನ್ನು ಸಂಸ್ಕರಿಸಲಾಗುತ್ತಿದೆ...',
+                ready: 'ರೆಕಾರ್ಡ್ ಮಾಡಲು ಸಿದ್ಧವಾಗಿದೆ'
             },
             ml: {
                 appName: 'റൂറൽകെയർ പ്രോ',
-                appSubtitle: '50+ രോഗലക്ഷണങ്ങളുള്ള AI-പവർഡ് ഹെൽത്ത്കെയർ അസിസ്റ്റന്റ്',
+                appSubtitle: '60+ രോഗലക്ഷണങ്ങളുള്ള AI-പവർഡ് ഹെൽത്ത്കെയർ അസിസ്റ്റന്റ്',
                 totalUsers: 'ആകെ ഉപയോക്താക്കൾ',
                 totalDiagnoses: 'രോഗനിർണയങ്ങൾ',
                 highRisk: 'ഉയർന്ന അപകടസാധ്യത',
@@ -1057,20 +1370,46 @@
                 age: 'പ്രായം',
                 voiceTitle: 'ശബ്ദ രോഗലക്ഷണ റെക്കോർഡർ',
                 typeSymptoms: 'അല്ലെങ്കിൽ നിങ്ങളുടെ രോഗലക്ഷണങ്ങൾ ടൈപ്പ് ചെയ്യുക (കോമയാൽ വേർതിരിക്കുക)',
-                symptomChecker: 'രോഗലക്ഷണ പരിശോധകൻ (50+ രോഗലക്ഷണങ്ങൾ)',
-                analyze: 'AI ഡയഗ്നോസിസ് പ്രവർത്തിപ്പിക്കുക'
+                symptomChecker: 'രോഗലക്ഷണ പരിശോധകൻ (60+ രോഗലക്ഷണങ്ങൾ)',
+                analyze: 'AI ഡയഗ്നോസിസ് പ്രവർത്തിപ്പിക്കുക',
+                all: 'എല്ലാം',
+                respiratory: 'ശ്വസന',
+                digestive: 'ദഹന',
+                neurological: 'ന്യൂറോളജിക്കൽ',
+                muscular: 'പേശീ',
+                skin: 'ചർമ്മം',
+                general: 'പൊതുവായ',
+                cardiovascular: 'ഹൃദയ',
+                urinary: 'മൂത്ര',
+                selectedSymptoms: 'തിരഞ്ഞെടുത്ത രോഗലക്ഷണങ്ങൾ:',
+                recognizedSpeech: 'തിരിച്ചറിഞ്ഞ സംസാരം:',
+                doctorPortal: 'ഡോക്ടറുടെ പോർട്ടൽ',
+                loginAsDoctor: 'ഡോക്ടറായി ലോഗിൻ ചെയ്യുക',
+                doctorLogin: 'ഡോക്ടർ ലോഗിൻ',
+                username: 'ഉപയോക്തൃനാമം',
+                password: 'പാസ്‌വേഡ്',
+                accessDashboard: 'ഡോക്ടർ ഡാഷ്‌ബോർഡ്',
+                patientRecords: 'രോഗിയുടെ രേഖകൾ',
+                addClinicalNote: 'ക്ലിനിക്കൽ കുറിപ്പ് ചേർക്കുക',
+                saveNote: 'കുറിപ്പ് സംരക്ഷിക്കുക',
+                logout: 'ലോഗൗട്ട്',
+                consultDoctor: 'ഉടൻ ഡോക്ടറെ സമീപിക്കുക',
+                homeRemedies: 'വീട്ടുവൈദ്യങ്ങൾ',
+                patientAdvice: 'രോഗിയുടെ ഉപദേശം',
+                recommendations: 'പ്രൊഫഷണൽ ശുപാർശകൾ',
+                matchingSymptoms: 'പൊരുത്തപ്പെടുന്ന രോഗലക്ഷണങ്ങൾ',
+                printReport: 'റിപ്പോർട്ട് പ്രിന്റ് ചെയ്യുക',
+                noSymptoms: 'രോഗലക്ഷണങ്ങളൊന്നും തിരഞ്ഞെടുത്തിട്ടില്ല',
+                recording: 'റെക്കോർഡിംഗ്... സംസാരിക്കുക',
+                recordingCompleted: 'റെക്കോർഡിംഗ് പൂർത്തിയായി',
+                microphoneClick: 'മൈക്രോഫോണിൽ ക്ലിക്ക് ചെയ്ത് നിങ്ങളുടെ ഭാഷയിൽ സംസാരിക്കുക',
+                processing: 'നിങ്ങളുടെ ശബ്ദം പ്രോസസ്സ് ചെയ്യുന്നു...',
+                ready: 'റെക്കോർഡ് ചെയ്യാൻ തയ്യാറാണ്'
             }
         };
 
-        // ==================== DISTRICTS ====================
-        const districts = [
-            'Chennai', 'Coimbatore', 'Madurai', 'Tiruchirappalli', 'Salem',
-            'Tirunelveli', 'Vellore', 'Erode', 'Kanyakumari', 'Dharmapuri',
-            'Thanjavur', 'Nagapattinam', 'Kanchipuram', 'Viluppuram', 'Thoothukkudi'
-        ];
-
-        // ==================== 50+ SYMPTOMS DATABASE ====================
-        const symptomsDB = [
+        // ==================== 60+ SYMPTOMS DATABASE (English Base) ====================
+        const symptomsBase = [
             // Respiratory (1-10)
             { id: 1, name: 'Cough', category: 'respiratory' },
             { id: 2, name: 'Shortness of breath', category: 'respiratory' },
@@ -1148,7 +1487,101 @@
             { id: 60, name: 'Urgent urination', category: 'urinary' }
         ];
 
-        // ==================== DISEASE DATABASE (WITHOUT MEDICINES) ====================
+        // ==================== MULTILINGUAL SYMPTOMS DATABASE ====================
+        const symptomsTranslations = {
+            hi: {
+                1: 'खांसी', 2: 'सांस की तकलीफ', 3: 'घरघराहट', 4: 'सीने में दर्द', 5: 'गले में खराश',
+                6: 'बहती नाक', 7: 'छींकना', 8: 'नाक बंद होना', 9: 'खून वाली खांसी', 10: 'सूखी खांसी',
+                11: 'मतली', 12: 'उल्टी', 13: 'दस्त', 14: 'कब्ज', 15: 'पेट दर्द',
+                16: 'पेट फूलना', 17: 'सीने में जलन', 18: 'भूख न लगना', 19: 'मल में खून', 20: 'निगलने में कठिनाई',
+                21: 'सिरदर्द', 22: 'चक्कर आना', 23: 'भ्रम', 24: 'दौरे', 25: 'कंपकंपी',
+                26: 'सुन्नता', 27: 'कमजोरी', 28: 'स्मृति हानि', 29: 'संतुलन की समस्या', 30: 'अस्पष्ट वाणी',
+                31: 'जोड़ों का दर्द', 32: 'मांसपेशियों में दर्द', 33: 'पीठ दर्द', 34: 'गर्दन दर्द', 35: 'जोड़ों में सूजन',
+                36: 'अकड़न', 37: 'मांसपेशियों में ऐंठन', 38: 'चकत्ते', 39: 'खुजली', 40: 'पित्ती',
+                41: 'शुष्क त्वचा', 42: 'त्वचा का लाल होना', 43: 'त्वचा का रंग बदलना', 44: 'घाव न भरना',
+                45: 'बुखार', 46: 'थकान', 47: 'ठंड लगना', 48: 'रात को पसीना', 49: 'वजन घटना',
+                50: 'वजन बढ़ना', 51: 'निर्जलीकरण', 52: 'सूजी हुई लिम्फ नोड्स', 53: 'धड़कन', 54: 'उच्च रक्तचाप',
+                55: 'निम्न रक्तचाप', 56: 'टखनों में सूजन', 57: 'बार-बार पेशाब', 58: 'दर्दनाक पेशाब',
+                59: 'पेशाब में खून', 60: 'तत्काल पेशाब'
+            },
+            ta: {
+                1: 'இருமல்', 2: 'மூச்சுத் திணறல்', 3: 'மூச்சு விடும் சத்தம்', 4: 'மார்பு வலி', 5: 'தொண்டை வலி',
+                6: 'மூக்கு ஒழுகுதல்', 7: 'தும்மல்', 8: 'மூக்கடைப்பு', 9: 'இரத்த இருமல்', 10: 'உலர் இருமல்',
+                11: 'குமட்டல்', 12: 'வாந்தி', 13: 'வயிற்றுப்போக்கு', 14: 'மலச்சிக்கல்', 15: 'வயிற்று வலி',
+                16: 'வயிறு உப்புசம்', 17: 'நெஞ்செரிச்சல்', 18: 'பசியின்மை', 19: 'மலத்தில் இரத்தம்', 20: 'விழுங்குவதில் சிரமம்',
+                21: 'தலைவலி', 22: 'தலைச்சுற்றல்', 23: 'குழப்பம்', 24: 'வலிப்பு', 25: 'நடுக்கம்',
+                26: 'உணர்வின்மை', 27: 'பலவீனம்', 28: 'நினைவு இழப்பு', 29: 'சமநிலை பிரச்சனைகள்', 30: 'தெளிவற்ற பேச்சு',
+                31: 'மூட்டு வலி', 32: 'தசை வலி', 33: 'முதுகு வலி', 34: 'கழுத்து வலி', 35: 'மூட்டு வீக்கம்',
+                36: 'விறைப்பு', 37: 'தசைப்பிடிப்பு', 38: 'தடிப்பு', 39: 'அரிப்பு', 40: 'படை',
+                41: 'வறண்ட சருமம்', 42: 'தோல் சிவத்தல்', 43: 'தோல் நிறமாற்றம்', 44: 'காயம் ஆறாமை',
+                45: 'காய்ச்சல்', 46: 'சோர்வு', 47: 'குளிர்', 48: 'இரவு வியர்வை', 49: 'எடை இழப்பு',
+                50: 'எடை அதிகரிப்பு', 51: 'நீரிழப்பு', 52: 'வீங்கிய நிணநீர் முடிச்சுகள்', 53: 'நெஞ்சுத்துடிப்பு', 54: 'உயர் இரத்த அழுத்தம்',
+                55: 'தாழ் இரத்த அழுத்தம்', 56: 'கணுக்கால் வீக்கம்', 57: 'அடிக்கடி சிறுநீர்', 58: 'வலி நிறைந்த சிறுநீர்',
+                59: 'சிறுநீரில் இரத்தம்', 60: 'அவசர சிறுநீர்'
+            },
+            te: {
+                1: 'దగ్గు', 2: 'ఊపిరి ఆడకపోవడం', 3: 'గురక', 4: 'ఛాతీ నొప్పి', 5: 'గొంతు నొప్పి',
+                6: 'ముక్కు కారడం', 7: 'తుమ్ములు', 8: 'ముక్కు దిబ్బడ', 9: 'రక్తం దగ్గు', 10: 'పొడి దగ్గు',
+                11: 'వికారం', 12: 'వాంతులు', 13: 'విరేచనాలు', 14: 'మలబద్ధకం', 15: 'కడుపు నొప్పి',
+                16: 'ఉబ్బరం', 17: 'గుండెల్లో మంట', 18: 'ఆకలి లేకపోవడం', 19: 'మలంలో రక్తం', 20: 'మింగడంలో ఇబ్బంది',
+                21: 'తలనొప్పి', 22: 'తలతిరగడం', 23: 'గందరగోళం', 24: 'మూర్ఛలు', 25: 'వణుకు',
+                26: 'తిమ్మిరి', 27: 'బలహీనత', 28: 'జ్ఞాపకశక్తి తగ్గడం', 29: 'సమతుల్యత సమస్యలు', 30: 'మాట తడబడడం',
+                31: 'కీళ్ల నొప్పి', 32: 'కండరాల నొప్పి', 33: 'వెన్నునొప్పి', 34: 'మెడ నొప్పి', 35: 'కీళ్ల వాపు',
+                36: 'బిగుతు', 37: 'కండరాల తిమ్మిరి', 38: 'దద్దుర్లు', 39: 'దురద', 40: 'ఉర్టికేరియా',
+                41: 'పొడి చర్మం', 42: 'చర్మం ఎర్రబడడం', 43: 'చర్మం రంగు మారడం', 44: 'గాయాలు మానకపోవడం',
+                45: 'జ్వరం', 46: 'అలసట', 47: 'చలి', 48: 'రాత్రి చెమటలు', 49: 'బరువు తగ్గడం',
+                50: 'బరువు పెరగడం', 51: 'నిర్జలీకరణం', 52: 'వాపు లింఫ్ నోడ్స్', 53: 'గుండె దడ', 54: 'అధిక రక్తపోటు',
+                55: 'తక్కువ రక్తపోటు', 56: 'చీలమండల వాపు', 57: 'తరచూ మూత్రం', 58: 'బాధాకరమైన మూత్రం',
+                59: 'మూత్రంలో రక్తం', 60: 'అత్యవసర మూత్రం'
+            },
+            kn: {
+                1: 'ಕೆಮ್ಮು', 2: 'ಉಸಿರಾಟದ ತೊಂದರೆ', 3: 'ಉಬ್ಬಸ', 4: 'ಎದೆ ನೋವು', 5: 'ಗಂಟಲು ನೋವು',
+                6: 'ಸ್ರವಿಸುವ ಮೂಗು', 7: 'ಸೀನುವಿಕೆ', 8: 'ಮೂಗಿನ ದಟ್ಟಣೆ', 9: 'ರಕ್ತದ ಕೆಮ್ಮು', 10: 'ಒಣ ಕೆಮ್ಮು',
+                11: 'ವಾಕರಿಕೆ', 12: 'ವಾಂತಿ', 13: 'ಅತಿಸಾರ', 14: 'ಮಲಬದ್ಧತೆ', 15: 'ಹೊಟ್ಟೆ ನೋವು',
+                16: 'ಉಬ್ಬರ', 17: 'ಎದೆಯುರಿ', 18: 'ಹಸಿವಿನ ಕೊರತೆ', 19: 'ಮಲದಲ್ಲಿ ರಕ್ತ', 20: 'ನುಂಗಲು ಕಷ್ಟ',
+                21: 'ತಲೆನೋವು', 22: 'ತಲೆತಿರುಗುವಿಕೆ', 23: 'ಗೊಂದಲ', 24: 'ಸೆಳವು', 25: 'ನಡುಕ',
+                26: 'ಮರಗಟ್ಟುವಿಕೆ', 27: 'ದೌರ್ಬಲ್ಯ', 28: 'ನೆನಪಿನ ಶಕ್ತಿ ಕಳೆದುಕೊಳ್ಳುವುದು', 29: 'ಸಮತೋಲನ ಸಮಸ್ಯೆಗಳು', 30: 'ತೊದಲುನುಡಿ',
+                31: 'ಕೀಲು ನೋವು', 32: 'ಸ್ನಾಯು ನೋವು', 33: 'ಬೆನ್ನು ನೋವು', 34: 'ಕುತ್ತಿಗೆ ನೋವು', 35: 'ಕೀಲು ಊತ',
+                36: 'ಬಿಗಿತ', 37: 'ಸ್ನಾಯು ಸೆಳೆತ', 38: 'ದದ್ದು', 39: 'ತುರಿಕೆ', 40: 'ಜೇನುಗೂಡುಗಳು',
+                41: 'ಒಣ ಚರ್ಮ', 42: 'ಚರ್ಮದ ಕೆಂಪಾಗುವಿಕೆ', 43: 'ಚರ್ಮದ ಬಣ್ಣ ಬದಲಾವಣೆ', 44: 'ಗಾಯಗಳು ವಾಸಿಯಾಗದೆ',
+                45: 'ಜ್ವರ', 46: 'ಆಯಾಸ', 47: 'ಶೀತ', 48: 'ರಾತ್ರಿ ಬೆವರುವಿಕೆ', 49: 'ತೂಕ ಇಳಿಕೆ',
+                50: 'ತೂಕ ಹೆಚ್ಚಳ', 51: 'ನಿರ್ಜಲೀಕರಣ', 52: 'ಊದಿದ ದುಗ್ಧರಸ ಗ್ರಂಥಿಗಳು', 53: 'ಹೃದಯ ಬಡಿತ', 54: 'ಅಧಿಕ ರಕ್ತದೊತ್ತಡ',
+                55: 'ಕಡಿಮೆ ರಕ್ತದೊತ್ತಡ', 56: 'ಕಣಕಾಲು ಊತ', 57: 'ಆಗಾಗ ಮೂತ್ರ', 58: 'ನೋವಿನ ಮೂತ್ರ',
+                59: 'ಮೂತ್ರದಲ್ಲಿ ರಕ್ತ', 60: 'ತುರ್ತು ಮೂತ್ರ'
+            },
+            ml: {
+                1: 'ചുമ', 2: 'ശ്വാസതടസ്സം', 3: 'ശ്വാസംമുട്ടൽ', 4: 'നെഞ്ചുവേദന', 5: 'തൊണ്ടവേദന',
+                6: 'മൂക്കൊലിപ്പ്', 7: 'തുമ്മൽ', 8: 'മൂക്കടപ്പ്', 9: 'രക്തം ചുമ', 10: 'വരണ്ട ചുമ',
+                11: 'ഓക്കാനം', 12: 'ഛർദ്ദി', 13: 'വയറിളക്കം', 14: 'മലബന്ധം', 15: 'വയറുവേദന',
+                16: 'വയറുവീർക്കൽ', 17: 'നെഞ്ചെരിച്ചിൽ', 18: 'വിശപ്പില്ലായ്മ', 19: 'മലത്തിൽ രക്തം', 20: 'വിഴുങ്ങാൻ ബുദ്ധിമുട്ട്',
+                21: 'തലവേദന', 22: 'തലകറക്കം', 23: 'ആശയക്കുഴപ്പം', 24: 'അപസ്മാരം', 25: 'വിറയൽ',
+                26: 'മരവിപ്പ്', 27: 'ബലഹീനത', 28: 'ഓർമ്മക്കുറവ്', 29: 'ബാലൻസ് പ്രശ്നങ്ങൾ', 30: 'വ്യക്തമല്ലാത്ത സംസാരം',
+                31: 'സന്ധി വേദന', 32: 'പേശി വേദന', 33: 'നടുവേദന', 34: 'കഴുത്ത് വേദന', 35: 'സന്ധി വീക്കം',
+                36: 'കാഠിന്യം', 37: 'പേശീവലിവ്', 38: 'തടിപ്പ്', 39: 'ചൊറിച്ചിൽ', 40: 'തേനീച്ചക്കൂടുകൾ',
+                41: 'വരണ്ട ചർമ്മം', 42: 'ചർമ്മത്തിൽ ചുവപ്പ്', 43: 'ചർമ്മത്തിന്റെ നിറവ്യത്യാസം', 44: 'മുറിവുകൾ ഉണങ്ങാതിരിക്കുക',
+                45: 'പനി', 46: 'ക്ഷീണം', 47: 'വിറയൽ', 48: 'രാത്രി വിയർപ്പ്', 49: 'ശരീരഭാരം കുറയൽ',
+                50: 'ശരീരഭാരം വർദ്ധിക്കൽ', 51: 'നിർജ്ജലീകരണം', 52: 'വീർത്ത ലിംഫ് നോഡുകൾ', 53: 'ഹൃദയമിടിപ്പ്', 54: 'ഉയർന്ന രക്തസമ്മർദ്ദം',
+                55: 'കുറഞ്ഞ രക്തസമ്മർദ്ദം', 56: 'കണങ്കാൽ വീക്കം', 57: 'ഇടയ്ക്കിടെ മൂത്രം', 58: 'വേദനാജനകമായ മൂത്രം',
+                59: 'മൂത്രത്തിൽ രക്തം', 60: 'അടിയന്തര മൂത്രം'
+            }
+        };
+
+        // Function to get symptoms in current language
+        function getSymptomsInCurrentLanguage() {
+            if (currentLanguage === 'en') return symptomsBase;
+            
+            return symptomsBase.map(symptom => {
+                const translatedName = symptomsTranslations[currentLanguage]?.[symptom.id];
+                return {
+                    ...symptom,
+                    name: translatedName || symptom.name
+                };
+            });
+        }
+
+        let symptomsDB = getSymptomsInCurrentLanguage();
+
+        // ==================== DISEASE DATABASE ====================
         const diseasesDB = [
             {
                 id: 1,
@@ -1248,6 +1681,7 @@
         let recordingSeconds = 0;
         let recordingTimer = null;
         let mediaStream = null;
+        let waveformInterval = null;
 
         // ==================== INITIALIZATION ====================
         document.addEventListener('DOMContentLoaded', () => {
@@ -1255,9 +1689,52 @@
                 showMainApp();
             }
             loadDistricts();
+            symptomsDB = getSymptomsInCurrentLanguage();
             displaySymptoms('all');
             updateStats();
+            initWaveform();
         });
+
+        // ==================== WAVEFORM INITIALIZATION ====================
+        function initWaveform() {
+            const waveform = document.getElementById('waveform');
+            waveform.innerHTML = '';
+            for (let i = 0; i < 30; i++) {
+                const bar = document.createElement('div');
+                bar.className = 'wave-bar';
+                bar.id = `wave-bar-${i}`;
+                bar.style.height = '20px';
+                waveform.appendChild(bar);
+            }
+        }
+
+        function animateWaveform() {
+            if (!isRecording) return;
+            
+            waveformInterval = setInterval(() => {
+                for (let i = 0; i < 30; i++) {
+                    const bar = document.getElementById(`wave-bar-${i}`);
+                    if (bar) {
+                        const height = Math.floor(Math.random() * 50) + 10;
+                        bar.style.height = height + 'px';
+                    }
+                }
+            }, 100);
+        }
+
+        function stopWaveform() {
+            if (waveformInterval) {
+                clearInterval(waveformInterval);
+                waveformInterval = null;
+            }
+            // Reset bars
+            for (let i = 0; i < 30; i++) {
+                const bar = document.getElementById(`wave-bar-${i}`);
+                if (bar) {
+                    bar.style.height = '20px';
+                }
+            }
+        }
 
         // ==================== AUTHENTICATION ====================
         function switchAuthTab(tab) {
@@ -1334,7 +1811,6 @@
                 showToast(`Password reset link sent to ${email}`, 'success');
                 console.log('Reset link:', `http://localhost:3000/reset-password?token=${resetToken}`);
                 
-                // Demo password reset
                 setTimeout(() => {
                     const newPassword = prompt('Enter new password (demo):');
                     if (newPassword) {
@@ -1369,18 +1845,39 @@
             document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
             
+            // Update language indicator
+            const langNames = {
+                en: 'English',
+                hi: 'हिन्दी',
+                ta: 'தமிழ்',
+                te: 'తెలుగు',
+                kn: 'ಕನ್ನಡ',
+                ml: 'മലയാളം'
+            };
+            document.getElementById('currentLangIndicator').textContent = langNames[lang] || 'English';
+            
+            // Update symptoms database with translated names
+            symptomsDB = getSymptomsInCurrentLanguage();
+            
+            // Refresh symptoms display
+            displaySymptoms(currentCategory);
+            updateSymptomTags();
+            
             const t = translations[lang] || translations.en;
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
                 if (t[key]) el.textContent = t[key];
             });
             
-            document.getElementById('voiceStatus').innerHTML = `<i class="fas fa-info-circle"></i> Click the microphone and speak in ${lang === 'en' ? 'English' : lang === 'hi' ? 'Hindi' : lang === 'ta' ? 'Tamil' : lang === 'te' ? 'Telugu' : lang === 'kn' ? 'Kannada' : 'Malayalam'}`;
+            document.getElementById('voiceStatus').innerHTML = `<i class="fas fa-info-circle"></i> ${t.microphoneClick}`;
+            
+            showToast(`Language switched to ${langNames[lang]}`, 'success');
         }
 
         // ==================== DISTRICTS ====================
         function loadDistricts() {
             const select = document.getElementById('patientDistrict');
+            select.innerHTML = '<option value="">Select District</option>';
             districts.forEach(d => {
                 const option = document.createElement('option');
                 option.value = d;
@@ -1430,8 +1927,12 @@
 
         function updateSymptomTags() {
             const container = document.getElementById('symptomTags');
-            container.innerHTML = '';
+            if (selectedSymptoms.length === 0) {
+                container.innerHTML = '<p style="color: var(--text-secondary);">No symptoms selected</p>';
+                return;
+            }
             
+            container.innerHTML = '';
             selectedSymptoms.forEach(id => {
                 const symptom = symptomsDB.find(s => s.id === id);
                 if (symptom) {
@@ -1452,8 +1953,10 @@
             }
         }
 
-        // ==================== VOICE RECORDING ====================
+        // ==================== ENHANCED VOICE RECORDING ====================
         async function toggleRecording() {
+            const t = translations[currentLanguage] || translations.en;
+            
             if (!isRecording) {
                 try {
                     mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -1487,10 +1990,14 @@
                         
                         // Auto-select matching symptoms
                         const words = recognizedText.toLowerCase().split(/[,\s]+/);
+                        
+                        // Get symptoms in current language for matching
+                        const currentSymptoms = symptomsDB;
+                        
                         words.forEach(word => {
-                            const match = symptomsDB.find(s => 
+                            const match = currentSymptoms.find(s => 
                                 s.name.toLowerCase().includes(word) || 
-                                (currentLanguage !== 'en' && word.includes(s.name.toLowerCase()))
+                                word.includes(s.name.toLowerCase())
                             );
                             if (match && !selectedSymptoms.includes(match.id)) {
                                 selectedSymptoms.push(match.id);
@@ -1501,7 +2008,9 @@
                         displaySymptoms(currentCategory);
                         
                         mediaStream.getTracks().forEach(track => track.stop());
-                        showToast('Voice captured successfully!', 'success');
+                        showToast(t.recordingCompleted, 'success');
+                        
+                        stopWaveform();
                     };
                     
                     mediaRecorder.start();
@@ -1509,7 +2018,7 @@
                     
                     document.getElementById('recordBtn').classList.add('recording');
                     document.getElementById('recordBtn').innerHTML = '<i class="fas fa-stop"></i>';
-                    document.getElementById('voiceStatus').innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Recording... Speak now';
+                    document.getElementById('voiceStatus').innerHTML = `<i class="fas fa-spinner fa-pulse"></i> ${t.recording}`;
                     
                     recordingSeconds = 0;
                     recordingTimer = setInterval(() => {
@@ -1519,6 +2028,8 @@
                         document.getElementById('timer').textContent = 
                             `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
                     }, 1000);
+                    
+                    animateWaveform();
                     
                 } catch (err) {
                     showToast('Please allow microphone access', 'error');
@@ -1532,11 +2043,12 @@
                 isRecording = false;
                 document.getElementById('recordBtn').classList.remove('recording');
                 document.getElementById('recordBtn').innerHTML = '<i class="fas fa-microphone"></i>';
-                document.getElementById('voiceStatus').innerHTML = '<i class="fas fa-check-circle"></i> Recording completed';
+                document.getElementById('voiceStatus').innerHTML = `<i class="fas fa-check-circle"></i> ${t.recordingCompleted}`;
+                stopWaveform();
             }
         }
 
-        // ==================== AI DIAGNOSIS (Without Confidence) ====================
+        // ==================== AI DIAGNOSIS ====================
         function analyzeHealth() {
             const name = document.getElementById('patientName').value;
             const age = document.getElementById('patientAge').value;
@@ -1587,7 +2099,7 @@
                 bestMatch = diseasesDB[0];
             }
             
-            // Display results without confidence
+            // Display results
             displayResults(bestMatch, allSymptoms);
             
             // Save diagnosis
@@ -1609,6 +2121,7 @@
         }
 
         function displayResults(disease, symptoms) {
+            const t = translations[currentLanguage] || translations.en;
             const resultsDiv = document.getElementById('results');
             const severityClass = `severity-${disease.severity}`;
             
@@ -1627,24 +2140,24 @@
                 </div>
                 
                 <div style="margin: 20px 0;">
-                    <h4>✅ Matching Symptoms:</h4>
+                    <h4>✅ ${t.matchingSymptoms}:</h4>
                     <div style="display: flex; gap: 10px; flex-wrap: wrap;">
                         ${matchedSymptoms.map(s => `<span style="background: var(--success); color: white; padding: 5px 15px; border-radius: 20px;">${s}</span>`).join('')}
                     </div>
                 </div>
                 
                 <div style="margin: 20px 0;">
-                    <h4>📋 Professional Recommendations:</h4>
+                    <h4>📋 ${t.recommendations}:</h4>
                     <ul>${disease.recommendations.map(r => `<li>${r}</li>`).join('')}</ul>
                 </div>
                 
                 <div style="margin: 20px 0;">
-                    <h4>🏠 Home Care & Remedies:</h4>
+                    <h4>🏠 ${t.homeRemedies}:</h4>
                     <ul>${disease.homeRemedies.map(r => `<li>${r}</li>`).join('')}</ul>
                 </div>
                 
                 <div style="margin: 20px 0;">
-                    <h4>💚 Patient Advice:</h4>
+                    <h4>💚 ${t.patientAdvice}:</h4>
                     <ul>${disease.patientAdvice.map(a => `<li>${a}</li>`).join('')}</ul>
                 </div>
             `;
@@ -1652,7 +2165,7 @@
             if (disease.severity === 'high') {
                 html += `
                     <div style="background: #fee2e2; padding: 20px; border-radius: 20px; margin: 20px 0;">
-                        <h4 style="color: var(--danger);">⚠️ CONSULT DOCTOR IMMEDIATELY</h4>
+                        <h4 style="color: var(--danger);">⚠️ ${t.consultDoctor}</h4>
                         <ul>${disease.warningSigns.map(s => `<li>${s}</li>`).join('')}</ul>
                     </div>
                 `;
@@ -1661,7 +2174,7 @@
             html += `
                 <div style="margin-top: 20px;">
                     <button class="login-btn" onclick="window.print()" style="width: auto; padding: 12px 30px;">
-                        <i class="fas fa-print"></i> Print Report
+                        <i class="fas fa-print"></i> ${t.printReport}
                     </button>
                 </div>
             `;
@@ -1696,7 +2209,6 @@
                 document.getElementById('doctorDashboard').style.display = 'block';
                 document.getElementById('doctorToggleBtn').innerHTML = '<i class="fas fa-lock-open"></i> Doctor Dashboard';
                 
-                // Display patient list
                 const list = document.getElementById('doctorPatientList');
                 list.innerHTML = diagnoses.map(d => `
                     <div class="doctor-card">

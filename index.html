@@ -25,10 +25,6 @@ button:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(0,0,0,0.2)}
 .status-healthy{color:#2e7d32;font-weight:bold;font-size:18px}
 .status-followup{color:#ef6c00;font-weight:bold;font-size:18px}
 .status-emergency{color:#c62828;font-weight:bold;font-size:18px}
-table{width:100%;border-collapse:collapse;margin-top:15px;background:white;border-radius:10px;overflow:hidden}
-th,td{padding:12px;border-bottom:1px solid #e0e0e0;text-align:left}
-th{background:#1b5e20;color:white;font-weight:500}
-tr:hover{background:#f5f5f5}
 .symptom-category{background:#f1f8e9;padding:15px;border-radius:10px;margin-bottom:15px}
 .symptom-item{display:flex;align-items:center;gap:8px;padding:8px;background:white;border-radius:6px;border:1px solid #c8e6c9}
 .symptom-item input[type="checkbox"]{width:18px;height:18px;cursor:pointer}
@@ -39,9 +35,9 @@ tr:hover{background:#f5f5f5}
 .severity-low{background:#e8f5e9;color:#2e7d32}
 .emergency-box{background:#ffebee;border:2px solid #c62828;padding:20px;border-radius:10px;margin:15px 0}
 .emergency-text{color:#c62828;font-weight:bold;font-size:16px}
-.filter-buttons{display:flex;gap:10px;margin-bottom:15px;flex-wrap:wrap}
-.filter-btn{padding:8px 15px;background:#e0e0e0;border-radius:20px;cursor:pointer}
-.filter-btn.active{background:#1b5e20;color:white}
+.language-selector{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;justify-content:flex-end}
+.lang-btn{padding:8px 15px;background:#e0e0e0;border-radius:20px;cursor:pointer;border:none;font-size:14px}
+.lang-btn.active{background:#1b5e20;color:white}
 .ai-suggestion{background:#f3e5f5;padding:20px;border-radius:10px;margin:15px 0;border-left:4px solid #7b1fa2}
 .ai-badge{background:#7b1fa2;color:white;padding:5px 15px;border-radius:20px;font-size:14px;display:inline-block;margin-bottom:15px}
 .possible-condition{background:#fff3e0;padding:15px;border-radius:8px;margin:10px 0;border-left:4px solid #ef6c00}
@@ -54,10 +50,6 @@ tr:hover{background:#f5f5f5}
 .loader-spinner{border:4px solid #f3f3f3;border-top:4px solid #1b5e20;border-radius:50%;width:40px;height:40px;animation:spin 1s linear infinite;margin:auto}
 @keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
 .note-box{background:#fff3cd;border:1px solid #ffeeba;padding:15px;border-radius:8px;margin:15px 0;color:#856404}
-.language-selector{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;justify-content:flex-end}
-.lang-btn{padding:8px 15px;background:#e0e0e0;border-radius:20px;cursor:pointer;border:none}
-.lang-btn.active{background:#1b5e20;color:white}
-.translated-text{font-style:italic;color:#666;margin-left:5px;font-size:0.9em}
 </style>
 </head>
 <body>
@@ -71,6 +63,11 @@ tr:hover{background:#f5f5f5}
 <button class="lang-btn" onclick="changeLanguage('te')">🇮🇳 తెలుగు</button>
 <button class="lang-btn" onclick="changeLanguage('bn')">🇮🇳 বাংলা</button>
 <button class="lang-btn" onclick="changeLanguage('mr')">🇮🇳 मराठी</button>
+<button class="lang-btn" onclick="changeLanguage('gu')">🇮🇳 ગુજરાતી</button>
+<button class="lang-btn" onclick="changeLanguage('kn')">🇮🇳 ಕನ್ನಡ</button>
+<button class="lang-btn" onclick="changeLanguage('ml')">🇮🇳 മലയാളം</button>
+<button class="lang-btn" onclick="changeLanguage('or')">🇮🇳 ଓଡ଼ିଆ</button>
+<button class="lang-btn" onclick="changeLanguage('pa')">🇮🇳 ਪੰਜਾਬੀ</button>
 </div>
 
 <!-- Patient Information Section -->
@@ -93,88 +90,94 @@ tr:hover{background:#f5f5f5}
 
 <!-- Symptoms Assessment Section -->
 <div class="section">
-<h2 id="symptomTitle">🩺 Natural Remedy Advisor</h2>
-<p id="symptomSubtitle" style="margin-bottom:15px;color:#666;">Select your symptoms for herbal remedies and gel-based solutions:</p>
+<h2 id="symptomTitle">🌿 Natural Remedy Advisor</h2>
+<p id="symptomSubtitle" style="margin-bottom:15px;color:#666;">Select your symptoms for natural remedies and gels:</p>
 
 <!-- Quick Symptom Search -->
 <div style="margin-bottom:20px">
 <input type="text" id="symptomSearch" placeholder="🔍 Search symptoms..." onkeyup="filterSymptoms()">
 </div>
 
-<!-- All Symptoms Categories (English - will be translated via JS) -->
+<!-- General Symptoms -->
 <div class="symptom-category">
 <h3 id="generalTitle">🤒 General Symptoms</h3>
 <div class="symptom-grid">
-<div class="symptom-item"><input type="checkbox" id="fever"><label for="fever">Fever / High Temperature</label><span class="severity-badge severity-medium">Medium</span></div>
-<div class="symptom-item"><input type="checkbox" id="chills"><label for="chills">Chills / Shivering</label><span class="severity-badge severity-medium">Medium</span></div>
-<div class="symptom-item"><input type="checkbox" id="fatigue"><label for="fatigue">Fatigue / Weakness</label><span class="severity-badge severity-low">Low</span></div>
-<div class="symptom-item"><input type="checkbox" id="weightLoss"><label for="weightLoss">Unexplained Weight Loss</label><span class="severity-badge severity-high">High</span></div>
-<div class="symptom-item"><input type="checkbox" id="lossAppetite"><label for="lossAppetite">Loss of Appetite</label><span class="severity-badge severity-low">Low</span></div>
+<div class="symptom-item"><input type="checkbox" id="fever"><label for="fever" id="lblFever">Fever / High Temperature</label><span class="severity-badge severity-medium">Medium</span></div>
+<div class="symptom-item"><input type="checkbox" id="chills"><label for="chills" id="lblChills">Chills / Shivering</label><span class="severity-badge severity-medium">Medium</span></div>
+<div class="symptom-item"><input type="checkbox" id="fatigue"><label for="fatigue" id="lblFatigue">Fatigue / Weakness</label><span class="severity-badge severity-low">Low</span></div>
+<div class="symptom-item"><input type="checkbox" id="weightLoss"><label for="weightLoss" id="lblWeightLoss">Unexplained Weight Loss</label><span class="severity-badge severity-high">High</span></div>
+<div class="symptom-item"><input type="checkbox" id="lossAppetite"><label for="lossAppetite" id="lblLossAppetite">Loss of Appetite</label><span class="severity-badge severity-low">Low</span></div>
 </div>
 </div>
 
+<!-- Respiratory Symptoms -->
 <div class="symptom-category">
 <h3 id="respiratoryTitle">🫁 Respiratory Symptoms</h3>
 <div class="symptom-grid">
-<div class="symptom-item"><input type="checkbox" id="cough"><label for="cough">Cough</label><span class="severity-badge severity-low">Low</span></div>
-<div class="symptom-item"><input type="checkbox" id="dryCough"><label for="dryCough">Dry Cough</label><span class="severity-badge severity-low">Low</span></div>
-<div class="symptom-item"><input type="checkbox" id="wetCough"><label for="wetCough">Wet Cough with Phlegm</label><span class="severity-badge severity-medium">Medium</span></div>
-<div class="symptom-item"><input type="checkbox" id="bloodCough"><label for="bloodCough">Coughing Blood</label><span class="severity-badge severity-high">High</span></div>
-<div class="symptom-item"><input type="checkbox" id="shortnessBreath"><label for="shortnessBreath">Shortness of Breath</label><span class="severity-badge severity-high">High</span></div>
-<div class="symptom-item"><input type="checkbox" id="wheezing"><label for="wheezing">Wheezing</label><span class="severity-badge severity-medium">Medium</span></div>
-<div class="symptom-item"><input type="checkbox" id="chestPain"><label for="chestPain">Chest Pain</label><span class="severity-badge severity-high">High</span></div>
-<div class="symptom-item"><input type="checkbox" id="soreThroat"><label for="soreThroat">Sore Throat</label><span class="severity-badge severity-low">Low</span></div>
-<div class="symptom-item"><input type="checkbox" id="runnyNose"><label for="runnyNose">Runny Nose</label><span class="severity-badge severity-low">Low</span></div>
+<div class="symptom-item"><input type="checkbox" id="cough"><label for="cough" id="lblCough">Cough</label><span class="severity-badge severity-low">Low</span></div>
+<div class="symptom-item"><input type="checkbox" id="dryCough"><label for="dryCough" id="lblDryCough">Dry Cough</label><span class="severity-badge severity-low">Low</span></div>
+<div class="symptom-item"><input type="checkbox" id="wetCough"><label for="wetCough" id="lblWetCough">Wet Cough with Phlegm</label><span class="severity-badge severity-medium">Medium</span></div>
+<div class="symptom-item"><input type="checkbox" id="bloodCough"><label for="bloodCough" id="lblBloodCough">Coughing Blood</label><span class="severity-badge severity-high">High</span></div>
+<div class="symptom-item"><input type="checkbox" id="shortnessBreath"><label for="shortnessBreath" id="lblShortnessBreath">Shortness of Breath</label><span class="severity-badge severity-high">High</span></div>
+<div class="symptom-item"><input type="checkbox" id="wheezing"><label for="wheezing" id="lblWheezing">Wheezing</label><span class="severity-badge severity-medium">Medium</span></div>
+<div class="symptom-item"><input type="checkbox" id="chestPain"><label for="chestPain" id="lblChestPain">Chest Pain</label><span class="severity-badge severity-high">High</span></div>
+<div class="symptom-item"><input type="checkbox" id="soreThroat"><label for="soreThroat" id="lblSoreThroat">Sore Throat</label><span class="severity-badge severity-low">Low</span></div>
+<div class="symptom-item"><input type="checkbox" id="runnyNose"><label for="runnyNose" id="lblRunnyNose">Runny Nose</label><span class="severity-badge severity-low">Low</span></div>
 </div>
 </div>
 
+<!-- Gastrointestinal Symptoms -->
 <div class="symptom-category">
 <h3 id="giTitle">🫃 Gastrointestinal Symptoms</h3>
 <div class="symptom-grid">
-<div class="symptom-item"><input type="checkbox" id="nausea"><label for="nausea">Nausea</label><span class="severity-badge severity-low">Low</span></div>
-<div class="symptom-item"><input type="checkbox" id="vomiting"><label for="vomiting">Vomiting</label><span class="severity-badge severity-medium">Medium</span></div>
-<div class="symptom-item"><input type="checkbox" id="diarrhea"><label for="diarrhea">Diarrhea</label><span class="severity-badge severity-medium">Medium</span></div>
-<div class="symptom-item"><input type="checkbox" id="bloodStool"><label for="bloodStool">Blood in Stool</label><span class="severity-badge severity-high">High</span></div>
-<div class="symptom-item"><input type="checkbox" id="constipation"><label for="constipation">Constipation</label><span class="severity-badge severity-low">Low</span></div>
-<div class="symptom-item"><input type="checkbox" id="abdominalPain"><label for="abdominalPain">Abdominal Pain</label><span class="severity-badge severity-medium">Medium</span></div>
-<div class="symptom-item"><input type="checkbox" id="heartburn"><label for="heartburn">Heartburn / Acidity</label><span class="severity-badge severity-low">Low</span></div>
+<div class="symptom-item"><input type="checkbox" id="nausea"><label for="nausea" id="lblNausea">Nausea</label><span class="severity-badge severity-low">Low</span></div>
+<div class="symptom-item"><input type="checkbox" id="vomiting"><label for="vomiting" id="lblVomiting">Vomiting</label><span class="severity-badge severity-medium">Medium</span></div>
+<div class="symptom-item"><input type="checkbox" id="diarrhea"><label for="diarrhea" id="lblDiarrhea">Diarrhea</label><span class="severity-badge severity-medium">Medium</span></div>
+<div class="symptom-item"><input type="checkbox" id="bloodStool"><label for="bloodStool" id="lblBloodStool">Blood in Stool</label><span class="severity-badge severity-high">High</span></div>
+<div class="symptom-item"><input type="checkbox" id="constipation"><label for="constipation" id="lblConstipation">Constipation</label><span class="severity-badge severity-low">Low</span></div>
+<div class="symptom-item"><input type="checkbox" id="abdominalPain"><label for="abdominalPain" id="lblAbdominalPain">Abdominal Pain</label><span class="severity-badge severity-medium">Medium</span></div>
+<div class="symptom-item"><input type="checkbox" id="heartburn"><label for="heartburn" id="lblHeartburn">Heartburn / Acidity</label><span class="severity-badge severity-low">Low</span></div>
 </div>
 </div>
 
+<!-- Neurological Symptoms -->
 <div class="symptom-category">
 <h3 id="neuroTitle">🧠 Neurological Symptoms</h3>
 <div class="symptom-grid">
-<div class="symptom-item"><input type="checkbox" id="headache"><label for="headache">Headache</label><span class="severity-badge severity-low">Low</span></div>
-<div class="symptom-item"><input type="checkbox" id="dizziness"><label for="dizziness">Dizziness</label><span class="severity-badge severity-medium">Medium</span></div>
-<div class="symptom-item"><input type="checkbox" id="fainting"><label for="fainting">Fainting</label><span class="severity-badge severity-high">High</span></div>
-<div class="symptom-item"><input type="checkbox" id="seizures"><label for="seizures">Seizures</label><span class="severity-badge severity-high">High</span></div>
-<div class="symptom-item"><input type="checkbox" id="confusion"><label for="confusion">Confusion</label><span class="severity-badge severity-high">High</span></div>
+<div class="symptom-item"><input type="checkbox" id="headache"><label for="headache" id="lblHeadache">Headache</label><span class="severity-badge severity-low">Low</span></div>
+<div class="symptom-item"><input type="checkbox" id="dizziness"><label for="dizziness" id="lblDizziness">Dizziness</label><span class="severity-badge severity-medium">Medium</span></div>
+<div class="symptom-item"><input type="checkbox" id="fainting"><label for="fainting" id="lblFainting">Fainting</label><span class="severity-badge severity-high">High</span></div>
+<div class="symptom-item"><input type="checkbox" id="seizures"><label for="seizures" id="lblSeizures">Seizures</label><span class="severity-badge severity-high">High</span></div>
+<div class="symptom-item"><input type="checkbox" id="confusion"><label for="confusion" id="lblConfusion">Confusion</label><span class="severity-badge severity-high">High</span></div>
 </div>
 </div>
 
+<!-- Musculoskeletal Symptoms -->
 <div class="symptom-category">
 <h3 id="muscleTitle">💪 Musculoskeletal Symptoms</h3>
 <div class="symptom-grid">
-<div class="symptom-item"><input type="checkbox" id="jointPain"><label for="jointPain">Joint Pain</label><span class="severity-badge severity-low">Low</span></div>
-<div class="symptom-item"><input type="checkbox" id="musclePain"><label for="musclePain">Muscle Pain</label><span class="severity-badge severity-low">Low</span></div>
-<div class="symptom-item"><input type="checkbox" id="backPain"><label for="backPain">Back Pain</label><span class="severity-badge severity-low">Low</span></div>
+<div class="symptom-item"><input type="checkbox" id="jointPain"><label for="jointPain" id="lblJointPain">Joint Pain</label><span class="severity-badge severity-low">Low</span></div>
+<div class="symptom-item"><input type="checkbox" id="musclePain"><label for="musclePain" id="lblMusclePain">Muscle Pain</label><span class="severity-badge severity-low">Low</span></div>
+<div class="symptom-item"><input type="checkbox" id="backPain"><label for="backPain" id="lblBackPain">Back Pain</label><span class="severity-badge severity-low">Low</span></div>
 </div>
 </div>
 
+<!-- Skin Symptoms -->
 <div class="symptom-category">
 <h3 id="skinTitle">🔴 Skin Symptoms</h3>
 <div class="symptom-grid">
-<div class="symptom-item"><input type="checkbox" id="rash"><label for="rash">Skin Rash</label><span class="severity-badge severity-low">Low</span></div>
-<div class="symptom-item"><input type="checkbox" id="itching"><label for="itching">Itching</label><span class="severity-badge severity-low">Low</span></div>
-<div class="symptom-item"><input type="checkbox" id="yellowSkin"><label for="yellowSkin">Yellow Skin (Jaundice)</label><span class="severity-badge severity-high">High</span></div>
+<div class="symptom-item"><input type="checkbox" id="rash"><label for="rash" id="lblRash">Skin Rash</label><span class="severity-badge severity-low">Low</span></div>
+<div class="symptom-item"><input type="checkbox" id="itching"><label for="itching" id="lblItching">Itching</label><span class="severity-badge severity-low">Low</span></div>
+<div class="symptom-item"><input type="checkbox" id="yellowSkin"><label for="yellowSkin" id="lblYellowSkin">Yellow Skin (Jaundice)</label><span class="severity-badge severity-high">High</span></div>
 </div>
 </div>
 
+<!-- Urinary Symptoms -->
 <div class="symptom-category">
 <h3 id="urinaryTitle">🚽 Urinary Symptoms</h3>
 <div class="symptom-grid">
-<div class="symptom-item"><input type="checkbox" id="painUrination"><label for="painUrination">Painful Urination</label><span class="severity-badge severity-medium">Medium</span></div>
-<div class="symptom-item"><input type="checkbox" id="bloodUrine"><label for="bloodUrine">Blood in Urine</label><span class="severity-badge severity-high">High</span></div>
+<div class="symptom-item"><input type="checkbox" id="painUrination"><label for="painUrination" id="lblPainUrination">Painful Urination</label><span class="severity-badge severity-medium">Medium</span></div>
+<div class="symptom-item"><input type="checkbox" id="bloodUrine"><label for="bloodUrine" id="lblBloodUrine">Blood in Urine</label><span class="severity-badge severity-high">High</span></div>
 </div>
 </div>
 
@@ -245,37 +248,26 @@ tr:hover{background:#f5f5f5}
 </div>
 
 <div id="followUp"></div>
-
-<!-- Important Note (Hidden - No Doctor's Page) -->
-<div class="note-box" style="display:none">
-<strong id="noteText">🌱 Note:</strong> <span id="noteContent">These are natural and herbal remedies. For emergency symptoms, please seek immediate medical help.</span>
-</div>
 </div>
 
-<!-- History Section (Hidden - No Doctor's Page) -->
+<!-- History Section (Hidden) -->
 <div class="section" style="display:none">
 <h2 id="historyTitle">📜 Recent Consultations</h2>
-<table>
-<thead>
-<tr><th id="timeCol">Time</th><th id="nameCol">Name</th><th id="ageCol">Age</th><th id="conditionCol">Condition</th><th id="statusCol">Status</th></tr>
-</thead>
-<tbody id="tableBody"></tbody>
-</table>
+<div id="tableBody"></div>
 </div>
 
 </div>
 
 <script>
 // Global variables
-let screenings = JSON.parse(localStorage.getItem("screenings") || "[]");
 let currentLanguage = 'en';
 
-// Translation dictionary
+// Translation dictionary for 12 Indian languages
 const translations = {
     en: {
         patientInfoTitle: "📋 Patient Information",
-        symptomTitle: "🩺 Natural Remedy Advisor",
-        symptomSubtitle: "Select your symptoms for herbal remedies and gel-based solutions:",
+        symptomTitle: "🌿 Natural Remedy Advisor",
+        symptomSubtitle: "Select your symptoms for natural remedies and gels:",
         analyzeBtn: "🌿 Get Natural Remedies",
         clearBtn: "🔄 Clear Form",
         emergencyBtn: "🚨 Emergency",
@@ -332,12 +324,19 @@ const translations = {
         bloodUrine: "Blood in Urine",
         statusHealthy: "✅ Healthy",
         statusFollowup: "🌿 Natural Care Recommended",
-        statusEmergency: "🚨 EMERGENCY"
+        statusEmergency: "🚨 EMERGENCY",
+        followUpHealthy: "Maintain healthy lifestyle with natural remedies.",
+        followUpNormal: "Use these natural remedies for 3 days. Consult doctor if no improvement.",
+        followUpEmergency: "URGENT: Immediate emergency care required",
+        descriptionHealthy: "Stay healthy with these natural wellness tips.",
+        descriptionNormal: "Based on your symptoms, here are natural remedies and gels for relief.",
+        diagnosisWellness: "Wellness Mode",
+        diagnosisNoSymptoms: "No Symptoms - Wellness Mode"
     },
     hi: {
         patientInfoTitle: "📋 मरीज की जानकारी",
-        symptomTitle: "🩺 प्राकृतिक उपचार सलाहकार",
-        symptomSubtitle: "हर्बल उपचार और जेल-आधारित समाधान के लिए अपने लक्षण चुनें:",
+        symptomTitle: "🌿 प्राकृतिक उपचार सलाहकार",
+        symptomSubtitle: "प्राकृतिक उपचार और जैल के लिए अपने लक्षण चुनें:",
         analyzeBtn: "🌿 प्राकृतिक उपचार प्राप्त करें",
         clearBtn: "🔄 फॉर्म साफ़ करें",
         emergencyBtn: "🚨 आपातकालीन",
@@ -394,12 +393,19 @@ const translations = {
         bloodUrine: "पेशाब में खून",
         statusHealthy: "✅ स्वस्थ",
         statusFollowup: "🌿 प्राकृतिक देखभाल अनुशंसित",
-        statusEmergency: "🚨 आपातकालीन"
+        statusEmergency: "🚨 आपातकालीन",
+        followUpHealthy: "प्राकृतिक उपचार के साथ स्वस्थ जीवनशैली बनाए रखें।",
+        followUpNormal: "इन प्राकृतिक उपचारों का 3 दिनों तक उपयोग करें। कोई सुधार न होने पर डॉक्टर से मिलें।",
+        followUpEmergency: "आपातकालीन - तत्काल चिकित्सा सहायता आवश्यक",
+        descriptionHealthy: "इन प्राकृतिक स्वास्थ्य युक्तियों के साथ स्वस्थ रहें।",
+        descriptionNormal: "आपके लक्षणों के आधार पर, यहां प्राकृतिक उपचार और जैल दिए गए हैं।",
+        diagnosisWellness: "स्वास्थ्य मोड",
+        diagnosisNoSymptoms: "कोई लक्षण नहीं - स्वास्थ्य मोड"
     },
     ta: {
         patientInfoTitle: "📋 நோயாளி தகவல்",
-        symptomTitle: "🩺 இயற்கை மருத்துவ ஆலோசகர்",
-        symptomSubtitle: "மூலிகை வைத்தியம் மற்றும் ஜெல் அடிப்படையிலான தீர்வுகளுக்கு உங்கள் அறிகுறிகளைத் தேர்ந்தெடுக்கவும்:",
+        symptomTitle: "🌿 இயற்கை மருத்துவ ஆலோசகர்",
+        symptomSubtitle: "இயற்கை வைத்தியம் மற்றும் ஜெல்களுக்கு உங்கள் அறிகுறிகளைத் தேர்ந்தெடுக்கவும்:",
         analyzeBtn: "🌿 இயற்கை மருந்துகளைப் பெறுங்கள்",
         clearBtn: "🔄 படிவத்தை அழிக்கவும்",
         emergencyBtn: "🚨 அவசரநிலை",
@@ -456,12 +462,19 @@ const translations = {
         bloodUrine: "சிறுநீரில் இரத்தம்",
         statusHealthy: "✅ ஆரோக்கியமான",
         statusFollowup: "🌿 இயற்கை பராமரிப்பு பரிந்துரைக்கப்படுகிறது",
-        statusEmergency: "🚨 அவசரநிலை"
+        statusEmergency: "🚨 அவசரநிலை",
+        followUpHealthy: "இயற்கை வைத்தியம் மூலம் ஆரோக்கியமான வாழ்க்கை முறையை பராமரிக்கவும்.",
+        followUpNormal: "இந்த இயற்கை வைத்தியங்களை 3 நாட்கள் பயன்படுத்தவும். முன்னேற்றம் இல்லையெனில் மருத்துவரை அணுகவும்.",
+        followUpEmergency: "அவசரநிலை - உடனடி மருத்துவ சிகிச்சை தேவை",
+        descriptionHealthy: "இந்த இயற்கை ஆரோக்கிய குறிப்புகளுடன் ஆரோக்கியமாக இருங்கள்.",
+        descriptionNormal: "உங்கள் அறிகுறிகளின் அடிப்படையில், இயற்கை வைத்தியம் மற்றும் ஜெல்கள் இங்கே உள்ளன.",
+        diagnosisWellness: "ஆரோக்கிய முறை",
+        diagnosisNoSymptoms: "அறிகுறிகள் இல்லை - ஆரோக்கிய முறை"
     },
     te: {
         patientInfoTitle: "📋 రోగి సమాచారం",
-        symptomTitle: "🩺 సహజ నివారణ సలహాదారు",
-        symptomSubtitle: "హెర్బల్ రెమెడీస్ మరియు జెల్ ఆధారిత పరిష్కారాల కోసం మీ లక్షణాలను ఎంచుకోండి:",
+        symptomTitle: "🌿 సహజ నివారణ సలహాదారు",
+        symptomSubtitle: "సహజ నివారణలు మరియు జెల్ల కోసం మీ లక్షణాలను ఎంచుకోండి:",
         analyzeBtn: "🌿 సహజ నివారణలను పొందండి",
         clearBtn: "🔄 ఫారమ్ను క్లియర్ చేయండి",
         emergencyBtn: "🚨 అత్యవసరం",
@@ -518,12 +531,19 @@ const translations = {
         bloodUrine: "మూత్రంలో రక్తం",
         statusHealthy: "✅ ఆరోగ్యకరమైన",
         statusFollowup: "🌿 సహజ సంరక్షణ సిఫార్సు చేయబడింది",
-        statusEmergency: "🚨 అత్యవసరం"
+        statusEmergency: "🚨 అత్యవసరం",
+        followUpHealthy: "సహజ నివారణలతో ఆరోగ్యకరమైన జీవనశైలిని నిర్వహించండి.",
+        followUpNormal: "ఈ సహజ నివారణలను 3 రోజులు ఉపయోగించండి. మెరుగుదల లేకపోతే డాక్టర్ను సంప్రదించండి.",
+        followUpEmergency: "అత్యవసరం - వెంటనే వైద్య సహాయం అవసరం",
+        descriptionHealthy: "ఈ సహజ ఆరోగ్య చిట్కాలతో ఆరోగ్యంగా ఉండండి.",
+        descriptionNormal: "మీ లక్షణాల ఆధారంగా, సహజ నివారణలు మరియు జెల్లు ఇక్కడ ఉన్నాయి.",
+        diagnosisWellness: "ఆరోగ్య మోడ్",
+        diagnosisNoSymptoms: "లక్షణాలు లేవు - ఆరోగ్య మోడ్"
     },
     bn: {
         patientInfoTitle: "📋 রোগীর তথ্য",
-        symptomTitle: "🩺 প্রাকৃতিক প্রতিকার উপদেষ্টা",
-        symptomSubtitle: "ভেষজ প্রতিকার এবং জেল-ভিত্তিক সমাধানের জন্য আপনার লক্ষণগুলি নির্বাচন করুন:",
+        symptomTitle: "🌿 প্রাকৃতিক প্রতিকার উপদেষ্টা",
+        symptomSubtitle: "প্রাকৃতিক প্রতিকার এবং জেলের জন্য আপনার লক্ষণগুলি নির্বাচন করুন:",
         analyzeBtn: "🌿 প্রাকৃতিক প্রতিকার পান",
         clearBtn: "🔄 ফর্ম মুছুন",
         emergencyBtn: "🚨 জরুরি অবস্থা",
@@ -580,12 +600,19 @@ const translations = {
         bloodUrine: "প্রস্রাবে রক্ত",
         statusHealthy: "✅ সুস্থ",
         statusFollowup: "🌿 প্রাকৃতিক যত্ন সুপারিশ করা হয়",
-        statusEmergency: "🚨 জরুরি অবস্থা"
+        statusEmergency: "🚨 জরুরি অবস্থা",
+        followUpHealthy: "প্রাকৃতিক প্রতিকারের সাথে স্বাস্থ্যকর জীবনধারা বজায় রাখুন।",
+        followUpNormal: "এই প্রাকৃতিক প্রতিকারগুলি 3 দিন ব্যবহার করুন। উন্নতি না হলে ডাক্তারের সাথে পরামর্শ করুন।",
+        followUpEmergency: "জরুরি - তাৎক্ষণিক চিকিৎসা প্রয়োজন",
+        descriptionHealthy: "এই প্রাকৃতিক স্বাস্থ্য টিপস দিয়ে সুস্থ থাকুন।",
+        descriptionNormal: "আপনার লক্ষণগুলির উপর ভিত্তি করে, এখানে প্রাকৃতিক প্রতিকার এবং জেল রয়েছে।",
+        diagnosisWellness: "সুস্থতা মোড",
+        diagnosisNoSymptoms: "কোন লক্ষণ নেই - সুস্থতা মোড"
     },
     mr: {
         patientInfoTitle: "📋 रुग्ण माहिती",
-        symptomTitle: "🩺 नैसर्गिक उपचार सल्लागार",
-        symptomSubtitle: "हर्बल उपचार आणि जेल-आधारित उपायांसाठी आपली लक्षणे निवडा:",
+        symptomTitle: "🌿 नैसर्गिक उपचार सल्लागार",
+        symptomSubtitle: "नैसर्गिक उपचार आणि जेलसाठी आपली लक्षणे निवडा:",
         analyzeBtn: "🌿 नैसर्गिक उपचार मिळवा",
         clearBtn: "🔄 फॉर्म साफ करा",
         emergencyBtn: "🚨 आणीबाणी",
@@ -642,7 +669,324 @@ const translations = {
         bloodUrine: "लघवीत रक्त",
         statusHealthy: "✅ निरोगी",
         statusFollowup: "🌿 नैसर्गिक काळजी शिफारस केली",
-        statusEmergency: "🚨 आणीबाणी"
+        statusEmergency: "🚨 आणीबाणी",
+        followUpHealthy: "नैसर्गिक उपचारांसह निरोगी जीवनशैली ठेवा.",
+        followUpNormal: "ही नैसर्गिक उपचार 3 दिवस वापरा. सुधारणा नसल्यास डॉक्टरांचा सल्ला घ्या.",
+        followUpEmergency: "आणीबाणी - त्वरित वैद्यकीय मदत आवश्यक",
+        descriptionHealthy: "या नैसर्गिक आरोग्य टिपांसह निरोगी रहा.",
+        descriptionNormal: "आपल्या लक्षणांवर आधारित, येथे नैसर्गिक उपचार आणि जेल आहेत.",
+        diagnosisWellness: "निरोगी मोड",
+        diagnosisNoSymptoms: "लक्षणे नाहीत - निरोगी मोड"
+    },
+    gu: {
+        patientInfoTitle: "📋 દર્દી માહિતી",
+        symptomTitle: "🌿 કુદરતી ઉપચાર સલાહકાર",
+        symptomSubtitle: "કુદરતી ઉપચાર અને જેલ માટે તમારા લક્ષણો પસંદ કરો:",
+        analyzeBtn: "🌿 કુદરતી ઉપચાર મેળવો",
+        clearBtn: "🔄 ફોર્મ સાફ કરો",
+        emergencyBtn: "🚨 કટોકટી",
+        loadingText: "તમારા માટે કુદરતી ઉપચાર શોધી રહ્યા છીએ...",
+        resultsTitle: "🌱 કુદરતી ઉપચાર અહેવાલ",
+        emergencyTitle: "🚨 કટોકટી - તાત્કાલિક કાર્યવાહી જરૂરી",
+        advisorBadge: "🌿 કુદરતી ઉપચાર સલાહકાર",
+        yourSymptomsTitle: "📋 તમારા લક્ષણો:",
+        homeTitle: "🏠 ઘરેલું ઉપચાર",
+        gelsTitle: "🧴 જેલ અને મલમ",
+        herbalTitle: "🌿 હર્બલ ઉપાય",
+        supplementsTitle: "💚 કુદરતી પૂરવણીઓ",
+        disclaimer: "⚠️ આ કુદરતી ઉપચાર છે. બળતરા થાય તો ઉપયોગ બંધ કરો.",
+        generalTitle: "🤒 સામાન્ય લક્ષણો",
+        respiratoryTitle: "🫁 શ્વસન લક્ષણો",
+        giTitle: "🫃 ગેસ્ટ્રોઇન્ટેસ્ટાઇનલ લક્ષણો",
+        neuroTitle: "🧠 ન્યુરોલોજીકલ લક્ષણો",
+        muscleTitle: "💪 મસ્ક્યુલોસ્કેલેટલ લક્ષણો",
+        skinTitle: "🔴 ત્વચા લક્ષણો",
+        urinaryTitle: "🚽 પેશાબ લક્ષણો",
+        fever: "તાવ / ઊંચો તાવ",
+        chills: "શરદી / ધ્રુજારી",
+        fatigue: "થાક / નબળાઇ",
+        weightLoss: "અસ્પષ્ટ વજન ઘટાડો",
+        lossAppetite: "ભૂખ ન લાગવી",
+        cough: "ઉધરસ",
+        dryCough: "સુકી ઉધરસ",
+        wetCough: "ભીની ઉધરસ (કફ સાથે)",
+        bloodCough: "લોહિયાળ ઉધરસ",
+        shortnessBreath: "શ્વાસ લેવામાં તકલીફ",
+        wheezing: "ઘરઘરાટી",
+        chestPain: "છાતીમાં દુખાવો",
+        soreThroat: "ગળામાં દુખાવો",
+        runnyNose: "નાક વહેવું",
+        nausea: "ઉબકા",
+        vomiting: "ઉલટી",
+        diarrhea: "ઝાડા",
+        bloodStool: "મળમાં લોહી",
+        constipation: "કબજિયાત",
+        abdominalPain: "પેટનો દુખાવો",
+        heartburn: "છાતીમાં બળતરા / એસિડિટી",
+        headache: "માથાનો દુખાવો",
+        dizziness: "ચક્કર",
+        fainting: "બેહોશ થવું",
+        seizures: "આંચકી",
+        confusion: "મૂંઝવણ",
+        jointPain: "સાંધાનો દુખાવો",
+        musclePain: "સ્નાયુમાં દુખાવો",
+        backPain: "પીઠનો દુખાવો",
+        rash: "ત્વચા પર ફોલ્લીઓ",
+        itching: "ખંજવાળ",
+        yellowSkin: "પીળી ત્વચા (કમળો)",
+        painUrination: "પેશાબમાં બળતરા",
+        bloodUrine: "પેશાબમાં લોહી",
+        statusHealthy: "✅ સ્વસ્થ",
+        statusFollowup: "🌿 કુદરતી સંભાળ ભલામણ કરેલ",
+        statusEmergency: "🚨 કટોકટી"
+    },
+    kn: {
+        patientInfoTitle: "📋 ರೋಗಿಯ ಮಾಹಿತಿ",
+        symptomTitle: "🌿 ನೈಸರ್ಗಿಕ ಔಷಧಿ ಸಲಹೆಗಾರ",
+        symptomSubtitle: "ನೈಸರ್ಗಿಕ ಪರಿಹಾರಗಳು ಮತ್ತು ಜೆಲ್ಗಳಿಗಾಗಿ ನಿಮ್ಮ ರೋಗಲಕ್ಷಣಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿ:",
+        analyzeBtn: "🌿 ನೈಸರ್ಗಿಕ ಪರಿಹಾರಗಳನ್ನು ಪಡೆಯಿರಿ",
+        clearBtn: "🔄 ಫಾರ್ಮ್ ಅನ್ನು ತೆರವುಗೊಳಿಸಿ",
+        emergencyBtn: "🚨 ತುರ್ತು",
+        loadingText: "ನಿಮಗಾಗಿ ನೈಸರ್ಗಿಕ ಪರಿಹಾರಗಳನ್ನು ಹುಡುಕುತ್ತಿದೆ...",
+        resultsTitle: "🌱 ನೈಸರ್ಗಿಕ ಔಷಧಿ ವರದಿ",
+        emergencyTitle: "🚨 ತುರ್ತು - ತಕ್ಷಣದ ಕ್ರಮ ಅಗತ್ಯ",
+        advisorBadge: "🌿 ನೈಸರ್ಗಿಕ ಔಷಧಿ ಸಲಹೆಗಾರ",
+        yourSymptomsTitle: "📋 ನಿಮ್ಮ ರೋಗಲಕ್ಷಣಗಳು:",
+        homeTitle: "🏠 ಮನೆಮದ್ದುಗಳು",
+        gelsTitle: "🧴 ಜೆಲ್ಗಳು ಮತ್ತು ಮುಲಾಮುಗಳು",
+        herbalTitle: "🌿 ಗಿಡಮೂಲಿಕೆ ಪರಿಹಾರಗಳು",
+        supplementsTitle: "💚 ನೈಸರ್ಗಿಕ ಪೂರಕಗಳು",
+        disclaimer: "⚠️ ಇವು ನೈಸರ್ಗಿಕ ಪರಿಹಾರಗಳು. ಕಿರಿಕಿರಿ ಉಂಟಾದರೆ ಬಳಸುವುದನ್ನು ನಿಲ್ಲಿಸಿ.",
+        generalTitle: "🤒 ಸಾಮಾನ್ಯ ರೋಗಲಕ್ಷಣಗಳು",
+        respiratoryTitle: "🫁 ಉಸಿರಾಟದ ರೋಗಲಕ್ಷಣಗಳು",
+        giTitle: "🫃 ಜಠರಗರುಳಿನ ರೋಗಲಕ್ಷಣಗಳು",
+        neuroTitle: "🧠 ನರವೈಜ್ಞಾನಿಕ ರೋಗಲಕ್ಷಣಗಳು",
+        muscleTitle: "💪 ಸ್ನಾಯು ಅಸ್ಥಿಪಂಜರದ ರೋಗಲಕ್ಷಣಗಳು",
+        skinTitle: "🔴 ಚರ್ಮದ ರೋಗಲಕ್ಷಣಗಳು",
+        urinaryTitle: "🚽 ಮೂತ್ರದ ರೋಗಲಕ್ಷಣಗಳು",
+        fever: "ಜ್ವರ / ಅಧಿಕ ತಾಪಮಾನ",
+        chills: "ಚಳಿ / ನಡುಕ",
+        fatigue: "ಆಯಾಸ / ದೌರ್ಬಲ್ಯ",
+        weightLoss: "ವಿವರಿಸಲಾಗದ ತೂಕ ನಷ್ಟ",
+        lossAppetite: "ಹಸಿವಿನ ಕೊರತೆ",
+        cough: "ಕೆಮ್ಮು",
+        dryCough: "ಒಣ ಕೆಮ್ಮು",
+        wetCough: "ಒದ್ದೆ ಕೆಮ್ಮು (ಕಫದೊಂದಿಗೆ)",
+        bloodCough: "ರಕ್ತದ ಕೆಮ್ಮು",
+        shortnessBreath: "ಉಸಿರಾಟದ ತೊಂದರೆ",
+        wheezing: "ಉಬ್ಬಸ",
+        chestPain: "ಎದೆ ನೋವು",
+        soreThroat: "ಗಂಟಲು ನೋವು",
+        runnyNose: "ಮೂಗು ಸೋರುವಿಕೆ",
+        nausea: "ವಾಕರಿಕೆ",
+        vomiting: "ವಾಂತಿ",
+        diarrhea: "ಅತಿಸಾರ",
+        bloodStool: "ಮಲದಲ್ಲಿ ರಕ್ತ",
+        constipation: "ಮಲಬದ್ಧತೆ",
+        abdominalPain: "ಹೊಟ್ಟೆ ನೋವು",
+        heartburn: "ಎದೆಯುರಿ / ಹುಳಿ",
+        headache: "ತಲೆನೋವು",
+        dizziness: "ತಲೆತಿರುಗುವಿಕೆ",
+        fainting: "ಮೂರ್ಛೆ",
+        seizures: "ಸೆಳೆತ",
+        confusion: "ಗೊಂದಲ",
+        jointPain: "ಕೀಲು ನೋವು",
+        musclePain: "ಸ್ನಾಯು ನೋವು",
+        backPain: "ಬೆನ್ನು ನೋವು",
+        rash: "ಚರ್ಮದ ದದ್ದು",
+        itching: "ತುರಿಕೆ",
+        yellowSkin: "ಹಳದಿ ಚರ್ಮ (ಕಾಮಾಲೆ)",
+        painUrination: "ಮೂತ್ರ ವಿಸರ್ಜನೆಯಲ್ಲಿ ನೋವು",
+        bloodUrine: "ಮೂತ್ರದಲ್ಲಿ ರಕ್ತ",
+        statusHealthy: "✅ ಆರೋಗ್ಯಕರ",
+        statusFollowup: "🌿 ನೈಸರ್ಗಿಕ ಆರೈಕೆ ಶಿಫಾರಸು ಮಾಡಲಾಗಿದೆ",
+        statusEmergency: "🚨 ತುರ್ತು"
+    },
+    ml: {
+        patientInfoTitle: "📋 രോഗിയുടെ വിവരങ്ങൾ",
+        symptomTitle: "🌿 പ്രകൃതിദത്ത പരിഹാര ഉപദേഷ്ടാവ്",
+        symptomSubtitle: "പ്രകൃതിദത്ത പരിഹാരങ്ങൾക്കും ജെല്ലുകൾക്കുമായി നിങ്ങളുടെ ലക്ഷണങ്ങൾ തിരഞ്ഞെടുക്കുക:",
+        analyzeBtn: "🌿 പ്രകൃതിദത്ത പരിഹാരങ്ങൾ നേടുക",
+        clearBtn: "🔄 ഫോം മായ്‌ക്കുക",
+        emergencyBtn: "🚨 അടിയന്തരം",
+        loadingText: "നിങ്ങൾക്കായി പ്രകൃതിദത്ത പരിഹാരങ്ങൾ കണ്ടെത്തുന്നു...",
+        resultsTitle: "🌱 പ്രകൃതിദത്ത പരിഹാര റിപ്പോർട്ട്",
+        emergencyTitle: "🚨 അടിയന്തരം - ഉടൻ നടപടി ആവശ്യമാണ്",
+        advisorBadge: "🌿 പ്രകൃതിദത്ത പരിഹാര ഉപദേഷ്ടാവ്",
+        yourSymptomsTitle: "📋 നിങ്ങളുടെ ലക്ഷണങ്ങൾ:",
+        homeTitle: "🏠 വീട്ടുവൈദ്യങ്ങൾ",
+        gelsTitle: "🧴 ജെല്ലുകളും തൈലങ്ങളും",
+        herbalTitle: "🌿 ഹെർബൽ പരിഹാരങ്ങൾ",
+        supplementsTitle: "💚 പ്രകൃതിദത്ത സപ്ലിമെന്റുകൾ",
+        disclaimer: "⚠️ ഇവ പ്രകൃതിദത്ത പരിഹാരങ്ങളാണ്. പ്രകോപനം ഉണ്ടായാൽ ഉപയോഗം നിർത്തുക.",
+        generalTitle: "🤒 പൊതുവായ ലക്ഷണങ്ങൾ",
+        respiratoryTitle: "🫁 ശ്വസന ലക്ഷണങ്ങൾ",
+        giTitle: "🫃 ദഹനനാളത്തിന്റെ ലക്ഷണങ്ങൾ",
+        neuroTitle: "🧠 ന്യൂറോളജിക്കൽ ലക്ഷണങ്ങൾ",
+        muscleTitle: "💪 മസ്കുലോസ്കെലെറ്റൽ ലക്ഷണങ്ങൾ",
+        skinTitle: "🔴 ചർമ്മ ലക്ഷണങ്ങൾ",
+        urinaryTitle: "🚽 മൂത്രാശയ ലക്ഷണങ്ങൾ",
+        fever: "പനി / ഉയർന്ന താപനില",
+        chills: "വിറയൽ / തണുപ്പ്",
+        fatigue: "ക്ഷീണം / ബലഹീനത",
+        weightLoss: "വിശദീകരിക്കാനാകാത്ത ശരീരഭാരം കുറയൽ",
+        lossAppetite: "വിശപ്പില്ലായ്മ",
+        cough: "ചുമ",
+        dryCough: "വരണ്ട ചുമ",
+        wetCough: "നനഞ്ഞ ചുമ (കഫത്തോടൊപ്പം)",
+        bloodCough: "രക്തം ചുമക്കൽ",
+        shortnessBreath: "ശ്വാസതടസ്സം",
+        wheezing: "ശ്വാസംമുട്ടൽ",
+        chestPain: "നെഞ്ചുവേദന",
+        soreThroat: "തൊണ്ടവേദന",
+        runnyNose: "മൂക്കൊലിപ്പ്",
+        nausea: "ഓക്കാനം",
+        vomiting: "ഛർദ്ദി",
+        diarrhea: "വയറിളക്കം",
+        bloodStool: "മലത്തിൽ രക്തം",
+        constipation: "മലബന്ധം",
+        abdominalPain: "വയറുവേദന",
+        heartburn: "നെഞ്ചെരിച്ചിൽ / ആസിഡിറ്റി",
+        headache: "തലവേദന",
+        dizziness: "തലകറക്കം",
+        fainting: "ബോധക്ഷയം",
+        seizures: "അപസ്മാരം",
+        confusion: "ആശയക്കുഴപ്പം",
+        jointPain: "സന്ധി വേദന",
+        musclePain: "പേശി വേദന",
+        backPain: "നടുവേദന",
+        rash: "ചർമ്മത്തിൽ തടിപ്പ്",
+        itching: "ചൊറിച്ചിൽ",
+        yellowSkin: "മഞ്ഞ ചർമ്മം (മഞ്ഞപ്പിത്തം)",
+        painUrination: "മൂത്രമൊഴിക്കുമ്പോൾ വേദന",
+        bloodUrine: "മൂത്രത്തിൽ രക്തം",
+        statusHealthy: "✅ ആരോഗ്യവാൻ",
+        statusFollowup: "🌿 പ്രകൃതിദത്ത പരിചരണം ശുപാർശ ചെയ്യുന്നു",
+        statusEmergency: "🚨 അടിയന്തരം"
+    },
+    or: {
+        patientInfoTitle: "📋 ରୋଗୀ ସୂଚନା",
+        symptomTitle: "🌿 ପ୍ରାକୃତିକ ଚିକିତ୍ସା ପରାମର୍ଶଦାତା",
+        symptomSubtitle: "ପ୍ରାକୃତିକ ଉପଚାର ଏବଂ ଜେଲ୍ ପାଇଁ ଆପଣଙ୍କ ଲକ୍ଷଣଗୁଡିକ ଚୟନ କରନ୍ତୁ:",
+        analyzeBtn: "🌿 ପ୍ରାକୃତିକ ଉପଚାର ପ୍ରାପ୍ତ କରନ୍ତୁ",
+        clearBtn: "🔄 ଫର୍ମ ଖାଲି କରନ୍ତୁ",
+        emergencyBtn: "🚨 ଜରୁରୀକାଳୀନ",
+        loadingText: "ଆପଣଙ୍କ ପାଇଁ ପ୍ରାକୃତିକ ଉପଚାର ଖୋଜୁଛି...",
+        resultsTitle: "🌱 ପ୍ରାକୃତିକ ଉପଚାର ରିପୋର୍ଟ",
+        emergencyTitle: "🚨 ଜରୁରୀକାଳୀନ - ତୁରନ୍ତ କାର୍ଯ୍ୟାନୁଷ୍ଠାନ ଆବଶ୍ୟକ",
+        advisorBadge: "🌿 ପ୍ରାକୃତିକ ଚିକିତ୍ସା ପରାମର୍ଶଦାତା",
+        yourSymptomsTitle: "📋 ଆପଣଙ୍କ ଲକ୍ଷଣଗୁଡିକ:",
+        homeTitle: "🏠 ଘରୋଇ ଉପଚାର",
+        gelsTitle: "🧴 ଜେଲ୍ ଏବଂ ମଲମ",
+        herbalTitle: "🌿 ହର୍ବାଲ୍ ସମାଧାନ",
+        supplementsTitle: "💚 ପ୍ରାକୃତିକ ସପ୍ଲିମେଣ୍ଟ୍",
+        disclaimer: "⚠️ ଏଗୁଡ଼ିକ ପ୍ରାକୃତିକ ଉପଚାର। ଜଳାପୋଡ଼ା ହେଲେ ବ୍ୟବହାର ବନ୍ଦ କରନ୍ତୁ।",
+        generalTitle: "🤒 ସାଧାରଣ ଲକ୍ଷଣ",
+        respiratoryTitle: "🫁 ଶ୍ୱସନ ଲକ୍ଷଣ",
+        giTitle: "🫃 ଗ୍ୟାଷ୍ଟ୍ରୋଇଣ୍ଟେଷ୍ଟାଇନାଲ ଲକ୍ଷଣ",
+        neuroTitle: "🧠 ସ୍ନାୟୁବିକ ଲକ୍ଷଣ",
+        muscleTitle: "💪 ମାସ୍କୁଲୋସ୍କେଲେଟାଲ ଲକ୍ଷଣ",
+        skinTitle: "🔴 ଚର୍ମ ଲକ୍ଷଣ",
+        urinaryTitle: "🚽 ପରିସ୍ରା ଲକ୍ଷଣ",
+        fever: "ଜ୍ୱର / ଉଚ୍ଚ ତାପମାତ୍ରା",
+        chills: "ଥଣ୍ଡା / କମ୍ପନ",
+        fatigue: "ଥକାପଣ / ଦୁର୍ବଳତା",
+        weightLoss: "ଅସ୍ପଷ୍ଟ ଓଜନ ହ୍ରାସ",
+        lossAppetite: "ଭୋକ ନ ଲାଗିବା",
+        cough: "କାଶ",
+        dryCough: "ଶୁଖିଲା କାଶ",
+        wetCough: "ଓଦା କାଶ (କଫ ସହିତ)",
+        bloodCough: "ରକ୍ତ କାଶ",
+        shortnessBreath: "ଶ୍ୱାସକ୍ରିୟାରେ ଅସୁବିଧା",
+        wheezing: "ଘଡଘଡି",
+        chestPain: "ଛାତି ଯନ୍ତ୍ରଣା",
+        soreThroat: "ଗଳା ଯନ୍ତ୍ରଣା",
+        runnyNose: "ନାକ ବୋହିବା",
+        nausea: "ବାନ୍ତି ଲାଗିବା",
+        vomiting: "ବାନ୍ତି",
+        diarrhea: "ଝାଡ଼ା",
+        bloodStool: "ମଳରେ ରକ୍ତ",
+        constipation: "କୋଷ୍ଠକାଠିନ୍ୟ",
+        abdominalPain: "ପେଟ ଯନ୍ତ୍ରଣା",
+        heartburn: "ଛାତି ଜଳାପୋଡ଼ା / ଏସିଡିଟି",
+        headache: "ମୁଣ୍ଡ ବିନ୍ଧା",
+        dizziness: "ମୁଣ୍ଡ ଘୁରିବା",
+        fainting: "ଚେତା ହରାଇବା",
+        seizures: "ବାତ",
+        confusion: "ଦ୍ୱନ୍ଦ୍ୱ",
+        jointPain: "ଗଣ୍ଠି ଯନ୍ତ୍ରଣା",
+        musclePain: "ମାଂସପେଶୀ ଯନ୍ତ୍ରଣା",
+        backPain: "ପିଠି ଯନ୍ତ୍ରଣା",
+        rash: "ଚର୍ମ ଦାଗ",
+        itching: "ଗଲୁ",
+        yellowSkin: "ହଳଦିଆ ଚର୍ମ (ଜଣ୍ଡିସ୍)",
+        painUrination: "ପରିସ୍ରାରେ ଜଳାପୋଡ଼ା",
+        bloodUrine: "ପରିସ୍ରାରେ ରକ୍ତ",
+        statusHealthy: "✅ ସୁସ୍ଥ",
+        statusFollowup: "🌿 ପ୍ରାକୃତିକ ଯତ୍ନ ସୁପାରିଶ କରାଯାଏ",
+        statusEmergency: "🚨 ଜରୁରୀକାଳୀନ"
+    },
+    pa: {
+        patientInfoTitle: "📋 ਮਰੀਜ਼ ਦੀ ਜਾਣਕਾਰੀ",
+        symptomTitle: "🌿 ਕੁਦਰਤੀ ਉਪਚਾਰ ਸਲਾਹਕਾਰ",
+        symptomSubtitle: "ਕੁਦਰਤੀ ਉਪਚਾਰ ਅਤੇ ਜੈੱਲਾਂ ਲਈ ਆਪਣੇ ਲੱਛਣ ਚੁਣੋ:",
+        analyzeBtn: "🌿 ਕੁਦਰਤੀ ਉਪਚਾਰ ਪ੍ਰਾਪਤ ਕਰੋ",
+        clearBtn: "🔄 ਫਾਰਮ ਸਾਫ਼ ਕਰੋ",
+        emergencyBtn: "🚨 ਐਮਰਜੈਂਸੀ",
+        loadingText: "ਤੁਹਾਡੇ ਲਈ ਕੁਦਰਤੀ ਉਪਚਾਰ ਲੱਭ ਰਹੇ ਹਾਂ...",
+        resultsTitle: "🌱 ਕੁਦਰਤੀ ਉਪਚਾਰ ਰਿਪੋਰਟ",
+        emergencyTitle: "🚨 ਐਮਰਜੈਂਸੀ - ਤੁਰੰਤ ਕਾਰਵਾਈ ਦੀ ਲੋੜ",
+        advisorBadge: "🌿 ਕੁਦਰਤੀ ਉਪਚਾਰ ਸਲਾਹਕਾਰ",
+        yourSymptomsTitle: "📋 ਤੁਹਾਡੇ ਲੱਛਣ:",
+        homeTitle: "🏠 ਘਰੇਲੂ ਉਪਚਾਰ",
+        gelsTitle: "🧴 ਜੈੱਲ ਅਤੇ ਮਲ੍ਹਮ",
+        herbalTitle: "🌿 ਹਰਬਲ ਹੱਲ",
+        supplementsTitle: "💚 ਕੁਦਰਤੀ ਪੂਰਕ",
+        disclaimer: "⚠️ ਇਹ ਕੁਦਰਤੀ ਉਪਚਾਰ ਹਨ। ਜਲਣ ਹੋਣ 'ਤੇ ਵਰਤੋਂ ਬੰਦ ਕਰੋ।",
+        generalTitle: "🤒 ਆਮ ਲੱਛਣ",
+        respiratoryTitle: "🫁 ਸਾਹ ਦੇ ਲੱਛਣ",
+        giTitle: "🫃 ਗੈਸਟਰੋਇੰਟੇਸਟਾਈਨਲ ਲੱਛਣ",
+        neuroTitle: "🧠 ਨਿਊਰੋਲੋਜੀਕਲ ਲੱਛਣ",
+        muscleTitle: "💪 ਮਾਸਪੇਸ਼ੀ ਲੱਛਣ",
+        skinTitle: "🔴 ਚਮੜੀ ਦੇ ਲੱਛਣ",
+        urinaryTitle: "🚽 ਪਿਸ਼ਾਬ ਦੇ ਲੱਛਣ",
+        fever: "ਬੁਖਾਰ / ਤੇਜ਼ ਬੁਖਾਰ",
+        chills: "ਕੰਬਣੀ / ਠੰਡ ਲੱਗਣਾ",
+        fatigue: "ਥਕਾਵਟ / ਕਮਜ਼ੋਰੀ",
+        weightLoss: "ਅਣਜਾਣੇ ਵਜ਼ਨ ਘਟਣਾ",
+        lossAppetite: "ਭੁੱਖ ਨਾ ਲੱਗਣਾ",
+        cough: "ਖਾਂਸੀ",
+        dryCough: "ਸੁੱਕੀ ਖਾਂਸੀ",
+        wetCough: "ਗਿੱਲੀ ਖਾਂਸੀ (ਬਲਗਮ ਨਾਲ)",
+        bloodCough: "ਖੂਨ ਵਾਲੀ ਖਾਂਸੀ",
+        shortnessBreath: "ਸਾਹ ਚੜ੍ਹਨਾ",
+        wheezing: "ਘਰਘਰਾਹਟ",
+        chestPain: "ਛਾਤੀ ਵਿੱਚ ਦਰਦ",
+        soreThroat: "ਗਲੇ ਵਿੱਚ ਖਰਾਸ਼",
+        runnyNose: "ਨੱਕ ਵਗਣਾ",
+        nausea: "ਮਤਲੀ",
+        vomiting: "ਉਲਟੀ",
+        diarrhea: "ਦਸਤ",
+        bloodStool: "ਮਲ ਵਿੱਚ ਖੂਨ",
+        constipation: "ਕਬਜ਼",
+        abdominalPain: "ਪੇਟ ਦਰਦ",
+        heartburn: "ਸੀਨੇ ਵਿੱਚ ਜਲਣ / ਐਸਿਡਿਟੀ",
+        headache: "ਸਿਰ ਦਰਦ",
+        dizziness: "ਚੱਕਰ ਆਉਣਾ",
+        fainting: "ਬੇਹੋਸ਼ ਹੋਣਾ",
+        seizures: "ਦੌਰੇ",
+        confusion: "ਉਲਝਣ",
+        jointPain: "ਜੋੜਾਂ ਦਾ ਦਰਦ",
+        musclePain: "ਮਾਸਪੇਸ਼ੀ ਦਰਦ",
+        backPain: "ਪਿੱਠ ਦਰਦ",
+        rash: "ਚਮੜੀ 'ਤੇ ਧੱਫੜ",
+        itching: "ਖੁਜਲੀ",
+        yellowSkin: "ਪੀਲੀ ਚਮੜੀ (ਪੀਲੀਆ)",
+        painUrination: "ਪਿਸ਼ਾਬ ਵਿੱਚ ਜਲਣ",
+        bloodUrine: "ਪਿਸ਼ਾਬ ਵਿੱਚ ਖੂਨ",
+        statusHealthy: "✅ ਸਿਹਤਮੰਦ",
+        statusFollowup: "🌿 ਕੁਦਰਤੀ ਦੇਖਭਾਲ ਦੀ ਸਿਫਾਰਸ਼ ਕੀਤੀ ਜਾਂਦੀ ਹੈ",
+        statusEmergency: "🚨 ਐਮਰਜੈਂਸੀ"
     }
 };
 
@@ -656,79 +1000,71 @@ function changeLanguage(lang) {
     });
     event.target.classList.add('active');
     
-    // Update all translatable elements
-    document.getElementById('patientInfoTitle').innerText = translations[lang].patientInfoTitle;
-    document.getElementById('symptomTitle').innerText = translations[lang].symptomTitle;
-    document.getElementById('symptomSubtitle').innerText = translations[lang].symptomSubtitle;
-    document.getElementById('analyzeBtn').innerText = translations[lang].analyzeBtn;
-    document.getElementById('clearBtn').innerText = translations[lang].clearBtn;
-    document.getElementById('emergencyBtn').innerText = translations[lang].emergencyBtn;
-    document.getElementById('loadingText').innerText = translations[lang].loadingText;
-    document.getElementById('resultsTitle').innerText = translations[lang].resultsTitle;
-    document.getElementById('emergencyTitle').innerText = translations[lang].emergencyTitle;
-    document.getElementById('advisorBadge').innerText = translations[lang].advisorBadge;
-    document.getElementById('yourSymptomsTitle').innerText = translations[lang].yourSymptomsTitle;
-    document.getElementById('homeTitle').innerText = translations[lang].homeTitle;
-    document.getElementById('gelsTitle').innerText = translations[lang].gelsTitle;
-    document.getElementById('herbalTitle').innerText = translations[lang].herbalTitle;
-    document.getElementById('supplementsTitle').innerText = translations[lang].supplementsTitle;
-    document.getElementById('disclaimer').innerText = translations[lang].disclaimer;
+    const t = translations[lang];
+    
+    // Update all text elements
+    document.getElementById('patientInfoTitle').innerText = t.patientInfoTitle;
+    document.getElementById('symptomTitle').innerText = t.symptomTitle;
+    document.getElementById('symptomSubtitle').innerText = t.symptomSubtitle;
+    document.getElementById('analyzeBtn').innerText = t.analyzeBtn;
+    document.getElementById('clearBtn').innerText = t.clearBtn;
+    document.getElementById('emergencyBtn').innerText = t.emergencyBtn;
+    document.getElementById('loadingText').innerText = t.loadingText;
+    document.getElementById('resultsTitle').innerText = t.resultsTitle;
+    document.getElementById('emergencyTitle').innerText = t.emergencyTitle;
+    document.getElementById('advisorBadge').innerText = t.advisorBadge;
+    document.getElementById('yourSymptomsTitle').innerText = t.yourSymptomsTitle;
+    document.getElementById('homeTitle').innerText = t.homeTitle;
+    document.getElementById('gelsTitle').innerText = t.gelsTitle;
+    document.getElementById('herbalTitle').innerText = t.herbalTitle;
+    document.getElementById('supplementsTitle').innerText = t.supplementsTitle;
+    document.getElementById('disclaimer').innerText = t.disclaimer;
     
     // Update category titles
-    document.getElementById('generalTitle').innerText = translations[lang].generalTitle;
-    document.getElementById('respiratoryTitle').innerText = translations[lang].respiratoryTitle;
-    document.getElementById('giTitle').innerText = translations[lang].giTitle;
-    document.getElementById('neuroTitle').innerText = translations[lang].neuroTitle;
-    document.getElementById('muscleTitle').innerText = translations[lang].muscleTitle;
-    document.getElementById('skinTitle').innerText = translations[lang].skinTitle;
-    document.getElementById('urinaryTitle').innerText = translations[lang].urinaryTitle;
+    document.getElementById('generalTitle').innerText = t.generalTitle;
+    document.getElementById('respiratoryTitle').innerText = t.respiratoryTitle;
+    document.getElementById('giTitle').innerText = t.giTitle;
+    document.getElementById('neuroTitle').innerText = t.neuroTitle;
+    document.getElementById('muscleTitle').innerText = t.muscleTitle;
+    document.getElementById('skinTitle').innerText = t.skinTitle;
+    document.getElementById('urinaryTitle').innerText = t.urinaryTitle;
     
     // Update symptom labels
-    updateSymptomLabel('fever', translations[lang].fever);
-    updateSymptomLabel('chills', translations[lang].chills);
-    updateSymptomLabel('fatigue', translations[lang].fatigue);
-    updateSymptomLabel('weightLoss', translations[lang].weightLoss);
-    updateSymptomLabel('lossAppetite', translations[lang].lossAppetite);
-    updateSymptomLabel('cough', translations[lang].cough);
-    updateSymptomLabel('dryCough', translations[lang].dryCough);
-    updateSymptomLabel('wetCough', translations[lang].wetCough);
-    updateSymptomLabel('bloodCough', translations[lang].bloodCough);
-    updateSymptomLabel('shortnessBreath', translations[lang].shortnessBreath);
-    updateSymptomLabel('wheezing', translations[lang].wheezing);
-    updateSymptomLabel('chestPain', translations[lang].chestPain);
-    updateSymptomLabel('soreThroat', translations[lang].soreThroat);
-    updateSymptomLabel('runnyNose', translations[lang].runnyNose);
-    updateSymptomLabel('nausea', translations[lang].nausea);
-    updateSymptomLabel('vomiting', translations[lang].vomiting);
-    updateSymptomLabel('diarrhea', translations[lang].diarrhea);
-    updateSymptomLabel('bloodStool', translations[lang].bloodStool);
-    updateSymptomLabel('constipation', translations[lang].constipation);
-    updateSymptomLabel('abdominalPain', translations[lang].abdominalPain);
-    updateSymptomLabel('heartburn', translations[lang].heartburn);
-    updateSymptomLabel('headache', translations[lang].headache);
-    updateSymptomLabel('dizziness', translations[lang].dizziness);
-    updateSymptomLabel('fainting', translations[lang].fainting);
-    updateSymptomLabel('seizures', translations[lang].seizures);
-    updateSymptomLabel('confusion', translations[lang].confusion);
-    updateSymptomLabel('jointPain', translations[lang].jointPain);
-    updateSymptomLabel('musclePain', translations[lang].musclePain);
-    updateSymptomLabel('backPain', translations[lang].backPain);
-    updateSymptomLabel('rash', translations[lang].rash);
-    updateSymptomLabel('itching', translations[lang].itching);
-    updateSymptomLabel('yellowSkin', translations[lang].yellowSkin);
-    updateSymptomLabel('painUrination', translations[lang].painUrination);
-    updateSymptomLabel('bloodUrine', translations[lang].bloodUrine);
+    document.getElementById('lblFever').innerText = t.fever;
+    document.getElementById('lblChills').innerText = t.chills;
+    document.getElementById('lblFatigue').innerText = t.fatigue;
+    document.getElementById('lblWeightLoss').innerText = t.weightLoss;
+    document.getElementById('lblLossAppetite').innerText = t.lossAppetite;
+    document.getElementById('lblCough').innerText = t.cough;
+    document.getElementById('lblDryCough').innerText = t.dryCough;
+    document.getElementById('lblWetCough').innerText = t.wetCough;
+    document.getElementById('lblBloodCough').innerText = t.bloodCough;
+    document.getElementById('lblShortnessBreath').innerText = t.shortnessBreath;
+    document.getElementById('lblWheezing').innerText = t.wheezing;
+    document.getElementById('lblChestPain').innerText = t.chestPain;
+    document.getElementById('lblSoreThroat').innerText = t.soreThroat;
+    document.getElementById('lblRunnyNose').innerText = t.runnyNose;
+    document.getElementById('lblNausea').innerText = t.nausea;
+    document.getElementById('lblVomiting').innerText = t.vomiting;
+    document.getElementById('lblDiarrhea').innerText = t.diarrhea;
+    document.getElementById('lblBloodStool').innerText = t.bloodStool;
+    document.getElementById('lblConstipation').innerText = t.constipation;
+    document.getElementById('lblAbdominalPain').innerText = t.abdominalPain;
+    document.getElementById('lblHeartburn').innerText = t.heartburn;
+    document.getElementById('lblHeadache').innerText = t.headache;
+    document.getElementById('lblDizziness').innerText = t.dizziness;
+    document.getElementById('lblFainting').innerText = t.fainting;
+    document.getElementById('lblSeizures').innerText = t.seizures;
+    document.getElementById('lblConfusion').innerText = t.confusion;
+    document.getElementById('lblJointPain').innerText = t.jointPain;
+    document.getElementById('lblMusclePain').innerText = t.musclePain;
+    document.getElementById('lblBackPain').innerText = t.backPain;
+    document.getElementById('lblRash').innerText = t.rash;
+    document.getElementById('lblItching').innerText = t.itching;
+    document.getElementById('lblYellowSkin').innerText = t.yellowSkin;
+    document.getElementById('lblPainUrination').innerText = t.painUrination;
+    document.getElementById('lblBloodUrine').innerText = t.bloodUrine;
 }
-
-function updateSymptomLabel(id, text) {
-    const label = document.querySelector(`label[for="${id}"]`);
-    if (label) {
-        label.innerText = text;
-    }
-}
-
-// Initial render
-renderTable();
 
 // Symptom search filter
 function filterSymptoms() {
@@ -757,20 +1093,12 @@ function clearForm() {
     document.getElementById('additionalSymptoms').value = '';
     document.getElementById('symptomSearch').value = '';
     
-    // Uncheck all checkboxes
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
     checkboxes.forEach(cb => cb.checked = false);
     
-    // Hide results
     document.getElementById('results').style.display = 'none';
-    
-    // Hide emergency alert if visible
     document.getElementById('emergencyAlert').style.display = 'none';
-    
-    // Show all symptoms again
     filterSymptoms();
-    
-    console.log("Form cleared successfully");
 }
 
 // Emergency override
@@ -783,7 +1111,6 @@ function emergencyOverride() {
         return;
     }
     
-    // Show loader
     document.getElementById('loader').style.display = 'block';
     document.getElementById('results').style.display = 'none';
     document.getElementById('emergencyAlert').style.display = 'none';
@@ -791,70 +1118,43 @@ function emergencyOverride() {
     setTimeout(() => {
         document.getElementById('loader').style.display = 'none';
         
+        const t = translations[currentLanguage];
+        
         const emergencyResult = {
             status: "emergency",
-            statusText: translations[currentLanguage].statusEmergency || "🚨 EMERGENCY",
-            diagnosis: translations[currentLanguage].emergencyTitle || "MEDICAL EMERGENCY",
-            description: "⚠️ " + (translations[currentLanguage].emergencyTitle || "EMERGENCY OVERRIDE ACTIVATED - Patient requires immediate medical attention!"),
-            homeRemedies: ["🚑 NOT APPLICABLE - EMERGENCY SITUATION"],
-            gels: ["🚑 NOT APPLICABLE - SEEK IMMEDIATE MEDICAL HELP"],
-            herbal: ["🚑 NOT APPLICABLE - CALL AMBULANCE NOW"],
-            supplements: ["🚑 DIAL 108 OR 102 IMMEDIATELY"],
-            symptoms: "Emergency override activated",
-            followUp: "URGENT: Immediate emergency care required"
+            statusText: t.statusEmergency,
+            diagnosis: t.emergencyTitle,
+            description: "⚠️ " + t.emergencyTitle,
+            homeRemedies: ["🚑 " + t.emergencyTitle],
+            gels: ["🚑 " + t.emergencyTitle],
+            herbal: ["🚑 " + t.emergencyTitle],
+            supplements: ["🚑 " + t.emergencyTitle],
+            symptoms: "Emergency override",
+            followUp: t.followUpEmergency || "URGENT: Immediate emergency care required"
         };
         
         displayResults(emergencyResult);
-        saveScreening(name, age, emergencyResult);
     }, 1000);
 }
 
 // Get selected symptoms
 function getSelectedSymptoms() {
     const symptoms = [];
-    const symptomMap = {
-        'fever': 'Fever',
-        'chills': 'Chills',
-        'fatigue': 'Fatigue',
-        'weightLoss': 'Weight Loss',
-        'lossAppetite': 'Loss of Appetite',
-        'cough': 'Cough',
-        'dryCough': 'Dry Cough',
-        'wetCough': 'Wet Cough',
-        'bloodCough': 'Coughing Blood',
-        'shortnessBreath': 'Shortness of Breath',
-        'wheezing': 'Wheezing',
-        'chestPain': 'Chest Pain',
-        'soreThroat': 'Sore Throat',
-        'runnyNose': 'Runny Nose',
-        'nausea': 'Nausea',
-        'vomiting': 'Vomiting',
-        'diarrhea': 'Diarrhea',
-        'bloodStool': 'Blood in Stool',
-        'constipation': 'Constipation',
-        'abdominalPain': 'Abdominal Pain',
-        'heartburn': 'Heartburn',
-        'headache': 'Headache',
-        'dizziness': 'Dizziness',
-        'fainting': 'Fainting',
-        'seizures': 'Seizures',
-        'confusion': 'Confusion',
-        'jointPain': 'Joint Pain',
-        'musclePain': 'Muscle Pain',
-        'backPain': 'Back Pain',
-        'rash': 'Rash',
-        'itching': 'Itching',
-        'yellowSkin': 'Yellow Skin',
-        'painUrination': 'Painful Urination',
-        'bloodUrine': 'Blood in Urine'
-    };
+    const symptomIds = [
+        'fever', 'chills', 'fatigue', 'weightLoss', 'lossAppetite',
+        'cough', 'dryCough', 'wetCough', 'bloodCough', 'shortnessBreath',
+        'wheezing', 'chestPain', 'soreThroat', 'runnyNose', 'nausea',
+        'vomiting', 'diarrhea', 'bloodStool', 'constipation', 'abdominalPain',
+        'heartburn', 'headache', 'dizziness', 'fainting', 'seizures',
+        'confusion', 'jointPain', 'musclePain', 'backPain', 'rash',
+        'itching', 'yellowSkin', 'painUrination', 'bloodUrine'
+    ];
     
-    for (let [id, label] of Object.entries(symptomMap)) {
-        let element = document.getElementById(id);
-        if (element && element.checked) {
-            symptoms.push(label);
+    symptomIds.forEach(id => {
+        if (document.getElementById(id) && document.getElementById(id).checked) {
+            symptoms.push(document.getElementById('lbl' + id.charAt(0).toUpperCase() + id.slice(1)).innerText);
         }
-    }
+    });
     
     return symptoms;
 }
@@ -870,37 +1170,37 @@ function getNaturalRemedies(symptoms, age, temp, bp) {
     let emergencyMsg = "";
     
     // EMERGENCY CHECKS
-    if (symptoms.includes('Chest Pain')) {
+    if (symptoms.includes(translations[currentLanguage].chestPain)) {
         emergency = true;
-        emergencyMsg = "⚠️ CHEST PAIN - Possible heart attack. SEEK EMERGENCY CARE IMMEDIATELY!";
+        emergencyMsg = "⚠️ " + translations[currentLanguage].chestPain + " - " + translations[currentLanguage].emergencyTitle;
     }
-    else if (symptoms.includes('Coughing Blood')) {
+    else if (symptoms.includes(translations[currentLanguage].bloodCough)) {
         emergency = true;
-        emergencyMsg = "⚠️ COUGHING BLOOD - Possible TB or internal bleeding. Immediate medical attention required!";
+        emergencyMsg = "⚠️ " + translations[currentLanguage].bloodCough + " - " + translations[currentLanguage].emergencyTitle;
     }
-    else if (symptoms.includes('Blood in Stool')) {
+    else if (symptoms.includes(translations[currentLanguage].bloodStool)) {
         emergency = true;
-        emergencyMsg = "⚠️ BLOOD IN STOOL - Possible internal bleeding. Seek immediate care!";
+        emergencyMsg = "⚠️ " + translations[currentLanguage].bloodStool + " - " + translations[currentLanguage].emergencyTitle;
     }
-    else if (symptoms.includes('Blood in Urine')) {
+    else if (symptoms.includes(translations[currentLanguage].bloodUrine)) {
         emergency = true;
-        emergencyMsg = "⚠️ BLOOD IN URINE - Kidney or bladder issue. Immediate medical attention required!";
+        emergencyMsg = "⚠️ " + translations[currentLanguage].bloodUrine + " - " + translations[currentLanguage].emergencyTitle;
     }
-    else if (symptoms.includes('Fainting')) {
+    else if (symptoms.includes(translations[currentLanguage].fainting)) {
         emergency = true;
-        emergencyMsg = "⚠️ FAINTING - Loss of consciousness. Neurological emergency!";
+        emergencyMsg = "⚠️ " + translations[currentLanguage].fainting + " - " + translations[currentLanguage].emergencyTitle;
     }
-    else if (symptoms.includes('Seizures')) {
+    else if (symptoms.includes(translations[currentLanguage].seizures)) {
         emergency = true;
-        emergencyMsg = "⚠️ SEIZURES - Neurological emergency. Immediate medical attention!";
+        emergencyMsg = "⚠️ " + translations[currentLanguage].seizures + " - " + translations[currentLanguage].emergencyTitle;
     }
-    else if (symptoms.includes('Confusion')) {
+    else if (symptoms.includes(translations[currentLanguage].confusion)) {
         emergency = true;
-        emergencyMsg = "⚠️ CONFUSION - Possible stroke or severe infection. Seek immediate care!";
+        emergencyMsg = "⚠️ " + translations[currentLanguage].confusion + " - " + translations[currentLanguage].emergencyTitle;
     }
-    else if (symptoms.includes('Yellow Skin')) {
+    else if (symptoms.includes(translations[currentLanguage].yellowSkin)) {
         emergency = true;
-        emergencyMsg = "⚠️ YELLOW SKIN - Jaundice. Liver condition needs immediate attention!";
+        emergencyMsg = "⚠️ " + translations[currentLanguage].yellowSkin + " - " + translations[currentLanguage].emergencyTitle;
     }
     
     // BP Emergency
@@ -910,7 +1210,7 @@ function getNaturalRemedies(symptoms, age, temp, bp) {
             let systolic = parseInt(bpParts[0]);
             if (systolic >= 180) {
                 emergency = true;
-                emergencyMsg = "⚠️ CRITICALLY HIGH BLOOD PRESSURE - Hypertensive emergency!";
+                emergencyMsg = "⚠️ CRITICALLY HIGH BP - " + translations[currentLanguage].emergencyTitle;
             }
         }
     }
@@ -919,16 +1219,18 @@ function getNaturalRemedies(symptoms, age, temp, bp) {
         return {
             emergency: true,
             message: emergencyMsg,
-            diagnosis: "MEDICAL EMERGENCY",
-            homeRemedies: ["🚑 NOT APPLICABLE - EMERGENCY SITUATION"],
-            gels: ["🚑 NOT APPLICABLE - SEEK IMMEDIATE MEDICAL HELP"],
-            herbal: ["🚑 NOT APPLICABLE - CALL AMBULANCE NOW"],
-            supplements: ["🚑 DIAL 108 OR 102 IMMEDIATELY"]
+            diagnosis: translations[currentLanguage].emergencyTitle,
+            homeRemedies: ["🚑 " + translations[currentLanguage].emergencyTitle],
+            gels: ["🚑 " + translations[currentLanguage].emergencyTitle],
+            herbal: ["🚑 " + translations[currentLanguage].emergencyTitle],
+            supplements: ["🚑 " + translations[currentLanguage].emergencyTitle]
         };
     }
     
     // COMMON COLD / FLU
-    if (symptoms.includes('Fever') && symptoms.includes('Cough') && symptoms.includes('Fatigue')) {
+    if (symptoms.includes(translations[currentLanguage].fever) && 
+        symptoms.includes(translations[currentLanguage].cough) && 
+        symptoms.includes(translations[currentLanguage].fatigue)) {
         diagnosis.push("Common Cold / Viral Fever");
         homeRemedies = [
             "🫖 Ginger tea with honey - Drink 3 times daily",
@@ -955,7 +1257,8 @@ function getNaturalRemedies(symptoms, age, temp, bp) {
     }
     
     // CHEST INFECTION / WET COUGH
-    else if (symptoms.includes('Wet Cough') && symptoms.includes('Fever')) {
+    else if (symptoms.includes(translations[currentLanguage].wetCough) && 
+             symptoms.includes(translations[currentLanguage].fever)) {
         diagnosis.push("Chest Congestion / Bronchitis");
         homeRemedies = [
             "💨 Steam inhalation with eucalyptus oil - 3 times daily",
@@ -982,7 +1285,7 @@ function getNaturalRemedies(symptoms, age, temp, bp) {
     }
     
     // SORE THROAT
-    else if (symptoms.includes('Sore Throat')) {
+    else if (symptoms.includes(translations[currentLanguage].soreThroat)) {
         diagnosis.push("Throat Inflammation");
         homeRemedies = [
             "🧂 Salt water gargle - warm water with salt, 3 times daily",
@@ -1009,7 +1312,8 @@ function getNaturalRemedies(symptoms, age, temp, bp) {
     }
     
     // COUGH (General)
-    else if (symptoms.includes('Cough') || symptoms.includes('Dry Cough')) {
+    else if (symptoms.includes(translations[currentLanguage].cough) || 
+             symptoms.includes(translations[currentLanguage].dryCough)) {
         diagnosis.push("Cough");
         homeRemedies = [
             "🍯 Honey - 1 teaspoon before bed",
@@ -1036,7 +1340,7 @@ function getNaturalRemedies(symptoms, age, temp, bp) {
     }
     
     // HEADACHE
-    else if (symptoms.includes('Headache')) {
+    else if (symptoms.includes(translations[currentLanguage].headache)) {
         diagnosis.push("Headache / Tension");
         homeRemedies = [
             "🧊 Cold compress on forehead for 10 minutes",
@@ -1063,7 +1367,9 @@ function getNaturalRemedies(symptoms, age, temp, bp) {
     }
     
     // JOINT PAIN / MUSCLE PAIN
-    else if (symptoms.includes('Joint Pain') || symptoms.includes('Muscle Pain') || symptoms.includes('Back Pain')) {
+    else if (symptoms.includes(translations[currentLanguage].jointPain) || 
+             symptoms.includes(translations[currentLanguage].musclePain) || 
+             symptoms.includes(translations[currentLanguage].backPain)) {
         diagnosis.push("Joint & Muscle Pain");
         homeRemedies = [
             "🔥 Warm compress on painful area for 15 minutes",
@@ -1094,7 +1400,8 @@ function getNaturalRemedies(symptoms, age, temp, bp) {
     }
     
     // GASTRITIS / ACIDITY
-    else if (symptoms.includes('Heartburn') || symptoms.includes('Abdominal Pain')) {
+    else if (symptoms.includes(translations[currentLanguage].heartburn) || 
+             symptoms.includes(translations[currentLanguage].abdominalPain)) {
         diagnosis.push("Acidity / Gastritis");
         homeRemedies = [
             "🥛 Cold milk - drink slowly",
@@ -1122,7 +1429,7 @@ function getNaturalRemedies(symptoms, age, temp, bp) {
     }
     
     // DIARRHEA
-    else if (symptoms.includes('Diarrhea')) {
+    else if (symptoms.includes(translations[currentLanguage].diarrhea)) {
         diagnosis.push("Diarrhea / Loose Motions");
         homeRemedies = [
             "💧 ORS - homemade: 1L water + 6 tsp sugar + 1/2 tsp salt",
@@ -1149,7 +1456,7 @@ function getNaturalRemedies(symptoms, age, temp, bp) {
     }
     
     // CONSTIPATION
-    else if (symptoms.includes('Constipation')) {
+    else if (symptoms.includes(translations[currentLanguage].constipation)) {
         diagnosis.push("Constipation");
         homeRemedies = [
             "💧 Warm water with lemon - first thing morning",
@@ -1178,7 +1485,8 @@ function getNaturalRemedies(symptoms, age, temp, bp) {
     }
     
     // SKIN RASH / ITCHING
-    else if (symptoms.includes('Rash') || symptoms.includes('Itching')) {
+    else if (symptoms.includes(translations[currentLanguage].rash) || 
+             symptoms.includes(translations[currentLanguage].itching)) {
         diagnosis.push("Skin Irritation / Allergy");
         homeRemedies = [
             "🧴 Aloe vera gel - fresh from leaf",
@@ -1208,7 +1516,7 @@ function getNaturalRemedies(symptoms, age, temp, bp) {
     }
     
     // UTI / URINARY ISSUES
-    else if (symptoms.includes('Painful Urination')) {
+    else if (symptoms.includes(translations[currentLanguage].painUrination)) {
         diagnosis.push("Urinary Tract Irritation");
         homeRemedies = [
             "🚰 Drink plenty of water - 8-10 glasses",
@@ -1237,7 +1545,7 @@ function getNaturalRemedies(symptoms, age, temp, bp) {
     
     // If symptoms exist but no specific match
     else if (symptoms.length > 0) {
-        diagnosis.push("General Symptoms - Natural Support");
+        diagnosis.push(translations[currentLanguage].diagnosisNoSymptoms || "General Symptoms - Natural Support");
         homeRemedies = [
             "🛌 Get adequate rest",
             "💧 Drink plenty of water",
@@ -1263,7 +1571,7 @@ function getNaturalRemedies(symptoms, age, temp, bp) {
     
     // No symptoms
     else {
-        diagnosis.push("No Symptoms - Wellness Mode");
+        diagnosis.push(translations[currentLanguage].diagnosisWellness || "No Symptoms - Wellness Mode");
         homeRemedies = [
             "🥗 Eat seasonal fruits and vegetables",
             "💧 Drink 8 glasses of water daily",
@@ -1311,7 +1619,6 @@ function analyzeHealth() {
         return;
     }
     
-    // Show loader
     document.getElementById('loader').style.display = 'block';
     document.getElementById('results').style.display = 'none';
     document.getElementById('emergencyAlert').style.display = 'none';
@@ -1321,13 +1628,14 @@ function analyzeHealth() {
         
         const symptoms = getSelectedSymptoms();
         const remedies = getNaturalRemedies(symptoms, parseInt(age), temp, bp);
+        const t = translations[currentLanguage];
         
         let result;
         
         if (remedies.emergency) {
             result = {
                 status: "emergency",
-                statusText: translations[currentLanguage].statusEmergency || "🚨 EMERGENCY",
+                statusText: t.statusEmergency,
                 diagnosis: remedies.diagnosis,
                 description: remedies.message,
                 homeRemedies: remedies.homeRemedies,
@@ -1335,38 +1643,37 @@ function analyzeHealth() {
                 herbal: remedies.herbal,
                 supplements: remedies.supplements,
                 symptoms: symptoms.length ? symptoms.join(", ") : "No symptoms",
-                followUp: "URGENT: Immediate emergency care required"
+                followUp: t.followUpEmergency || "URGENT: Immediate emergency care required"
             };
         } else if (symptoms.length > 0) {
             result = {
                 status: "followup",
-                statusText: translations[currentLanguage].statusFollowup || "🌿 Natural Care Recommended",
+                statusText: t.statusFollowup,
                 diagnosis: remedies.diagnosis,
-                description: "Based on your symptoms, here are natural remedies and gels for relief.",
+                description: t.descriptionNormal || "Based on your symptoms, here are natural remedies and gels for relief.",
                 homeRemedies: remedies.homeRemedies,
                 gels: remedies.gels,
                 herbal: remedies.herbal,
                 supplements: remedies.supplements,
                 symptoms: symptoms.join(", "),
-                followUp: "Use these natural remedies for 3 days. Consult doctor if no improvement."
+                followUp: t.followUpNormal || "Use these natural remedies for 3 days. Consult doctor if no improvement."
             };
         } else {
             result = {
                 status: "healthy",
-                statusText: translations[currentLanguage].statusHealthy || "✅ Healthy",
-                diagnosis: "Wellness Mode",
-                description: "Stay healthy with these natural wellness tips.",
+                statusText: t.statusHealthy,
+                diagnosis: t.diagnosisWellness || "Wellness Mode",
+                description: t.descriptionHealthy || "Stay healthy with these natural wellness tips.",
                 homeRemedies: remedies.homeRemedies,
                 gels: remedies.gels,
                 herbal: remedies.herbal,
                 supplements: remedies.supplements,
                 symptoms: "No symptoms reported",
-                followUp: "Maintain healthy lifestyle with natural remedies."
+                followUp: t.followUpHealthy || "Maintain healthy lifestyle with natural remedies."
             };
         }
         
         displayResults(result);
-        saveScreening(name, age, result);
     }, 1500);
 }
 
@@ -1443,41 +1750,8 @@ function displayResults(result) {
     }
 }
 
-// Save screening (kept for functionality but UI hidden)
-function saveScreening(name, age, result) {
-    const record = {
-        time: new Date().toLocaleString(),
-        name: name,
-        age: age,
-        diagnosis: result.diagnosis,
-        status: result.statusText
-    };
-    
-    screenings.unshift(record);
-    if (screenings.length > 20) screenings.pop();
-    localStorage.setItem("screenings", JSON.stringify(screenings));
-    renderTable();
-}
-
-// Render table (kept for functionality but UI hidden)
-function renderTable() {
-    const tbody = document.getElementById("tableBody");
-    if (screenings.length === 0) {
-        tbody.innerHTML = "<tr><td colspan='5' style='text-align:center'>No records found</td></tr>";
-        return;
-    }
-    tbody.innerHTML = screenings.map(s => `
-        <tr>
-            <td>${s.time}</td>
-            <td>${s.name}</td>
-            <td>${s.age}</td>
-            <td>${s.diagnosis}</td>
-            <td>${s.status}</td>
-        </tr>
-    `).join("");
-}
-
-console.log("RuralCare AI - Natural Remedies with Multi-language Support Loaded Successfully!");
+// Initialize with English
+changeLanguage('en');
 </script>
 
 </body>

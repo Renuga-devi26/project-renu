@@ -175,7 +175,7 @@
             color: var(--primary);
         }
 
-        /* Language Switcher - Always Visible */
+        /* Language Switcher */
         .language-bar {
             background: white;
             padding: 10px;
@@ -407,7 +407,7 @@
             font-size: 1rem;
         }
 
-        /* Voice Recording Section - Always Accessible */
+        /* Voice Recording Section */
         .voice-section {
             background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
             border-radius: 16px;
@@ -460,6 +460,11 @@
             transition: all 0.3s;
         }
 
+        .play-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
         .audio-wave {
             flex: 1;
             height: 50px;
@@ -510,6 +515,11 @@
         .mic-permission-btn:hover {
             background: var(--primary-dark);
             transform: translateY(-2px);
+        }
+
+        .mic-permission-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
 
         .symptoms-text textarea {
@@ -628,58 +638,6 @@
         .severity-high {
             background: #fee2e2;
             color: #991b1b;
-        }
-
-        /* Conditional Doctor Advice Section */
-        .doctor-advice-section {
-            background: linear-gradient(135deg, #fff3e0, #ffe4bc);
-            border-radius: 12px;
-            padding: 15px;
-            margin: 15px 0;
-            border: 2px solid var(--warning);
-        }
-
-        .doctor-advice-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        .doctor-advice-header h3 {
-            color: var(--warning);
-            font-size: 1.2rem;
-        }
-
-        .doctor-icon {
-            font-size: 1.8rem;
-        }
-
-        .doctor-message {
-            background: white;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 10px 0;
-            border-left: 4px solid var(--warning);
-            font-style: italic;
-        }
-
-        .doctor-advice-input {
-            margin-top: 15px;
-        }
-
-        .doctor-advice-input textarea {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid var(--border);
-            border-radius: 10px;
-            margin-bottom: 10px;
-            font-size: 0.95rem;
-        }
-
-        .doctor-advice-actions {
-            display: flex;
-            gap: 10px;
         }
 
         .recommendation-box {
@@ -803,7 +761,8 @@
             
             .login-container, .language-bar, .stats-grid, .form-section, 
             .symptom-checker, .voice-section, .analyze-btn, .disease-library, 
-            .recent-section, .result-actions, .toast, .logout-btn {
+            .recent-section, .result-actions, .toast, .logout-btn,
+            .mic-permission-btn, .voice-controls {
                 display: none !important;
             }
             
@@ -1281,7 +1240,7 @@
             </div>
         </div>
 
-        <!-- Voice Recording Section - Always Accessible -->
+        <!-- Voice Recording Section -->
         <div class="voice-section">
             <div class="section-header">
                 <span class="icon">🎤</span>
@@ -1312,7 +1271,7 @@
             🔬 Analyze Health Status
         </button>
 
-        <!-- Results Card with Conditional Doctor Advice -->
+        <!-- Results Card -->
         <div id="results" class="results-card" style="display: none;"></div>
 
         <!-- Disease Library -->
@@ -1452,19 +1411,16 @@
                 symptoms: [1, 5, 6, 7, 8, 37],
                 severity: 'low',
                 description: 'Viral infection of upper respiratory tract',
-                causes: ['Rhinoviruses', 'Coronaviruses', 'RSV'],
                 about: 'The common cold is a viral infection of your nose and throat. It is usually harmless, although it might not feel that way.',
                 riskFactors: ['Close contact with infected persons', 'Weakened immune system'],
-                complications: ['Sinusitis', 'Ear infections'],
                 prevention: ['Wash hands frequently', 'Avoid touching face', 'Disinfect surfaces'],
                 recommendations: ['Rest and stay hydrated', 'Use saline nasal spray', 'Gargle with warm salt water'],
                 medicines: [
-                    { name: 'Paracetamol', dosage: '650mg every 6-8 hours for fever' },
-                    { name: 'Cetirizine', dosage: '10mg once daily for runny nose' },
-                    { name: 'Cough syrup', dosage: '10ml three times daily' }
+                    { name: 'Paracetamol', dosage: '650mg every 6-8 hours for fever (Prescription Required)' },
+                    { name: 'Cetirizine', dosage: '10mg once daily for runny nose (Prescription Required)' },
+                    { name: 'Cough syrup', dosage: '10ml three times daily (Prescription Required)' }
                 ],
                 homeRemedies: ['Warm water gargle', 'Honey with ginger tea', 'Steam inhalation'],
-                consultDoctor: false,
                 warningSigns: ['High fever > 101°F for more than 3 days', 'Difficulty breathing']
             },
             {
@@ -1472,19 +1428,16 @@
                 symptoms: [1, 2, 37, 38, 39, 40, 51, 17],
                 severity: 'medium',
                 description: 'Viral infection affecting respiratory system',
-                causes: ['Influenza A virus', 'Influenza B virus'],
                 about: 'Influenza is a viral infection that attacks your respiratory system — your nose, throat and lungs.',
                 riskFactors: ['Elderly', 'Pregnant women', 'Chronic conditions'],
-                complications: ['Pneumonia', 'Bronchitis'],
                 prevention: ['Annual flu vaccine', 'Hand hygiene', 'Avoid crowded places'],
                 recommendations: ['Rest and isolate', 'Take antiviral medications if prescribed', 'Stay hydrated'],
                 medicines: [
-                    { name: 'Oseltamivir', dosage: '75mg twice daily for 5 days (prescription required)' },
-                    { name: 'Paracetamol', dosage: '650mg every 6 hours for fever' },
-                    { name: 'Cough suppressant', dosage: 'As directed' }
+                    { name: 'Oseltamivir', dosage: '75mg twice daily for 5 days (Prescription Required)' },
+                    { name: 'Paracetamol', dosage: '650mg every 6 hours for fever (Prescription Required)' },
+                    { name: 'Cough suppressant', dosage: 'As directed by physician (Prescription Required)' }
                 ],
                 homeRemedies: ['Warm fluids', 'Honey and lemon tea', 'Rest in well-ventilated room'],
-                consultDoctor: true,
                 warningSigns: ['Difficulty breathing', 'Chest pain', 'Confusion', 'Severe vomiting']
             },
             {
@@ -1492,22 +1445,352 @@
                 symptoms: [1, 2, 4, 37, 38, 3, 23],
                 severity: 'high',
                 description: 'Infection of lung tissue',
-                causes: ['Streptococcus pneumoniae', 'Mycoplasma pneumoniae', 'Viruses'],
                 about: 'Pneumonia is an infection that inflames the air sacs in one or both lungs.',
                 riskFactors: ['Smoking', 'Chronic lung disease', 'Weakened immune system'],
-                complications: ['Bacteremia', 'Lung abscess'],
                 prevention: ['Vaccination', 'No smoking', 'Good hygiene'],
                 recommendations: ['Immediate medical attention required', 'Take prescribed antibiotics', 'Rest and hydrate'],
                 medicines: [
-                    { name: 'Amoxicillin', dosage: '500mg three times daily (prescription only)' },
-                    { name: 'Azithromycin', dosage: '500mg once daily (prescription only)' },
-                    { name: 'Paracetamol', dosage: '650mg for fever' }
+                    { name: 'Amoxicillin', dosage: '500mg three times daily (Prescription Only)' },
+                    { name: 'Azithromycin', dosage: '500mg once daily (Prescription Only)' },
+                    { name: 'Paracetamol', dosage: '650mg for fever (Prescription Required)' }
                 ],
                 homeRemedies: ['Steam inhalation', 'Warm compress for chest', 'Honey for cough'],
-                consultDoctor: true,
                 warningSigns: ['Severe difficulty breathing', 'Blue lips or face', 'Chest pain']
             },
-            // Add more diseases as needed...
+            {
+                id: 4, name: 'Bronchitis', category: 'respiratory',
+                symptoms: [1, 2, 3, 38, 4, 37],
+                severity: 'medium',
+                description: 'Inflammation of bronchial tubes',
+                about: 'Bronchitis is an inflammation of the lining of your bronchial tubes, which carry air to and from your lungs.',
+                riskFactors: ['Cigarette smoke', 'Low immunity', 'Gastric reflux'],
+                prevention: ['Avoid smoking', 'Wear mask in polluted areas', 'Wash hands'],
+                recommendations: ['Rest', 'Drink fluids', 'Use humidifier', 'Avoid lung irritants'],
+                medicines: [
+                    { name: 'Cough suppressant', dosage: 'As directed by physician (Prescription Required)' },
+                    { name: 'Bronchodilators', dosage: 'As prescribed for wheezing (Prescription Only)' },
+                    { name: 'Paracetamol', dosage: '650mg for fever (Prescription Required)' }
+                ],
+                homeRemedies: ['Honey', 'Ginger tea', 'Steam inhalation', 'Salt water gargle'],
+                warningSigns: ['Fever > 100.4°F', 'Coughing up blood', 'Shortness of breath']
+            },
+            {
+                id: 5, name: 'Tuberculosis', category: 'infectious',
+                symptoms: [1, 2, 4, 37, 38, 41, 40],
+                severity: 'high',
+                description: 'Bacterial infection affecting lungs',
+                about: 'Tuberculosis (TB) is a potentially serious infectious disease that mainly affects the lungs.',
+                riskFactors: ['Weakened immune system', 'Close contact with TB patient', 'Malnutrition'],
+                prevention: ['BCG vaccination', 'Avoid close contact with active TB patients', 'Ventilation'],
+                recommendations: ['Complete full course of antibiotics', 'Isolate initially', 'Nutritious diet'],
+                medicines: [
+                    { name: 'Isoniazid', dosage: 'As prescribed by physician (Prescription Only)' },
+                    { name: 'Rifampin', dosage: 'As prescribed by physician (Prescription Only)' },
+                    { name: 'Ethambutol', dosage: 'As prescribed by physician (Prescription Only)' }
+                ],
+                homeRemedies: ['Nutritious diet', 'Rest', 'Good ventilation', 'Mask usage'],
+                warningSigns: ['Coughing blood', 'Severe chest pain', 'Difficulty breathing']
+            },
+            
+            // Digestive Diseases
+            {
+                id: 6, name: 'Gastroenteritis', category: 'digestive',
+                symptoms: [9, 10, 11, 13, 37, 38, 43],
+                severity: 'medium',
+                description: 'Stomach flu - inflammation of stomach and intestines',
+                about: 'Gastroenteritis is an inflammation of the lining of the intestines caused by a virus, bacteria, or parasites.',
+                riskFactors: ['Poor hand washing', 'Contaminated food/water', 'Close contact with infected'],
+                prevention: ['Hand washing', 'Safe food handling', 'Drink clean water'],
+                recommendations: ['Oral rehydration', 'BRAT diet', 'Rest', 'Avoid dairy and spicy food'],
+                medicines: [
+                    { name: 'ORS', dosage: 'As needed for dehydration (Prescription Required)' },
+                    { name: 'Zinc supplements', dosage: '20mg daily (Prescription Required)' },
+                    { name: 'Paracetamol', dosage: '650mg for fever (Prescription Required)' }
+                ],
+                homeRemedies: ['Coconut water', 'Rice water', 'Bananas', 'Ginger tea'],
+                warningSigns: ['Blood in stool', 'Severe dehydration', 'High fever']
+            },
+            {
+                id: 7, name: 'Acid Reflux (GERD)', category: 'digestive',
+                symptoms: [15, 14, 13, 16, 5],
+                severity: 'low',
+                description: 'Chronic acid reflux disease',
+                about: 'Gastroesophageal reflux disease (GERD) occurs when stomach acid frequently flows back into the esophagus.',
+                riskFactors: ['Obesity', 'Hiatal hernia', 'Pregnancy', 'Smoking'],
+                prevention: ['Maintain healthy weight', 'Avoid trigger foods', 'Eat smaller meals'],
+                recommendations: ['Elevate head of bed', 'Avoid spicy/fatty foods', 'Eat small meals'],
+                medicines: [
+                    { name: 'Omeprazole', dosage: '20mg once daily before meal (Prescription Required)' },
+                    { name: 'Ranitidine', dosage: '150mg twice daily (Prescription Required)' },
+                    { name: 'Antacids', dosage: 'As needed (Prescription Required)' }
+                ],
+                homeRemedies: ['Ginger tea', 'Aloe vera juice', 'Chewing gum'],
+                warningSigns: ['Difficulty swallowing', 'Unexplained weight loss', 'Chest pain']
+            },
+            {
+                id: 8, name: 'Peptic Ulcer', category: 'digestive',
+                symptoms: [13, 15, 9, 16, 41],
+                severity: 'medium',
+                description: 'Sores in stomach lining',
+                about: 'Peptic ulcers are open sores that develop on the inside lining of your stomach and the upper portion of your small intestine.',
+                riskFactors: ['H. pylori infection', 'Regular NSAID use', 'Smoking', 'Alcohol'],
+                prevention: ['Limit NSAIDs', 'Treat H. pylori', 'Avoid alcohol', 'Quit smoking'],
+                recommendations: ['Take prescribed antibiotics', 'Avoid NSAIDs', 'Eat small meals'],
+                medicines: [
+                    { name: 'Amoxicillin', dosage: '500mg three times daily (Prescription Only)' },
+                    { name: 'Omeprazole', dosage: '20mg twice daily (Prescription Only)' },
+                    { name: 'Metronidazole', dosage: '500mg three times daily (Prescription Only)' }
+                ],
+                homeRemedies: ['Cabbage juice', 'Bananas', 'Honey', 'Garlic'],
+                warningSigns: ['Black/bloody stool', 'Vomiting blood', 'Severe abdominal pain']
+            },
+            {
+                id: 9, name: 'Hepatitis A', category: 'infectious',
+                symptoms: [37, 38, 16, 9, 13, 40],
+                severity: 'medium',
+                description: 'Liver infection from hepatitis A virus',
+                about: 'Hepatitis A is a highly contagious liver infection caused by the hepatitis A virus.',
+                riskFactors: ['Travel to endemic areas', 'Eating contaminated food', 'Close contact with infected'],
+                prevention: ['Hepatitis A vaccine', 'Good hygiene', 'Safe food handling'],
+                recommendations: ['Rest', 'Avoid alcohol', 'Healthy diet', 'Hydration'],
+                medicines: [
+                    { name: 'Supportive care', dosage: 'No specific antiviral (Prescription Required)' },
+                    { name: 'Anti-nausea meds', dosage: 'As needed (Prescription Required)' }
+                ],
+                homeRemedies: ['Rest', 'Small frequent meals', 'Avoid fatty foods', 'Stay hydrated'],
+                warningSigns: ['Jaundice', 'Severe vomiting', 'Abdominal swelling']
+            },
+            
+            // Neurological Diseases
+            {
+                id: 10, name: 'Migraine', category: 'neurological',
+                symptoms: [17, 9, 10, 18, 49],
+                severity: 'medium',
+                description: 'Severe recurring headaches',
+                about: 'A migraine is a headache of varying intensity, often accompanied by nausea and sensitivity to light and sound.',
+                riskFactors: ['Family history', 'Age', 'Gender (women more common)', 'Hormonal changes'],
+                triggers: ['Stress', 'Certain foods', 'Caffeine', 'Weather changes'],
+                prevention: ['Identify triggers', 'Regular sleep', 'Stress management', 'Regular exercise'],
+                recommendations: ['Rest in dark quiet room', 'Apply cold compress', 'Stay hydrated'],
+                medicines: [
+                    { name: 'Ibuprofen', dosage: '400-600mg at onset (Prescription Required)' },
+                    { name: 'Sumatriptan', dosage: 'As prescribed by physician (Prescription Only)' },
+                    { name: 'Paracetamol', dosage: '650mg (Prescription Required)' }
+                ],
+                homeRemedies: ['Cold compress', 'Caffeine (small amount)', 'Rest in dark room', 'Peppermint oil'],
+                warningSigns: ['Sudden severe headache', 'With fever/stiff neck', 'After head injury']
+            },
+            {
+                id: 11, name: 'Epilepsy', category: 'neurological',
+                symptoms: [20, 19, 23, 24],
+                severity: 'high',
+                description: 'Neurological disorder causing seizures',
+                about: 'Epilepsy is a central nervous system disorder in which brain activity becomes abnormal, causing seizures.',
+                riskFactors: ['Age', 'Family history', 'Head injuries', 'Stroke', 'Brain infections'],
+                prevention: ['Prevent head injuries', 'Reduce stroke risk', 'Proper prenatal care'],
+                recommendations: ['Take medication regularly', 'Wear medical alert bracelet', 'Avoid triggers'],
+                medicines: [
+                    { name: 'Sodium valproate', dosage: 'As prescribed by neurologist (Prescription Only)' },
+                    { name: 'Carbamazepine', dosage: 'As prescribed by neurologist (Prescription Only)' },
+                    { name: 'Levetiracetam', dosage: 'As prescribed by neurologist (Prescription Only)' }
+                ],
+                homeRemedies: ['Ketogenic diet (under supervision)', 'Stress reduction', 'Regular sleep'],
+                warningSigns: ['Seizure >5 minutes', 'Difficulty breathing', 'Injury during seizure']
+            },
+            {
+                id: 12, name: 'Stroke', category: 'neurological',
+                symptoms: [17, 18, 19, 22, 23, 24, 49],
+                severity: 'high',
+                description: 'Brain attack from interrupted blood supply',
+                about: 'A stroke occurs when the blood supply to part of your brain is interrupted or reduced, preventing brain tissue from getting oxygen and nutrients.',
+                riskFactors: ['High BP', 'Smoking', 'Diabetes', 'Heart disease', 'Obesity'],
+                prevention: ['Control BP', 'Healthy diet', 'Exercise', 'No smoking', 'Limit alcohol'],
+                recommendations: ['Immediate emergency care', 'Rehabilitation', 'Medication adherence'],
+                medicines: [
+                    { name: 'tPA', dosage: 'Clot-buster (emergency only - Prescription Only)' },
+                    { name: 'Aspirin', dosage: '81-325mg daily (Prescription Required)' },
+                    { name: 'Clopidogrel', dosage: '75mg daily (Prescription Only)' }
+                ],
+                homeRemedies: ['Rehabilitation exercises', 'Healthy diet', 'Support groups'],
+                warningSigns: ['Face drooping', 'Arm weakness', 'Speech difficulty', 'Time to call emergency']
+            },
+            
+            // Cardiovascular Diseases
+            {
+                id: 13, name: 'Hypertension', category: 'cardiovascular',
+                symptoms: [17, 18, 44, 49],
+                severity: 'medium',
+                description: 'High blood pressure',
+                about: 'High blood pressure is a common condition that affects the body\'s arteries. It can lead to serious health problems if not treated.',
+                riskFactors: ['Age', 'Family history', 'Obesity', 'Sedentary lifestyle', 'Smoking'],
+                prevention: ['Healthy diet', 'Reduce salt', 'Regular exercise', 'Healthy weight'],
+                recommendations: ['Regular BP monitoring', 'Low salt diet', 'Exercise', 'Medication compliance'],
+                medicines: [
+                    { name: 'Amlodipine', dosage: '5-10mg once daily (Prescription Only)' },
+                    { name: 'Losartan', dosage: '50mg once daily (Prescription Only)' },
+                    { name: 'Hydrochlorothiazide', dosage: '12.5-25mg once daily (Prescription Only)' }
+                ],
+                homeRemedies: ['Garlic', 'Hibiscus tea', 'Reduce stress', 'Regular walking'],
+                warningSigns: ['BP >180/120', 'Chest pain', 'Severe headache', 'Shortness of breath']
+            },
+            {
+                id: 14, name: 'Heart Attack', category: 'cardiovascular',
+                symptoms: [4, 2, 40, 44, 9, 38],
+                severity: 'high',
+                description: 'Myocardial infarction',
+                about: 'A heart attack occurs when the flow of blood to the heart is severely reduced or blocked.',
+                riskFactors: ['Age', 'Smoking', 'High BP', 'High cholesterol', 'Diabetes', 'Obesity'],
+                prevention: ['Heart-healthy diet', 'Exercise', 'No smoking', 'Control BP/cholesterol'],
+                recommendations: ['Emergency treatment', 'Cardiac rehab', 'Medication adherence', 'Lifestyle changes'],
+                medicines: [
+                    { name: 'Aspirin', dosage: '325mg chewed immediately (Emergency - Prescription Required)' },
+                    { name: 'Nitroglycerin', dosage: 'As prescribed (Prescription Only)' },
+                    { name: 'Clopidogrel', dosage: '75mg daily (Prescription Only)' }
+                ],
+                homeRemedies: ['Healthy diet', 'Gradual exercise', 'Stress management'],
+                warningSigns: ['Chest pressure', 'Pain in arm/neck', 'Shortness of breath', 'Cold sweat']
+            },
+            
+            // Metabolic Diseases
+            {
+                id: 15, name: 'Type 2 Diabetes', category: 'metabolic',
+                symptoms: [47, 48, 38, 41, 49],
+                severity: 'medium',
+                description: 'Chronic condition affecting blood sugar',
+                about: 'Type 2 diabetes is an impairment in the way the body regulates and uses sugar (glucose) as a fuel.',
+                riskFactors: ['Weight', 'Inactivity', 'Family history', 'Age >45', 'PCOS'],
+                prevention: ['Healthy weight', 'Exercise', 'Healthy diet', 'Avoid sugary drinks'],
+                recommendations: ['Monitor blood sugar', 'Healthy diet', 'Exercise', 'Medication compliance'],
+                medicines: [
+                    { name: 'Metformin', dosage: '500-1000mg twice daily (Prescription Only)' },
+                    { name: 'Glibenclamide', dosage: '5mg once daily (Prescription Only)' },
+                    { name: 'Insulin', dosage: 'As prescribed by physician (Prescription Only)' }
+                ],
+                homeRemedies: ['Fenugreek seeds', 'Bitter gourd', 'Cinnamon', 'Regular walking'],
+                warningSigns: ['Blood sugar >300', 'Confusion', 'Fruity breath', 'Nausea/vomiting']
+            },
+            {
+                id: 16, name: 'Hypothyroidism', category: 'metabolic',
+                symptoms: [38, 41, 23, 42, 43],
+                severity: 'low',
+                description: 'Underactive thyroid',
+                about: 'Hypothyroidism is a condition in which your thyroid gland doesn\'t produce enough of certain crucial hormones.',
+                riskFactors: ['Female gender', 'Age >60', 'Family history', 'Autoimmune disease'],
+                prevention: ['Cannot prevent, but manage with medication'],
+                recommendations: ['Daily thyroid medication', 'Regular blood tests', 'Healthy diet', 'Exercise'],
+                medicines: [
+                    { name: 'Levothyroxine', dosage: '25-150mcg once daily (Prescription Only)' }
+                ],
+                homeRemedies: ['No specific remedies', 'Take medication as prescribed'],
+                warningSigns: ['Severe fatigue', 'Depression', 'Cold intolerance', 'Weight gain']
+            },
+            
+            // Skin Diseases
+            {
+                id: 17, name: 'Eczema', category: 'skin',
+                symptoms: [31, 32, 34, 36],
+                severity: 'low',
+                description: 'Inflammatory skin condition',
+                about: 'Atopic dermatitis (eczema) is a condition that makes your skin red and itchy.',
+                riskFactors: ['Family history', 'Asthma', 'Hay fever', 'Living in cities'],
+                prevention: ['Moisturize regularly', 'Avoid triggers', 'Gentle skin care', 'Manage stress'],
+                recommendations: ['Moisturize frequently', 'Avoid scratching', 'Use gentle soaps', 'Identify triggers'],
+                medicines: [
+                    { name: 'Hydrocortisone cream', dosage: 'Apply twice daily (Prescription Required)' },
+                    { name: 'Antihistamines', dosage: 'As needed for itching (Prescription Required)' },
+                    { name: 'Tacrolimus ointment', dosage: 'As prescribed (Prescription Only)' }
+                ],
+                homeRemedies: ['Coconut oil', 'Oatmeal baths', 'Aloe vera', 'Avoid hot showers'],
+                warningSigns: ['Signs of infection', 'Fever', 'Spreading redness', 'Pain']
+            },
+            {
+                id: 18, name: 'Psoriasis', category: 'skin',
+                symptoms: [31, 32, 35, 36],
+                severity: 'medium',
+                description: 'Autoimmune skin condition',
+                about: 'Psoriasis is a skin disease that causes a rash with itchy, scaly patches, most commonly on the knees, elbows, trunk and scalp.',
+                riskFactors: ['Family history', 'Stress', 'Obesity', 'Smoking'],
+                prevention: ['Moisturize', 'Avoid triggers', 'Manage stress', 'Healthy lifestyle'],
+                recommendations: ['Topical treatments', 'Phototherapy', 'Systemic medications', 'Avoid triggers'],
+                medicines: [
+                    { name: 'Topical corticosteroids', dosage: 'Apply as directed (Prescription Required)' },
+                    { name: 'Vitamin D analogues', dosage: 'Apply twice daily (Prescription Required)' },
+                    { name: 'Methotrexate', dosage: 'As prescribed (Prescription Only)' }
+                ],
+                homeRemedies: ['Aloe vera', 'Oatmeal baths', 'Moisturizers', 'Sunlight (moderate)'],
+                warningSigns: ['Joint pain', 'Widespread rash', 'Pustules', 'Fever']
+            },
+            
+            // Infectious Diseases
+            {
+                id: 19, name: 'Malaria', category: 'infectious',
+                symptoms: [37, 39, 40, 17, 38, 51],
+                severity: 'high',
+                description: 'Mosquito-borne parasitic disease',
+                about: 'Malaria is a disease caused by a parasite that is spread to humans through the bites of infected mosquitoes.',
+                riskFactors: ['Living in endemic areas', 'Travel to tropics', 'No preventive measures'],
+                prevention: ['Mosquito nets', 'Repellents', 'Prophylactic medications', 'Remove standing water'],
+                recommendations: ['Immediate treatment', 'Complete medication course', 'Rest', 'Hydration'],
+                medicines: [
+                    { name: 'Artemisinin combination', dosage: 'As prescribed (Prescription Only)' },
+                    { name: 'Chloroquine', dosage: 'For sensitive strains (Prescription Only)' },
+                    { name: 'Primaquine', dosage: 'For relapse prevention (Prescription Only)' }
+                ],
+                homeRemedies: ['Rest', 'Hydration', 'Fever management'],
+                warningSigns: ['Severe headache', 'Confusion', 'Seizures', 'Difficulty breathing']
+            },
+            {
+                id: 20, name: 'Dengue Fever', category: 'infectious',
+                symptoms: [37, 17, 51, 31, 9, 38],
+                severity: 'high',
+                description: 'Mosquito-borne viral infection',
+                about: 'Dengue is a mosquito-borne viral infection occurring in tropical and subtropical areas.',
+                riskFactors: ['Living in tropics', 'Previous dengue infection', 'Weakened immunity'],
+                prevention: ['Mosquito control', 'Repellents', 'Remove breeding sites', 'Protective clothing'],
+                recommendations: ['Rest', 'Hydration', 'Monitor platelet count', 'No NSAIDs'],
+                medicines: [
+                    { name: 'Paracetamol', dosage: '650mg every 6 hours (Prescription Required - no aspirin)' },
+                    { name: 'IV fluids', dosage: 'If severe (Prescription Only)' }
+                ],
+                homeRemedies: ['Papaya leaf juice', 'Coconut water', 'Hydration', 'Rest'],
+                warningSigns: ['Severe abdominal pain', 'Bleeding', 'Vomiting', 'Rapid breathing']
+            },
+            
+            // Muscular Diseases
+            {
+                id: 21, name: 'Arthritis', category: 'muscular',
+                symptoms: [25, 26, 29, 30],
+                severity: 'medium',
+                description: 'Joint inflammation',
+                about: 'Arthritis is inflammation of one or more joints. The main symptoms are joint pain and stiffness.',
+                riskFactors: ['Age', 'Family history', 'Obesity', 'Joint injury', 'Infection'],
+                prevention: ['Exercise', 'Healthy weight', 'Protect joints', 'No smoking'],
+                recommendations: ['Pain management', 'Physical therapy', 'Exercise', 'Joint protection'],
+                medicines: [
+                    { name: 'Ibuprofen', dosage: '400mg three times daily (Prescription Required)' },
+                    { name: 'Paracetamol', dosage: '650mg as needed (Prescription Required)' },
+                    { name: 'Methotrexate', dosage: 'For RA as prescribed (Prescription Only)' }
+                ],
+                homeRemedies: ['Hot/cold therapy', 'Gentle exercise', 'Turmeric', 'Epsom salt baths'],
+                warningSigns: ['Severe joint pain', 'Fever', 'Red/hot joint', 'Difficulty moving']
+            },
+            {
+                id: 22, name: 'Osteoporosis', category: 'muscular',
+                symptoms: [27, 41, 25],
+                severity: 'medium',
+                description: 'Brittle bones from bone loss',
+                about: 'Osteoporosis causes bones to become weak and brittle — so brittle that a fall or even mild stresses can cause a fracture.',
+                riskFactors: ['Age >50', 'Female', 'Family history', 'Low calcium', 'Smoking'],
+                prevention: ['Calcium/vitamin D', 'Weight-bearing exercise', 'No smoking', 'Limit alcohol'],
+                recommendations: ['Calcium supplements', 'Vitamin D', 'Weight-bearing exercise', 'Fall prevention'],
+                medicines: [
+                    { name: 'Calcium', dosage: '1000-1200mg daily (Prescription Required)' },
+                    { name: 'Vitamin D', dosage: '800-1000 IU daily (Prescription Required)' },
+                    { name: 'Alendronate', dosage: '70mg weekly (Prescription Only)' }
+                ],
+                homeRemedies: ['Calcium-rich foods', 'Sunlight', 'Exercise', 'Quit smoking'],
+                warningSigns: ['Fracture from minor injury', 'Height loss', 'Stooped posture']
+            }
         ];
 
         // ==================== STATE VARIABLES ====================
@@ -1526,7 +1809,7 @@
         let microphonePermission = false;
         let mediaStream = null;
 
-        // Language translations (simplified - can be expanded)
+        // Language translations
         const translations = {
             en: { appName: 'RuralCare AI', totalLabel: 'Total Visits', todayLabel: 'Today', highRiskLabel: 'High Risk' },
             ta: { appName: 'ரூரல் கேர் ஏஐ', totalLabel: 'மொத்த வருகைகள்', todayLabel: 'இன்று', highRiskLabel: 'அதிக ஆபத்து' },
@@ -1547,11 +1830,15 @@
             const username = document.getElementById('loginUsername').value;
             const password = document.getElementById('loginPassword').value;
             
+            // Simple demo authentication - accepts any non-empty values
             if (username && password) {
                 currentUser = { name: 'Demo Patient', email: username };
+                
+                // Hide login page and show main app
                 document.getElementById('loginPage').style.display = 'none';
                 document.getElementById('mainApp').style.display = 'block';
                 
+                // Initialize the app after login
                 loadDistricts();
                 loadSymptoms();
                 loadDiseaseLibrary();
@@ -1560,7 +1847,7 @@
                 
                 showToast('Login successful! Welcome to RuralCare AI', 'success');
             } else {
-                showToast('Please enter credentials', 'error');
+                showToast('Please enter both email/phone and password', 'error');
             }
         }
 
@@ -1568,6 +1855,8 @@
             currentUser = null;
             document.getElementById('mainApp').style.display = 'none';
             document.getElementById('loginPage').style.display = 'block';
+            document.getElementById('loginUsername').value = '';
+            document.getElementById('loginPassword').value = '';
             showToast('Logged out successfully', 'success');
         }
 
@@ -1764,7 +2053,7 @@
             
             setTimeout(() => {
                 const diagnosis = performAIDiagnosis();
-                displayDiagnosisWithConditionalAdvice(diagnosis);
+                displayDiagnosis(diagnosis);
                 saveDiagnosis(diagnosis);
                 
                 document.getElementById('analyzeBtn').disabled = false;
@@ -1801,12 +2090,11 @@
                 prevention: ['Regular health checkups'],
                 medicines: [],
                 homeRemedies: ['Rest', 'Hydration'],
-                consultDoctor: true,
                 warningSigns: ['Symptoms persist']
             };
         }
 
-        function displayDiagnosisWithConditionalAdvice(diagnosis) {
+        function displayDiagnosis(diagnosis) {
             const resultsDiv = document.getElementById('results');
             const severityClass = diagnosis.severity === 'low' ? 'severity-low' : 
                                 diagnosis.severity === 'medium' ? 'severity-medium' : 'severity-high';
@@ -1862,37 +2150,12 @@
                 `;
             }
             
-            // Conditional Doctor Advice - Only shown if consultDoctor is true
-            if (diagnosis.consultDoctor || diagnosis.severity === 'high') {
-                const diagnosisId = Date.now();
-                html += `
-                    <div class="doctor-advice-section" id="doctorAdvice-${diagnosisId}">
-                        <div class="doctor-advice-header">
-                            <span class="doctor-icon">👨‍⚕️</span>
-                            <h3>Doctor's Advice</h3>
-                        </div>
-                        
-                        <div class="doctor-message" id="doctorMessage-${diagnosisId}">
-                            ${getDoctorAdvice(diagnosis)}
-                        </div>
-                        
-                        <div class="doctor-advice-input">
-                            <textarea id="adviceInput-${diagnosisId}" placeholder="Doctor can add specific advice here..." rows="3">${getDoctorAdvice(diagnosis)}</textarea>
-                            <div class="doctor-advice-actions">
-                                <button class="btn btn-primary" onclick="updateDoctorAdvice(${diagnosisId})">💾 Save Advice</button>
-                                <button class="btn btn-secondary" onclick="resetDoctorAdvice(${diagnosisId}, '${diagnosis.severity}')">↺ Reset</button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }
-            
-            // Always show recommendations and home remedies
+            // Warning signs for high severity
             if (diagnosis.severity === 'high') {
                 html += `
                     <div class="recommendation-box consult-doctor">
-                        <h3>⚠️ URGENT: Consult Doctor Immediately</h3>
-                        <p>Based on your symptoms and severity, please seek immediate medical attention.</p>
+                        <h3>⚠️ URGENT: Seek Medical Attention Immediately</h3>
+                        <p>Based on your symptoms and severity, please visit a doctor immediately.</p>
                 `;
                 
                 if (diagnosis.warningSigns && diagnosis.warningSigns.length > 0) {
@@ -1906,21 +2169,25 @@
                     `;
                 }
                 html += `</div>`;
-            } else {
+            }
+            
+            // Home Remedies
+            if (diagnosis.homeRemedies && diagnosis.homeRemedies.length > 0) {
                 html += `
                     <div class="recommendation-box">
-                        <h3>🏠 Home Remedies & Self Care</h3>
+                        <h3>🏠 Home Remedies</h3>
                         <ul>
-                            ${diagnosis.homeRemedies ? diagnosis.homeRemedies.map(r => `<li>${r}</li>`).join('') : '<li>Rest and stay hydrated</li>'}
+                            ${diagnosis.homeRemedies.map(r => `<li>${r}</li>`).join('')}
                         </ul>
                     </div>
                 `;
             }
             
+            // Prescription Medicines
             if (diagnosis.medicines && diagnosis.medicines.length > 0) {
                 html += `
                     <div class="disease-info">
-                        <h3>💊 Recommended Medicines</h3>
+                        <h3>💊 Prescription Medicines</h3>
                         <div class="medicine-list">
                             ${diagnosis.medicines.map(med => `
                                 <div class="medicine-item">
@@ -1929,64 +2196,38 @@
                                 </div>
                             `).join('')}
                         </div>
-                        <p style="font-size: 0.8rem; color: var(--danger); margin-top: 8px;">⚠️ Always consult doctor before taking medicines</p>
+                        <p style="font-size: 0.8rem; color: var(--danger); margin-top: 8px; font-weight: bold;">
+                            ⚕️ PRESCRIPTION REQUIRED - Consult doctor before taking any medication
+                        </p>
+                    </div>
+                `;
+            }
+            
+            // Recommendations
+            if (diagnosis.recommendations && diagnosis.recommendations.length > 0) {
+                html += `
+                    <div class="disease-info">
+                        <h3>📋 Recommendations</h3>
+                        <ul>${diagnosis.recommendations.map(r => `<li>${r}</li>`).join('')}</ul>
                     </div>
                 `;
             }
             
             html += `
-                <div class="disease-info">
-                    <h3>📋 Recommendations</h3>
-                    <ul>${diagnosis.recommendations.map(r => `<li>${r}</li>`).join('')}</ul>
-                </div>
-                
                 <div class="result-actions">
                     <button class="btn btn-secondary" onclick="saveToLocal()">💾 Save</button>
                     <button class="btn btn-warning" onclick="window.print()">🖨️ Print Report</button>
                     <button class="btn btn-success" onclick="newDiagnosis()">➕ New</button>
                 </div>
                 
-                <p style="text-align: center; margin-top: 15px; font-size: 0.85rem; color: var(--danger);">
-                    ⚕️ This is for informational purposes only. Always consult a qualified doctor.
+                <p style="text-align: center; margin-top: 15px; font-size: 0.85rem; color: var(--danger); font-weight: bold;">
+                    ⚕️ This is for informational purposes only. Always consult a qualified doctor before taking any medication.
                 </p>
             `;
             
             resultsDiv.innerHTML = html;
             resultsDiv.style.display = 'block';
             resultsDiv.scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function getDoctorAdvice(diagnosis) {
-            if (diagnosis.severity === 'high') {
-                return "⚠️ URGENT: Please visit the nearest hospital immediately. This condition requires immediate medical attention. Do not delay.";
-            } else if (diagnosis.severity === 'medium') {
-                return "Schedule an appointment with your doctor within 24-48 hours. Monitor your symptoms closely and rest.";
-            } else {
-                return "Monitor your symptoms at home. If symptoms worsen or persist beyond 3-4 days, please consult a doctor.";
-            }
-        }
-
-        function updateDoctorAdvice(diagnosisId) {
-            const adviceInput = document.getElementById(`adviceInput-${diagnosisId}`);
-            const doctorMessage = document.getElementById(`doctorMessage-${diagnosisId}`);
-            const newAdvice = adviceInput.value;
-            
-            doctorMessage.textContent = newAdvice;
-            showToast('Doctor\'s advice saved!', 'success');
-        }
-
-        function resetDoctorAdvice(diagnosisId, severity) {
-            const adviceInput = document.getElementById(`adviceInput-${diagnosisId}`);
-            const doctorMessage = document.getElementById(`doctorMessage-${diagnosisId}`);
-            const defaultAdvice = severity === 'high' ? 
-                "⚠️ URGENT: Please visit the nearest hospital immediately. This condition requires immediate medical attention. Do not delay." :
-                severity === 'medium' ?
-                "Schedule an appointment with your doctor within 24-48 hours. Monitor your symptoms closely and rest." :
-                "Monitor your symptoms at home. If symptoms worsen or persist beyond 3-4 days, please consult a doctor.";
-            
-            adviceInput.value = defaultAdvice;
-            doctorMessage.textContent = defaultAdvice;
-            showToast('Reset to default advice', 'success');
         }
 
         function saveDiagnosis(diagnosis) {
@@ -2047,16 +2288,24 @@
                             <p>${disease.about || disease.description}</p>
                         </div>
                         <div class="detail-section">
-                            <h4>🦠 Causes</h4>
-                            <ul>${disease.causes ? disease.causes.map(c => `<li>${c}</li>`).join('') : '<li>Various factors</li>'}</ul>
-                        </div>
-                        <div class="detail-section">
                             <h4>⚠️ Risk Factors</h4>
                             <ul>${disease.riskFactors ? disease.riskFactors.map(r => `<li>${r}</li>`).join('') : '<li>General population</li>'}</ul>
                         </div>
                         <div class="detail-section">
                             <h4>🛡️ Prevention</h4>
                             <ul>${disease.prevention ? disease.prevention.map(p => `<li>${p}</li>`).join('') : '<li>Consult doctor</li>'}</ul>
+                        </div>
+                        <div class="detail-section">
+                            <h4>💊 Prescription Medicines</h4>
+                            <div class="medicine-list">
+                                ${disease.medicines ? disease.medicines.map(med => `
+                                    <div class="medicine-item">
+                                        <strong>${med.name}</strong>
+                                        <span>${med.dosage}</span>
+                                    </div>
+                                `).join('') : '<p>Consult doctor for prescription</p>'}
+                            </div>
+                            <p style="font-size: 0.8rem; color: var(--danger); margin-top: 5px;">⚠️ Prescription Required</p>
                         </div>
                         <div class="detail-section">
                             <h4>🏠 Home Remedies</h4>
@@ -2105,7 +2354,7 @@
             const filtered = diseaseDatabase.filter(d => 
                 d.name.toLowerCase().includes(searchTerm) || 
                 d.description.toLowerCase().includes(searchTerm) ||
-                (d.causes && d.causes.some(c => c.toLowerCase().includes(searchTerm)))
+                (d.about && d.about.toLowerCase().includes(searchTerm))
             );
             
             displayDiseases(filtered);
@@ -2197,7 +2446,7 @@
             document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById(`lang${lang.charAt(0).toUpperCase() + lang.slice(1)}`).classList.add('active');
             
-            // Update UI text based on language (simplified - can be expanded)
+            // Update UI text based on language
             if (translations[lang]) {
                 document.getElementById('appName').textContent = `🏥 ${translations[lang].appName}`;
                 document.getElementById('totalLabel').textContent = translations[lang].totalLabel;
@@ -2223,8 +2472,6 @@
         window.saveToLocal = saveToLocal;
         window.newDiagnosis = newDiagnosis;
         window.viewDiagnosis = viewDiagnosis;
-        window.updateDoctorAdvice = updateDoctorAdvice;
-        window.resetDoctorAdvice = resetDoctorAdvice;
         window.filterDiseasesByCategory = filterDiseasesByCategory;
         window.toggleDiseaseDetails = toggleDiseaseDetails;
     </script>

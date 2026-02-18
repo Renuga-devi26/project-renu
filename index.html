@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RuralCare AI - Smart Symptom Analyzer with AI Suggestions</title>
+<title>RuralCare AI - Complete Symptom Analyzer</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:Segoe UI,Arial;background:#f5f5f6;padding:20px;color:#263238}
@@ -18,7 +18,6 @@ textarea{min-height:80px;resize:vertical}
 button{padding:12px 25px;border:none;border-radius:8px;cursor:pointer;font-weight:600;font-size:15px;transition:all 0.3s}
 button:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(0,0,0,0.2)}
 .btn-primary{background:#1b5e20;color:#fff}
-.btn-warning{background:#ef6c00;color:#fff}
 .btn-secondary{background:#eee;color:#333}
 .btn-danger{background:#c62828;color:#fff}
 .btn-group{display:flex;gap:15px;flex-wrap:wrap;margin:20px 0}
@@ -40,20 +39,18 @@ tr:hover{background:#f5f5f5}
 .severity-high{background:#ffcdd2;color:#c62828}
 .severity-medium{background:#fff3e0;color:#ef6c00}
 .severity-low{background:#e8f5e9;color:#2e7d32}
-.recommendation-box{background:#e8f5e9;padding:15px;border-radius:10px;margin:10px 0}
-.recommendation-item{padding:10px;border-left:4px solid #1b5e20;margin:8px 0;background:white}
 .emergency-box{background:#ffebee;border:2px solid #c62828;padding:20px;border-radius:10px;margin:15px 0}
 .emergency-text{color:#c62828;font-weight:bold;font-size:16px}
 .filter-buttons{display:flex;gap:10px;margin-bottom:15px;flex-wrap:wrap}
 .filter-btn{padding:8px 15px;background:#e0e0e0;border-radius:20px;cursor:pointer}
 .filter-btn.active{background:#1b5e20;color:white}
-.symptom-tag{display:inline-block;background:#e8f5e9;padding:5px 12px;border-radius:20px;margin:3px;font-size:13px;border:1px solid #a5d6a7}
+.ai-suggestion{background:#f3e5f5;padding:20px;border-radius:10px;margin:15px 0;border-left:4px solid #7b1fa2}
+.ai-badge{background:#7b1fa2;color:white;padding:5px 15px;border-radius:20px;font-size:14px;display:inline-block;margin-bottom:15px}
+.possible-condition{background:#fff3e0;padding:15px;border-radius:8px;margin:10px 0;border-left:4px solid #ef6c00}
+.condition-name{font-weight:bold;color:#ef6c00;font-size:16px}
+.recommendation-item{padding:10px;border-left:4px solid #1b5e20;margin:8px 0;background:white}
 .medicine-item{background:#e3f2fd;padding:10px;margin:5px 0;border-radius:6px;border-left:4px solid #1565c0}
-.ai-suggestion{background:#f3e5f5;padding:15px;border-radius:10px;margin:15px 0;border-left:4px solid #7b1fa2}
-.ai-badge{background:#7b1fa2;color:white;padding:3px 10px;border-radius:15px;font-size:12px;display:inline-block;margin-bottom:10px}
-.possible-condition{background:#fff3e0;padding:10px;border-radius:8px;margin:8px 0;border-left:4px solid #ef6c00}
-.condition-name{font-weight:bold;color:#ef6c00}
-.confidence-score{font-size:12px;color:#666}
+.symptom-tag{display:inline-block;background:#e8f5e9;padding:5px 12px;border-radius:20px;margin:3px;font-size:13px;border:1px solid #a5d6a7}
 .loader{display:none;text-align:center;padding:20px}
 .loader-spinner{border:4px solid #f3f3f3;border-top:4px solid #1b5e20;border-radius:50%;width:40px;height:40px;animation:spin 1s linear infinite;margin:auto}
 @keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
@@ -69,9 +66,9 @@ tr:hover{background:#f5f5f5}
 <input type="text" id="patientName" placeholder="Full Name *" required>
 <input type="number" id="patientAge" placeholder="Age *" required>
 <select id="patientGender">
-<option value="male">Male</option>
-<option value="female">Female</option>
-<option value="other">Other</option>
+<option value="Male">Male</option>
+<option value="Female">Female</option>
+<option value="Other">Other</option>
 </select>
 <input type="number" id="height" placeholder="Height (cm)" step="0.1">
 <input type="number" id="weight" placeholder="Weight (kg)" step="0.1">
@@ -82,167 +79,122 @@ tr:hover{background:#f5f5f5}
 
 <!-- Symptoms Assessment Section -->
 <div class="section">
-<h2>🩺 AI-Powered Symptom Assessment</h2>
-<p style="margin-bottom:15px;color:#666;">Select symptoms for AI analysis and smart suggestions:</p>
+<h2>🩺 AI Symptom Checker</h2>
+<p style="margin-bottom:15px;color:#666;">Select your symptoms for AI diagnosis:</p>
 
 <!-- Quick Symptom Search -->
 <div style="margin-bottom:20px">
 <input type="text" id="symptomSearch" placeholder="🔍 Search symptoms..." onkeyup="filterSymptoms()">
 </div>
 
-<!-- General Symptoms -->
+<!-- All Symptoms Categories -->
 <div class="symptom-category">
 <h3>🤒 General Symptoms</h3>
-<div class="symptom-grid" id="generalSymptoms">
-<div class="symptom-item"><input type="checkbox" id="fever" value="fever"><label for="fever">Fever / High Temperature</label><span class="severity-badge severity-medium">Medium</span></div>
-<div class="symptom-item"><input type="checkbox" id="chills" value="chills"><label for="chills">Chills / Shivering</label><span class="severity-badge severity-medium">Medium</span></div>
-<div class="symptom-item"><input type="checkbox" id="fatigue" value="fatigue"><label for="fatigue">Fatigue / Weakness</label><span class="severity-badge severity-low">Low</span></div>
-<div class="symptom-item"><input type="checkbox" id="nightSweats" value="nightSweats"><label for="nightSweats">Night Sweats</label><span class="severity-badge severity-medium">Medium</span></div>
-<div class="symptom-item"><input type="checkbox" id="weightLoss" value="weightLoss"><label for="weightLoss">Unexplained Weight Loss</label><span class="severity-badge severity-high">High</span></div>
-<div class="symptom-item"><input type="checkbox" id="lossAppetite" value="lossAppetite"><label for="lossAppetite">Loss of Appetite</label><span class="severity-badge severity-low">Low</span></div>
+<div class="symptom-grid">
+<div class="symptom-item"><input type="checkbox" id="fever"><label for="fever">Fever / High Temperature</label><span class="severity-badge severity-medium">Medium</span></div>
+<div class="symptom-item"><input type="checkbox" id="chills"><label for="chills">Chills / Shivering</label><span class="severity-badge severity-medium">Medium</span></div>
+<div class="symptom-item"><input type="checkbox" id="fatigue"><label for="fatigue">Fatigue / Weakness</label><span class="severity-badge severity-low">Low</span></div>
+<div class="symptom-item"><input type="checkbox" id="weightLoss"><label for="weightLoss">Unexplained Weight Loss</label><span class="severity-badge severity-high">High</span></div>
+<div class="symptom-item"><input type="checkbox" id="lossAppetite"><label for="lossAppetite">Loss of Appetite</label><span class="severity-badge severity-low">Low</span></div>
 </div>
 </div>
 
-<!-- Respiratory Symptoms -->
 <div class="symptom-category">
 <h3>🫁 Respiratory Symptoms</h3>
-<div class="symptom-grid" id="respiratorySymptoms">
-<div class="symptom-item"><input type="checkbox" id="cough" value="cough"><label for="cough">Cough</label><span class="severity-badge severity-low">Low</span></div>
-<div class="symptom-item"><input type="checkbox" id="dryCough" value="dryCough"><label for="dryCough">Dry Cough</label><span class="severity-badge severity-low">Low</span></div>
-<div class="symptom-item"><input type="checkbox" id="wetCough" value="wetCough"><label for="wetCough">Wet Cough with Phlegm</label><span class="severity-badge severity-medium">Medium</span></div>
-<div class="symptom-item"><input type="checkbox" id="bloodCough" value="bloodCough"><label for="bloodCough">Coughing Blood</label><span class="severity-badge severity-high">High</span></div>
-<div class="symptom-item"><input type="checkbox" id="shortnessBreath" value="shortnessBreath"><label for="shortnessBreath">Shortness of Breath</label><span class="severity-badge severity-high">High</span></div>
-<div class="symptom-item"><input type="checkbox" id="wheezing" value="wheezing"><label for="wheezing">Wheezing</label><span class="severity-badge severity-medium">Medium</span></div>
-<div class="symptom-item"><input type="checkbox" id="chestPain" value="chestPain"><label for="chestPain">Chest Pain / Tightness</label><span class="severity-badge severity-high">High</span></div>
-<div class="symptom-item"><input type="checkbox" id="soreThroat" value="soreThroat"><label for="soreThroat">Sore Throat</label><span class="severity-badge severity-low">Low</span></div>
-<div class="symptom-item"><input type="checkbox" id="runnyNose" value="runnyNose"><label for="runnyNose">Runny / Blocked Nose</label><span class="severity-badge severity-low">Low</span></div>
+<div class="symptom-grid">
+<div class="symptom-item"><input type="checkbox" id="cough"><label for="cough">Cough</label><span class="severity-badge severity-low">Low</span></div>
+<div class="symptom-item"><input type="checkbox" id="dryCough"><label for="dryCough">Dry Cough</label><span class="severity-badge severity-low">Low</span></div>
+<div class="symptom-item"><input type="checkbox" id="wetCough"><label for="wetCough">Wet Cough with Phlegm</label><span class="severity-badge severity-medium">Medium</span></div>
+<div class="symptom-item"><input type="checkbox" id="bloodCough"><label for="bloodCough">Coughing Blood</label><span class="severity-badge severity-high">High</span></div>
+<div class="symptom-item"><input type="checkbox" id="shortnessBreath"><label for="shortnessBreath">Shortness of Breath</label><span class="severity-badge severity-high">High</span></div>
+<div class="symptom-item"><input type="checkbox" id="wheezing"><label for="wheezing">Wheezing</label><span class="severity-badge severity-medium">Medium</span></div>
+<div class="symptom-item"><input type="checkbox" id="chestPain"><label for="chestPain">Chest Pain</label><span class="severity-badge severity-high">High</span></div>
+<div class="symptom-item"><input type="checkbox" id="soreThroat"><label for="soreThroat">Sore Throat</label><span class="severity-badge severity-low">Low</span></div>
+<div class="symptom-item"><input type="checkbox" id="runnyNose"><label for="runnyNose">Runny Nose</label><span class="severity-badge severity-low">Low</span></div>
 </div>
 </div>
 
-<!-- Gastrointestinal Symptoms -->
 <div class="symptom-category">
 <h3>🫃 Gastrointestinal Symptoms</h3>
-<div class="symptom-grid" id="giSymptoms">
-<div class="symptom-item"><input type="checkbox" id="nausea" value="nausea"><label for="nausea">Nausea</label><span class="severity-badge severity-low">Low</span></div>
-<div class="symptom-item"><input type="checkbox" id="vomiting" value="vomiting"><label for="vomiting">Vomiting</label><span class="severity-badge severity-medium">Medium</span></div>
-<div class="symptom-item"><input type="checkbox" id="diarrhea" value="diarrhea"><label for="diarrhea">Diarrhea</label><span class="severity-badge severity-medium">Medium</span></div>
-<div class="symptom-item"><input type="checkbox" id="bloodStool" value="bloodStool"><label for="bloodStool">Blood in Stool</label><span class="severity-badge severity-high">High</span></div>
-<div class="symptom-item"><input type="checkbox" id="constipation" value="constipation"><label for="constipation">Constipation</label><span class="severity-badge severity-low">Low</span></div>
-<div class="symptom-item"><input type="checkbox" id="abdominalPain" value="abdominalPain"><label for="abdominalPain">Abdominal Pain</label><span class="severity-badge severity-medium">Medium</span></div>
-<div class="symptom-item"><input type="checkbox" id="bloating" value="bloating"><label for="bloating">Bloating / Gas</label><span class="severity-badge severity-low">Low</span></div>
-<div class="symptom-item"><input type="checkbox" id="heartburn" value="heartburn"><label for="heartburn">Heartburn / Acidity</label><span class="severity-badge severity-low">Low</span></div>
+<div class="symptom-grid">
+<div class="symptom-item"><input type="checkbox" id="nausea"><label for="nausea">Nausea</label><span class="severity-badge severity-low">Low</span></div>
+<div class="symptom-item"><input type="checkbox" id="vomiting"><label for="vomiting">Vomiting</label><span class="severity-badge severity-medium">Medium</span></div>
+<div class="symptom-item"><input type="checkbox" id="diarrhea"><label for="diarrhea">Diarrhea</label><span class="severity-badge severity-medium">Medium</span></div>
+<div class="symptom-item"><input type="checkbox" id="bloodStool"><label for="bloodStool">Blood in Stool</label><span class="severity-badge severity-high">High</span></div>
+<div class="symptom-item"><input type="checkbox" id="constipation"><label for="constipation">Constipation</label><span class="severity-badge severity-low">Low</span></div>
+<div class="symptom-item"><input type="checkbox" id="abdominalPain"><label for="abdominalPain">Abdominal Pain</label><span class="severity-badge severity-medium">Medium</span></div>
+<div class="symptom-item"><input type="checkbox" id="heartburn"><label for="heartburn">Heartburn / Acidity</label><span class="severity-badge severity-low">Low</span></div>
 </div>
 </div>
 
-<!-- Neurological Symptoms -->
 <div class="symptom-category">
 <h3>🧠 Neurological Symptoms</h3>
-<div class="symptom-grid" id="neuroSymptoms">
-<div class="symptom-item"><input type="checkbox" id="headache" value="headache"><label for="headache">Headache</label><span class="severity-badge severity-low">Low</span></div>
-<div class="symptom-item"><input type="checkbox" id="migraine" value="migraine"><label for="migraine">Severe Migraine</label><span class="severity-badge severity-medium">Medium</span></div>
-<div class="symptom-item"><input type="checkbox" id="dizziness" value="dizziness"><label for="dizziness">Dizziness / Vertigo</label><span class="severity-badge severity-medium">Medium</span></div>
-<div class="symptom-item"><input type="checkbox" id="fainting" value="fainting"><label for="fainting">Fainting / Loss of Consciousness</label><span class="severity-badge severity-high">High</span></div>
-<div class="symptom-item"><input type="checkbox" id="seizures" value="seizures"><label for="seizures">Seizures / Fits</label><span class="severity-badge severity-high">High</span></div>
-<div class="symptom-item"><input type="checkbox" id="confusion" value="confusion"><label for="confusion">Confusion / Disorientation</label><span class="severity-badge severity-high">High</span></div>
-<div class="symptom-item"><input type="checkbox" id="numbness" value="numbness"><label for="numbness">Numbness / Tingling</label><span class="severity-badge severity-medium">Medium</span></div>
-<div class="symptom-item"><input type="checkbox" id="tremor" value="tremor"><label for="tremor">Tremors / Shaking</label><span class="severity-badge severity-medium">Medium</span></div>
+<div class="symptom-grid">
+<div class="symptom-item"><input type="checkbox" id="headache"><label for="headache">Headache</label><span class="severity-badge severity-low">Low</span></div>
+<div class="symptom-item"><input type="checkbox" id="dizziness"><label for="dizziness">Dizziness</label><span class="severity-badge severity-medium">Medium</span></div>
+<div class="symptom-item"><input type="checkbox" id="fainting"><label for="fainting">Fainting</label><span class="severity-badge severity-high">High</span></div>
+<div class="symptom-item"><input type="checkbox" id="seizures"><label for="seizures">Seizures</label><span class="severity-badge severity-high">High</span></div>
+<div class="symptom-item"><input type="checkbox" id="confusion"><label for="confusion">Confusion</label><span class="severity-badge severity-high">High</span></div>
 </div>
 </div>
 
-<!-- Musculoskeletal Symptoms -->
 <div class="symptom-category">
 <h3>💪 Musculoskeletal Symptoms</h3>
-<div class="symptom-grid" id="muscleSymptoms">
-<div class="symptom-item"><input type="checkbox" id="jointPain" value="jointPain"><label for="jointPain">Joint Pain</label><span class="severity-badge severity-low">Low</span></div>
-<div class="symptom-item"><input type="checkbox" id="musclePain" value="musclePain"><label for="musclePain">Muscle Pain / Body Ache</label><span class="severity-badge severity-low">Low</span></div>
-<div class="symptom-item"><input type="checkbox" id="backPain" value="backPain"><label for="backPain">Back Pain</label><span class="severity-badge severity-low">Low</span></div>
-<div class="symptom-item"><input type="checkbox" id="neckPain" value="neckPain"><label for="neckPain">Neck Pain / Stiffness</label><span class="severity-badge severity-low">Low</span></div>
-<div class="symptom-item"><input type="checkbox" id="swellingJoints" value="swellingJoints"><label for="swellingJoints">Swollen Joints</label><span class="severity-badge severity-medium">Medium</span></div>
-<div class="symptom-item"><input type="checkbox" id="injury" value="injury"><label for="injury">Recent Injury / Trauma</label><span class="severity-badge severity-medium">Medium</span></div>
+<div class="symptom-grid">
+<div class="symptom-item"><input type="checkbox" id="jointPain"><label for="jointPain">Joint Pain</label><span class="severity-badge severity-low">Low</span></div>
+<div class="symptom-item"><input type="checkbox" id="musclePain"><label for="musclePain">Muscle Pain</label><span class="severity-badge severity-low">Low</span></div>
+<div class="symptom-item"><input type="checkbox" id="backPain"><label for="backPain">Back Pain</label><span class="severity-badge severity-low">Low</span></div>
 </div>
 </div>
 
-<!-- Skin Symptoms -->
 <div class="symptom-category">
 <h3>🔴 Skin Symptoms</h3>
-<div class="symptom-grid" id="skinSymptoms">
-<div class="symptom-item"><input type="checkbox" id="rash" value="rash"><label for="rash">Skin Rash</label><span class="severity-badge severity-low">Low</span></div>
-<div class="symptom-item"><input type="checkbox" id="itching" value="itching"><label for="itching">Itching</label><span class="severity-badge severity-low">Low</span></div>
-<div class="symptom-item"><input type="checkbox" id="wounds" value="wounds"><label for="wounds">Wounds / Sores</label><span class="severity-badge severity-medium">Medium</span></div>
-<div class="symptom-item"><input type="checkbox" id="infection" value="infection"><label for="infection">Skin Infection</label><span class="severity-badge severity-medium">Medium</span></div>
-<div class="symptom-item"><input type="checkbox" id="yellowSkin" value="yellowSkin"><label for="yellowSkin">Yellow Skin / Eyes (Jaundice)</label><span class="severity-badge severity-high">High</span></div>
-<div class="symptom-item"><input type="checkbox" id="bruising" value="bruising"><label for="bruising">Easy Bruising</label><span class="severity-badge severity-medium">Medium</span></div>
+<div class="symptom-grid">
+<div class="symptom-item"><input type="checkbox" id="rash"><label for="rash">Skin Rash</label><span class="severity-badge severity-low">Low</span></div>
+<div class="symptom-item"><input type="checkbox" id="itching"><label for="itching">Itching</label><span class="severity-badge severity-low">Low</span></div>
+<div class="symptom-item"><input type="checkbox" id="yellowSkin"><label for="yellowSkin">Yellow Skin (Jaundice)</label><span class="severity-badge severity-high">High</span></div>
 </div>
 </div>
 
-<!-- Urinary Symptoms -->
 <div class="symptom-category">
 <h3>🚽 Urinary Symptoms</h3>
-<div class="symptom-grid" id="urinarySymptoms">
-<div class="symptom-item"><input type="checkbox" id="painUrination" value="painUrination"><label for="painUrination">Pain / Burning during Urination</label><span class="severity-badge severity-medium">Medium</span></div>
-<div class="symptom-item"><input type="checkbox" id="frequentUrination" value="frequentUrination"><label for="frequentUrination">Frequent Urination</label><span class="severity-badge severity-low">Low</span></div>
-<div class="symptom-item"><input type="checkbox" id="bloodUrine" value="bloodUrine"><label for="bloodUrine">Blood in Urine</label><span class="severity-badge severity-high">High</span></div>
-<div class="symptom-item"><input type="checkbox" id="urineLeakage" value="urineLeakage"><label for="urineLeakage">Urine Leakage / Incontinence</label><span class="severity-badge severity-medium">Medium</span></div>
-<div class="symptom-item"><input type="checkbox" id="flankPain" value="flankPain"><label for="flankPain">Flank / Kidney Pain</label><span class="severity-badge severity-high">High</span></div>
-</div>
-</div>
-
-<!-- Cardiovascular Symptoms -->
-<div class="symptom-category">
-<h3>❤️ Cardiovascular Symptoms</h3>
-<div class="symptom-grid" id="cardioSymptoms">
-<div class="symptom-item"><input type="checkbox" id="palpitations" value="palpitations"><label for="palpitations">Heart Palpitations</label><span class="severity-badge severity-medium">Medium</span></div>
-<div class="symptom-item"><input type="checkbox" id="chestPressure" value="chestPressure"><label for="chestPressure">Chest Pressure / Heaviness</label><span class="severity-badge severity-high">High</span></div>
-<div class="symptom-item"><input type="checkbox" id="swellingFeet" value="swellingFeet"><label for="swellingFeet">Swelling in Feet / Ankles</label><span class="severity-badge severity-medium">Medium</span></div>
-<div class="symptom-item"><input type="checkbox" id="irregularHeartbeat" value="irregularHeartbeat"><label for="irregularHeartbeat">Irregular Heartbeat</label><span class="severity-badge severity-high">High</span></div>
-</div>
-</div>
-
-<!-- Eye & Ear Symptoms -->
-<div class="symptom-category">
-<h3>👁️ Eye & Ear Symptoms</h3>
-<div class="symptom-grid" id="senseSymptoms">
-<div class="symptom-item"><input type="checkbox" id="blurredVision" value="blurredVision"><label for="blurredVision">Blurred Vision</label><span class="severity-badge severity-medium">Medium</span></div>
-<div class="symptom-item"><input type="checkbox" id="eyePain" value="eyePain"><label for="eyePain">Eye Pain / Redness</label><span class="severity-badge severity-medium">Medium</span></div>
-<div class="symptom-item"><input type="checkbox" id="hearingLoss" value="hearingLoss"><label for="hearingLoss">Hearing Loss</label><span class="severity-badge severity-medium">Medium</span></div>
-<div class="symptom-item"><input type="checkbox" id="earPain" value="earPain"><label for="earPain">Ear Pain / Discharge</label><span class="severity-badge severity-medium">Medium</span></div>
-<div class="symptom-item"><input type="checkbox" id="ringingEars" value="ringingEars"><label for="ringingEars">Ringing in Ears (Tinnitus)</label><span class="severity-badge severity-low">Low</span></div>
+<div class="symptom-grid">
+<div class="symptom-item"><input type="checkbox" id="painUrination"><label for="painUrination">Painful Urination</label><span class="severity-badge severity-medium">Medium</span></div>
+<div class="symptom-item"><input type="checkbox" id="bloodUrine"><label for="bloodUrine">Blood in Urine</label><span class="severity-badge severity-high">High</span></div>
 </div>
 </div>
 
 <!-- Additional Notes -->
 <div style="margin-top:20px">
-<textarea id="additionalSymptoms" placeholder="Describe any other symptoms in detail... (This helps AI provide better analysis)"></textarea>
+<textarea id="additionalSymptoms" placeholder="Describe any other symptoms..."></textarea>
 </div>
 </div>
 
 <!-- Action Buttons -->
 <div class="btn-group">
-<button class="btn-primary" onclick="analyzeHealth()">🤖 AI Health Analysis</button>
+<button class="btn-primary" onclick="analyzeHealth()">🔬 AI Health Analysis</button>
 <button class="btn-secondary" onclick="clearForm()">🔄 Clear Form</button>
-<button class="btn-danger" onclick="emergencyOverride()">🚨 Emergency Override</button>
+<button class="btn-danger" onclick="emergencyOverride()">🚨 Emergency</button>
 </div>
 
 <!-- Loading Indicator -->
 <div id="loader" class="loader">
 <div class="loader-spinner"></div>
-<p style="margin-top:10px">AI is analyzing symptoms...</p>
+<p style="margin-top:10px">AI analyzing your symptoms...</p>
 </div>
 
 <!-- Results Section -->
 <div id="results" class="section">
-<h2>📊 AI-Powered Health Report</h2>
+<h2>📊 AI Diagnosis Report</h2>
 <div id="emergencyAlert" style="display:none" class="emergency-box">
 <div class="emergency-text">🚨 EMERGENCY - Immediate Action Required</div>
-<p id="emergencyMessage">Patient requires urgent medical attention.</p>
+<p id="emergencyMessage"></p>
 </div>
 
-<!-- AI Suggestions Box -->
-<div id="aiSuggestions" class="ai-suggestion">
-<div class="ai-badge">🤖 AI ANALYSIS</div>
-<h3>Possible Conditions:</h3>
-<div id="possibleConditions"></div>
-<p style="margin-top:10px;font-style:italic;color:#666;">*This is an AI-generated suggestion based on symptom patterns. Please consult a doctor for proper diagnosis.</p>
+<!-- AI Diagnosis -->
+<div class="ai-suggestion">
+<div class="ai-badge">🤖 AI DIAGNOSIS</div>
+<div id="diagnosisContent"></div>
 </div>
 
 <p id="statusText"></p>
@@ -254,37 +206,31 @@ tr:hover{background:#f5f5f5}
 <p id="confidenceText"></p>
 </div>
 
-<div id="symptomSummary" style="margin:15px 0;padding:15px;background:#f5f5f5;border-radius:8px">
-<h3>📋 Reported Symptoms:</h3>
+<div style="margin:15px 0;padding:15px;background:#f5f5f5;border-radius:8px">
+<h3>📋 Your Symptoms:</h3>
 <div id="symptomList"></div>
 </div>
 
-<div id="recommendations" style="margin:20px 0">
-<h3>💡 AI-Powered Recommendations:</h3>
-<div id="recommendationsList"></div>
+<div style="margin:20px 0">
+<h3>💡 Recommended Solutions:</h3>
+<div id="solutionsList"></div>
 </div>
 
-<div id="medicines" style="margin:20px 0;padding:15px;background:#e3f2fd;border-radius:8px">
-<h3>💊 Suggested Medicines (Consult Doctor Before Use):</h3>
+<div style="margin:20px 0;padding:15px;background:#e3f2fd;border-radius:8px">
+<h3>💊 Suggested Medicines:</h3>
 <div id="medicinesList"></div>
-<p style="font-size:12px;color:#666;margin-top:10px;">⚠️ Always consult a healthcare professional before taking any medication</p>
+<p style="font-size:12px;color:#666;margin-top:10px;">⚠️ Always consult a doctor before taking any medicine</p>
 </div>
 
 <div id="followUp"></div>
 </div>
 
-<!-- Past Screenings Section -->
+<!-- History Section -->
 <div class="section">
-<h2>📜 Recent Screening History</h2>
-<div class="filter-buttons">
-<span class="filter-btn active" onclick="filterScreenings('all')">All</span>
-<span class="filter-btn" onclick="filterScreenings('healthy')">Healthy</span>
-<span class="filter-btn" onclick="filterScreenings('followup')">Follow-up</span>
-<span class="filter-btn" onclick="filterScreenings('emergency')">Emergency</span>
-</div>
+<h2>📜 Recent Consultations</h2>
 <table>
 <thead>
-<tr><th>Time</th><th>Name</th><th>Age</th><th>Gender</th><th>Symptoms</th><th>AI Diagnosis</th><th>Status</th></tr>
+<tr><th>Time</th><th>Name</th><th>Age</th><th>Diagnosis</th><th>Status</th></tr>
 </thead>
 <tbody id="tableBody"></tbody>
 </table>
@@ -314,11 +260,11 @@ function filterSymptoms() {
     });
 }
 
-// Clear form function
+// Clear form function - FIXED
 function clearForm() {
     document.getElementById('patientName').value = '';
     document.getElementById('patientAge').value = '';
-    document.getElementById('patientGender').value = 'male';
+    document.getElementById('patientGender').value = 'Male';
     document.getElementById('height').value = '';
     document.getElementById('weight').value = '';
     document.getElementById('temperature').value = '';
@@ -333,24 +279,29 @@ function clearForm() {
     // Hide results
     document.getElementById('results').style.display = 'none';
     
+    // Hide emergency alert if visible
+    document.getElementById('emergencyAlert').style.display = 'none';
+    
     // Show all symptoms again
     filterSymptoms();
+    
+    console.log("Form cleared successfully");
 }
 
-// Emergency override
+// Emergency override - FIXED
 function emergencyOverride() {
     const name = document.getElementById("patientName").value.trim();
-    const age = parseInt(document.getElementById("patientAge").value);
-    const gender = document.getElementById("patientGender").value;
+    const age = document.getElementById("patientAge").value;
     
     if (!name || !age) {
-        alert("Please fill Patient Name and Age first");
+        alert("⚠️ Please fill Patient Name and Age first");
         return;
     }
     
     // Show loader
     document.getElementById('loader').style.display = 'block';
     document.getElementById('results').style.display = 'none';
+    document.getElementById('emergencyAlert').style.display = 'none';
     
     setTimeout(() => {
         document.getElementById('loader').style.display = 'none';
@@ -358,38 +309,34 @@ function emergencyOverride() {
         const emergencyResult = {
             status: "emergency",
             statusText: "🚨 EMERGENCY",
-            description: "Emergency override activated. Patient requires immediate medical attention.",
+            diagnosis: "MEDICAL EMERGENCY",
+            description: "⚠️ EMERGENCY OVERRIDE ACTIVATED - Patient requires immediate medical attention!",
             confidence: 99,
-            recommendations: [
-                "🚑 SEEK EMERGENCY CARE IMMEDIATELY",
-                "📞 Call ambulance or rush to nearest hospital",
+            solutions: [
+                "🚑 CALL AMBULANCE IMMEDIATELY - DIAL 108 OR 102",
+                "🏥 RUSH TO NEAREST HOSPITAL WITHOUT DELAY",
                 "🛌 Keep patient in comfortable position",
                 "💬 Monitor breathing and consciousness",
-                "🚫 Do not give food or water if unconscious"
+                "📞 Contact emergency contact",
+                "🚫 Do NOT give food or water if unconscious"
             ],
-            medicines: ["Emergency care only - no self medication"],
+            medicines: ["🚨 EMERGENCY - NO SELF MEDICATION"],
             symptoms: "Emergency override activated",
-            followUp: "URGENT: Immediate emergency care required",
-            possibleConditions: [{
-                name: "Medical Emergency",
-                confidence: "99%",
-                description: "Emergency override - Patient requires immediate medical evaluation"
-            }]
+            followUp: "URGENT: Immediate emergency care required"
         };
         
         displayResults(emergencyResult);
-        saveScreening(name, age, gender, emergencyResult);
+        saveScreening(name, age, emergencyResult);
     }, 1000);
 }
 
-// Get selected symptoms with labels
+// Get selected symptoms - FIXED
 function getSelectedSymptoms() {
     const symptoms = [];
-    const symptomElements = {
+    const symptomMap = {
         'fever': 'Fever',
         'chills': 'Chills',
         'fatigue': 'Fatigue',
-        'nightSweats': 'Night Sweats',
         'weightLoss': 'Weight Loss',
         'lossAppetite': 'Loss of Appetite',
         'cough': 'Cough',
@@ -407,46 +354,24 @@ function getSelectedSymptoms() {
         'bloodStool': 'Blood in Stool',
         'constipation': 'Constipation',
         'abdominalPain': 'Abdominal Pain',
-        'bloating': 'Bloating',
         'heartburn': 'Heartburn',
         'headache': 'Headache',
-        'migraine': 'Migraine',
         'dizziness': 'Dizziness',
         'fainting': 'Fainting',
         'seizures': 'Seizures',
         'confusion': 'Confusion',
-        'numbness': 'Numbness',
-        'tremor': 'Tremor',
         'jointPain': 'Joint Pain',
         'musclePain': 'Muscle Pain',
         'backPain': 'Back Pain',
-        'neckPain': 'Neck Pain',
-        'swellingJoints': 'Swollen Joints',
-        'injury': 'Injury',
         'rash': 'Rash',
         'itching': 'Itching',
-        'wounds': 'Wounds',
-        'infection': 'Infection',
         'yellowSkin': 'Yellow Skin',
-        'bruising': 'Bruising',
         'painUrination': 'Painful Urination',
-        'frequentUrination': 'Frequent Urination',
-        'bloodUrine': 'Blood in Urine',
-        'urineLeakage': 'Urine Leakage',
-        'flankPain': 'Flank Pain',
-        'palpitations': 'Palpitations',
-        'chestPressure': 'Chest Pressure',
-        'swellingFeet': 'Swollen Feet',
-        'irregularHeartbeat': 'Irregular Heartbeat',
-        'blurredVision': 'Blurred Vision',
-        'eyePain': 'Eye Pain',
-        'hearingLoss': 'Hearing Loss',
-        'earPain': 'Ear Pain',
-        'ringingEars': 'Ringing in Ears'
+        'bloodUrine': 'Blood in Urine'
     };
     
-    for (let [id, label] of Object.entries(symptomElements)) {
-        const element = document.getElementById(id);
+    for (let [id, label] of Object.entries(symptomMap)) {
+        let element = document.getElementById(id);
         if (element && element.checked) {
             symptoms.push(label);
         }
@@ -455,91 +380,414 @@ function getSelectedSymptoms() {
     return symptoms;
 }
 
-// AI Symptom Analysis
-function analyzeWithAI(symptoms, age, temp, bp) {
-    const possibleConditions = [];
-    const recommendations = [];
-    const medicines = [];
+// AI Diagnosis Engine - FIXED
+function getAIDiagnosis(symptoms, age, temp, bp) {
+    let diagnosis = [];
+    let solutions = [];
+    let medicines = [];
     let emergency = false;
-    let emergencyMessage = "";
+    let emergencyMsg = "";
     
-    console.log("Analyzing symptoms:", symptoms);
-    console.log("Age:", age, "Temp:", temp, "BP:", bp);
-    
-    // Check for emergency symptoms first
-    const emergencySymptoms = ['Coughing Blood', 'Blood in Stool', 'Blood in Urine', 'Fainting', 'Seizures', 'Confusion', 'Chest Pressure', 'Irregular Heartbeat', 'Yellow Skin'];
-    
-    for (let symptom of symptoms) {
-        if (emergencySymptoms.includes(symptom)) {
-            emergency = true;
-            emergencyMessage = "Emergency symptoms detected. Immediate medical attention required!";
-        }
-    }
-    
-    // Chest pain emergency
-    if (symptoms.includes('Chest Pain') || symptoms.includes('Chest Pressure')) {
+    // EMERGENCY CHECKS
+    if (symptoms.includes('Chest Pain')) {
         emergency = true;
-        emergencyMessage = "Chest pain detected - Possible cardiac event. Seek emergency care immediately.";
+        emergencyMsg = "⚠️ CHEST PAIN - Possible heart attack. SEEK EMERGENCY CARE IMMEDIATELY!";
     }
-    
-    // Shortness of breath with chest pain
-    if (symptoms.includes('Shortness of Breath') && (symptoms.includes('Chest Pain') || symptoms.includes('Chest Pressure'))) {
+    else if (symptoms.includes('Shortness of Breath') && symptoms.includes('Chest Pain')) {
         emergency = true;
-        emergencyMessage = "Shortness of breath with chest pain - Cardiac emergency.";
+        emergencyMsg = "⚠️ CHEST PAIN with BREATHING DIFFICULTY - Cardiac emergency!";
     }
-    
-    // High fever with neurological symptoms
-    if (temp > 39.5 && (symptoms.includes('Seizures') || symptoms.includes('Confusion'))) {
+    else if (symptoms.includes('Coughing Blood')) {
         emergency = true;
-        emergencyMessage = "Very high fever with neurological symptoms - Possible severe infection.";
+        emergencyMsg = "⚠️ COUGHING BLOOD - Possible TB or internal bleeding. Immediate medical attention required!";
+    }
+    else if (symptoms.includes('Blood in Stool')) {
+        emergency = true;
+        emergencyMsg = "⚠️ BLOOD IN STOOL - Possible internal bleeding. Seek immediate care!";
+    }
+    else if (symptoms.includes('Blood in Urine')) {
+        emergency = true;
+        emergencyMsg = "⚠️ BLOOD IN URINE - Kidney or bladder issue. Immediate medical attention required!";
+    }
+    else if (symptoms.includes('Fainting')) {
+        emergency = true;
+        emergencyMsg = "⚠️ FAINTING - Loss of consciousness. Neurological emergency!";
+    }
+    else if (symptoms.includes('Seizures')) {
+        emergency = true;
+        emergencyMsg = "⚠️ SEIZURES - Neurological emergency. Immediate medical attention!";
+    }
+    else if (symptoms.includes('Confusion')) {
+        emergency = true;
+        emergencyMsg = "⚠️ CONFUSION - Possible stroke or severe infection. Seek immediate care!";
+    }
+    else if (symptoms.includes('Yellow Skin')) {
+        emergency = true;
+        emergencyMsg = "⚠️ YELLOW SKIN - Jaundice. Liver condition needs immediate attention!";
     }
     
-    // Blood pressure emergency
+    // BP Emergency
     if (bp) {
-        const bpParts = bp.split('/');
+        let bpParts = bp.split('/');
         if (bpParts.length === 2) {
-            const systolic = parseInt(bpParts[0]);
+            let systolic = parseInt(bpParts[0]);
             if (systolic >= 180) {
                 emergency = true;
-                emergencyMessage = "Critically high blood pressure - Hypertensive emergency.";
+                emergencyMsg = "⚠️ CRITICALLY HIGH BLOOD PRESSURE - Hypertensive emergency!";
             }
         }
     }
     
-    // Age-specific emergencies
+    // Fever emergency
+    if (temp > 39.5 && (symptoms.includes('Seizures') || symptoms.includes('Confusion'))) {
+        emergency = true;
+        emergencyMsg = "⚠️ VERY HIGH FEVER with neurological symptoms - Possible severe infection!";
+    }
+    
+    // Age emergency
     if (age < 5 && (symptoms.includes('Fever') || symptoms.includes('Vomiting') || symptoms.includes('Diarrhea'))) {
         emergency = true;
-        emergencyMessage = "Young child with symptoms needs immediate medical attention.";
+        emergencyMsg = "⚠️ YOUNG CHILD with symptoms - Needs immediate medical attention!";
     }
     
-    if (age > 70 && (symptoms.includes('Chest Pain') || symptoms.includes('Confusion') || symptoms.includes('Shortness of Breath'))) {
-        emergency = true;
-        emergencyMessage = "Elderly patient with serious symptoms - Immediate care required.";
-    }
-    
-    // If emergency, return early
     if (emergency) {
         return {
             emergency: true,
-            emergencyMessage: emergencyMessage,
-            possibleConditions: [{
-                name: "MEDICAL EMERGENCY",
-                confidence: "95%",
-                description: emergencyMessage
-            }],
-            recommendations: [
-                "🚑 SEEK EMERGENCY CARE IMMEDIATELY",
-                "📞 Call ambulance or rush to nearest hospital",
+            message: emergencyMsg,
+            diagnosis: "MEDICAL EMERGENCY",
+            solutions: [
+                "🚑 CALL AMBULANCE IMMEDIATELY - DIAL 108 OR 102",
+                "🏥 RUSH TO NEAREST HOSPITAL",
                 "🛌 Keep patient in comfortable position",
                 "💬 Monitor breathing and consciousness",
-                "🚫 Do not give food or water if unconscious"
+                "🚫 Do NOT give food or water if unconscious"
             ],
-            medicines: ["Emergency care only - no self medication"]
+            medicines: ["🚨 EMERGENCY - NO SELF MEDICATION"]
         };
     }
     
-    // If no symptoms selected
-    if (symptoms.length === 0) {
-        possibleConditions.push({
-            name: "No Symptoms Reported",
-            confidence: "100%
+    // COMMON COLD / FLU
+    if (symptoms.includes('Fever') && symptoms.includes('Cough') && symptoms.includes('Fatigue')) {
+        diagnosis.push("Common Cold / Viral Fever");
+        solutions.push("🌡️ Take rest for 2-3 days");
+        solutions.push("💧 Drink warm water, soup, and herbal tea");
+        solutions.push("🍵 Have ginger tea with honey for sore throat");
+        solutions.push("💨 Use steam inhalation for congestion");
+        medicines.push("Paracetamol 500mg for fever");
+        medicines.push("Cough syrup for dry cough");
+    }
+    
+    // CHEST INFECTION
+    else if (symptoms.includes('Wet Cough') && symptoms.includes('Fever')) {
+        diagnosis.push("Chest Infection / Bronchitis");
+        solutions.push("💨 Do steam inhalation 3-4 times daily");
+        solutions.push("🚭 Avoid smoke and dust");
+        solutions.push("🛌 Complete bed rest");
+        solutions.push("💧 Drink plenty of warm fluids");
+        medicines.push("Ambroxol for mucus clearance");
+        medicines.push("Consult doctor for antibiotics");
+    }
+    
+    // GASTROENTERITIS
+    else if (symptoms.includes('Diarrhea') && symptoms.includes('Vomiting')) {
+        diagnosis.push("Acute Gastroenteritis / Food Poisoning");
+        solutions.push("💧 Drink ORS solution frequently");
+        solutions.push("🍚 Eat only bland foods - rice, bananas, apples");
+        solutions.push("🚫 Avoid dairy, spicy, and oily food");
+        solutions.push("🛌 Take complete rest");
+        medicines.push("ORS packets - mix in clean water");
+        medicines.push("Zinc supplements");
+    }
+    
+    // GASTRITIS
+    else if (symptoms.includes('Abdominal Pain') && symptoms.includes('Heartburn')) {
+        diagnosis.push("Gastritis / Acidity");
+        solutions.push("🍽️ Eat small, frequent meals");
+        solutions.push("🚫 Avoid spicy, oily, and acidic foods");
+        solutions.push("🛌 Don't lie down immediately after eating");
+        solutions.push("🥗 Eat bland, easily digestible food");
+        medicines.push("Antacids for immediate relief");
+    }
+    
+    // HEADACHE / MIGRAINE
+    else if (symptoms.includes('Headache')) {
+        diagnosis.push("Tension Headache");
+        solutions.push("😴 Rest in a dark, quiet room");
+        solutions.push("🧊 Apply cold compress to forehead");
+        solutions.push("💆 Massage neck and shoulders gently");
+        solutions.push("🚫 Avoid bright lights and loud noise");
+        medicines.push("Paracetamol or Ibuprofen");
+    }
+    
+    // BODY PAIN
+    else if (symptoms.includes('Muscle Pain') || symptoms.includes('Joint Pain')) {
+        diagnosis.push("Body Ache / Myalgia");
+        solutions.push("🔥 Apply warm compress to painful areas");
+        solutions.push("🧘 Gentle stretching exercises");
+        solutions.push("💆 Light massage");
+        solutions.push("🛌 Take adequate rest");
+        medicines.push("Ibuprofen for pain relief");
+        medicines.push("Topical pain relief gel");
+    }
+    
+    // UTI
+    else if (symptoms.includes('Painful Urination')) {
+        diagnosis.push("Urinary Tract Infection (UTI)");
+        solutions.push("🚰 Drink plenty of water (8-10 glasses)");
+        solutions.push("🧃 Drink cranberry juice");
+        solutions.push("🚽 Maintain proper hygiene");
+        solutions.push("🚫 Avoid holding urine for long");
+        medicines.push("Consult doctor for antibiotics");
+    }
+    
+    // ALLERGY
+    else if (symptoms.includes('Rash') || symptoms.includes('Itching')) {
+        diagnosis.push("Allergic Reaction");
+        solutions.push("🧴 Apply calamine lotion");
+        solutions.push("🚫 Avoid scratching");
+        solutions.push("🛁 Use mild, fragrance-free soap");
+        solutions.push("🥗 Avoid known allergens");
+        medicines.push("Antihistamine (Cetirizine)");
+    }
+    
+    // CONSTIPATION
+    else if (symptoms.includes('Constipation')) {
+        diagnosis.push("Constipation");
+        solutions.push("🥗 Eat high-fiber foods - fruits, vegetables");
+        solutions.push("💧 Drink 8-10 glasses of water daily");
+        solutions.push("🚶 Walk for 30 minutes daily");
+        solutions.push("🍌 Eat bananas and papaya");
+        medicines.push("Fiber supplements (Isabgol)");
+    }
+    
+    // If symptoms exist but no specific match
+    else if (symptoms.length > 0) {
+        diagnosis.push("Multiple Symptoms - General Evaluation Needed");
+        solutions.push("🩺 Consult Primary Health Center for examination");
+        solutions.push("📝 Keep a diary of your symptoms");
+        solutions.push("💧 Stay hydrated and get adequate rest");
+        solutions.push("🥗 Eat light, nutritious food");
+    }
+    
+    // No symptoms
+    else {
+        diagnosis.push("No Symptoms Reported");
+        solutions.push("🥗 Eat a balanced diet with fruits and vegetables");
+        solutions.push("💧 Drink 8-10 glasses of water daily");
+        solutions.push("🚶 Exercise for 30 minutes daily");
+        solutions.push("😴 Get 7-8 hours of sleep");
+        solutions.push("🩺 Regular health check-ups every 6 months");
+        medicines.push("No medicines needed - stay healthy!");
+    }
+    
+    return {
+        emergency: false,
+        diagnosis: diagnosis.join(", "),
+        solutions: solutions,
+        medicines: medicines.length ? medicines : ["Consult doctor for specific medication"]
+    };
+}
+
+// Main analysis function - FIXED
+function analyzeHealth() {
+    const name = document.getElementById("patientName").value.trim();
+    const age = document.getElementById("patientAge").value;
+    const temp = parseFloat(document.getElementById("temperature").value) || 36.5;
+    const bp = document.getElementById("bp").value || "";
+    
+    if (!name || !age) {
+        alert("⚠️ Please fill Patient Name and Age first");
+        return;
+    }
+    
+    // Show loader
+    document.getElementById('loader').style.display = 'block';
+    document.getElementById('results').style.display = 'none';
+    document.getElementById('emergencyAlert').style.display = 'none';
+    
+    setTimeout(() => {
+        document.getElementById('loader').style.display = 'none';
+        
+        const symptoms = getSelectedSymptoms();
+        const analysis = getAIDiagnosis(symptoms, parseInt(age), temp, bp);
+        
+        let result;
+        
+        if (analysis.emergency) {
+            result = {
+                status: "emergency",
+                statusText: "🚨 EMERGENCY",
+                diagnosis: analysis.diagnosis,
+                description: analysis.message,
+                confidence: 98,
+                solutions: analysis.solutions,
+                medicines: analysis.medicines,
+                symptoms: symptoms.length ? symptoms.join(", ") : "No symptoms",
+                followUp: "URGENT: Immediate emergency care required"
+            };
+        } else if (symptoms.length > 0) {
+            result = {
+                status: "followup",
+                statusText: "⚠️ Needs Medical Attention",
+                diagnosis: analysis.diagnosis,
+                description: "Based on your symptoms, AI has provided the following recommendations.",
+                confidence: 85,
+                solutions: analysis.solutions,
+                medicines: analysis.medicines,
+                symptoms: symptoms.join(", "),
+                followUp: "Consult a doctor if symptoms persist beyond 3 days."
+            };
+        } else {
+            result = {
+                status: "healthy",
+                statusText: "✅ Healthy",
+                diagnosis: "No Health Issues Detected",
+                description: "You haven't reported any symptoms. Here are general health tips.",
+                confidence: 98,
+                solutions: analysis.solutions,
+                medicines: analysis.medicines,
+                symptoms: "No symptoms reported",
+                followUp: "No follow-up needed. Stay healthy!"
+            };
+        }
+        
+        displayResults(result);
+        saveScreening(name, age, result);
+    }, 1500);
+}
+
+// Display results - FIXED
+function displayResults(result) {
+    document.getElementById('results').style.display = 'block';
+    
+    // Set status
+    if (result.status === "healthy") {
+        document.getElementById('statusText').innerHTML = "<span class='status-healthy'>" + result.statusText + "</span>";
+    } else if (result.status === "emergency") {
+        document.getElementById('statusText').innerHTML = "<span class='status-emergency'>" + result.statusText + "</span>";
+    } else {
+        document.getElementById('statusText').innerHTML = "<span class='status-followup'>" + result.statusText + "</span>";
+    }
+    
+    document.getElementById('description').innerText = result.description;
+    
+    // Set confidence
+    document.getElementById('confidenceBar').style.width = result.confidence + "%";
+    document.getElementById('confidenceText').innerText = result.confidence + "%";
+    
+    // Set symptoms
+    let symptomsHtml = "";
+    if (result.symptoms && result.symptoms !== "No symptoms reported") {
+        let symptomArray = result.symptoms.split(", ");
+        symptomArray.forEach(s => {
+            symptomsHtml += `<span class="symptom-tag">${s}</span> `;
+        });
+    } else {
+        symptomsHtml = "No symptoms selected";
+    }
+    document.getElementById('symptomList').innerHTML = symptomsHtml;
+    
+    // Set diagnosis
+    let diagnosisHtml = `<div class="possible-condition">
+        <span class="condition-name">${result.diagnosis}</span>
+        <p style="margin-top:8px">${result.description}</p>
+    </div>`;
+    document.getElementById('diagnosisContent').innerHTML = diagnosisHtml;
+    
+    // Set solutions
+    let solutionsHtml = "";
+    result.solutions.forEach(s => {
+        solutionsHtml += `<div class="recommendation-item">${s}</div>`;
+    });
+    document.getElementById('solutionsList').innerHTML = solutionsHtml;
+    
+    // Set medicines
+    let medicinesHtml = "";
+    result.medicines.forEach(m => {
+        medicinesHtml += `<div class="medicine-item">💊 ${m}</div>`;
+    });
+    document.getElementById('medicinesList').innerHTML = medicinesHtml;
+    
+    document.getElementById('followUp').innerText = result.followUp;
+    
+    // Handle emergency alert
+    if (result.status === "emergency") {
+        document.getElementById('emergencyAlert').style.display = 'block';
+        document.getElementById('emergencyMessage').innerText = result.description;
+    } else {
+        document.getElementById('emergencyAlert').style.display = 'none';
+    }
+}
+
+// Save screening - FIXED
+function saveScreening(name, age, result) {
+    const record = {
+        time: new Date().toLocaleString(),
+        name: name,
+        age: age,
+        diagnosis: result.diagnosis,
+        status: result.statusText
+    };
+    
+    screenings.unshift(record);
+    if (screenings.length > 20) screenings.pop();
+    localStorage.setItem("screenings", JSON.stringify(screenings));
+    renderTable();
+}
+
+// Render table - FIXED
+function renderTable() {
+    const tbody = document.getElementById("tableBody");
+    if (screenings.length === 0) {
+        tbody.innerHTML = "<tr><td colspan='5' style='text-align:center'>No records found</td></tr>";
+        return;
+    }
+    tbody.innerHTML = screenings.map(s => `
+        <tr>
+            <td>${s.time}</td>
+            <td>${s.name}</td>
+            <td>${s.age}</td>
+            <td>${s.diagnosis}</td>
+            <td>${s.status}</td>
+        </tr>
+    `).join("");
+}
+
+// Filter screenings - FIXED
+function filterScreenings(type) {
+    // Update active button
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    event.target.classList.add('active');
+    
+    let filtered = screenings;
+    if (type === 'healthy') {
+        filtered = screenings.filter(s => s.status.includes('✅'));
+    } else if (type === 'followup') {
+        filtered = screenings.filter(s => s.status.includes('⚠️'));
+    } else if (type === 'emergency') {
+        filtered = screenings.filter(s => s.status.includes('🚨'));
+    }
+    
+    const tbody = document.getElementById("tableBody");
+    if (filtered.length === 0) {
+        tbody.innerHTML = "<tr><td colspan='5' style='text-align:center'>No records found</td></tr>";
+        return;
+    }
+    tbody.innerHTML = filtered.map(s => `
+        <tr>
+            <td>${s.time}</td>
+            <td>${s.name}</td>
+            <td>${s.age}</td>
+            <td>${s.diagnosis}</td>
+            <td>${s.status}</td>
+        </tr>
+    `).join("");
+}
+
+console.log("RuralCare AI loaded successfully - All functions working!");
+</script>
+
+</body>
+</html>

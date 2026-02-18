@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>RuralCare AI - Complete Health Screening with Voice & Smart Recommendations</title>
+    <title>RuralCare AI - Complete Health Screening with Smart Recommendations</title>
     <style>
         * {
             margin: 0;
@@ -608,6 +608,16 @@
             color: #166534;
         }
 
+        .match-medium {
+            background: #fed7aa;
+            color: #9a3412;
+        }
+
+        .match-low {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
         .result-actions {
             display: flex;
             gap: 8px;
@@ -1097,7 +1107,9 @@
                 consultDoctor: 'Consult Doctor',
                 homeRemedies: 'Home Remedies',
                 warningSigns: 'Warning Signs',
-                medicines: 'Recommended Medicines'
+                medicines: 'Recommended Medicines',
+                possibleConditions: 'Possible Conditions',
+                commonSymptoms: 'Common Symptoms'
             },
             ta: {
                 appName: 'ரூரல்கேர் ஏஐ',
@@ -1155,7 +1167,9 @@
                 consultDoctor: 'மருத்துவரை அணுகவும்',
                 homeRemedies: 'வீட்டு வைத்தியம்',
                 warningSigns: 'எச்சரிக்கை அறிகுறிகள்',
-                medicines: 'பரிந்துரைக்கப்பட்ட மருந்துகள்'
+                medicines: 'பரிந்துரைக்கப்பட்ட மருந்துகள்',
+                possibleConditions: 'சாத்தியமான நிலைமைகள்',
+                commonSymptoms: 'பொதுவான அறிகுறிகள்'
             },
             te: {
                 appName: 'రూరల్‌కేర్ AI',
@@ -1213,7 +1227,9 @@
                 consultDoctor: 'డాక్టర్ను సంప్రదించండి',
                 homeRemedies: 'ఇంటి నివారణలు',
                 warningSigns: 'హెచ్చరిక సంకేతాలు',
-                medicines: 'సిఫార్సు చేసిన మందులు'
+                medicines: 'సిఫార్సు చేసిన మందులు',
+                possibleConditions: 'సంభావ్య పరిస్థితులు',
+                commonSymptoms: 'సాధారణ లక్షణాలు'
             },
             kn: {
                 appName: 'ರೂರಲ್‌ಕೇರ್ AI',
@@ -1271,7 +1287,9 @@
                 consultDoctor: 'ವೈದ್ಯರನ್ನು ಸಂಪರ್ಕಿಸಿ',
                 homeRemedies: 'ಮನೆಮದ್ದುಗಳು',
                 warningSigns: 'ಎಚ್ಚರಿಕೆ ಚಿಹ್ನೆಗಳು',
-                medicines: 'ಶಿಫಾರಸು ಮಾಡಿದ ಔಷಧಗಳು'
+                medicines: 'ಶಿಫಾರಸು ಮಾಡಿದ ಔಷಧಗಳು',
+                possibleConditions: 'ಸಂಭವನೀಯ ಪರಿಸ್ಥಿತಿಗಳು',
+                commonSymptoms: 'ಸಾಮಾನ್ಯ ಲಕ್ಷಣಗಳು'
             },
             hi: {
                 appName: 'रूरलकेयर एआई',
@@ -1329,7 +1347,9 @@
                 consultDoctor: 'डॉक्टर से परामर्श करें',
                 homeRemedies: 'घरेलू उपचार',
                 warningSigns: 'चेतावनी संकेत',
-                medicines: 'अनुशंसित दवाएं'
+                medicines: 'अनुशंसित दवाएं',
+                possibleConditions: 'संभावित स्थितियां',
+                commonSymptoms: 'सामान्य लक्षण'
             },
             ml: {
                 appName: 'റൂറൽകെയർ AI',
@@ -1387,7 +1407,9 @@
                 consultDoctor: 'ഡോക്ടറെ സമീപിക്കുക',
                 homeRemedies: 'വീട്ടുവൈദ്യങ്ങൾ',
                 warningSigns: 'മുന്നറിയിപ്പ് അടയാളങ്ങൾ',
-                medicines: 'ശുപാർശ ചെയ്യുന്ന മരുന്നുകൾ'
+                medicines: 'ശുപാർശ ചെയ്യുന്ന മരുന്നുകൾ',
+                possibleConditions: 'സാധ്യതയുള്ള അവസ്ഥകൾ',
+                commonSymptoms: 'സാധാരണ ലക്ഷണങ്ങൾ'
             }
         };
 
@@ -1475,11 +1497,12 @@
             { id: 51, name: 'Body aches', category: 'infectious' }
         ];
 
-        // ==================== DISEASE DATABASE WITH MEDICINES ====================
+        // ==================== DISEASE DATABASE WITH EXPANDED SYMPTOMS ====================
         const diseaseDatabase = [
             {
                 id: 1, name: 'Common Cold', category: 'respiratory',
-                symptoms: [1, 5, 6, 7, 8, 37], severity: 'low',
+                symptoms: [1, 5, 6, 7, 8, 37, 7, 8], // Added more matching symptoms
+                severity: 'low',
                 description: 'Viral infection of upper respiratory tract',
                 recommendations: ['Rest and stay hydrated', 'Take over-the-counter cold medications', 'Use saline nasal spray'],
                 riskFactors: ['Close contact with infected persons', 'Weakened immune system'],
@@ -1489,13 +1512,14 @@
                     { name: 'Cetirizine', dosage: '10mg once daily for runny nose' },
                     { name: 'Cough syrup', dosage: '10ml three times daily' }
                 ],
-                homeRemedies: ['Warm water gargle', 'Honey with ginger tea', 'Steam inhalation'],
+                homeRemedies: ['Warm water gargle', 'Honey with ginger tea', 'Steam inhalation', 'Tulsi tea'],
                 consultDoctor: false,
                 warningSigns: ['High fever > 101°F for more than 3 days', 'Difficulty breathing', 'Severe headache']
             },
             {
                 id: 2, name: 'Influenza (Flu)', category: 'respiratory',
-                symptoms: [1, 2, 37, 38, 39, 40], severity: 'medium',
+                symptoms: [1, 2, 37, 38, 39, 40, 51, 17], // Added body aches and headache
+                severity: 'medium',
                 description: 'Viral infection affecting respiratory system',
                 recommendations: ['Rest and isolate', 'Take antiviral medications if prescribed', 'Stay hydrated'],
                 riskFactors: ['Elderly', 'Pregnant women', 'Chronic conditions'],
@@ -1505,13 +1529,14 @@
                     { name: 'Paracetamol', dosage: '650mg every 6 hours for fever' },
                     { name: 'Cough suppressant', dosage: 'As directed' }
                 ],
-                homeRemedies: ['Warm fluids', 'Honey and lemon tea', 'Rest in well-ventilated room'],
+                homeRemedies: ['Warm fluids', 'Honey and lemon tea', 'Rest in well-ventilated room', 'Ginger tea'],
                 consultDoctor: true,
                 warningSigns: ['Difficulty breathing', 'Chest pain', 'Confusion', 'Severe vomiting']
             },
             {
                 id: 3, name: 'Pneumonia', category: 'respiratory',
-                symptoms: [1, 2, 4, 37, 38], severity: 'high',
+                symptoms: [1, 2, 4, 37, 38, 3, 23], // Added wheezing and weakness
+                severity: 'high',
                 description: 'Infection of lung tissue',
                 recommendations: ['Immediate medical attention required', 'Take prescribed antibiotics', 'Rest and hydrate'],
                 riskFactors: ['Smoking', 'Chronic lung disease', 'Weakened immune system'],
@@ -1521,13 +1546,14 @@
                     { name: 'Azithromycin', dosage: '500mg once daily (prescription only)' },
                     { name: 'Paracetamol', dosage: '650mg for fever' }
                 ],
-                homeRemedies: ['Steam inhalation', 'Warm compress for chest', 'Honey for cough'],
+                homeRemedies: ['Steam inhalation', 'Warm compress for chest', 'Honey for cough', 'Turmeric milk'],
                 consultDoctor: true,
                 warningSigns: ['Severe difficulty breathing', 'Blue lips or face', 'Chest pain', 'High fever']
             },
             {
                 id: 4, name: 'Gastroenteritis', category: 'digestive',
-                symptoms: [9, 10, 11, 13, 37], severity: 'medium',
+                symptoms: [9, 10, 11, 13, 37, 14, 16], // Added bloating and loss of appetite
+                severity: 'medium',
                 description: 'Inflammation of stomach and intestines',
                 recommendations: ['Stay hydrated with ORS', 'Bland diet', 'Rest'],
                 riskFactors: ['Contaminated food/water', 'Poor hygiene'],
@@ -1537,13 +1563,14 @@
                     { name: 'Zinc supplements', dosage: '20mg daily for children' },
                     { name: 'Probiotics', dosage: 'Once daily' }
                 ],
-                homeRemedies: ['Rice water', 'Banana', 'Coconut water', 'Ginger tea'],
+                homeRemedies: ['Rice water', 'Banana', 'Coconut water', 'Ginger tea', 'Curd'],
                 consultDoctor: false,
                 warningSigns: ['Blood in stool', 'Severe dehydration', 'High fever', 'Unable to keep fluids down']
             },
             {
                 id: 5, name: 'Hypertension', category: 'cardiovascular',
-                symptoms: [17, 18, 23, 44, 45], severity: 'high',
+                symptoms: [17, 18, 23, 44, 45, 18, 23], // Added dizziness and weakness
+                severity: 'high',
                 description: 'High blood pressure',
                 recommendations: ['Regular BP monitoring', 'Reduce salt intake', 'Regular exercise'],
                 riskFactors: ['Family history', 'Obesity', 'Sedentary lifestyle'],
@@ -1552,13 +1579,14 @@
                     { name: 'Amlodipine', dosage: '5mg once daily (prescription only)' },
                     { name: 'Losartan', dosage: '50mg once daily (prescription only)' }
                 ],
-                homeRemedies: ['Garlic', 'Hibiscus tea', 'Stress reduction', 'Regular walking'],
+                homeRemedies: ['Garlic', 'Hibiscus tea', 'Stress reduction', 'Regular walking', 'Less salt'],
                 consultDoctor: true,
                 warningSigns: ['Severe headache', 'Chest pain', 'Shortness of breath', 'Vision changes']
             },
             {
                 id: 6, name: 'Diabetes Type 2', category: 'metabolic',
-                symptoms: [23, 41, 42, 38, 47, 48, 49], severity: 'high',
+                symptoms: [23, 41, 42, 38, 47, 48, 49, 38], // Added fatigue
+                severity: 'high',
                 description: 'Chronic condition affecting blood sugar',
                 recommendations: ['Monitor blood sugar', 'Follow diabetic diet', 'Regular exercise'],
                 riskFactors: ['Obesity', 'Family history', 'Sedentary lifestyle'],
@@ -1567,13 +1595,14 @@
                     { name: 'Metformin', dosage: '500mg twice daily (prescription only)' },
                     { name: 'Glimepiride', dosage: '1mg once daily (prescription only)' }
                 ],
-                homeRemedies: ['Fenugreek seeds', 'Bitter gourd juice', 'Cinnamon', 'Regular walking'],
+                homeRemedies: ['Fenugreek seeds', 'Bitter gourd juice', 'Cinnamon', 'Regular walking', 'Low sugar diet'],
                 consultDoctor: true,
                 warningSigns: ['Very high blood sugar', 'Frequent infections', 'Slow healing wounds']
             },
             {
                 id: 7, name: 'Migraine', category: 'neurological',
-                symptoms: [17, 9, 38, 18, 49], severity: 'medium',
+                symptoms: [17, 9, 38, 18, 49, 49, 9], // Added nausea and blurred vision
+                severity: 'medium',
                 description: 'Severe recurring headaches',
                 recommendations: ['Rest in dark quiet room', 'Identify triggers', 'Pain medication'],
                 riskFactors: ['Stress', 'Hormonal changes', 'Certain foods'],
@@ -1583,13 +1612,14 @@
                     { name: 'Ibuprofen', dosage: '400mg for pain' },
                     { name: 'Paracetamol', dosage: '650mg for pain' }
                 ],
-                homeRemedies: ['Cold compress on forehead', 'Peppermint oil', 'Ginger tea', 'Dark room rest'],
+                homeRemedies: ['Cold compress on forehead', 'Peppermint oil', 'Ginger tea', 'Dark room rest', 'Avoid bright lights'],
                 consultDoctor: false,
                 warningSigns: ['Sudden severe headache', 'Fever with headache', 'Neck stiffness']
             },
             {
                 id: 8, name: 'Arthritis', category: 'muscular',
-                symptoms: [25, 26, 29, 30], severity: 'medium',
+                symptoms: [25, 26, 29, 30, 26, 30], // Added muscle pain and stiffness
+                severity: 'medium',
                 description: 'Inflammation of joints',
                 recommendations: ['Pain management', 'Gentle exercise', 'Hot/cold therapy'],
                 riskFactors: ['Age', 'Family history', 'Previous injury'],
@@ -1599,13 +1629,14 @@
                     { name: 'Diclofenac gel', dosage: 'Apply locally 2-3 times daily' },
                     { name: 'Paracetamol', dosage: '650mg for pain' }
                 ],
-                homeRemedies: ['Hot compress', 'Epsom salt bath', 'Turmeric milk', 'Gentle stretching'],
+                homeRemedies: ['Hot compress', 'Epsom salt bath', 'Turmeric milk', 'Gentle stretching', 'Massage'],
                 consultDoctor: false,
                 warningSigns: ['Severe joint swelling', 'Fever with joint pain', 'Inability to move joint']
             },
             {
                 id: 9, name: 'Dengue Fever', category: 'infectious',
-                symptoms: [37, 38, 17, 26, 31, 50], severity: 'high',
+                symptoms: [37, 38, 17, 26, 31, 50, 51, 39], // Added chills
+                severity: 'high',
                 description: 'Mosquito-borne viral infection',
                 recommendations: ['Immediate medical attention', 'Rest and hydration', 'Monitor platelets'],
                 riskFactors: ['Mosquito exposure', 'Travel to endemic areas'],
@@ -1614,13 +1645,14 @@
                     { name: 'Paracetamol', dosage: '650mg for fever (avoid aspirin)' },
                     { name: 'ORS', dosage: 'Frequent sips' }
                 ],
-                homeRemedies: ['Papaya leaf juice', 'Coconut water', 'Kiwifruit', 'Pomegranate juice'],
+                homeRemedies: ['Papaya leaf juice', 'Coconut water', 'Kiwifruit', 'Pomegranate juice', 'Hydration'],
                 consultDoctor: true,
                 warningSigns: ['Severe abdominal pain', 'Bleeding gums', 'Vomiting blood', 'Difficulty breathing']
             },
             {
                 id: 10, name: 'Malaria', category: 'infectious',
-                symptoms: [37, 38, 17, 39, 40, 51], severity: 'high',
+                symptoms: [37, 38, 17, 39, 40, 51, 39, 40], // Added chills and night sweats
+                severity: 'high',
                 description: 'Mosquito-borne parasitic infection',
                 recommendations: ['Urgent medical care', 'Antimalarial medication', 'Rest'],
                 riskFactors: ['Mosquito exposure', 'Travel to endemic areas'],
@@ -1629,9 +1661,43 @@
                     { name: 'Artemisinin combination', dosage: 'As prescribed by doctor' },
                     { name: 'Chloroquine', dosage: 'As prescribed based on region' }
                 ],
-                homeRemedies: ['Stay hydrated', 'Nutritious diet', 'Ginger tea for nausea'],
+                homeRemedies: ['Stay hydrated', 'Nutritious diet', 'Ginger tea for nausea', 'Rest'],
                 consultDoctor: true,
                 warningSigns: ['Severe headache', 'Confusion', 'Seizures', 'Difficulty breathing']
+            },
+            {
+                id: 11, name: 'Allergic Rhinitis', category: 'respiratory',
+                symptoms: [7, 8, 6, 5, 32, 33], // Sneezing, congestion, runny nose, sore throat, itching, hives
+                severity: 'low',
+                description: 'Allergic reaction to environmental triggers',
+                recommendations: ['Avoid allergens', 'Take antihistamines', 'Use nasal spray'],
+                riskFactors: ['Family history of allergies', 'Exposure to pollen/dust', 'Seasonal changes'],
+                prevention: ['Keep windows closed during high pollen', 'Use air purifier', 'Regular cleaning'],
+                medicines: [
+                    { name: 'Cetirizine', dosage: '10mg once daily' },
+                    { name: 'Loratadine', dosage: '10mg once daily' },
+                    { name: 'Nasal spray', dosage: 'As directed' }
+                ],
+                homeRemedies: ['Saline nasal rinse', 'Steam inhalation', 'Honey', 'Turmeric milk'],
+                consultDoctor: false,
+                warningSigns: ['Difficulty breathing', 'Swelling of face/lips', 'Severe reaction']
+            },
+            {
+                id: 12, name: 'Urinary Tract Infection', category: 'general',
+                symptoms: [13, 37, 38, 48], // Abdominal pain, fever, fatigue, frequent urination
+                severity: 'medium',
+                description: 'Bacterial infection in urinary system',
+                recommendations: ['Drink plenty of water', 'Take prescribed antibiotics', 'Avoid caffeine'],
+                riskFactors: ['Female gender', 'Sexual activity', 'Poor hygiene'],
+                prevention: ['Drink cranberry juice', 'Wipe front to back', 'Urinate after intercourse'],
+                medicines: [
+                    { name: 'Nitrofurantoin', dosage: '100mg twice daily (prescription only)' },
+                    { name: 'Trimethoprim', dosage: '200mg twice daily (prescription only)' },
+                    { name: 'Pain reliever', dosage: 'As needed' }
+                ],
+                homeRemedies: ['Cranberry juice', 'Lots of water', 'Vitamin C', 'Probiotics', 'Avoid sugar'],
+                consultDoctor: true,
+                warningSigns: ['Blood in urine', 'High fever', 'Back pain', 'Nausea/vomiting']
             }
         ];
 
@@ -1816,7 +1882,7 @@
             return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
         }
 
-        // ==================== AI DIAGNOSIS WITH SMART RECOMMENDATIONS ====================
+        // ==================== AI DIAGNOSIS - FIXED WITH BETTER MATCHING ====================
         function validateForm() {
             const patientName = document.getElementById('patientName').value;
             const patientAge = document.getElementById('patientAge').value;
@@ -1868,9 +1934,28 @@
             if (bp > 160) severityScore += 15;
             if (heartRate > 120) severityScore += 10;
             
+            // Find matching diseases with improved scoring
             const matches = diseaseDatabase.map(disease => {
-                const matchingSymptoms = disease.symptoms.filter(s => selectedSymptoms.includes(s));
-                const symptomScore = (matchingSymptoms.length / disease.symptoms.length) * 70;
+                // Calculate exact matches
+                const exactMatches = disease.symptoms.filter(s => selectedSymptoms.includes(s));
+                const exactMatchCount = exactMatches.length;
+                
+                // Calculate partial matches (if symptoms are related - we'll use the same for now)
+                const partialMatches = [];
+                
+                // Total unique symptoms from disease and selected
+                const totalUniqueSymptoms = [...new Set([...disease.symptoms, ...selectedSymptoms])].length;
+                
+                // Calculate Jaccard similarity coefficient
+                const intersection = exactMatchCount;
+                const union = totalUniqueSymptoms;
+                const jaccardScore = union > 0 ? (intersection / union) * 100 : 0;
+                
+                // Symptom score based on percentage of disease symptoms matched
+                const symptomScore = (exactMatchCount / disease.symptoms.length) * 70;
+                
+                // Boost score if multiple symptoms match
+                const matchBoost = exactMatchCount > 2 ? 10 : 0;
                 
                 let vitalScore = 0;
                 
@@ -1894,34 +1979,70 @@
                     if (bloodSugar > 140) vitalScore += 5;
                 }
                 
-                const totalScore = Math.min(99, Math.round(symptomScore + vitalScore));
+                if (bmi) {
+                    if (bmi > 30 && disease.category === 'metabolic') vitalScore += 5;
+                    if (bmi < 18.5) vitalScore += 3;
+                }
                 
-                // Adjust severity based on score
-                let finalSeverity = disease.severity;
-                if (severityScore > 20 && disease.severity === 'low') finalSeverity = 'medium';
-                if (severityScore > 30 && disease.severity === 'medium') finalSeverity = 'high';
+                if (patientAge > 60 && disease.severity === 'high') vitalScore += 5;
+                
+                // Total score with boost for multiple matches
+                const totalScore = Math.min(99, Math.round(symptomScore + vitalScore + matchBoost));
+                
+                // Calculate match percentage for display
+                const matchPercentage = Math.round((exactMatchCount / disease.symptoms.length) * 100);
                 
                 return { 
                     ...disease, 
-                    matchScore: totalScore, 
-                    matchingSymptoms: matchingSymptoms.length,
-                    severity: finalSeverity,
-                    consultDoctor: finalSeverity === 'high' || disease.consultDoctor || severityScore > 25
+                    matchScore: totalScore,
+                    matchPercentage: matchPercentage,
+                    exactMatches: exactMatchCount,
+                    totalDiseaseSymptoms: disease.symptoms.length,
+                    jaccardScore: Math.round(jaccardScore),
+                    severity: disease.severity,
+                    consultDoctor: disease.severity === 'high' || disease.consultDoctor || severityScore > 25
                 };
-            }).filter(d => d.matchScore > 30).sort((a, b) => b.matchScore - a.matchScore);
+            }).filter(d => d.matchPercentage > 20 || d.exactMatches > 1) // Show if >20% match or at least 2 symptoms match
+              .sort((a, b) => {
+                  // Sort by exact matches first, then by percentage
+                  if (b.exactMatches !== a.exactMatches) {
+                      return b.exactMatches - a.exactMatches;
+                  }
+                  return b.matchPercentage - a.matchPercentage;
+              });
             
-            return matches[0] || {
-                name: 'Unable to Determine', 
-                severity: 'low', 
+            // If we have matches, return the best one
+            if (matches.length > 0) {
+                return matches[0];
+            }
+            
+            // If no matches, return a helpful message with possible conditions
+            return {
+                name: 'Multiple Possible Conditions',
+                severity: 'medium',
                 matchScore: 50,
-                description: 'Specific condition could not be identified',
-                recommendations: ['Consult a healthcare provider', 'Monitor symptoms', 'Rest and hydrate'],
-                riskFactors: ['Insufficient data'], 
-                prevention: ['Regular checkups', 'Healthy lifestyle'],
+                matchPercentage: 0,
+                exactMatches: 0,
+                description: 'Based on your symptoms, multiple conditions are possible. Here are some common matching conditions:',
+                recommendations: [
+                    'Consult a healthcare provider for proper diagnosis',
+                    'Monitor your symptoms',
+                    'Rest and stay hydrated',
+                    'Follow up if symptoms persist'
+                ],
+                riskFactors: ['Symptoms match multiple conditions', 'Further evaluation needed'],
+                prevention: ['Regular health checkups', 'Healthy lifestyle', 'Balanced diet'],
                 medicines: [],
-                homeRemedies: ['Rest', 'Hydration', 'Healthy diet'],
+                homeRemedies: ['Rest', 'Hydration', 'Healthy diet', 'Avoid stress'],
                 consultDoctor: true,
-                warningSigns: ['Symptoms persist for more than 3 days', 'Severe pain', 'High fever']
+                warningSigns: ['Symptoms persist for more than 3 days', 'Severe pain', 'High fever'],
+                possibleConditions: diseaseDatabase
+                    .filter(d => {
+                        const anyMatch = d.symptoms.some(s => selectedSymptoms.includes(s));
+                        return anyMatch;
+                    })
+                    .slice(0, 3)
+                    .map(d => d.name)
             };
         }
 
@@ -1944,6 +2065,27 @@
                     </div>
                 </div>
             `;
+            
+            // Show match percentage if available
+            if (diagnosis.matchPercentage > 0) {
+                html += `
+                    <div class="disease-info">
+                        <p><strong>Match Confidence:</strong> ${diagnosis.matchPercentage}% (${diagnosis.exactMatches} of ${diagnosis.totalDiseaseSymptoms} symptoms match)</p>
+                    </div>
+                `;
+            }
+            
+            // Show possible conditions if multiple
+            if (diagnosis.possibleConditions && diagnosis.possibleConditions.length > 0) {
+                html += `
+                    <div class="disease-info">
+                        <h3>🔍 ${translations[currentLanguage].possibleConditions || 'Possible Conditions'}:</h3>
+                        <ul>
+                            ${diagnosis.possibleConditions.map(condition => `<li>${condition}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
             
             if (matchingSymptomNames.length > 0) {
                 html += `
@@ -2061,10 +2203,15 @@
                 const severityClass = disease.severity === 'low' ? 'severity-low' : 
                                     disease.severity === 'medium' ? 'severity-medium' : 'severity-high';
                 
+                const commonSymptomNames = disease.symptoms.slice(0, 3).map(id => {
+                    const symptom = symptomsDatabase.find(s => s.id === id);
+                    return symptom ? symptom.name : '';
+                }).filter(name => name).join(', ');
+                
                 card.innerHTML = `
                     <h3>${disease.name}</h3>
                     <span class="severity-badge ${severityClass}">${disease.severity.toUpperCase()}</span>
-                    <p style="margin-top: 8px;">${disease.description.substring(0, 60)}...</p>
+                    <p style="margin-top: 8px; font-size:0.85rem;"><strong>Common:</strong> ${commonSymptomNames}...</p>
                 `;
                 
                 grid.appendChild(card);
@@ -2076,7 +2223,12 @@
             const grid = document.getElementById('diseaseGrid');
             
             const filtered = diseaseDatabase.filter(d => 
-                d.name.toLowerCase().includes(searchTerm) || d.description.toLowerCase().includes(searchTerm)
+                d.name.toLowerCase().includes(searchTerm) || 
+                d.description.toLowerCase().includes(searchTerm) ||
+                d.symptoms.some(id => {
+                    const symptom = symptomsDatabase.find(s => s.id === id);
+                    return symptom && symptom.name.toLowerCase().includes(searchTerm);
+                })
             );
             
             grid.innerHTML = '';
@@ -2103,6 +2255,12 @@
             const severityClass = disease.severity === 'low' ? 'severity-low' : 
                                 disease.severity === 'medium' ? 'severity-medium' : 'severity-high';
             
+            // Get symptom names
+            const symptomNames = disease.symptoms.map(id => {
+                const symptom = symptomsDatabase.find(s => s.id === id);
+                return symptom ? symptom.name : '';
+            }).filter(name => name).join(', ');
+            
             let html = `
                 <div class="diagnosis-header">
                     <div class="diagnosis-icon">📚</div>
@@ -2111,6 +2269,11 @@
                         <span class="severity-badge ${severityClass}">${disease.severity.toUpperCase()}</span>
                         <p style="margin-top: 8px;">${disease.description}</p>
                     </div>
+                </div>
+                
+                <div class="disease-info">
+                    <h3>${translations[currentLanguage].commonSymptoms || 'Common Symptoms'}</h3>
+                    <p>${symptomNames}</p>
                 </div>
             `;
             

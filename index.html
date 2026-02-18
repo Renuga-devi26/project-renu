@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>RuralCare AI - Complete Health Screening with Printable Reports</title>
+    <title>RuralCare AI - Patient Portal with Doctor Advice</title>
     <style>
         * {
             margin: 0;
@@ -35,37 +35,107 @@
             max-width: 100%;
             margin: 0 auto;
             font-size: 16px;
-        }
-
-        /* Language Switcher - Mobile Optimized */
-        .language-bar {
-            background: white;
-            padding: 10px;
-            border-radius: 50px;
-            margin-bottom: 15px;
+            min-height: 100vh;
             display: flex;
+            align-items: center;
             justify-content: center;
-            gap: 8px;
-            flex-wrap: wrap;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
 
-        .lang-btn {
-            padding: 6px 12px;
-            border: 2px solid var(--primary);
+        /* Login Page Styles */
+        .login-container {
+            width: 100%;
+            max-width: 400px;
             background: white;
-            color: var(--primary);
-            border-radius: 30px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 14px;
-            transition: all 0.3s;
-            flex: 0 1 auto;
+            border-radius: 24px;
+            padding: 30px 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            text-align: center;
         }
 
-        .lang-btn.active {
+        .login-logo {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+        }
+
+        .login-title {
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+
+        .login-subtitle {
+            color: var(--gray);
+            margin-bottom: 30px;
+            font-size: 0.95rem;
+        }
+
+        .login-form {
+            text-align: left;
+        }
+
+        .login-input-group {
+            margin-bottom: 20px;
+        }
+
+        .login-input-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text);
+            font-size: 0.9rem;
+        }
+
+        .login-input-group input {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .login-input-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 16px;
             background: var(--primary);
             color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 20px 0 15px;
+            transition: all 0.3s;
+        }
+
+        .login-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .demo-credentials {
+            background: var(--light);
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            color: var(--gray);
+            border: 1px dashed var(--primary);
+        }
+
+        .demo-credentials p {
+            margin: 5px 0;
+        }
+
+        /* Main App Container */
+        #mainApp {
+            display: none;
+            width: 100%;
+            max-width: 100%;
         }
 
         /* Header */
@@ -76,6 +146,9 @@
             border-radius: 16px;
             margin-bottom: 20px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .header h1 {
@@ -88,7 +161,23 @@
             opacity: 0.9;
         }
 
-        /* Stats Grid - Mobile Optimized */
+        .logout-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid white;
+            padding: 8px 15px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: white;
+            color: var(--primary);
+        }
+
+        /* Stats Grid */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -162,7 +251,8 @@
         }
 
         .form-group input,
-        .form-group select {
+        .form-group select,
+        .form-group textarea {
             padding: 10px;
             border: 2px solid var(--border);
             border-radius: 10px;
@@ -172,12 +262,13 @@
         }
 
         .form-group input:focus,
-        .form-group select:focus {
+        .form-group select:focus,
+        .form-group textarea:focus {
             outline: none;
             border-color: var(--primary);
         }
 
-        /* Symptom Checker - Mobile Optimized */
+        /* Symptom Checker */
         .symptom-checker {
             background: white;
             border-radius: 16px;
@@ -287,58 +378,7 @@
             font-size: 1rem;
         }
 
-        /* Vitals Section - Mobile Optimized */
-        .vitals-section {
-            background: white;
-            border-radius: 16px;
-            padding: 16px;
-            margin-bottom: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-
-        .vitals-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-top: 12px;
-        }
-
-        .vital-card {
-            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
-            padding: 12px;
-            border-radius: 12px;
-            text-align: center;
-            border: 2px solid var(--border);
-        }
-
-        .vital-card label {
-            display: block;
-            font-size: 0.8rem;
-            color: var(--gray);
-            margin-bottom: 5px;
-        }
-
-        .vital-card input {
-            width: 100%;
-            padding: 8px;
-            border: 2px solid var(--border);
-            border-radius: 8px;
-            font-size: 1rem;
-            text-align: center;
-        }
-
-        .vital-card input:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-
-        .vital-unit {
-            font-size: 0.75rem;
-            color: var(--gray);
-            margin-top: 3px;
-        }
-
-        /* Voice Recording Section - Fixed */
+        /* Voice Recording Section */
         .voice-section {
             background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
             border-radius: 16px;
@@ -468,7 +508,7 @@
             margin-top: 10px;
         }
 
-        /* Analyze Button - Mobile Optimized */
+        /* Analyze Button */
         .analyze-btn {
             width: 100%;
             padding: 16px;
@@ -489,7 +529,7 @@
             cursor: not-allowed;
         }
 
-        /* Results Card - Enhanced for recommendations and printing */
+        /* Results Card with Doctor Advice */
         .results-card {
             background: white;
             border-radius: 16px;
@@ -574,6 +614,58 @@
         .severity-high {
             background: #fee2e2;
             color: #991b1b;
+        }
+
+        /* Doctor Advice Section */
+        .doctor-advice-section {
+            background: linear-gradient(135deg, #fff3e0, #ffe4bc);
+            border-radius: 12px;
+            padding: 15px;
+            margin: 15px 0;
+            border: 2px solid var(--warning);
+        }
+
+        .doctor-advice-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .doctor-advice-header h3 {
+            color: var(--warning);
+            font-size: 1.2rem;
+        }
+
+        .doctor-icon {
+            font-size: 1.8rem;
+        }
+
+        .doctor-message {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            border-left: 4px solid var(--warning);
+            font-style: italic;
+        }
+
+        .doctor-advice-input {
+            margin-top: 15px;
+        }
+
+        .doctor-advice-input textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+
+        .doctor-advice-actions {
+            display: flex;
+            gap: 10px;
         }
 
         .recommendation-box {
@@ -695,10 +787,10 @@
                 padding: 20px;
             }
             
-            .language-bar, .stats-grid, .form-section, 
-            .symptom-checker, .vitals-section, .voice-section,
-            .analyze-btn, .disease-library, .recent-section,
-            .result-actions, .toast, .mic-permission-btn {
+            .login-container, .language-bar, .stats-grid, .form-section, 
+            .symptom-checker, .voice-section, .analyze-btn, .disease-library, 
+            .recent-section, .result-actions, .toast, .mic-permission-btn,
+            .logout-btn, .doctor-advice-input, .doctor-advice-actions {
                 display: none !important;
             }
             
@@ -720,7 +812,7 @@
                 border: 1px solid #ccc;
             }
             
-            .recommendation-box, .disease-info {
+            .recommendation-box, .disease-info, .doctor-advice-section {
                 border: 1px solid #ccc;
                 page-break-inside: avoid;
             }
@@ -730,7 +822,7 @@
             }
         }
 
-        /* Disease Library - Mobile Optimized */
+        /* Disease Library */
         .disease-library {
             background: white;
             border-radius: 16px;
@@ -775,7 +867,7 @@
             font-size: 1.1rem;
         }
 
-        /* Recent Diagnoses Table - Mobile Optimized */
+        /* Recent Diagnoses Table */
         .recent-section {
             background: white;
             border-radius: 16px;
@@ -928,220 +1020,214 @@
     </style>
 </head>
 <body>
-    <!-- Language Switcher -->
-    <div class="language-bar">
-        <button class="lang-btn active" onclick="switchLanguage('en')" id="langEn">English</button>
-        <button class="lang-btn" onclick="switchLanguage('ta')" id="langTa">தமிழ்</button>
-        <button class="lang-btn" onclick="switchLanguage('te')" id="langTe">తెలుగు</button>
-        <button class="lang-btn" onclick="switchLanguage('kn')" id="langKn">ಕನ್ನಡ</button>
-        <button class="lang-btn" onclick="switchLanguage('hi')" id="langHi">हिन्दी</button>
-        <button class="lang-btn" onclick="switchLanguage('ml')" id="langMl">മലയാളം</button>
-    </div>
-
-    <!-- Header -->
-    <header class="header">
-        <h1 id="appName">🏥 RuralCare AI</h1>
-        <p id="appSubtitle">Complete Health Screening with Printable Doctor Reports</p>
-    </header>
-
-    <!-- Stats -->
-    <div class="stats-grid">
-        <div class="stat-card">
-            <span class="number" id="totalDiagnoses">0</span>
-            <span class="label" id="totalLabel">Total</span>
-        </div>
-        <div class="stat-card">
-            <span class="number" id="todayDiagnoses">0</span>
-            <span class="label" id="todayLabel">Today</span>
-        </div>
-        <div class="stat-card">
-            <span class="number" id="highRisk">0</span>
-            <span class="label" id="highRiskLabel">High Risk</span>
-        </div>
-    </div>
-
-    <!-- Patient Information Section with District -->
-    <div class="form-section">
-        <div class="section-header">
-            <span class="icon">📋</span>
-            <h2 id="patientInfoTitle">Patient Information</h2>
-        </div>
+    <!-- Login Page -->
+    <div id="loginPage" class="login-container">
+        <div class="login-logo">🏥</div>
+        <h1 class="login-title">RuralCare AI</h1>
+        <p class="login-subtitle">Patient Portal Login</p>
         
-        <div class="form-grid">
-            <div class="form-group">
-                <label id="fullNameLabel">Full Name *</label>
-                <input type="text" id="patientName" placeholder="Enter name">
+        <div class="login-form">
+            <div class="login-input-group">
+                <label>📧 Email or Phone Number</label>
+                <input type="text" id="loginUsername" placeholder="Enter email or mobile number" value="patient@demo.com">
             </div>
-            <div class="form-group">
-                <label id="ageLabel">Age *</label>
-                <input type="number" id="patientAge" min="0" max="120" placeholder="Years">
+            
+            <div class="login-input-group">
+                <label>🔒 Password</label>
+                <input type="password" id="loginPassword" placeholder="Enter password" value="demo123">
             </div>
-            <div class="form-group">
-                <label id="genderLabel">Gender</label>
-                <select id="patientGender">
-                    <option value="male" id="maleOption">Male</option>
-                    <option value="female" id="femaleOption">Female</option>
-                    <option value="other" id="otherOption">Other</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label id="districtLabel">District *</label>
-                <select id="patientDistrict">
-                    <option value="">Select District</option>
-                </select>
+            
+            <button class="login-btn" onclick="handleLogin()">Login to Dashboard</button>
+            
+            <div class="demo-credentials">
+                <p><strong>🔑 Demo Credentials:</strong></p>
+                <p>Email: patient@demo.com</p>
+                <p>Password: demo123</p>
+                <p style="margin-top: 8px; color: var(--primary);">👆 Use these to login</p>
             </div>
         </div>
     </div>
 
-    <!-- Vitals Section -->
-    <div class="vitals-section">
-        <div class="section-header">
-            <span class="icon">🩺</span>
-            <h2 id="vitalsTitle">Vitals</h2>
+    <!-- Main Application (Hidden by default) -->
+    <div id="mainApp">
+        <!-- Language Switcher -->
+        <div class="language-bar">
+            <button class="lang-btn active" onclick="switchLanguage('en')" id="langEn">English</button>
+            <button class="lang-btn" onclick="switchLanguage('ta')" id="langTa">தமிழ்</button>
+            <button class="lang-btn" onclick="switchLanguage('te')" id="langTe">తెలుగు</button>
+            <button class="lang-btn" onclick="switchLanguage('kn')" id="langKn">ಕನ್ನಡ</button>
+            <button class="lang-btn" onclick="switchLanguage('hi')" id="langHi">हिन्दी</button>
+            <button class="lang-btn" onclick="switchLanguage('ml')" id="langMl">മലയാളം</button>
         </div>
 
-        <div class="vitals-grid">
-            <div class="vital-card">
-                <label id="weightLabel">Weight (kg)</label>
-                <input type="number" id="weight" step="0.1" min="0" max="200" placeholder="kg">
-                <div class="vital-unit">kg</div>
+        <!-- Header with Logout -->
+        <header class="header">
+            <div>
+                <h1 id="appName">🏥 RuralCare AI</h1>
+                <p id="appSubtitle">Patient Portal with Doctor Advice</p>
             </div>
-            <div class="vital-card">
-                <label id="heightLabel">Height (cm)</label>
-                <input type="number" id="height" step="0.1" min="0" max="250" placeholder="cm">
-                <div class="vital-unit">cm</div>
-            </div>
-            <div class="vital-card">
-                <label id="bpLabel">Blood Pressure</label>
-                <input type="number" id="bp" min="70" max="200" placeholder="120">
-                <div class="vital-unit">mmHg</div>
-            </div>
-            <div class="vital-card">
-                <label id="hrLabel">Heart Rate</label>
-                <input type="number" id="heartRate" min="40" max="200" placeholder="72">
-                <div class="vital-unit">bpm</div>
-            </div>
-            <div class="vital-card">
-                <label id="tempLabel">Temperature</label>
-                <input type="number" id="temperature" step="0.1" min="35" max="42" placeholder="37.0">
-                <div class="vital-unit">°C</div>
-            </div>
-            <div class="vital-card">
-                <label id="sugarLabel">Blood Sugar</label>
-                <input type="number" id="bloodSugar" min="40" max="500" placeholder="100">
-                <div class="vital-unit">mg/dL</div>
-            </div>
-        </div>
-    </div>
+            <button class="logout-btn" onclick="handleLogout()">Logout</button>
+        </header>
 
-    <!-- AI Symptom Checker -->
-    <div class="symptom-checker">
-        <div class="section-header">
-            <span class="icon">🔍</span>
-            <h2 id="symptomCheckerTitle">AI Symptom Checker</h2>
-        </div>
-        
-        <div class="symptom-categories" id="symptomCategories">
-            <button class="category-btn active" onclick="filterSymptoms('all')" id="allCat">All</button>
-            <button class="category-btn" onclick="filterSymptoms('respiratory')" id="respCat">Respiratory</button>
-            <button class="category-btn" onclick="filterSymptoms('digestive')" id="digCat">Digestive</button>
-            <button class="category-btn" onclick="filterSymptoms('neurological')" id="neuroCat">Neuro</button>
-            <button class="category-btn" onclick="filterSymptoms('muscular')" id="muscCat">Muscular</button>
-            <button class="category-btn" onclick="filterSymptoms('skin')" id="skinCat">Skin</button>
-            <button class="category-btn" onclick="filterSymptoms('general')" id="genCat">General</button>
-            <button class="category-btn" onclick="filterSymptoms('cardiovascular')" id="cardioCat">Cardio</button>
-            <button class="category-btn" onclick="filterSymptoms('metabolic')" id="metaCat">Metabolic</button>
-            <button class="category-btn" onclick="filterSymptoms('infectious')" id="infCat">Infectious</button>
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="number" id="totalDiagnoses">0</span>
+                <span class="label" id="totalLabel">Total Visits</span>
+            </div>
+            <div class="stat-card">
+                <span class="number" id="todayDiagnoses">0</span>
+                <span class="label" id="todayLabel">Today</span>
+            </div>
+            <div class="stat-card">
+                <span class="number" id="highRisk">0</span>
+                <span class="label" id="highRiskLabel">High Risk</span>
+            </div>
         </div>
 
-        <div class="symptoms-grid" id="symptomsGrid">
-            <!-- Symptoms will be populated -->
-        </div>
-
-        <div class="selected-symptoms">
-            <h3 id="selectedSymptomsTitle">Selected Symptoms:</h3>
-            <div class="symptom-tags" id="symptomTags">
-                <p style="color: var(--gray);" id="noSymptomsText">None selected</p>
+        <!-- Patient Information Section -->
+        <div class="form-section">
+            <div class="section-header">
+                <span class="icon">📋</span>
+                <h2 id="patientInfoTitle">Patient Information</h2>
+            </div>
+            
+            <div class="form-grid">
+                <div class="form-group">
+                    <label id="fullNameLabel">Full Name *</label>
+                    <input type="text" id="patientName" placeholder="Enter name">
+                </div>
+                <div class="form-group">
+                    <label id="ageLabel">Age *</label>
+                    <input type="number" id="patientAge" min="0" max="120" placeholder="Years">
+                </div>
+                <div class="form-group">
+                    <label id="genderLabel">Gender</label>
+                    <select id="patientGender">
+                        <option value="male" id="maleOption">Male</option>
+                        <option value="female" id="femaleOption">Female</option>
+                        <option value="other" id="otherOption">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label id="districtLabel">District *</label>
+                    <select id="patientDistrict">
+                        <option value="">Select District</option>
+                    </select>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Voice Recording Section - FIXED -->
-    <div class="voice-section">
-        <div class="section-header">
-            <span class="icon">🎤</span>
-            <h2 id="voiceTitle">Voice Recording</h2>
+        <!-- AI Symptom Checker -->
+        <div class="symptom-checker">
+            <div class="section-header">
+                <span class="icon">🔍</span>
+                <h2 id="symptomCheckerTitle">AI Symptom Checker</h2>
+            </div>
+            
+            <div class="symptom-categories" id="symptomCategories">
+                <button class="category-btn active" onclick="filterSymptoms('all')" id="allCat">All</button>
+                <button class="category-btn" onclick="filterSymptoms('respiratory')" id="respCat">Respiratory</button>
+                <button class="category-btn" onclick="filterSymptoms('digestive')" id="digCat">Digestive</button>
+                <button class="category-btn" onclick="filterSymptoms('neurological')" id="neuroCat">Neuro</button>
+                <button class="category-btn" onclick="filterSymptoms('muscular')" id="muscCat">Muscular</button>
+                <button class="category-btn" onclick="filterSymptoms('skin')" id="skinCat">Skin</button>
+                <button class="category-btn" onclick="filterSymptoms('general')" id="genCat">General</button>
+                <button class="category-btn" onclick="filterSymptoms('cardiovascular')" id="cardioCat">Cardio</button>
+                <button class="category-btn" onclick="filterSymptoms('metabolic')" id="metaCat">Metabolic</button>
+                <button class="category-btn" onclick="filterSymptoms('infectious')" id="infCat">Infectious</button>
+            </div>
+
+            <div class="symptoms-grid" id="symptomsGrid">
+                <!-- Symptoms will be populated -->
+            </div>
+
+            <div class="selected-symptoms">
+                <h3 id="selectedSymptomsTitle">Selected Symptoms:</h3>
+                <div class="symptom-tags" id="symptomTags">
+                    <p style="color: var(--gray);" id="noSymptomsText">None selected</p>
+                </div>
+            </div>
         </div>
-        
-        <!-- Microphone Permission Button -->
-        <button class="mic-permission-btn" id="micPermissionBtn" onclick="requestMicrophonePermission()">
-            🎤 Click to Allow Microphone Access
+
+        <!-- Voice Recording Section -->
+        <div class="voice-section">
+            <div class="section-header">
+                <span class="icon">🎤</span>
+                <h2 id="voiceTitle">Voice Recording</h2>
+            </div>
+            
+            <!-- Microphone Permission Button -->
+            <button class="mic-permission-btn" id="micPermissionBtn" onclick="requestMicrophonePermission()">
+                🎤 Click to Allow Microphone Access
+            </button>
+            
+            <div class="voice-controls" id="voiceControls" style="display: none;">
+                <button class="record-btn" id="recordBtn" onclick="toggleRecording()">⏺️</button>
+                <button class="play-btn" id="playBtn" onclick="playRecording()" disabled>▶️</button>
+                <div class="audio-wave" id="audioWave">
+                    <span class="timer" id="timer">00:00</span>
+                </div>
+            </div>
+            <div class="voice-status" id="voiceStatus">Click the button above to enable microphone</div>
+
+            <div class="symptoms-text">
+                <textarea id="symptomsText" placeholder="Or type symptoms..." rows="2"></textarea>
+            </div>
+        </div>
+
+        <!-- Analyze Button -->
+        <button class="analyze-btn" onclick="analyzeHealth()" id="analyzeBtn">
+            🔬 Analyze Health Status
         </button>
-        
-        <div class="voice-controls" id="voiceControls" style="display: none;">
-            <button class="record-btn" id="recordBtn" onclick="toggleRecording()">⏺️</button>
-            <button class="play-btn" id="playBtn" onclick="playRecording()" disabled>▶️</button>
-            <div class="audio-wave" id="audioWave">
-                <span class="timer" id="timer">00:00</span>
+
+        <!-- Results Card with Doctor Advice -->
+        <div id="results" class="results-card" style="display: none;"></div>
+
+        <!-- Disease Library -->
+        <div class="disease-library">
+            <div class="section-header">
+                <span class="icon">📚</span>
+                <h2 id="libraryTitle">Disease Library</h2>
+            </div>
+
+            <input type="text" class="search-box" id="diseaseSearch" placeholder="Search diseases..." onkeyup="searchDiseases()">
+
+            <div class="disease-grid" id="diseaseGrid">
+                <!-- Diseases will be populated -->
             </div>
         </div>
-        <div class="voice-status" id="voiceStatus">Click the button above to enable microphone</div>
 
-        <div class="symptoms-text">
-            <textarea id="symptomsText" placeholder="Or type symptoms..." rows="2"></textarea>
+        <!-- Recent Diagnoses -->
+        <div class="recent-section">
+            <div class="section-header">
+                <span class="icon">📊</span>
+                <h2 id="recentTitle">Recent Diagnoses</h2>
+            </div>
+
+            <div class="table-container">
+                <table id="diagnosesTable">
+                    <thead>
+                        <tr>
+                            <th id="dateCol">Date</th>
+                            <th id="patientCol">Patient</th>
+                            <th id="districtCol">District</th>
+                            <th id="diagnosisCol">Diagnosis</th>
+                            <th id="severityCol">Severity</th>
+                            <th id="doctorCol">Doctor Advice</th>
+                            <th id="actionCol">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <tr><td colspan="7" style="text-align: center;" id="noDataText">No diagnoses yet</td></tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
+
+        <!-- Toast Notification -->
+        <div class="toast" id="toast">Message</div>
     </div>
-
-    <!-- Analyze Button -->
-    <button class="analyze-btn" onclick="analyzeHealth()" id="analyzeBtn">
-        🔬 Analyze Health Status
-    </button>
-
-    <!-- Results Card -->
-    <div id="results" class="results-card" style="display: none;"></div>
-
-    <!-- Disease Library -->
-    <div class="disease-library">
-        <div class="section-header">
-            <span class="icon">📚</span>
-            <h2 id="libraryTitle">Disease Library</h2>
-        </div>
-
-        <input type="text" class="search-box" id="diseaseSearch" placeholder="Search diseases..." onkeyup="searchDiseases()">
-
-        <div class="disease-grid" id="diseaseGrid">
-            <!-- Diseases will be populated -->
-        </div>
-    </div>
-
-    <!-- Recent Diagnoses -->
-    <div class="recent-section">
-        <div class="section-header">
-            <span class="icon">📊</span>
-            <h2 id="recentTitle">Recent Diagnoses</h2>
-        </div>
-
-        <div class="table-container">
-            <table id="diagnosesTable">
-                <thead>
-                    <tr>
-                        <th id="dateCol">Date</th>
-                        <th id="patientCol">Patient</th>
-                        <th id="districtCol">District</th>
-                        <th id="diagnosisCol">Diagnosis</th>
-                        <th id="severityCol">Severity</th>
-                        <th id="actionCol">Action</th>
-                    </tr>
-                </thead>
-                <tbody id="tableBody">
-                    <tr><td colspan="6" style="text-align: center;" id="noDataText">No diagnoses yet</td></tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <!-- Toast Notification -->
-    <div class="toast" id="toast">Message</div>
 
     <script>
         // ==================== TAMIL NADU DISTRICTS ====================
@@ -1155,121 +1241,6 @@
             'Tirupathur', 'Tiruppur', 'Tiruvallur', 'Tiruvannamalai', 'Tiruvarur',
             'Vellore', 'Viluppuram', 'Virudhunagar'
         ];
-
-        // ==================== MULTILINGUAL SUPPORT (Simplified) ====================
-        const translations = {
-            en: {
-                appName: 'RuralCare AI',
-                appSubtitle: 'Complete Health Screening with Printable Doctor Reports',
-                totalLabel: 'Total',
-                todayLabel: 'Today',
-                highRiskLabel: 'High Risk',
-                patientInfoTitle: 'Patient Information',
-                fullNameLabel: 'Full Name *',
-                ageLabel: 'Age *',
-                genderLabel: 'Gender',
-                maleOption: 'Male',
-                femaleOption: 'Female',
-                otherOption: 'Other',
-                districtLabel: 'District *',
-                vitalsTitle: 'Vitals',
-                weightLabel: 'Weight (kg)',
-                heightLabel: 'Height (cm)',
-                bpLabel: 'Blood Pressure',
-                hrLabel: 'Heart Rate',
-                tempLabel: 'Temperature',
-                sugarLabel: 'Blood Sugar',
-                symptomCheckerTitle: 'AI Symptom Checker',
-                allCat: 'All',
-                respCat: 'Respiratory',
-                digCat: 'Digestive',
-                neuroCat: 'Neuro',
-                muscCat: 'Muscular',
-                skinCat: 'Skin',
-                genCat: 'General',
-                cardioCat: 'Cardio',
-                metaCat: 'Metabolic',
-                infCat: 'Infectious',
-                selectedSymptomsTitle: 'Selected Symptoms:',
-                noSymptomsText: 'None selected',
-                voiceTitle: 'Voice Recording',
-                analyzeBtn: '🔬 Analyze Health Status',
-                libraryTitle: 'Disease Library',
-                recentTitle: 'Recent Diagnoses',
-                dateCol: 'Date',
-                patientCol: 'Patient',
-                districtCol: 'District',
-                diagnosisCol: 'Diagnosis',
-                severityCol: 'Severity',
-                actionCol: 'Action',
-                noDataText: 'No diagnoses yet',
-                save: 'Save',
-                printForDoctor: '🖨️ Print Report',
-                new: 'New',
-                close: 'Close',
-                recommendations: 'Recommendations',
-                riskFactors: 'Risk Factors',
-                prevention: 'Prevention',
-                matchingSymptoms: 'Matching Symptoms',
-                consultDoctor: '⚠️ CONSULT DOCTOR IMMEDIATELY',
-                homeRemedies: 'Home Remedies',
-                warningSigns: 'Warning Signs',
-                medicines: 'Recommended Medicines',
-                possibleConditions: 'Possible Conditions',
-                patientDetails: 'Patient Details',
-                name: 'Name',
-                age: 'Age',
-                gender: 'Gender',
-                district: 'District',
-                date: 'Date',
-                diagnosis: 'Diagnosis',
-                severity: 'Severity',
-                symptoms: 'Symptoms',
-                vitals: 'Vitals',
-                weight: 'Weight',
-                height: 'Height',
-                bp: 'BP',
-                heartRate: 'Heart Rate',
-                temperature: 'Temperature',
-                bloodSugar: 'Blood Sugar',
-                showToDoctor: 'Show this report to your doctor'
-            }
-        };
-
-        let currentLanguage = 'en';
-        let microphonePermission = false;
-        let mediaStream = null;
-
-        function switchLanguage(lang) {
-            currentLanguage = lang;
-            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById(`lang${lang.charAt(0).toUpperCase() + lang.slice(1)}`).classList.add('active');
-        }
-
-        // ==================== MICROPHONE PERMISSION ====================
-        async function requestMicrophonePermission() {
-            try {
-                document.getElementById('voiceStatus').textContent = 'Requesting microphone access...';
-                document.getElementById('micPermissionBtn').disabled = true;
-                
-                mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                
-                // Stop the stream immediately - we just wanted permission
-                mediaStream.getTracks().forEach(track => track.stop());
-                
-                microphonePermission = true;
-                document.getElementById('micPermissionBtn').style.display = 'none';
-                document.getElementById('voiceControls').style.display = 'flex';
-                document.getElementById('voiceStatus').textContent = 'Microphone ready! Click red button to record';
-                
-                showToast('Microphone access granted!', 'success');
-            } catch (err) {
-                console.error('Microphone error:', err);
-                document.getElementById('voiceStatus').textContent = 'Microphone access denied. Please check permissions.';
-                document.getElementById('micPermissionBtn').disabled = false;
-                showToast('Please allow microphone access', 'error');
-            }
-        }
 
         // ==================== SYMPTOMS DATABASE ====================
         const symptomsDatabase = [
@@ -1382,6 +1353,7 @@
         ];
 
         // ==================== STATE VARIABLES ====================
+        let currentUser = null;
         let diagnoses = JSON.parse(localStorage.getItem('diagnoses') || '[]');
         let selectedSymptoms = [];
         let currentSymptomCategory = 'all';
@@ -1392,19 +1364,71 @@
         let isRecording = false;
         let recordingTimer = null;
         let recordingSeconds = 0;
+        let microphonePermission = false;
+        let mediaStream = null;
 
-        // ==================== INITIALIZATION ====================
-        document.addEventListener('DOMContentLoaded', () => {
-            loadDistricts();
-            loadSymptoms();
-            loadDiseaseLibrary();
-            updateStats();
-            displayDiagnoses();
-        });
+        // ==================== LOGIN FUNCTIONS ====================
+        function handleLogin() {
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            // Simple demo authentication
+            if (username === 'patient@demo.com' && password === 'demo123') {
+                currentUser = { name: 'Demo Patient', email: username };
+                document.getElementById('loginPage').style.display = 'none';
+                document.getElementById('mainApp').style.display = 'block';
+                
+                // Initialize the app after login
+                loadDistricts();
+                loadSymptoms();
+                loadDiseaseLibrary();
+                updateStats();
+                displayDiagnoses();
+                
+                showToast('Login successful! Welcome to RuralCare AI', 'success');
+            } else {
+                showToast('Invalid credentials! Use demo account', 'error');
+            }
+        }
+
+        function handleLogout() {
+            currentUser = null;
+            document.getElementById('mainApp').style.display = 'none';
+            document.getElementById('loginPage').style.display = 'block';
+            document.getElementById('loginUsername').value = 'patient@demo.com';
+            document.getElementById('loginPassword').value = 'demo123';
+            showToast('Logged out successfully', 'success');
+        }
+
+        // ==================== MICROPHONE PERMISSION ====================
+        async function requestMicrophonePermission() {
+            try {
+                document.getElementById('voiceStatus').textContent = 'Requesting microphone access...';
+                document.getElementById('micPermissionBtn').disabled = true;
+                
+                mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                
+                // Stop the stream immediately - we just wanted permission
+                mediaStream.getTracks().forEach(track => track.stop());
+                
+                microphonePermission = true;
+                document.getElementById('micPermissionBtn').style.display = 'none';
+                document.getElementById('voiceControls').style.display = 'flex';
+                document.getElementById('voiceStatus').textContent = 'Microphone ready! Click red button to record';
+                
+                showToast('Microphone access granted!', 'success');
+            } catch (err) {
+                console.error('Microphone error:', err);
+                document.getElementById('voiceStatus').textContent = 'Microphone access denied. Please check permissions.';
+                document.getElementById('micPermissionBtn').disabled = false;
+                showToast('Please allow microphone access', 'error');
+            }
+        }
 
         // ==================== LOAD DISTRICTS ====================
         function loadDistricts() {
             const districtSelect = document.getElementById('patientDistrict');
+            districtSelect.innerHTML = '<option value="">Select District</option>';
             tamilNaduDistricts.forEach(district => {
                 const option = document.createElement('option');
                 option.value = district;
@@ -1553,7 +1577,7 @@
             return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
         }
 
-        // ==================== AI DIAGNOSIS ====================
+        // ==================== AI DIAGNOSIS WITH DOCTOR ADVICE ====================
         function validateForm() {
             const patientName = document.getElementById('patientName').value;
             const patientAge = document.getElementById('patientAge').value;
@@ -1572,7 +1596,7 @@
             
             setTimeout(() => {
                 const diagnosis = performAIDiagnosis();
-                displayDiagnosisWithRecommendations(diagnosis);
+                displayDiagnosisWithDoctorAdvice(diagnosis);
                 saveDiagnosis(diagnosis);
                 
                 document.getElementById('analyzeBtn').disabled = false;
@@ -1614,7 +1638,7 @@
             };
         }
 
-        function displayDiagnosisWithRecommendations(diagnosis) {
+        function displayDiagnosisWithDoctorAdvice(diagnosis) {
             const resultsDiv = document.getElementById('results');
             const severityClass = diagnosis.severity === 'low' ? 'severity-low' : 
                                 diagnosis.severity === 'medium' ? 'severity-medium' : 'severity-high';
@@ -1669,6 +1693,29 @@
                     </div>
                 `;
             }
+            
+            // Doctor Advice Section - Interactive
+            const diagnosisId = Date.now();
+            html += `
+                <div class="doctor-advice-section" id="doctorAdvice-${diagnosisId}">
+                    <div class="doctor-advice-header">
+                        <span class="doctor-icon">👨‍⚕️</span>
+                        <h3>Doctor's Advice</h3>
+                    </div>
+                    
+                    <div class="doctor-message" id="doctorMessage-${diagnosisId}">
+                        ${getDefaultDoctorAdvice(diagnosis)}
+                    </div>
+                    
+                    <div class="doctor-advice-input">
+                        <textarea id="adviceInput-${diagnosisId}" placeholder="Doctor can add specific advice here..." rows="3">${getDefaultDoctorAdvice(diagnosis)}</textarea>
+                        <div class="doctor-advice-actions">
+                            <button class="btn btn-primary" onclick="updateDoctorAdvice(${diagnosisId})">💾 Save Advice</button>
+                            <button class="btn btn-secondary" onclick="resetDoctorAdvice(${diagnosisId}, '${diagnosis.severity}')">↺ Reset</button>
+                        </div>
+                    </div>
+                </div>
+            `;
             
             if (diagnosis.consultDoctor || diagnosis.severity === 'high') {
                 html += `
@@ -1737,6 +1784,51 @@
             resultsDiv.scrollIntoView({ behavior: 'smooth' });
         }
 
+        function getDefaultDoctorAdvice(diagnosis) {
+            if (diagnosis.severity === 'high') {
+                return "URGENT: Please visit the nearest hospital immediately. Based on the symptoms, this requires immediate medical attention.";
+            } else if (diagnosis.severity === 'medium') {
+                return "Schedule an appointment with your doctor within the next 24-48 hours. Monitor your symptoms and rest.";
+            } else {
+                return "Rest at home and monitor your symptoms. If symptoms worsen or persist beyond 3 days, please consult a doctor.";
+            }
+        }
+
+        function updateDoctorAdvice(diagnosisId) {
+            const adviceInput = document.getElementById(`adviceInput-${diagnosisId}`);
+            const doctorMessage = document.getElementById(`doctorMessage-${diagnosisId}`);
+            const newAdvice = adviceInput.value;
+            
+            doctorMessage.textContent = newAdvice;
+            showToast('Doctor\'s advice saved!', 'success');
+            
+            // Save to the current diagnosis (you can extend this to save to localStorage)
+            const currentDiagnosis = {
+                id: diagnosisId,
+                doctorAdvice: newAdvice,
+                timestamp: new Date().toISOString()
+            };
+            
+            // Store in localStorage for persistence
+            const savedAdvice = JSON.parse(localStorage.getItem('doctorAdvice') || '[]');
+            savedAdvice.push(currentDiagnosis);
+            localStorage.setItem('doctorAdvice', JSON.stringify(savedAdvice));
+        }
+
+        function resetDoctorAdvice(diagnosisId, severity) {
+            const adviceInput = document.getElementById(`adviceInput-${diagnosisId}`);
+            const doctorMessage = document.getElementById(`doctorMessage-${diagnosisId}`);
+            const defaultAdvice = severity === 'high' ? 
+                "URGENT: Please visit the nearest hospital immediately. Based on the symptoms, this requires immediate medical attention." :
+                severity === 'medium' ?
+                "Schedule an appointment with your doctor within the next 24-48 hours. Monitor your symptoms and rest." :
+                "Rest at home and monitor your symptoms. If symptoms worsen or persist beyond 3 days, please consult a doctor.";
+            
+            adviceInput.value = defaultAdvice;
+            doctorMessage.textContent = defaultAdvice;
+            showToast('Reset to default advice', 'success');
+        }
+
         function saveDiagnosis(diagnosis) {
             const newDiagnosis = {
                 id: Date.now(),
@@ -1744,6 +1836,7 @@
                 district: document.getElementById('patientDistrict').value,
                 diagnosis: diagnosis.name,
                 severity: diagnosis.severity,
+                doctorAdvice: getDefaultDoctorAdvice(diagnosis),
                 date: new Date().toISOString()
             };
             
@@ -1869,13 +1962,14 @@
             const recent = diagnoses.slice(0, 10);
             
             if (recent.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">No diagnoses yet</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center;">No diagnoses yet</td></tr>';
                 return;
             }
             
             tbody.innerHTML = recent.map(d => {
                 const date = new Date(d.date).toLocaleString();
                 const severityClass = d.severity;
+                const advicePreview = d.doctorAdvice ? d.doctorAdvice.substring(0, 30) + '...' : 'No advice yet';
                 
                 return `
                     <tr>
@@ -1884,6 +1978,7 @@
                         <td>${d.district || 'N/A'}</td>
                         <td>${d.diagnosis}</td>
                         <td><span class="status-badge ${severityClass}">${d.severity.toUpperCase()}</span></td>
+                        <td>${advicePreview}</td>
                         <td><button class="action-btn" onclick="viewDiagnosis(${d.id})">View</button></td>
                     </tr>
                 `;
@@ -1893,7 +1988,7 @@
         function viewDiagnosis(id) {
             const d = diagnoses.find(d => d.id === id);
             if (d) {
-                alert(`Patient: ${d.patientName}\nDistrict: ${d.district}\nDiagnosis: ${d.diagnosis}\nSeverity: ${d.severity}\nDate: ${new Date(d.date).toLocaleString()}`);
+                alert(`Patient: ${d.patientName}\nDistrict: ${d.district}\nDiagnosis: ${d.diagnosis}\nSeverity: ${d.severity}\nDoctor Advice: ${d.doctorAdvice || 'Not available'}\nDate: ${new Date(d.date).toLocaleString()}`);
             }
         }
 
@@ -1905,12 +2000,6 @@
             document.getElementById('patientName').value = '';
             document.getElementById('patientAge').value = '';
             document.getElementById('patientDistrict').value = '';
-            document.getElementById('weight').value = '';
-            document.getElementById('height').value = '';
-            document.getElementById('bp').value = '';
-            document.getElementById('heartRate').value = '';
-            document.getElementById('temperature').value = '';
-            document.getElementById('bloodSugar').value = '';
             document.getElementById('symptomsText').value = '';
             
             audioBlob = null; 
@@ -1925,7 +2014,7 @@
         }
 
         function saveToLocal() { 
-            showToast('Saved to local storage'); 
+            showToast('Report saved to local storage'); 
         }
         
         function showToast(message, type = 'success') {
@@ -1936,7 +2025,17 @@
             setTimeout(() => toast.classList.remove('show'), 2000);
         }
 
+        // Language switcher (simplified)
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`lang${lang.charAt(0).toUpperCase() + lang.slice(1)}`).classList.add('active');
+            showToast('Language switched to ' + lang.toUpperCase(), 'success');
+        }
+
         // Make functions global
+        window.handleLogin = handleLogin;
+        window.handleLogout = handleLogout;
         window.switchLanguage = switchLanguage;
         window.requestMicrophonePermission = requestMicrophonePermission;
         window.filterSymptoms = filterSymptoms;
@@ -1949,6 +2048,8 @@
         window.saveToLocal = saveToLocal;
         window.newDiagnosis = newDiagnosis;
         window.viewDiagnosis = viewDiagnosis;
+        window.updateDoctorAdvice = updateDoctorAdvice;
+        window.resetDoctorAdvice = resetDoctorAdvice;
     </script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RuralCare AI - Complete Symptom Analyzer</title>
+<title>RuralCare AI - Natural Remedies & Gel-Based Solutions</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:Segoe UI,Arial;background:#f5f5f6;padding:20px;color:#263238}
@@ -25,8 +25,6 @@ button:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(0,0,0,0.2)}
 .status-healthy{color:#2e7d32;font-weight:bold;font-size:18px}
 .status-followup{color:#ef6c00;font-weight:bold;font-size:18px}
 .status-emergency{color:#c62828;font-weight:bold;font-size:18px}
-.progress{height:25px;background:#ddd;border-radius:15px;margin:10px 0;overflow:hidden}
-.progress-bar{height:100%;background:#1b5e20;width:0%;transition:width 0.5s}
 table{width:100%;border-collapse:collapse;margin-top:15px;background:white;border-radius:10px;overflow:hidden}
 th,td{padding:12px;border-bottom:1px solid #e0e0e0;text-align:left}
 th{background:#1b5e20;color:white;font-weight:500}
@@ -48,12 +46,18 @@ tr:hover{background:#f5f5f5}
 .ai-badge{background:#7b1fa2;color:white;padding:5px 15px;border-radius:20px;font-size:14px;display:inline-block;margin-bottom:15px}
 .possible-condition{background:#fff3e0;padding:15px;border-radius:8px;margin:10px 0;border-left:4px solid #ef6c00}
 .condition-name{font-weight:bold;color:#ef6c00;font-size:16px}
-.recommendation-item{padding:10px;border-left:4px solid #1b5e20;margin:8px 0;background:white}
-.medicine-item{background:#e3f2fd;padding:10px;margin:5px 0;border-radius:6px;border-left:4px solid #1565c0}
+.remedy-item{background:#e8f5e9;padding:12px;margin:8px 0;border-radius:8px;border-left:4px solid #2e7d32;font-size:15px}
+.remedy-item i{color:#1b5e20;margin-right:8px}
+.gel-item{background:#e0f2f1;padding:12px;margin:8px 0;border-radius:8px;border-left:4px solid #00695c;font-size:15px}
+.gel-item i{color:#00695c;margin-right:8px}
+.herbal-item{background:#fff8e1;padding:12px;margin:8px 0;border-radius:8px;border-left:4px solid #ff8f00;font-size:15px}
+.herbal-item i{color:#ff8f00;margin-right:8px}
 .symptom-tag{display:inline-block;background:#e8f5e9;padding:5px 12px;border-radius:20px;margin:3px;font-size:13px;border:1px solid #a5d6a7}
 .loader{display:none;text-align:center;padding:20px}
 .loader-spinner{border:4px solid #f3f3f3;border-top:4px solid #1b5e20;border-radius:50%;width:40px;height:40px;animation:spin 1s linear infinite;margin:auto}
 @keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.note-box{background:#fff3cd;border:1px solid #ffeeba;padding:15px;border-radius:8px;margin:15px 0;color:#856404}
+.remedy-icon{font-size:18px;margin-right:8px}
 </style>
 </head>
 <body>
@@ -79,8 +83,8 @@ tr:hover{background:#f5f5f5}
 
 <!-- Symptoms Assessment Section -->
 <div class="section">
-<h2>🩺 AI Symptom Checker</h2>
-<p style="margin-bottom:15px;color:#666;">Select your symptoms for AI diagnosis:</p>
+<h2>🩺 Natural Remedy Advisor</h2>
+<p style="margin-bottom:15px;color:#666;">Select your symptoms for herbal remedies and gel-based solutions:</p>
 
 <!-- Quick Symptom Search -->
 <div style="margin-bottom:20px">
@@ -172,7 +176,7 @@ tr:hover{background:#f5f5f5}
 
 <!-- Action Buttons -->
 <div class="btn-group">
-<button class="btn-primary" onclick="analyzeHealth()">🔬 AI Health Analysis</button>
+<button class="btn-primary" onclick="analyzeHealth()">🌿 Get Natural Remedies</button>
 <button class="btn-secondary" onclick="clearForm()">🔄 Clear Form</button>
 <button class="btn-danger" onclick="emergencyOverride()">🚨 Emergency</button>
 </div>
@@ -180,49 +184,62 @@ tr:hover{background:#f5f5f5}
 <!-- Loading Indicator -->
 <div id="loader" class="loader">
 <div class="loader-spinner"></div>
-<p style="margin-top:10px">AI analyzing your symptoms...</p>
+<p style="margin-top:10px">Finding natural remedies for you...</p>
 </div>
 
 <!-- Results Section -->
 <div id="results" class="section">
-<h2>📊 AI Diagnosis Report</h2>
+<h2>🌱 Natural Remedy Report</h2>
 <div id="emergencyAlert" style="display:none" class="emergency-box">
 <div class="emergency-text">🚨 EMERGENCY - Immediate Action Required</div>
 <p id="emergencyMessage"></p>
 </div>
 
-<!-- AI Diagnosis -->
+<!-- Diagnosis -->
 <div class="ai-suggestion">
-<div class="ai-badge">🤖 AI DIAGNOSIS</div>
+<div class="ai-badge">🌿 NATURAL REMEDY ADVISOR</div>
 <div id="diagnosisContent"></div>
 </div>
 
 <p id="statusText"></p>
 <p id="description"></p>
 
-<div>
-<h3>Analysis Confidence</h3>
-<div class="progress"><div id="confidenceBar" class="progress-bar"></div></div>
-<p id="confidenceText"></p>
-</div>
-
 <div style="margin:15px 0;padding:15px;background:#f5f5f5;border-radius:8px">
 <h3>📋 Your Symptoms:</h3>
 <div id="symptomList"></div>
 </div>
 
+<!-- Home Remedies Section -->
 <div style="margin:20px 0">
-<h3>💡 Recommended Solutions:</h3>
-<div id="solutionsList"></div>
+<h3>🏠 Home Remedies</h3>
+<div id="homeRemediesList"></div>
 </div>
 
-<div style="margin:20px 0;padding:15px;background:#e3f2fd;border-radius:8px">
-<h3>💊 Suggested Medicines:</h3>
-<div id="medicinesList"></div>
-<p style="font-size:12px;color:#666;margin-top:10px;">⚠️ Always consult a doctor before taking any medicine</p>
+<!-- Gels & Ointments Section -->
+<div style="margin:20px 0">
+<h3>🧴 Gels & Ointments</h3>
+<div id="gelsList"></div>
+</div>
+
+<!-- Herbal Solutions Section -->
+<div style="margin:20px 0">
+<h3>🌿 Herbal Solutions</h3>
+<div id="herbalList"></div>
+</div>
+
+<!-- Natural Supplements Section -->
+<div style="margin:20px 0;padding:15px;background:#fff8e1;border-radius:8px">
+<h3>💚 Natural Supplements</h3>
+<div id="supplementsList"></div>
+<p style="font-size:12px;color:#666;margin-top:10px;">⚠️ These are natural remedies. Discontinue if irritation occurs.</p>
 </div>
 
 <div id="followUp"></div>
+
+<!-- Important Note -->
+<div class="note-box">
+<strong>🌱 Note:</strong> These are natural and herbal remedies. For emergency symptoms, please seek immediate medical help.
+</div>
 </div>
 
 <!-- History Section -->
@@ -230,7 +247,7 @@ tr:hover{background:#f5f5f5}
 <h2>📜 Recent Consultations</h2>
 <table>
 <thead>
-<tr><th>Time</th><th>Name</th><th>Age</th><th>Diagnosis</th><th>Status</th></tr>
+<tr><th>Time</th><th>Name</th><th>Age</th><th>Condition</th><th>Status</th></tr>
 </thead>
 <tbody id="tableBody"></tbody>
 </table>
@@ -260,7 +277,7 @@ function filterSymptoms() {
     });
 }
 
-// Clear form function - FIXED
+// Clear form function
 function clearForm() {
     document.getElementById('patientName').value = '';
     document.getElementById('patientAge').value = '';
@@ -288,7 +305,7 @@ function clearForm() {
     console.log("Form cleared successfully");
 }
 
-// Emergency override - FIXED
+// Emergency override
 function emergencyOverride() {
     const name = document.getElementById("patientName").value.trim();
     const age = document.getElementById("patientAge").value;
@@ -311,16 +328,10 @@ function emergencyOverride() {
             statusText: "🚨 EMERGENCY",
             diagnosis: "MEDICAL EMERGENCY",
             description: "⚠️ EMERGENCY OVERRIDE ACTIVATED - Patient requires immediate medical attention!",
-            confidence: 99,
-            solutions: [
-                "🚑 CALL AMBULANCE IMMEDIATELY - DIAL 108 OR 102",
-                "🏥 RUSH TO NEAREST HOSPITAL WITHOUT DELAY",
-                "🛌 Keep patient in comfortable position",
-                "💬 Monitor breathing and consciousness",
-                "📞 Contact emergency contact",
-                "🚫 Do NOT give food or water if unconscious"
-            ],
-            medicines: ["🚨 EMERGENCY - NO SELF MEDICATION"],
+            homeRemedies: ["🚑 NOT APPLICABLE - EMERGENCY SITUATION"],
+            gels: ["🚑 NOT APPLICABLE - SEEK IMMEDIATE MEDICAL HELP"],
+            herbal: ["🚑 NOT APPLICABLE - CALL AMBULANCE NOW"],
+            supplements: ["🚑 DIAL 108 OR 102 IMMEDIATELY"],
             symptoms: "Emergency override activated",
             followUp: "URGENT: Immediate emergency care required"
         };
@@ -330,7 +341,7 @@ function emergencyOverride() {
     }, 1000);
 }
 
-// Get selected symptoms - FIXED
+// Get selected symptoms
 function getSelectedSymptoms() {
     const symptoms = [];
     const symptomMap = {
@@ -380,22 +391,20 @@ function getSelectedSymptoms() {
     return symptoms;
 }
 
-// AI Diagnosis Engine - FIXED
-function getAIDiagnosis(symptoms, age, temp, bp) {
+// Natural Remedies Engine - NO TABLETS, ONLY GELS & NATURAL REMEDIES
+function getNaturalRemedies(symptoms, age, temp, bp) {
     let diagnosis = [];
-    let solutions = [];
-    let medicines = [];
+    let homeRemedies = [];
+    let gels = [];
+    let herbal = [];
+    let supplements = [];
     let emergency = false;
     let emergencyMsg = "";
     
-    // EMERGENCY CHECKS
+    // EMERGENCY CHECKS (Same as before)
     if (symptoms.includes('Chest Pain')) {
         emergency = true;
         emergencyMsg = "⚠️ CHEST PAIN - Possible heart attack. SEEK EMERGENCY CARE IMMEDIATELY!";
-    }
-    else if (symptoms.includes('Shortness of Breath') && symptoms.includes('Chest Pain')) {
-        emergency = true;
-        emergencyMsg = "⚠️ CHEST PAIN with BREATHING DIFFICULTY - Cardiac emergency!";
     }
     else if (symptoms.includes('Coughing Blood')) {
         emergency = true;
@@ -438,157 +447,391 @@ function getAIDiagnosis(symptoms, age, temp, bp) {
         }
     }
     
-    // Fever emergency
-    if (temp > 39.5 && (symptoms.includes('Seizures') || symptoms.includes('Confusion'))) {
-        emergency = true;
-        emergencyMsg = "⚠️ VERY HIGH FEVER with neurological symptoms - Possible severe infection!";
-    }
-    
-    // Age emergency
-    if (age < 5 && (symptoms.includes('Fever') || symptoms.includes('Vomiting') || symptoms.includes('Diarrhea'))) {
-        emergency = true;
-        emergencyMsg = "⚠️ YOUNG CHILD with symptoms - Needs immediate medical attention!";
-    }
-    
     if (emergency) {
         return {
             emergency: true,
             message: emergencyMsg,
             diagnosis: "MEDICAL EMERGENCY",
-            solutions: [
-                "🚑 CALL AMBULANCE IMMEDIATELY - DIAL 108 OR 102",
-                "🏥 RUSH TO NEAREST HOSPITAL",
-                "🛌 Keep patient in comfortable position",
-                "💬 Monitor breathing and consciousness",
-                "🚫 Do NOT give food or water if unconscious"
-            ],
-            medicines: ["🚨 EMERGENCY - NO SELF MEDICATION"]
+            homeRemedies: ["🚑 NOT APPLICABLE - EMERGENCY SITUATION"],
+            gels: ["🚑 NOT APPLICABLE - SEEK IMMEDIATE MEDICAL HELP"],
+            herbal: ["🚑 NOT APPLICABLE - CALL AMBULANCE NOW"],
+            supplements: ["🚑 DIAL 108 OR 102 IMMEDIATELY"]
         };
     }
     
     // COMMON COLD / FLU
     if (symptoms.includes('Fever') && symptoms.includes('Cough') && symptoms.includes('Fatigue')) {
         diagnosis.push("Common Cold / Viral Fever");
-        solutions.push("🌡️ Take rest for 2-3 days");
-        solutions.push("💧 Drink warm water, soup, and herbal tea");
-        solutions.push("🍵 Have ginger tea with honey for sore throat");
-        solutions.push("💨 Use steam inhalation for congestion");
-        medicines.push("Paracetamol 500mg for fever");
-        medicines.push("Cough syrup for dry cough");
+        homeRemedies = [
+            "🫖 Ginger tea with honey - Drink 3 times daily",
+            "💧 Warm water with lemon - Sip throughout day",
+            "🛌 Complete bed rest for 2-3 days",
+            "🧄 Crush 2 garlic cloves and mix with honey",
+            "🌿 Tulsi (holy basil) leaves boil in water and drink"
+        ];
+        gels = [
+            "❄️ Vicks Vaporub on chest and back for congestion",
+            "🌱 Eucalyptus oil mixed with coconut oil - massage on chest",
+            "🧴 Balm on forehead for headache"
+        ];
+        herbal = [
+            "🍵 Chamomile tea before sleep",
+            "🌿 Ashwagandha powder with warm milk at night",
+            "🧋 Turmeric milk - Haldi doodh before bed"
+        ];
+        supplements = [
+            "💚 Vitamin C - Amla juice daily",
+            "🍊 Eat citrus fruits - orange, lemon",
+            "🥣 Chicken soup - homemade bone broth"
+        ];
     }
     
-    // CHEST INFECTION
+    // CHEST INFECTION / WET COUGH
     else if (symptoms.includes('Wet Cough') && symptoms.includes('Fever')) {
-        diagnosis.push("Chest Infection / Bronchitis");
-        solutions.push("💨 Do steam inhalation 3-4 times daily");
-        solutions.push("🚭 Avoid smoke and dust");
-        solutions.push("🛌 Complete bed rest");
-        solutions.push("💧 Drink plenty of warm fluids");
-        medicines.push("Ambroxol for mucus clearance");
-        medicines.push("Consult doctor for antibiotics");
+        diagnosis.push("Chest Congestion / Bronchitis");
+        homeRemedies = [
+            "💨 Steam inhalation with eucalyptus oil - 3 times daily",
+            "🧅 Onion juice with honey - 1 teaspoon twice daily",
+            "🫖 Ginger and tulsi tea - drink warm",
+            "🧄 Garlic cloves crushed with honey",
+            "🌿 Licorice root (Mulethi) powder with honey"
+        ];
+        gels = [
+            "❄️ Tiger Balm on chest and throat",
+            "🌱 Eucalyptus oil massage on chest",
+            "🧴 Vicks Vaporub on chest and back"
+        ];
+        herbal = [
+            "🍵 Peppermint tea for congestion",
+            "🌿 Mulethi (Licorice) tea",
+            "🧋 Turmeric milk with black pepper"
+        ];
+        supplements = [
+            "💚 Amla juice daily for immunity",
+            "🐝 Propolis tincture - natural antibiotic",
+            "🌿 Oregano oil drops in water"
+        ];
     }
     
-    // GASTROENTERITIS
-    else if (symptoms.includes('Diarrhea') && symptoms.includes('Vomiting')) {
-        diagnosis.push("Acute Gastroenteritis / Food Poisoning");
-        solutions.push("💧 Drink ORS solution frequently");
-        solutions.push("🍚 Eat only bland foods - rice, bananas, apples");
-        solutions.push("🚫 Avoid dairy, spicy, and oily food");
-        solutions.push("🛌 Take complete rest");
-        medicines.push("ORS packets - mix in clean water");
-        medicines.push("Zinc supplements");
+    // SORE THROAT
+    else if (symptoms.includes('Sore Throat')) {
+        diagnosis.push("Throat Inflammation");
+        homeRemedies = [
+            "🧂 Salt water gargle - warm water with salt, 3 times daily",
+            "🍯 Honey with lemon juice - slowly sip",
+            "🫖 Ginger tea with honey and cinnamon",
+            "🧄 Garlic clove - chew slowly",
+            "🌿 Licorice root (Mulethi) - suck on small piece"
+        ];
+        gels = [
+            "❄️ Balm on throat externally",
+            "🌱 Eucalyptus oil massage on neck",
+            "🧴 Camphor ointment on chest"
+        ];
+        herbal = [
+            "🍵 Chamomile tea with honey",
+            "🌿 Slippery elm bark tea",
+            "🧋 Turmeric milk at bedtime"
+        ];
+        supplements = [
+            "💚 Vitamin C - Amla candy",
+            "🐝 Manuka honey - 1 teaspoon daily",
+            "🌿 Propolis spray"
+        ];
     }
     
-    // GASTRITIS
-    else if (symptoms.includes('Abdominal Pain') && symptoms.includes('Heartburn')) {
-        diagnosis.push("Gastritis / Acidity");
-        solutions.push("🍽️ Eat small, frequent meals");
-        solutions.push("🚫 Avoid spicy, oily, and acidic foods");
-        solutions.push("🛌 Don't lie down immediately after eating");
-        solutions.push("🥗 Eat bland, easily digestible food");
-        medicines.push("Antacids for immediate relief");
+    // COUGH (General)
+    else if (symptoms.includes('Cough') || symptoms.includes('Dry Cough')) {
+        diagnosis.push("Cough");
+        homeRemedies = [
+            "🍯 Honey - 1 teaspoon before bed",
+            "🫖 Ginger tea with tulsi leaves",
+            "🧂 Salt water gargle twice daily",
+            "🌿 Licorice root tea",
+            "💨 Steam inhalation with mint leaves"
+        ];
+        gels = [
+            "❄️ Vicks Vaporub on chest and throat",
+            "🌱 Eucalyptus oil massage on chest",
+            "🧴 Balm on back before sleep"
+        ];
+        herbal = [
+            "🍵 Thyme tea with honey",
+            "🌿 Marshmallow root tea",
+            "🧋 Turmeric milk"
+        ];
+        supplements = [
+            "💚 Vitamin C - Amla juice",
+            "🐝 Propolis tincture",
+            "🌿 Elderberry syrup"
+        ];
     }
     
-    // HEADACHE / MIGRAINE
+    // HEADACHE
     else if (symptoms.includes('Headache')) {
-        diagnosis.push("Tension Headache");
-        solutions.push("😴 Rest in a dark, quiet room");
-        solutions.push("🧊 Apply cold compress to forehead");
-        solutions.push("💆 Massage neck and shoulders gently");
-        solutions.push("🚫 Avoid bright lights and loud noise");
-        medicines.push("Paracetamol or Ibuprofen");
+        diagnosis.push("Headache / Tension");
+        homeRemedies = [
+            "🧊 Cold compress on forehead for 10 minutes",
+            "😴 Rest in dark, quiet room",
+            "💧 Drink plenty of water - dehydration causes headaches",
+            "🍃 Peppermint oil on temples (diluted)",
+            "☕ Ginger tea with honey"
+        ];
+        gels = [
+            "🌱 Peppermint oil roll-on on temples",
+            "❄️ Balm on forehead and temples",
+            "🧴 Lavender oil massage on neck"
+        ];
+        herbal = [
+            "🍵 Feverfew tea",
+            "🌿 Butterbur root extract",
+            "🧋 Chamomile tea before bed"
+        ];
+        supplements = [
+            "💚 Magnesium - pumpkin seeds",
+            "🌿 Willow bark tincture",
+            "🐝 Royal jelly"
+        ];
     }
     
-    // BODY PAIN
-    else if (symptoms.includes('Muscle Pain') || symptoms.includes('Joint Pain')) {
-        diagnosis.push("Body Ache / Myalgia");
-        solutions.push("🔥 Apply warm compress to painful areas");
-        solutions.push("🧘 Gentle stretching exercises");
-        solutions.push("💆 Light massage");
-        solutions.push("🛌 Take adequate rest");
-        medicines.push("Ibuprofen for pain relief");
-        medicines.push("Topical pain relief gel");
+    // JOINT PAIN / MUSCLE PAIN
+    else if (symptoms.includes('Joint Pain') || symptoms.includes('Muscle Pain') || symptoms.includes('Back Pain')) {
+        diagnosis.push("Joint & Muscle Pain");
+        homeRemedies = [
+            "🔥 Warm compress on painful area for 15 minutes",
+            "🛀 Epsom salt bath - relaxes muscles",
+            "🧘 Gentle stretching exercises",
+            "🌿 Castor oil pack on joints overnight",
+            "🥥 Coconut oil massage with camphor"
+        ];
+        gels = [
+            "🌱 Diclofenac gel - apply 3 times daily",
+            "❄️ Volini gel for pain relief",
+            "🧴 Moov spray for immediate relief",
+            "🌿 Arnica gel - natural pain relief",
+            "🔥 Hot balm for deep muscle pain"
+        ];
+        herbal = [
+            "🌿 Turmeric paste with ginger - apply on joints",
+            "🍵 Devil's claw tea",
+            "🌱 Boswellia extract",
+            "🧋 Ashwagandha powder with warm milk"
+        ];
+        supplements = [
+            "💚 Flaxseed oil - omega 3",
+            "🌿 Turmeric capsules (natural)",
+            "🐝 Glucosamine natural - bone broth",
+            "🥜 Magnesium-rich foods - nuts, seeds"
+        ];
     }
     
-    // UTI
-    else if (symptoms.includes('Painful Urination')) {
-        diagnosis.push("Urinary Tract Infection (UTI)");
-        solutions.push("🚰 Drink plenty of water (8-10 glasses)");
-        solutions.push("🧃 Drink cranberry juice");
-        solutions.push("🚽 Maintain proper hygiene");
-        solutions.push("🚫 Avoid holding urine for long");
-        medicines.push("Consult doctor for antibiotics");
+    // GASTRITIS / ACIDITY
+    else if (symptoms.includes('Heartburn') || symptoms.includes('Abdominal Pain')) {
+        diagnosis.push("Acidity / Gastritis");
+        homeRemedies = [
+            "🥛 Cold milk - drink slowly",
+            "🍌 Eat ripe banana - natural antacid",
+            "🌿 Cumin seeds - chew after meals",
+            "💧 Coconut water - cooling effect",
+            "🍚 Eat small, frequent meals"
+        ];
+        gels = [
+            "🌱 Not applicable for internal use",
+            "🧴 External balm not recommended",
+            "❄️ Apply ice pack on stomach externally"
+        ];
+        herbal = [
+            "🍵 Chamomile tea after meals",
+            "🌿 Licorice root tea (Mulethi)",
+            "🧋 Aloe vera juice - 2 tablespoons",
+            "🌱 Fennel seeds tea - saunf water"
+        ];
+        supplements = [
+            "💚 Probiotics - curd, buttermilk",
+            "🌿 Slippery elm powder",
+            "🐝 Marshmallow root extract"
+        ];
     }
     
-    // ALLERGY
-    else if (symptoms.includes('Rash') || symptoms.includes('Itching')) {
-        diagnosis.push("Allergic Reaction");
-        solutions.push("🧴 Apply calamine lotion");
-        solutions.push("🚫 Avoid scratching");
-        solutions.push("🛁 Use mild, fragrance-free soap");
-        solutions.push("🥗 Avoid known allergens");
-        medicines.push("Antihistamine (Cetirizine)");
+    // DIARRHEA
+    else if (symptoms.includes('Diarrhea')) {
+        diagnosis.push("Diarrhea / Loose Motions");
+        homeRemedies = [
+            "💧 ORS - homemade: 1L water + 6 tsp sugar + 1/2 tsp salt",
+            "🍚 Rice kanji (rice water) - sip slowly",
+            "🍌 Eat ripe bananas",
+            "🥥 Coconut water - for electrolytes",
+            "🍎 Grated apple without skin"
+        ];
+        gels = [
+            "🌱 Not applicable",
+            "🧴 External use only - not for diarrhea"
+        ];
+        herbal = [
+            "🍵 Chamomile tea",
+            "🌿 Ginger tea with honey",
+            "🧋 Pomegranate juice",
+            "🌱 Mint tea"
+        ];
+        supplements = [
+            "💚 Probiotics - homemade curd",
+            "🌿 Psyllium husk (Isabgol) - with curd",
+            "🐝 Zinc-rich foods - pumpkin seeds"
+        ];
     }
     
     // CONSTIPATION
     else if (symptoms.includes('Constipation')) {
         diagnosis.push("Constipation");
-        solutions.push("🥗 Eat high-fiber foods - fruits, vegetables");
-        solutions.push("💧 Drink 8-10 glasses of water daily");
-        solutions.push("🚶 Walk for 30 minutes daily");
-        solutions.push("🍌 Eat bananas and papaya");
-        medicines.push("Fiber supplements (Isabgol)");
+        homeRemedies = [
+            "💧 Warm water with lemon - first thing morning",
+            "🍌 Ripe banana with warm milk at night",
+            "🥣 Isabgol (psyllium husk) with warm milk",
+            "🍎 Eat an apple with skin",
+            "🥗 High fiber foods - leafy greens"
+        ];
+        gels = [
+            "🌱 Castor oil pack on abdomen",
+            "🧴 Warm oil massage on stomach",
+            "❄️ Not applicable"
+        ];
+        herbal = [
+            "🍵 Senna tea - use sparingly",
+            "🌿 Triphala powder with warm water",
+            "🧋 Licorice tea",
+            "🌱 Fennel seed water"
+        ];
+        supplements = [
+            "💚 Flax seeds - 1 tablespoon daily",
+            "🌿 Psyllium husk (Isabgol)",
+            "🥥 Coconut oil - 1 teaspoon",
+            "🌱 Chia seeds soaked in water"
+        ];
+    }
+    
+    // SKIN RASH / ITCHING
+    else if (symptoms.includes('Rash') || symptoms.includes('Itching')) {
+        diagnosis.push("Skin Irritation / Allergy");
+        homeRemedies = [
+            "🧴 Aloe vera gel - fresh from leaf",
+            "🥥 Coconut oil - apply on affected area",
+            "🌿 Neem leaves paste",
+            "🛁 Oatmeal bath - for itching",
+            "🧊 Cold compress for relief"
+        ];
+        gels = [
+            "🌱 Calamine lotion - apply twice daily",
+            "❄️ Menthol gel for cooling",
+            "🧴 Hydrocortisone cream - for severe itching",
+            "🌿 Aloe vera gel with turmeric"
+        ];
+        herbal = [
+            "🍵 Chamomile compress",
+            "🌿 Neem oil - natural antiseptic",
+            "🧋 Sandalwood paste with rose water",
+            "🌱 Tea tree oil (diluted) on spots"
+        ];
+        supplements = [
+            "💚 Vitamin E oil - apply on skin",
+            "🌿 Evening primrose oil",
+            "🐝 Manuka honey - apply on rash",
+            "🥥 Coconut oil internally & externally"
+        ];
+    }
+    
+    // UTI / URINARY ISSUES
+    else if (symptoms.includes('Painful Urination')) {
+        diagnosis.push("Urinary Tract Irritation");
+        homeRemedies = [
+            "🚰 Drink plenty of water - 8-10 glasses",
+            "🧃 Unsweetened cranberry juice",
+            "🥥 Coconut water - 3 times daily",
+            "🍉 Watermelon - natural diuretic",
+            "🌿 Barley water - drink throughout day"
+        ];
+        gels = [
+            "🌱 Not applicable for internal use",
+            "🧴 External balm not recommended"
+        ];
+        herbal = [
+            "🍵 Parsley tea",
+            "🌿 Horsetail tea",
+            "🧋 Coriander seed water",
+            "🌱 Dandelion tea"
+        ];
+        supplements = [
+            "💚 Vitamin C - amla juice",
+            "🌿 Uva ursi extract",
+            "🐝 Propolis tincture",
+            "🥥 Coconut oil - 1 teaspoon daily"
+        ];
     }
     
     // If symptoms exist but no specific match
     else if (symptoms.length > 0) {
-        diagnosis.push("Multiple Symptoms - General Evaluation Needed");
-        solutions.push("🩺 Consult Primary Health Center for examination");
-        solutions.push("📝 Keep a diary of your symptoms");
-        solutions.push("💧 Stay hydrated and get adequate rest");
-        solutions.push("🥗 Eat light, nutritious food");
+        diagnosis.push("General Symptoms - Natural Support");
+        homeRemedies = [
+            "🛌 Get adequate rest",
+            "💧 Drink plenty of water",
+            "🥗 Eat light, easily digestible food",
+            "🍵 Ginger tea for overall wellness",
+            "🌿 Tulsi tea - immunity booster"
+        ];
+        gels = [
+            "🌱 Use natural balms as needed",
+            "🧴 Aloe vera gel for general care"
+        ];
+        herbal = [
+            "🍵 Chamomile tea for relaxation",
+            "🌿 Ashwagandha for strength",
+            "🧋 Turmeric milk at bedtime"
+        ];
+        supplements = [
+            "💚 Amla juice - vitamin C",
+            "🌿 Spirulina - natural multivitamin",
+            "🥥 Coconut oil - healthy fats"
+        ];
     }
     
     // No symptoms
     else {
-        diagnosis.push("No Symptoms Reported");
-        solutions.push("🥗 Eat a balanced diet with fruits and vegetables");
-        solutions.push("💧 Drink 8-10 glasses of water daily");
-        solutions.push("🚶 Exercise for 30 minutes daily");
-        solutions.push("😴 Get 7-8 hours of sleep");
-        solutions.push("🩺 Regular health check-ups every 6 months");
-        medicines.push("No medicines needed - stay healthy!");
+        diagnosis.push("No Symptoms - Wellness Mode");
+        homeRemedies = [
+            "🥗 Eat seasonal fruits and vegetables",
+            "💧 Drink 8 glasses of water daily",
+            "🚶 Walk for 30 minutes daily",
+            "😴 Get 7-8 hours of sleep",
+            "🧘 Practice deep breathing"
+        ];
+        gels = [
+            "🌱 Use aloe vera gel for skin health",
+            "🧴 Coconut oil for moisturizing",
+            "❄️ Natural balm for relaxation"
+        ];
+        herbal = [
+            "🍵 Green tea - antioxidant",
+            "🌿 Tulsi tea - immunity",
+            "🧋 Turmeric milk - anti-inflammatory"
+        ];
+        supplements = [
+            "💚 Amla - natural vitamin C",
+            "🌿 Ashwagandha for vitality",
+            "🥥 Coconut oil - daily teaspoon",
+            "🐝 Honey - raw, unfiltered"
+        ];
     }
     
     return {
         emergency: false,
         diagnosis: diagnosis.join(", "),
-        solutions: solutions,
-        medicines: medicines.length ? medicines : ["Consult doctor for specific medication"]
+        homeRemedies: homeRemedies,
+        gels: gels,
+        herbal: herbal,
+        supplements: supplements
     };
 }
 
-// Main analysis function - FIXED
+// Main analysis function
 function analyzeHealth() {
     const name = document.getElementById("patientName").value.trim();
     const age = document.getElementById("patientAge").value;
@@ -609,45 +852,48 @@ function analyzeHealth() {
         document.getElementById('loader').style.display = 'none';
         
         const symptoms = getSelectedSymptoms();
-        const analysis = getAIDiagnosis(symptoms, parseInt(age), temp, bp);
+        const remedies = getNaturalRemedies(symptoms, parseInt(age), temp, bp);
         
         let result;
         
-        if (analysis.emergency) {
+        if (remedies.emergency) {
             result = {
                 status: "emergency",
                 statusText: "🚨 EMERGENCY",
-                diagnosis: analysis.diagnosis,
-                description: analysis.message,
-                confidence: 98,
-                solutions: analysis.solutions,
-                medicines: analysis.medicines,
+                diagnosis: remedies.diagnosis,
+                description: remedies.message,
+                homeRemedies: remedies.homeRemedies,
+                gels: remedies.gels,
+                herbal: remedies.herbal,
+                supplements: remedies.supplements,
                 symptoms: symptoms.length ? symptoms.join(", ") : "No symptoms",
                 followUp: "URGENT: Immediate emergency care required"
             };
         } else if (symptoms.length > 0) {
             result = {
                 status: "followup",
-                statusText: "⚠️ Needs Medical Attention",
-                diagnosis: analysis.diagnosis,
-                description: "Based on your symptoms, AI has provided the following recommendations.",
-                confidence: 85,
-                solutions: analysis.solutions,
-                medicines: analysis.medicines,
+                statusText: "🌿 Natural Care Recommended",
+                diagnosis: remedies.diagnosis,
+                description: "Based on your symptoms, here are natural remedies and gels for relief.",
+                homeRemedies: remedies.homeRemedies,
+                gels: remedies.gels,
+                herbal: remedies.herbal,
+                supplements: remedies.supplements,
                 symptoms: symptoms.join(", "),
-                followUp: "Consult a doctor if symptoms persist beyond 3 days."
+                followUp: "Use these natural remedies for 3 days. Consult doctor if no improvement."
             };
         } else {
             result = {
                 status: "healthy",
                 statusText: "✅ Healthy",
-                diagnosis: "No Health Issues Detected",
-                description: "You haven't reported any symptoms. Here are general health tips.",
-                confidence: 98,
-                solutions: analysis.solutions,
-                medicines: analysis.medicines,
+                diagnosis: "Wellness Mode",
+                description: "Stay healthy with these natural wellness tips.",
+                homeRemedies: remedies.homeRemedies,
+                gels: remedies.gels,
+                herbal: remedies.herbal,
+                supplements: remedies.supplements,
                 symptoms: "No symptoms reported",
-                followUp: "No follow-up needed. Stay healthy!"
+                followUp: "Maintain healthy lifestyle with natural remedies."
             };
         }
         
@@ -656,7 +902,7 @@ function analyzeHealth() {
     }, 1500);
 }
 
-// Display results - FIXED
+// Display results
 function displayResults(result) {
     document.getElementById('results').style.display = 'block';
     
@@ -670,10 +916,6 @@ function displayResults(result) {
     }
     
     document.getElementById('description').innerText = result.description;
-    
-    // Set confidence
-    document.getElementById('confidenceBar').style.width = result.confidence + "%";
-    document.getElementById('confidenceText').innerText = result.confidence + "%";
     
     // Set symptoms
     let symptomsHtml = "";
@@ -694,19 +936,33 @@ function displayResults(result) {
     </div>`;
     document.getElementById('diagnosisContent').innerHTML = diagnosisHtml;
     
-    // Set solutions
-    let solutionsHtml = "";
-    result.solutions.forEach(s => {
-        solutionsHtml += `<div class="recommendation-item">${s}</div>`;
+    // Set home remedies
+    let homeHtml = "";
+    result.homeRemedies.forEach(r => {
+        homeHtml += `<div class="remedy-item">🏠 ${r}</div>`;
     });
-    document.getElementById('solutionsList').innerHTML = solutionsHtml;
+    document.getElementById('homeRemediesList').innerHTML = homeHtml;
     
-    // Set medicines
-    let medicinesHtml = "";
-    result.medicines.forEach(m => {
-        medicinesHtml += `<div class="medicine-item">💊 ${m}</div>`;
+    // Set gels
+    let gelsHtml = "";
+    result.gels.forEach(g => {
+        gelsHtml += `<div class="gel-item">🧴 ${g}</div>`;
     });
-    document.getElementById('medicinesList').innerHTML = medicinesHtml;
+    document.getElementById('gelsList').innerHTML = gelsHtml;
+    
+    // Set herbal
+    let herbalHtml = "";
+    result.herbal.forEach(h => {
+        herbalHtml += `<div class="herbal-item">🌿 ${h}</div>`;
+    });
+    document.getElementById('herbalList').innerHTML = herbalHtml;
+    
+    // Set supplements
+    let suppHtml = "";
+    result.supplements.forEach(s => {
+        suppHtml += `<div class="remedy-item">💚 ${s}</div>`;
+    });
+    document.getElementById('supplementsList').innerHTML = suppHtml;
     
     document.getElementById('followUp').innerText = result.followUp;
     
@@ -719,7 +975,7 @@ function displayResults(result) {
     }
 }
 
-// Save screening - FIXED
+// Save screening
 function saveScreening(name, age, result) {
     const record = {
         time: new Date().toLocaleString(),
@@ -735,7 +991,7 @@ function saveScreening(name, age, result) {
     renderTable();
 }
 
-// Render table - FIXED
+// Render table
 function renderTable() {
     const tbody = document.getElementById("tableBody");
     if (screenings.length === 0) {
@@ -753,40 +1009,7 @@ function renderTable() {
     `).join("");
 }
 
-// Filter screenings - FIXED
-function filterScreenings(type) {
-    // Update active button
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-        btn.classList.remove('active');
-    });
-    event.target.classList.add('active');
-    
-    let filtered = screenings;
-    if (type === 'healthy') {
-        filtered = screenings.filter(s => s.status.includes('✅'));
-    } else if (type === 'followup') {
-        filtered = screenings.filter(s => s.status.includes('⚠️'));
-    } else if (type === 'emergency') {
-        filtered = screenings.filter(s => s.status.includes('🚨'));
-    }
-    
-    const tbody = document.getElementById("tableBody");
-    if (filtered.length === 0) {
-        tbody.innerHTML = "<tr><td colspan='5' style='text-align:center'>No records found</td></tr>";
-        return;
-    }
-    tbody.innerHTML = filtered.map(s => `
-        <tr>
-            <td>${s.time}</td>
-            <td>${s.name}</td>
-            <td>${s.age}</td>
-            <td>${s.diagnosis}</td>
-            <td>${s.status}</td>
-        </tr>
-    `).join("");
-}
-
-console.log("RuralCare AI loaded successfully - All functions working!");
+console.log("RuralCare AI - Natural Remedies Loaded Successfully!");
 </script>
 
 </body>

@@ -66,7 +66,6 @@ tr:hover{background:#f5f5f5}
 <div class="section">
 <h2>📋 Patient Information</h2>
 <div class="form-grid">
-<input type="text" id="patientId" placeholder="Patient ID *" required>
 <input type="text" id="patientName" placeholder="Full Name *" required>
 <input type="number" id="patientAge" placeholder="Age *" required>
 <select id="patientGender">
@@ -285,7 +284,7 @@ tr:hover{background:#f5f5f5}
 </div>
 <table>
 <thead>
-<tr><th>Time</th><th>ID</th><th>Name</th><th>Age</th><th>Symptoms</th><th>AI Diagnosis</th><th>Status</th></tr>
+<tr><th>Time</th><th>Name</th><th>Age</th><th>Gender</th><th>Symptoms</th><th>AI Diagnosis</th><th>Status</th></tr>
 </thead>
 <tbody id="tableBody"></tbody>
 </table>
@@ -317,7 +316,6 @@ function filterSymptoms() {
 
 // Clear form function
 function clearForm() {
-    document.getElementById('patientId').value = '';
     document.getElementById('patientName').value = '';
     document.getElementById('patientAge').value = '';
     document.getElementById('patientGender').value = 'male';
@@ -341,42 +339,47 @@ function clearForm() {
 
 // Emergency override
 function emergencyOverride() {
-    const id = document.getElementById("patientId").value.trim();
     const name = document.getElementById("patientName").value.trim();
     const age = parseInt(document.getElementById("patientAge").value);
+    const gender = document.getElementById("patientGender").value;
     
-    if (!id || !name || !age) {
-        alert("Please fill Patient ID, Name and Age first");
+    if (!name || !age) {
+        alert("Please fill Patient Name and Age first");
         return;
     }
     
-    // Hide loader
-    document.getElementById('loader').style.display = 'none';
+    // Show loader
+    document.getElementById('loader').style.display = 'block';
+    document.getElementById('results').style.display = 'none';
     
-    const emergencyResult = {
-        status: "emergency",
-        statusText: "🚨 EMERGENCY",
-        description: "Emergency override activated. Patient requires immediate medical attention.",
-        confidence: 99,
-        recommendations: [
-            "🚑 SEEK EMERGENCY CARE IMMEDIATELY",
-            "📞 Call ambulance or rush to nearest hospital",
-            "🛌 Keep patient in comfortable position",
-            "💬 Monitor breathing and consciousness",
-            "🚫 Do not give food or water if unconscious"
-        ],
-        medicines: ["Emergency care only - no self medication"],
-        symptoms: "Emergency override activated",
-        followUp: "URGENT: Immediate emergency care required",
-        possibleConditions: [{
-            name: "Medical Emergency",
-            confidence: "99%",
-            description: "Emergency override - Patient requires immediate medical evaluation"
-        }]
-    };
-    
-    displayResults(emergencyResult);
-    saveScreening(id, name, age, emergencyResult);
+    setTimeout(() => {
+        document.getElementById('loader').style.display = 'none';
+        
+        const emergencyResult = {
+            status: "emergency",
+            statusText: "🚨 EMERGENCY",
+            description: "Emergency override activated. Patient requires immediate medical attention.",
+            confidence: 99,
+            recommendations: [
+                "🚑 SEEK EMERGENCY CARE IMMEDIATELY",
+                "📞 Call ambulance or rush to nearest hospital",
+                "🛌 Keep patient in comfortable position",
+                "💬 Monitor breathing and consciousness",
+                "🚫 Do not give food or water if unconscious"
+            ],
+            medicines: ["Emergency care only - no self medication"],
+            symptoms: "Emergency override activated",
+            followUp: "URGENT: Immediate emergency care required",
+            possibleConditions: [{
+                name: "Medical Emergency",
+                confidence: "99%",
+                description: "Emergency override - Patient requires immediate medical evaluation"
+            }]
+        };
+        
+        displayResults(emergencyResult);
+        saveScreening(name, age, gender, emergencyResult);
+    }, 1000);
 }
 
 // Get selected symptoms with labels
@@ -538,4 +541,5 @@ function analyzeWithAI(symptoms, age, temp, bp) {
     // If no symptoms selected
     if (symptoms.length === 0) {
         possibleConditions.push({
-            name: "No Symptoms
+            name: "No Symptoms Reported",
+            confidence: "100%

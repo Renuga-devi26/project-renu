@@ -297,6 +297,9 @@ tr:hover{background:#f5f5f5}
 // Global variables
 let screenings = JSON.parse(localStorage.getItem("screenings") || "[]");
 
+// Initial render
+renderTable();
+
 // Symptom search filter
 function filterSymptoms() {
     let searchText = document.getElementById('symptomSearch').value.toLowerCase();
@@ -317,17 +320,23 @@ function clearForm() {
     document.getElementById('patientId').value = '';
     document.getElementById('patientName').value = '';
     document.getElementById('patientAge').value = '';
+    document.getElementById('patientGender').value = 'male';
     document.getElementById('height').value = '';
     document.getElementById('weight').value = '';
     document.getElementById('temperature').value = '';
     document.getElementById('bp').value = '';
     document.getElementById('additionalSymptoms').value = '';
+    document.getElementById('symptomSearch').value = '';
     
     // Uncheck all checkboxes
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
     checkboxes.forEach(cb => cb.checked = false);
     
+    // Hide results
     document.getElementById('results').style.display = 'none';
+    
+    // Show all symptoms again
+    filterSymptoms();
 }
 
 // Emergency override
@@ -341,19 +350,28 @@ function emergencyOverride() {
         return;
     }
     
+    // Hide loader
+    document.getElementById('loader').style.display = 'none';
+    
     const emergencyResult = {
         status: "emergency",
         statusText: "🚨 EMERGENCY",
         description: "Emergency override activated. Patient requires immediate medical attention.",
         confidence: 99,
-        recommendations: ["🚑 SEEK EMERGENCY CARE IMMEDIATELY", "📞 Call ambulance or rush to nearest hospital", "🛌 Keep patient comfortable and monitor vital signs"],
+        recommendations: [
+            "🚑 SEEK EMERGENCY CARE IMMEDIATELY",
+            "📞 Call ambulance or rush to nearest hospital",
+            "🛌 Keep patient in comfortable position",
+            "💬 Monitor breathing and consciousness",
+            "🚫 Do not give food or water if unconscious"
+        ],
         medicines: ["Emergency care only - no self medication"],
-        symptoms: "Emergency override",
+        symptoms: "Emergency override activated",
         followUp: "URGENT: Immediate emergency care required",
         possibleConditions: [{
             name: "Medical Emergency",
             confidence: "99%",
-            description: "Patient requires immediate medical evaluation"
+            description: "Emergency override - Patient requires immediate medical evaluation"
         }]
     };
     
@@ -442,6 +460,9 @@ function analyzeWithAI(symptoms, age, temp, bp) {
     let emergency = false;
     let emergencyMessage = "";
     
+    console.log("Analyzing symptoms:", symptoms);
+    console.log("Age:", age, "Temp:", temp, "BP:", bp);
+    
     // Check for emergency symptoms first
     const emergencySymptoms = ['Coughing Blood', 'Blood in Stool', 'Blood in Urine', 'Fainting', 'Seizures', 'Confusion', 'Chest Pressure', 'Irregular Heartbeat', 'Yellow Skin'];
     
@@ -499,30 +520,22 @@ function analyzeWithAI(symptoms, age, temp, bp) {
             emergency: true,
             emergencyMessage: emergencyMessage,
             possibleConditions: [{
-                name: "Medical Emergency",
+                name: "MEDICAL EMERGENCY",
                 confidence: "95%",
                 description: emergencyMessage
             }],
-            recommendations: ["🚑 SEEK EMERGENCY CARE IMMEDIATELY", "📞 Call ambulance or rush to nearest hospital", "🛌 Keep patient in comfortable position", "💬 Do not give food or water if unconscious"],
+            recommendations: [
+                "🚑 SEEK EMERGENCY CARE IMMEDIATELY",
+                "📞 Call ambulance or rush to nearest hospital",
+                "🛌 Keep patient in comfortable position",
+                "💬 Monitor breathing and consciousness",
+                "🚫 Do not give food or water if unconscious"
+            ],
             medicines: ["Emergency care only - no self medication"]
         };
     }
     
-    // Respiratory Conditions
-    if (symptoms.includes('Cough') && symptoms.includes('Fever') && symptoms.includes('Fatigue')) {
+    // If no symptoms selected
+    if (symptoms.length === 0) {
         possibleConditions.push({
-            name: "Upper Respiratory Infection / Common Cold",
-            confidence: "85%",
-            description: "Viral infection affecting nose and throat"
-        });
-        recommendations.push("🛌 Get plenty of rest");
-        recommendations.push("💧 Drink warm fluids like soup and tea");
-        recommendations.push("💨 Use steam inhalation");
-        medicines.push("Paracetamol for fever");
-        medicines.push("Cough syrup (Dextromethorphan for dry cough)");
-    }
-    
-    if (symptoms.includes('Wet Cough') && symptoms.includes('Fever') && symptoms.includes('Fatigue')) {
-        possibleConditions.push({
-            name: "Bronchitis or Chest Infection",
-            confidence: "
+            name: "No Symptoms

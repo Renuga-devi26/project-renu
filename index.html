@@ -1,598 +1,1312 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RuralCare · 360° premium health AI</title>
-  <!-- Font & Icons (modern, clean) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    }
-
-    body {
-      background: linear-gradient(145deg, #eef5f1 0%, #f7fbf9 100%);
-      padding: 24px;
-      color: #1b3329;
-    }
-
-    /* main container */
-    .container {
-      max-width: 1600px;
-      margin: 0 auto;
-    }
-
-    /* ===== premium card style ===== */
-    .premium-card {
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(70, 130, 90, 0.25);
-      border-radius: 42px;
-      padding: 32px;
-      margin-bottom: 28px;
-      box-shadow: 0 20px 40px -10px rgba(20, 70, 40, 0.25), 0 0 0 1px rgba(60, 110, 80, 0.1) inset;
-      transition: all 0.25s ease;
-    }
-
-    h2 {
-      font-size: 2.1rem;
-      font-weight: 600;
-      background: linear-gradient(135deg, #1b4b3b, #2d6a4f);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 24px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      border-bottom: 2px solid rgba(40, 110, 70, 0.2);
-      padding-bottom: 16px;
-      letter-spacing: -0.02em;
-    }
-
-    h3 {
-      color: #1f5e41;
-      font-weight: 600;
-      font-size: 1.4rem;
-      margin: 24px 0 16px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    /* language selector premium */
-    .lang-panel {
-      display: flex;
-      justify-content: flex-end;
-      gap: 12px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-    }
-    .lang-btn {
-      background: white;
-      border: 1.5px solid #c0dfcf;
-      padding: 10px 26px;
-      border-radius: 60px;
-      font-weight: 600;
-      color: #1f5e41;
-      cursor: pointer;
-      box-shadow: 0 5px 12px rgba(0,30,10,0.05);
-      transition: 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .lang-btn.active {
-      background: #1f5e41;
-      color: white;
-      border-color: #1f5e41;
-      box-shadow: 0 8px 18px rgba(30, 100, 60, 0.3);
-    }
-
-    /* form grid */
-    .grid-4 {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-      gap: 18px;
-    }
-    .input-icon {
-      position: relative;
-      display: flex;
-      align-items: center;
-    }
-    .input-icon i {
-      position: absolute;
-      left: 18px;
-      color: #2e7d5e;
-      font-size: 1.2rem;
-    }
-    .input-icon input, .input-icon select, .input-icon textarea {
-      width: 100%;
-      padding: 16px 16px 16px 52px;
-      border: 2px solid #def0e6;
-      border-radius: 60px;
-      font-size: 1rem;
-      background: rgba(255,255,255,0.9);
-      transition: 0.2s;
-    }
-    .input-icon textarea {
-      border-radius: 32px;
-      padding: 18px 22px 18px 52px;
-    }
-    .input-icon input:focus, .input-icon select:focus, .input-icon textarea:focus {
-      border-color: #1f5e41;
-      outline: none;
-      box-shadow: 0 0 0 4px rgba(30, 110, 70, 0.2);
-    }
-
-    /* symptom grid premium */
-    .symptom-category {
-      background: rgba(235, 250, 240, 0.7);
-      border-radius: 38px;
-      padding: 24px;
-      margin-bottom: 22px;
-      backdrop-filter: blur(4px);
-    }
-    .symptom-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 14px;
-    }
-    .symptom-item {
-      background: white;
-      border-radius: 50px;
-      padding: 10px 22px 10px 16px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      box-shadow: 0 3px 10px rgba(0,30,10,0.05);
-      border: 1px solid #c0ecd2;
-      transition: all 0.1s;
-    }
-    .symptom-item:hover {
-      border-color: #1b5e3f;
-      box-shadow: 0 6px 14px rgba(30, 110, 70, 0.15);
-    }
-    .symptom-item input[type="checkbox"] {
-      width: 22px;
-      height: 22px;
-      accent-color: #1f5e41;
-    }
-
-    .severity-badge {
-      font-size: 0.7rem;
-      font-weight: 700;
-      padding: 5px 12px;
-      border-radius: 40px;
-      background: #e2f0e6;
-      color: #124e31;
-    }
-
-    /* premium voice bar */
-    .voice-premium {
-      background: linear-gradient(105deg, #edfff5 0%, #ffffff 100%);
-      border-radius: 80px;
-      padding: 16px 28px;
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 20px;
-      margin: 25px 0 10px;
-      border: 1px solid #9fdfbc;
-      box-shadow: 0 6px 18px rgba(20, 100, 50, 0.15);
-    }
-    .voice-btn {
-      background: #1f5e41;
-      color: white;
-      border: none;
-      padding: 14px 38px;
-      border-radius: 80px;
-      font-weight: 700;
-      font-size: 1.1rem;
-      display: flex;
-      gap: 12px;
-      align-items: center;
-      cursor: pointer;
-      box-shadow: 0 8px 20px rgba(20, 90, 50, 0.4);
-      transition: 0.2s;
-    }
-    .voice-btn.listening {
-      background: #b13e3e;
-      animation: pulse 1.2s infinite;
-    }
-    @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.7; } }
-
-    /* primary buttons */
-    .btn-group {
-      display: flex;
-      gap: 18px;
-      flex-wrap: wrap;
-      margin: 30px 0;
-    }
-    .btn-primary, .btn-secondary, .btn-danger {
-      padding: 18px 40px;
-      border-radius: 70px;
-      font-weight: 700;
-      font-size: 1.2rem;
-      border: none;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      transition: 0.2s;
-      box-shadow: 0 8px 18px rgba(0, 30, 10, 0.2);
-    }
-    .btn-primary { background: #1f5e41; color: white; }
-    .btn-primary:hover { background: #124d32; transform: scale(1.02); }
-    .btn-secondary { background: #e1f0e6; color: #1f5e41; }
-    .btn-danger { background: #b13e3e; color: white; }
-
-    /* result premium */
-    .result-premium {
-      background: linear-gradient(125deg, #f6fffa, #ffffff);
-      border-radius: 48px;
-      padding: 32px;
-      margin: 22px 0;
-      border: 1px solid rgba(30, 110, 70, 0.3);
-      box-shadow: 0 18px 36px -10px #a0d8bb;
-    }
-    .status-emergency { color: #b02b2b; font-weight: 800; font-size: 2rem; }
-    .status-followup { color: #c96b0b; font-weight: 800; font-size: 2rem; }
-    .status-healthy { color: #1f5e41; font-weight: 800; font-size: 2rem; }
-
-    .recommendation-card {
-      background: #f2fcf5;
-      border-radius: 28px;
-      padding: 20px 26px;
-      margin: 10px 0;
-      border-left: 8px solid #1f5e41;
-      font-weight: 500;
-    }
-
-    /* doctor panel premium */
-    .doctor-premium {
-      background: linear-gradient(125deg, #e2f0f5, #f9ffff);
-      border-left: 10px solid #144d70;
-      border-radius: 48px;
-    }
-    .login-glass {
-      background: rgba(255,255,255,0.75);
-      backdrop-filter: blur(16px);
-      border-radius: 48px;
-      padding: 36px;
-      max-width: 450px;
-      margin: 0 auto;
-      border: 1px solid #b7d9e5;
-    }
-    .doctor-table {
-      width: 100%;
-      border-collapse: collapse;
-      border-radius: 36px;
-      overflow: hidden;
-      background: white;
-    }
-    .doctor-table th {
-      background: #144d70;
-      color: white;
-      padding: 18px;
-      font-weight: 500;
-    }
-    .doctor-table td {
-      padding: 16px;
-      border-bottom: 1px solid #d0ead9;
-    }
-
-    /* extra features grid: health tips, emergency contacts */
-    .feature-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 22px;
-      margin: 30px 0;
-    }
-    .feature-tile {
-      background: rgba(255,255,255,0.7);
-      backdrop-filter: blur(10px);
-      padding: 24px;
-      border-radius: 38px;
-      border: 1px solid #c2e5cf;
-      box-shadow: 0 8px 16px -8px #7fa38d;
-    }
-
-    .hidden { display: none; }
-    .loader {
-      display: none;
-      text-align: center;
-      padding: 40px;
-    }
-    .loader-spinner {
-      border: 6px solid #d2f0de;
-      border-top: 6px solid #1f5e41;
-      border-radius: 50%;
-      width: 70px;
-      height: 70px;
-      animation: spin 1s linear infinite;
-      margin: 10px auto;
-    }
-    @keyframes spin { 0% { transform: rotate(0); } 100% { transform: rotate(360deg); } }
-
-    #results { display: none; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RuralCare - Patient Records & Natural Remedies</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Segoe UI,Arial;background:#f5f5f6;padding:20px;color:#263238}
+.container{max-width:1400px;margin:auto}
+.section{background:#fff;padding:25px;border-radius:14px;margin-bottom:25px;box-shadow:0 4px 10px rgba(0,0,0,.1)}
+h2{color:#1b5e20;margin-bottom:15px;border-bottom:2px solid #e8f5e9;padding-bottom:10px}
+h3{color:#2e7d32;margin:15px 0 10px}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
+.symptom-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:15px 0}
+input,select,textarea{padding:12px;border:1px solid #ccc;border-radius:8px;width:100%;font-size:14px}
+textarea{min-height:80px;resize:vertical}
+button{padding:12px 25px;border:none;border-radius:8px;cursor:pointer;font-weight:600;font-size:15px;transition:all 0.3s}
+button:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(0,0,0,0.2)}
+.btn-primary{background:#1b5e20;color:#fff}
+.btn-secondary{background:#eee;color:#333}
+.btn-danger{background:#c62828;color:#fff}
+.btn-group{display:flex;gap:15px;flex-wrap:wrap;margin:20px 0}
+#results{display:none;margin-top:20px}
+.status-healthy{color:#2e7d32;font-weight:bold;font-size:18px}
+.status-followup{color:#ef6c00;font-weight:bold;font-size:18px}
+.status-emergency{color:#c62828;font-weight:bold;font-size:18px}
+table{width:100%;border-collapse:collapse;margin-top:15px;background:white;border-radius:10px;overflow:hidden}
+th,td{padding:12px;border-bottom:1px solid #e0e0e0;text-align:left}
+th{background:#1b5e20;color:white;font-weight:500}
+tr:hover{background:#f5f5f5}
+.symptom-category{background:#f1f8e9;padding:15px;border-radius:10px;margin-bottom:15px}
+.symptom-item{display:flex;align-items:center;gap:8px;padding:8px;background:white;border-radius:6px;border:1px solid #c8e6c9}
+.symptom-item input[type="checkbox"]{width:18px;height:18px;cursor:pointer}
+.symptom-item label{cursor:pointer;flex:1}
+.severity-badge{font-size:11px;padding:2px 6px;border-radius:4px;background:#eee}
+.severity-high{background:#ffcdd2;color:#c62828}
+.severity-medium{background:#fff3e0;color:#ef6c00}
+.severity-low{background:#e8f5e9;color:#2e7d32}
+.emergency-box{background:#ffebee;border:2px solid #c62828;padding:20px;border-radius:10px;margin:15px 0}
+.emergency-text{color:#c62828;font-weight:bold;font-size:16px}
+.language-selector{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;justify-content:flex-end}
+.lang-btn{padding:5px 10px;background:#e0e0e0;border-radius:15px;cursor:pointer;border:none;font-size:12px}
+.lang-btn.active{background:#1b5e20;color:white}
+.ai-suggestion{background:#f3e5f5;padding:20px;border-radius:10px;margin:15px 0;border-left:4px solid #7b1fa2}
+.ai-badge{background:#7b1fa2;color:white;padding:5px 15px;border-radius:20px;font-size:14px;display:inline-block;margin-bottom:15px}
+.possible-condition{background:#fff3e0;padding:15px;border-radius:8px;margin:10px 0;border-left:4px solid #ef6c00}
+.condition-name{font-weight:bold;color:#ef6c00;font-size:16px}
+.remedy-item{background:#e8f5e9;padding:12px;margin:8px 0;border-radius:8px;border-left:4px solid #2e7d32;font-size:15px}
+.gel-item{background:#e0f2f1;padding:12px;margin:8px 0;border-radius:8px;border-left:4px solid #00695c;font-size:15px}
+.symptom-tag{display:inline-block;background:#e8f5e9;padding:5px 12px;border-radius:20px;margin:3px;font-size:13px;border:1px solid #a5d6a7}
+.loader{display:none;text-align:center;padding:20px}
+.loader-spinner{border:4px solid #f3f3f3;border-top:4px solid #1b5e20;border-radius:50%;width:40px;height:40px;animation:spin 1s linear infinite;margin:auto}
+@keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.search-box{margin-bottom:15px;padding:10px;border:1px solid #ddd;border-radius:8px;width:100%}
+.record-count{background:#1b5e20;color:white;padding:5px 15px;border-radius:20px;display:inline-block;margin-bottom:10px}
+.delete-btn{background:#c62828;color:white;padding:5px 10px;border-radius:5px;cursor:pointer;font-size:12px;border:none}
+</style>
 </head>
 <body>
 <div class="container">
 
-  <!-- 🌐 PREMIUM LANGUAGE + DASHBOARD -->
-  <div class="lang-panel">
-    <button class="lang-btn active" onclick="switchLang('en')"><i class="fas fa-globe"></i> English</button>
-    <button class="lang-btn" onclick="switchLang('hi')"><i class="fas fa-language"></i> हिन्दी</button>
-    <button class="lang-btn" onclick="switchLang('te')"><i class="fas fa-language"></i> తెలుగు</button>
-    <button class="lang-btn" onclick="switchLang('ta')"><i class="fas fa-language"></i> தமிழ்</button>
-    <button class="lang-btn" onclick="switchLang('bn')"><i class="fas fa-language"></i> বাংলা</button>
-  </div>
+<!-- Language Selector - Simple for small cities -->
+<div class="language-selector">
+<button class="lang-btn active" onclick="changeLanguage('en')">English</button>
+<button class="lang-btn" onclick="changeLanguage('hi')">हिंदी</button>
+<button class="lang-btn" onclick="changeLanguage('ta')">தமிழ்</button>
+<button class="lang-btn" onclick="changeLanguage('te')">తెలుగు</button>
+<button class="lang-btn" onclick="changeLanguage('bn')">বাংলা</button>
+<button class="lang-btn" onclick="changeLanguage('mr')">मराठी</button>
+<button class="lang-btn" onclick="changeLanguage('gu')">ગુજરાતી</button>
+<button class="lang-btn" onclick="changeLanguage('kn')">ಕನ್ನಡ</button>
+</div>
 
-  <!-- patient premium card -->
-  <div class="premium-card">
-    <h2><i class="fas fa-user-circle" style="font-size:2rem; color:#1f5e41;"></i> <span data-i18n="patient_info">Patient health profile</span></h2>
-    <div class="grid-4">
-      <div class="input-icon"><i class="fas fa-user"></i><input type="text" id="patientName" placeholder="Full name" value="Anjali Sharma"></div>
-      <div class="input-icon"><i class="fas fa-calendar-alt"></i><input type="number" id="patientAge" placeholder="Age" value="52"></div>
-      <div class="input-icon"><i class="fas fa-venus-mars"></i><select id="patientGender"><option>Male</option><option selected>Female</option><option>Other</option></select></div>
-      <div class="input-icon"><i class="fas fa-ruler-vertical"></i><input type="number" id="height" placeholder="Height (cm)" value="165"></div>
-      <div class="input-icon"><i class="fas fa-weight-scale"></i><input type="number" id="weight" placeholder="Weight (kg)" value="71"></div>
-      <div class="input-icon"><i class="fas fa-thermometer-half"></i><input type="number" step="0.1" id="temperature" placeholder="Temp °C" value="38.2"></div>
-      <div class="input-icon"><i class="fas fa-heartbeat"></i><input type="text" id="bp" placeholder="BP (e.g., 135/85)" value="148/92"></div>
-    </div>
+<!-- Patient Information Section -->
+<div class="section">
+<h2 id="patientInfoTitle">📋 Patient Information</h2>
+<div class="form-grid">
+<input type="text" id="patientName" placeholder="Full Name *" required>
+<input type="number" id="patientAge" placeholder="Age *" required>
+<select id="patientGender">
+<option value="Male">Male</option>
+<option value="Female">Female</option>
+<option value="Other">Other</option>
+</select>
+<input type="number" id="height" placeholder="Height (cm)" step="0.1">
+<input type="number" id="weight" placeholder="Weight (kg)" step="0.1">
+<input type="number" step="0.1" id="temperature" placeholder="Temperature °C">
+<input type="text" id="bp" placeholder="Blood Pressure">
+<input type="text" id="village" placeholder="Village/Town">
+<input type="text" id="mobile" placeholder="Mobile Number">
+</div>
+</div>
 
-    <!-- voice input + health tips toggle (extra) -->
-    <div class="voice-premium">
-      <button class="voice-btn" id="voiceBtn" onclick="startVoiceInput()"><i class="fas fa-microphone-alt"></i> <span data-i18n="voice_start">Voice symptom assistant</span></button>
-      <span id="voiceStatus" style="font-weight:500; color:#1b5e3a;"><i class="fas fa-info-circle"></i> click & speak</span>
-      <span style="margin-left:auto; display:flex; gap:8px;"><i class="fas fa-shield-alt" style="color:#1f5e41;"></i> AI‑powered</span>
-    </div>
-  </div>
+<!-- Symptoms Assessment Section -->
+<div class="section">
+<h2 id="symptomTitle">🩺 Select Symptoms</h2>
+<p id="symptomSubtitle" style="margin-bottom:15px;color:#666;">Choose symptoms for home remedies and gels:</p>
 
-  <!-- Symptoms luxury panel -->
-  <div class="premium-card">
-    <h2><i class="fas fa-stethoscope"></i> <span data-i18n="symptom_checker">Intelligent symptom probe</span></h2>
-    <div class="input-icon" style="margin-bottom:22px;"><i class="fas fa-search"></i><input type="text" id="symptomSearch" placeholder="🔍 search symptoms..." onkeyup="filterSymptoms()"></div>
+<!-- Quick Symptom Search -->
+<div style="margin-bottom:20px">
+<input type="text" id="symptomSearch" placeholder="🔍 Search symptoms..." onkeyup="filterSymptoms()">
+</div>
 
-    <!-- categories condensed but all present (using same IDs) -->
-    <div class="symptom-category"><h3><i class="fas fa-temperature-high"></i> <span data-i18n="general">General</span></h3><div class="symptom-grid">
-      <div class="symptom-item"><input type="checkbox" id="fever"><label for="fever" data-i18n="fever">Fever</label><span class="severity-badge">medium</span></div>
-      <div class="symptom-item"><input type="checkbox" id="chills"><label for="chills" data-i18n="chills">Chills</label><span class="severity-badge">medium</span></div>
-      <div class="symptom-item"><input type="checkbox" id="fatigue"><label for="fatigue" data-i18n="fatigue">Fatigue</label><span class="severity-badge">low</span></div>
-      <div class="symptom-item"><input type="checkbox" id="weightLoss"><label for="weightLoss" data-i18n="weightLoss">Weight loss</label><span class="severity-badge">high</span></div>
-    </div></div>
+<!-- General Symptoms -->
+<div class="symptom-category">
+<h3 id="generalTitle">🤒 General Symptoms</h3>
+<div class="symptom-grid">
+<div class="symptom-item"><input type="checkbox" id="fever"><label for="fever" id="lblFever">Fever</label><span class="severity-badge severity-medium">Medium</span></div>
+<div class="symptom-item"><input type="checkbox" id="chills"><label for="chills" id="lblChills">Chills</label><span class="severity-badge severity-medium">Medium</span></div>
+<div class="symptom-item"><input type="checkbox" id="fatigue"><label for="fatigue" id="lblFatigue">Fatigue</label><span class="severity-badge severity-low">Low</span></div>
+<div class="symptom-item"><input type="checkbox" id="weightLoss"><label for="weightLoss" id="lblWeightLoss">Weight Loss</label><span class="severity-badge severity-high">High</span></div>
+<div class="symptom-item"><input type="checkbox" id="lossAppetite"><label for="lossAppetite" id="lblLossAppetite">Loss of Appetite</label><span class="severity-badge severity-low">Low</span></div>
+</div>
+</div>
 
-    <div class="symptom-category"><h3><i class="fas fa-lungs"></i> <span data-i18n="respiratory">Respiratory</span></h3><div class="symptom-grid">
-      <div class="symptom-item"><input type="checkbox" id="cough" checked><label for="cough" data-i18n="cough">Cough</label><span class="severity-badge">low</span></div>
-      <div class="symptom-item"><input type="checkbox" id="dryCough"><label for="dryCough" data-i18n="dryCough">Dry cough</label><span class="severity-badge">low</span></div>
-      <div class="symptom-item"><input type="checkbox" id="wetCough" checked><label for="wetCough" data-i18n="wetCough">Wet cough</label><span class="severity-badge">medium</span></div>
-      <div class="symptom-item"><input type="checkbox" id="bloodCough"><label for="bloodCough" data-i18n="bloodCough">Blood cough</label><span class="severity-badge">high</span></div>
-      <div class="symptom-item"><input type="checkbox" id="shortnessBreath"><label for="shortnessBreath" data-i18n="shortBreath">Short of breath</label><span class="severity-badge">high</span></div>
-      <div class="symptom-item"><input type="checkbox" id="chestPain"><label for="chestPain" data-i18n="chestPain">Chest pain</label><span class="severity-badge">high</span></div>
-    </div></div>
+<!-- Respiratory Symptoms -->
+<div class="symptom-category">
+<h3 id="respiratoryTitle">🫁 Respiratory</h3>
+<div class="symptom-grid">
+<div class="symptom-item"><input type="checkbox" id="cough"><label for="cough" id="lblCough">Cough</label><span class="severity-badge severity-low">Low</span></div>
+<div class="symptom-item"><input type="checkbox" id="dryCough"><label for="dryCough" id="lblDryCough">Dry Cough</label><span class="severity-badge severity-low">Low</span></div>
+<div class="symptom-item"><input type="checkbox" id="wetCough"><label for="wetCough" id="lblWetCough">Wet Cough</label><span class="severity-badge severity-medium">Medium</span></div>
+<div class="symptom-item"><input type="checkbox" id="bloodCough"><label for="bloodCough" id="lblBloodCough">Blood in Cough</label><span class="severity-badge severity-high">High</span></div>
+<div class="symptom-item"><input type="checkbox" id="shortnessBreath"><label for="shortnessBreath" id="lblShortnessBreath">Breathlessness</label><span class="severity-badge severity-high">High</span></div>
+<div class="symptom-item"><input type="checkbox" id="wheezing"><label for="wheezing" id="lblWheezing">Wheezing</label><span class="severity-badge severity-medium">Medium</span></div>
+<div class="symptom-item"><input type="checkbox" id="chestPain"><label for="chestPain" id="lblChestPain">Chest Pain</label><span class="severity-badge severity-high">High</span></div>
+<div class="symptom-item"><input type="checkbox" id="soreThroat"><label for="soreThroat" id="lblSoreThroat">Sore Throat</label><span class="severity-badge severity-low">Low</span></div>
+<div class="symptom-item"><input type="checkbox" id="runnyNose"><label for="runnyNose" id="lblRunnyNose">Runny Nose</label><span class="severity-badge severity-low">Low</span></div>
+</div>
+</div>
 
-    <div class="symptom-category"><h3><i class="fas fa-stomach"></i> <span data-i18n="gi">Gastrointestinal</span></h3><div class="symptom-grid">
-      <div class="symptom-item"><input type="checkbox" id="nausea"><label for="nausea" data-i18n="nausea">Nausea</label><span class="severity-badge">low</span></div>
-      <div class="symptom-item"><input type="checkbox" id="vomiting"><label for="vomiting" data-i18n="vomiting">Vomiting</label><span class="severity-badge">medium</span></div>
-      <div class="symptom-item"><input type="checkbox" id="diarrhea"><label for="diarrhea" data-i18n="diarrhea">Diarrhea</label><span class="severity-badge">medium</span></div>
-      <div class="symptom-item"><input type="checkbox" id="bloodStool"><label for="bloodStool" data-i18n="bloodStool">Blood in stool</label><span class="severity-badge">high</span></div>
-      <div class="symptom-item"><input type="checkbox" id="abdominalPain"><label for="abdominalPain" data-i18n="abdominalPain">Abdominal pain</label><span class="severity-badge">medium</span></div>
-    </div></div>
+<!-- Gastrointestinal Symptoms -->
+<div class="symptom-category">
+<h3 id="giTitle">🫃 Stomach</h3>
+<div class="symptom-grid">
+<div class="symptom-item"><input type="checkbox" id="nausea"><label for="nausea" id="lblNausea">Nausea</label><span class="severity-badge severity-low">Low</span></div>
+<div class="symptom-item"><input type="checkbox" id="vomiting"><label for="vomiting" id="lblVomiting">Vomiting</label><span class="severity-badge severity-medium">Medium</span></div>
+<div class="symptom-item"><input type="checkbox" id="diarrhea"><label for="diarrhea" id="lblDiarrhea">Diarrhea</label><span class="severity-badge severity-medium">Medium</span></div>
+<div class="symptom-item"><input type="checkbox" id="bloodStool"><label for="bloodStool" id="lblBloodStool">Blood in Stool</label><span class="severity-badge severity-high">High</span></div>
+<div class="symptom-item"><input type="checkbox" id="constipation"><label for="constipation" id="lblConstipation">Constipation</label><span class="severity-badge severity-low">Low</span></div>
+<div class="symptom-item"><input type="checkbox" id="abdominalPain"><label for="abdominalPain" id="lblAbdominalPain">Stomach Pain</label><span class="severity-badge severity-medium">Medium</span></div>
+<div class="symptom-item"><input type="checkbox" id="heartburn"><label for="heartburn" id="lblHeartburn">Acidity</label><span class="severity-badge severity-low">Low</span></div>
+</div>
+</div>
 
-    <div class="symptom-category"><h3><i class="fas fa-brain"></i> <span data-i18n="neuro">Neurological</span></h3><div class="symptom-grid">
-      <div class="symptom-item"><input type="checkbox" id="headache"><label for="headache" data-i18n="headache">Headache</label><span class="severity-badge">low</span></div>
-      <div class="symptom-item"><input type="checkbox" id="dizziness"><label for="dizziness" data-i18n="dizziness">Dizziness</label><span class="severity-badge">medium</span></div>
-      <div class="symptom-item"><input type="checkbox" id="fainting"><label for="fainting" data-i18n="fainting">Fainting</label><span class="severity-badge">high</span></div>
-      <div class="symptom-item"><input type="checkbox" id="confusion"><label for="confusion" data-i18n="confusion">Confusion</label><span class="severity-badge">high</span></div>
-    </div></div>
+<!-- Pain Symptoms -->
+<div class="symptom-category">
+<h3 id="painTitle">💪 Pain</h3>
+<div class="symptom-grid">
+<div class="symptom-item"><input type="checkbox" id="headache"><label for="headache" id="lblHeadache">Headache</label><span class="severity-badge severity-low">Low</span></div>
+<div class="symptom-item"><input type="checkbox" id="jointPain"><label for="jointPain" id="lblJointPain">Joint Pain</label><span class="severity-badge severity-low">Low</span></div>
+<div class="symptom-item"><input type="checkbox" id="musclePain"><label for="musclePain" id="lblMusclePain">Muscle Pain</label><span class="severity-badge severity-low">Low</span></div>
+<div class="symptom-item"><input type="checkbox" id="backPain"><label for="backPain" id="lblBackPain">Back Pain</label><span class="severity-badge severity-low">Low</span></div>
+<div class="symptom-item"><input type="checkbox" id="dizziness"><label for="dizziness" id="lblDizziness">Dizziness</label><span class="severity-badge severity-medium">Medium</span></div>
+</div>
+</div>
 
-    <div class="input-icon"><i class="fas fa-pen-alt"></i><textarea id="additionalSymptoms" placeholder="Additional notes..." data-i18n-placeholder="additional_placeholder">mild wheezing, throat pain</textarea></div>
-  </div>
+<!-- Skin Symptoms -->
+<div class="symptom-category">
+<h3 id="skinTitle">🔴 Skin</h3>
+<div class="symptom-grid">
+<div class="symptom-item"><input type="checkbox" id="rash"><label for="rash" id="lblRash">Rash</label><span class="severity-badge severity-low">Low</span></div>
+<div class="symptom-item"><input type="checkbox" id="itching"><label for="itching" id="lblItching">Itching</label><span class="severity-badge severity-low">Low</span></div>
+<div class="symptom-item"><input type="checkbox" id="yellowSkin"><label for="yellowSkin" id="lblYellowSkin">Yellow Skin</label><span class="severity-badge severity-high">High</span></div>
+</div>
+</div>
 
-  <!-- action buttons premium -->
-  <div class="btn-group">
-    <button class="btn-primary" onclick="analyzeHealth()"><i class="fas fa-microchip"></i> <span data-i18n="analyze">AI deep analysis</span></button>
-    <button class="btn-secondary" onclick="clearForm()"><i class="fas fa-undo-alt"></i> <span data-i18n="clear">Reset</span></button>
-    <button class="btn-danger" onclick="emergencyOverride()"><i class="fas fa-exclamation-triangle"></i> <span data-i18n="emergency">SOS emergency</span></button>
-  </div>
+<!-- Urinary Symptoms -->
+<div class="symptom-category">
+<h3 id="urinaryTitle">🚽 Urine</h3>
+<div class="symptom-grid">
+<div class="symptom-item"><input type="checkbox" id="painUrination"><label for="painUrination" id="lblPainUrination">Painful Urination</label><span class="severity-badge severity-medium">Medium</span></div>
+<div class="symptom-item"><input type="checkbox" id="bloodUrine"><label for="bloodUrine" id="lblBloodUrine">Blood in Urine</label><span class="severity-badge severity-high">High</span></div>
+</div>
+</div>
 
-  <!-- loader premium -->
-  <div id="loader" class="loader"><div class="loader-spinner"></div><p style="margin-top:18px; font-size:1.2rem;" data-i18n="analyzing">AI analysing with deep learning...</p></div>
+<!-- Emergency Symptoms -->
+<div class="symptom-category">
+<h3 id="emergencySymTitle">🚨 Emergency Signs</h3>
+<div class="symptom-grid">
+<div class="symptom-item"><input type="checkbox" id="fainting"><label for="fainting" id="lblFainting">Fainting</label><span class="severity-badge severity-high">High</span></div>
+<div class="symptom-item"><input type="checkbox" id="seizures"><label for="seizures" id="lblSeizures">Seizures</label><span class="severity-badge severity-high">High</span></div>
+<div class="symptom-item"><input type="checkbox" id="confusion"><label for="confusion" id="lblConfusion">Confusion</label><span class="severity-badge severity-high">High</span></div>
+</div>
+</div>
 
-  <!-- results panel (confidence & tablets removed) -->
-  <div id="results" class="premium-card">
-    <h2><i class="fas fa-file-medical-alt"></i> <span data-i18n="report">AI diagnosis & care plan</span></h2>
-    <div id="emergencyAlert" style="display:none; background:#ffefed; border-radius:48px; padding:28px; border:3px solid #b71c1c; margin-bottom:20px;">
-      <span style="color:#b71c1c; font-size:2rem; font-weight:800;"><i class="fas fa-skull-crosswalk"></i> EMERGENCY</span>
-      <p id="emergencyMessage"></p>
-    </div>
+<!-- Additional Notes -->
+<div style="margin-top:20px">
+<textarea id="additionalSymptoms" placeholder="Other symptoms or notes..."></textarea>
+</div>
+</div>
 
-    <div class="result-premium">
-      <p id="statusText" style="margin-bottom:10px;"></p>
-      <p id="description" style="font-size:1.3rem;"></p>
-    </div>
+<!-- Action Buttons -->
+<div class="btn-group">
+<button class="btn-primary" onclick="analyzeHealth()" id="analyzeBtn">🔍 Check & Save</button>
+<button class="btn-secondary" onclick="clearForm()" id="clearBtn">🔄 Clear</button>
+<button class="btn-danger" onclick="emergencyOverride()" id="emergencyBtn">🚨 Emergency</button>
+</div>
 
-    <div style="background:#f4fcf8; border-radius:40px; padding:26px; margin:22px 0;">
-      <h3><i class="fas fa-list-check"></i> <span data-i18n="your_symptoms">Reported symptoms</span></h3>
-      <div id="symptomList"></div>
-    </div>
+<!-- Loading Indicator -->
+<div id="loader" class="loader">
+<div class="loader-spinner"></div>
+<p id="loadingText">Checking...</p>
+</div>
 
-    <h3><i class="fas fa-lightbulb"></i> <span data-i18n="solutions">Recommended home & care solutions</span></h3>
-    <div id="solutionsList" style="margin-bottom:20px;"></div>
+<!-- Results Section -->
+<div id="results" class="section">
+<h2 id="resultsTitle">📋 Report</h2>
+<div id="emergencyAlert" style="display:none" class="emergency-box">
+<div class="emergency-text" id="emergencyTitle">🚨 EMERGENCY</div>
+<p id="emergencyMessage"></p>
+</div>
 
-    <div style="background:#e4f3e7; border-radius:60px; padding:22px; font-weight:600;" id="followUp"></div>
-  </div>
+<!-- Simple Diagnosis -->
+<div class="ai-suggestion">
+<div class="ai-badge" id="advisorBadge">🌿 REMEDIES</div>
+<div id="diagnosisContent"></div>
+</div>
 
-  <!-- extra premium features: first aid / emergency contacts / health tips -->
-  <div class="feature-grid">
-    <div class="feature-tile"><i class="fas fa-kit-medical" style="font-size:2rem; color:#1f5e41;"></i> <h4>First aid guide</h4><p>Bleeding, burns, fractures – quick protocols.</p></div>
-    <div class="feature-tile"><i class="fas fa-truck-medical" style="font-size:2rem; color:#1f5e41;"></i> <h4>Emergency contacts</h4><p>108 · 102 · rural ambulance · 24/7</p></div>
-    <div class="feature-tile"><i class="fas fa-apple-alt" style="font-size:2rem; color:#1f5e41;"></i> <h4>Daily health tip</h4><p id="healthTip">Drink 8 glasses of water</p></div>
-  </div>
+<p id="statusText"></p>
+<p id="description"></p>
 
-  <!-- 👨‍⚕️ DOCTOR SECURE PANEL (separate, with login) -->
-  <div class="premium-card doctor-premium">
-    <h2><i class="fas fa-user-md"></i> <span data-i18n="doctor_panel">Doctor’s secure portal</span></h2>
-    <div id="doctorLoginBox" class="login-glass">
-      <p style="font-weight:600; margin-bottom:16px;"><i class="fas fa-lock"></i> <span data-i18n="doctor_login">Doctor login (demo: doctor/123)</span></p>
-      <div class="input-icon"><i class="fas fa-user-md"></i><input type="text" id="docUser" placeholder="Username" value="doctor"></div>
-      <div class="input-icon" style="margin:16px 0;"><i class="fas fa-key"></i><input type="password" id="docPass" placeholder="Password" value="123"></div>
-      <button class="btn-primary" onclick="doctorLogin()" style="width:100%;"><i class="fas fa-sign-in-alt"></i> <span data-i18n="login">Access panel</span></button>
-    </div>
+<div style="margin:15px 0;padding:15px;background:#f5f5f5;border-radius:8px">
+<h3 id="yourSymptomsTitle">📋 Your Symptoms:</h3>
+<div id="symptomList"></div>
+</div>
 
-    <div id="doctorRecords" class="hidden" style="margin-top:25px;">
-      <div style="display:flex; justify-content:space-between; align-items:center;">
-        <h3><i class="fas fa-database"></i> <span data-i18n="all_patient_records">Complete patient records</span></h3>
-        <button class="btn-secondary" onclick="logoutDoctor()"><i class="fas fa-sign-out-alt"></i> <span data-i18n="logout">Logout</span></button>
-      </div>
-      <table class="doctor-table">
-        <thead><tr><th>Time</th><th>Name</th><th>Age</th><th>Diagnosis</th><th>Status</th></tr></thead>
-        <tbody id="doctorTableBody"></tbody>
-      </table>
-    </div>
-  </div>
+<!-- Home Remedies - Simple -->
+<div style="margin:20px 0">
+<h3 id="homeTitle">🏠 Home Remedies</h3>
+<div id="homeRemediesList"></div>
+</div>
 
-  <!-- recent consultations (public) -->
-  <div class="premium-card">
-    <h2><i class="fas fa-history"></i> <span data-i18n="recent">Last consultations</span></h2>
-    <table style="width:100%; border-collapse:collapse; background:white; border-radius:32px; overflow:hidden;">
-      <thead style="background:#1f5e41; color:white;"><tr><th>Time</th><th>Name</th><th>Age</th><th>Diagnosis</th><th>Status</th></tr></thead>
-      <tbody id="tableBody"></tbody>
-    </table>
-  </div>
+<!-- Gels & Ointments - Simple -->
+<div style="margin:20px 0">
+<h3 id="gelsTitle">🧴 Gels / Ointments</h3>
+<div id="gelsList"></div>
+</div>
+
+<div id="followUp" style="font-weight:bold;margin-top:15px;"></div>
+</div>
+
+<!-- Patient Records Section -->
+<div class="section">
+<h2>📜 Patient Records</h2>
+<div style="display:flex;gap:10px;margin-bottom:15px;flex-wrap:wrap">
+<input type="text" id="searchRecord" class="search-box" placeholder="🔍 Search by name, village or mobile..." style="width:300px;" onkeyup="searchRecords()">
+<button class="btn-secondary" onclick="exportRecords()">📥 Export</button>
+<button class="btn-danger" onclick="clearAllRecords()" style="background:#c62828;">🗑️ Clear All</button>
+</div>
+<div class="record-count" id="recordCount">Total Patients: 0</div>
+<div style="overflow-x:auto;">
+<table id="recordsTable">
+<thead>
+<tr>
+<th>Date/Time</th>
+<th>Name</th>
+<th>Age</th>
+<th>Gender</th>
+<th>Village</th>
+<th>Mobile</th>
+<th>Symptoms</th>
+<th>Diagnosis</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody id="tableBody">
+<tr><td colspan="10" style="text-align:center;">No records found</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
 </div>
 
 <script>
-  // ---------- PREMIUM GLOBAL ----------
-  let screenings = JSON.parse(localStorage.getItem('rural_premium_screenings') || '[]');
-  let currentLang = 'en';
-
-  const i18n = {
-    en: { patient_info:'Patient health profile', symptom_checker:'Intelligent symptom probe', general:'General', fever:'Fever', chills:'Chills', fatigue:'Fatigue', weightLoss:'Weight loss', respiratory:'Respiratory', cough:'Cough', dryCough:'Dry cough', wetCough:'Wet cough', bloodCough:'Blood cough', shortBreath:'Short of breath', chestPain:'Chest pain', gi:'Gastrointestinal', nausea:'Nausea', vomiting:'Vomiting', diarrhea:'Diarrhea', bloodStool:'Blood in stool', abdominalPain:'Abdominal pain', neuro:'Neurological', headache:'Headache', dizziness:'Dizziness', fainting:'Fainting', confusion:'Confusion', analyze:'AI deep analysis', clear:'Reset', emergency:'SOS emergency', analyzing:'AI analysing with deep learning...', report:'AI diagnosis & care plan', your_symptoms:'Reported symptoms', solutions:'Recommended home & care solutions', doctor_panel:"Doctor’s secure portal", doctor_login:'Doctor login (demo: doctor/123)', login:'Access panel', all_patient_records:'Complete patient records', logout:'Logout', recent:'Last consultations', voice_start:'Voice symptom assistant', additional_placeholder:'Additional notes...' },
-    hi: { patient_info:'रोगी स्वास्थ्य प्रोफ़ाइल', symptom_checker:'बुद्धिमान लक्षण जांच', general:'सामान्य', fever:'बुखार', chills:'ठंड लगना', fatigue:'थकान', weightLoss:'वजन घटना', respiratory:'श्वसन', cough:'खांसी', dryCough:'सूखी खांसी', wetCough:'गीली खांसी', bloodCough:'खून वाली खांसी', shortBreath:'सांस फूलना', chestPain:'सीने में दर्द', gi:'जठरांत्र', nausea:'मतली', vomiting:'उल्टी', diarrhea:'दस्त', bloodStool:'मल में खून', abdominalPain:'पेट दर्द', neuro:'तंत्रिका', headache:'सिरदर्द', dizziness:'चक्कर', fainting:'बेहोशी', confusion:'भ्रम', analyze:'AI गहन विश्लेषण', clear:'रीसेट', emergency:'आपातकाल', analyzing:'AI गहन विश्लेषण कर रहा...', report:'AI निदान और देखभाल योजना', your_symptoms:'रिपोर्ट किए गए लक्षण', solutions:'अनुशंसित समाधान', doctor_panel:'डॉक्टर पोर्टल', doctor_login:'डॉक्टर लॉगिन (doctor/123)', login:'पैनल खोलें', all_patient_records:'सभी रिकॉर्ड', logout:'लॉगआउट', recent:'पिछले परामर्श', voice_start:'आवाज सहायक', additional_placeholder:'अतिरिक्त नोट्स...' },
-    te: { patient_info:'రోగి ఆరోగ్య ప్రొఫైల్', symptom_checker:'ఇంటెలిజెంట్ సింప్టమ్ ప్రోబ్', general:'సాధారణ', fever:'జ్వరం', chills:'చలి', fatigue:'అలసట', weightLoss:'బరువు తగ్గడం', respiratory:'శ్వాసకోశ', cough:'దగ్గు', dryCough:'పొడి దగ్గు', wetCough:'తడి దగ్గు', bloodCough:'రక్త దగ్గు', shortBreath:'ఊపిరి ఆడకపోవడం', chestPain:'ఛాతీ నొప్పి', gi:'జీర్ణ', nausea:'వికారం', vomiting:'వాంతులు', diarrhea:'అతిసారం', bloodStool:'మలంలో రక్తం', abdominalPain:'కడుపు నొప్పి', neuro:'నాడీ', headache:'తలనొప్పి', dizziness:'తలతిరగడం', fainting:'మూర్ఛ', confusion:'గందరగోళం', analyze:'AI లోతైన విశ్లేషణ', clear:'రీసెట్', emergency:'అత్యవసర', analyzing:'AI లోతైన విశ్లేషణ చేస్తోంది...', report:'AI నిర్ధారణ & సంరక్షణ ప్రణాళిక', your_symptoms:'నివేదించిన లక్షణాలు', solutions:'సిఫార్సు పరిష్కారాలు', doctor_panel:'డాక్టర్ పోర్టల్', doctor_login:'డాక్టర్ లాగిన్ (doctor/123)', login:'ప్యానెల్ తెరవండి', all_patient_records:'పూర్తి రికార్డులు', logout:'లాగ్అవుట్', recent:'చివరి సంప్రదింపులు', voice_start:'వాయిస్ అసిస్టెంట్', additional_placeholder:'అదనపు గమనికలు...' },
-    ta: { patient_info:'நோயாளி சுகாதார சுயவிவரம்', symptom_checker:'அறிகுறி ஆய்வி', general:'பொது', fever:'காய்ச்சல்', chills:'குளிர்', fatigue:'சோர்வு', weightLoss:'எடை இழப்பு', respiratory:'சுவாசம்', cough:'இருமல்', dryCough:'உலர் இருமல்', wetCough:'ஈர இருமல்', bloodCough:'இரத்த இருமல்', shortBreath:'மூச்சுத்திணறல்', chestPain:'மார்பு வலி', gi:'இரைப்பை', nausea:'குமட்டல்', vomiting:'வாந்தி', diarrhea:'வயிற்றுப்போக்கு', bloodStool:'மலத்தில் இரத்தம்', abdominalPain:'வயிற்று வலி', neuro:'நரம்பியல்', headache:'தலைவலி', dizziness:'மயக்கம்', fainting:'மயக்கம்', confusion:'குழப்பம்', analyze:'AI ஆழமான பகுப்பாய்வு', clear:'மீட்டமை', emergency:'அவசரநிலை', analyzing:'AI ஆழமான பகுப்பாய்வு செய்கிறது...', report:'AI நோயறிதல் & பராமரிப்பு திட்டம்', your_symptoms:'பதிவான அறிகுறிகள்', solutions:'பரிந்துரைக்கப்பட்ட தீர்வுகள்', doctor_panel:'மருத்துவர் நுழைவு', doctor_login:'மருத்துவர் உள்நுழைவு (doctor/123)', login:'குழுவை திற', all_patient_records:'முழு பதிவுகள்', logout:'வெளியேறு', recent:'சமீபத்திய ஆலோசனைகள்', voice_start:'குரல் உதவியாளர்', additional_placeholder:'கூடுதல் குறிப்புகள்...' },
-    bn: { patient_info:'রোগীর স্বাস্থ্য প্রোফাইল', symptom_checker:'বুদ্ধিমান লক্ষণ পরীক্ষক', general:'সাধারণ', fever:'জ্বর', chills:'ঠান্ডা লাগা', fatigue:'ক্লান্তি', weightLoss:'ওজন হ্রাস', respiratory:'শ্বসনতন্ত্র', cough:'কাশি', dryCough:'শুকনো কাশি', wetCough:'ভেজা কাশি', bloodCough:'রক্তযুক্ত কাশি', shortBreath:'শ্বাসকষ্ট', chestPain:'বুকে ব্যথা', gi:'গ্যাস্ট্রোইনটেস্টাইনাল', nausea:'অস্বস্তি', vomiting:'বমি', diarrhea:'ডায়রিয়া', bloodStool:'মলে রক্ত', abdominalPain:'পেটে ব্যথা', neuro:'স্নায়বিক', headache:'মাথাব্যথা', dizziness:'মাথা ঘোরা', fainting:'অজ্ঞান হয়ে যাওয়া', confusion:'বিভ্রান্তি', analyze:'AI গভীর বিশ্লেষণ', clear:'রিসেট', emergency:'জরুরি', analyzing:'AI গভীর বিশ্লেষণ করছে...', report:'AI রোগনির্ণয় ও যত্ন পরিকল্পনা', your_symptoms:'রিপোর্ট করা লক্ষণ', solutions:'প্রস্তাবিত সমাধান', doctor_panel:'ডাক্তার প্যানেল', doctor_login:'ডাক্তার লগইন (doctor/123)', login:'প্যানেল খুলুন', all_patient_records:'সম্পূর্ণ রেকর্ড', logout:'লগআউট', recent:'সাম্প্রতিক পরামর্শ', voice_start:'ভয়েস সহায়ক', additional_placeholder:'অতিরিক্ত নোট...' }
-  };
-
-  function switchLang(lang) {
-    currentLang = lang;
-    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.lang-btn').forEach(b => { if (b.innerText.includes(lang==='en'?'English':lang) || b.innerHTML.includes(lang)) b.classList.add('active'); });
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-      let key = el.getAttribute('data-i18n');
-      if (i18n[lang] && i18n[lang][key]) el.innerText = i18n[lang][key];
-    });
-    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-      let key = el.getAttribute('data-i18n-placeholder');
-      if (i18n[lang] && i18n[lang][key]) el.placeholder = i18n[lang][key];
-    });
-  }
-
-  function filterSymptoms() { let val=document.getElementById('symptomSearch').value.toLowerCase(); document.querySelectorAll('.symptom-item').forEach(e=>{ let t=e.querySelector('label').innerText.toLowerCase(); e.style.display=t.includes(val)||val===''?'flex':'none'; }); }
-
-  function clearForm() { document.querySelectorAll('input:not([type=checkbox]), textarea').forEach(e=>e.value=''); document.querySelectorAll('input[type=checkbox]').forEach(c=>c.checked=false); document.getElementById('results').style.display='none'; document.getElementById('emergencyAlert').style.display='none'; filterSymptoms(); }
-
-  function emergencyOverride() { 
-    let name=document.getElementById('patientName').value||'Unknown'; let age=document.getElementById('patientAge').value||'?';
-    document.getElementById('loader').style.display='block'; document.getElementById('results').style.display='none';
-    setTimeout(()=>{
-      document.getElementById('loader').style.display='none';
-      let res={ status:'emergency', statusText:'🚨 EMERGENCY', diagnosis:'CRITICAL ALERT', description:'Immediate hospital transfer required. Emergency services notified.', solutions:['🚑 call 108/102 now','🛌 keep patient still','❌ no oral intake'], symptoms:'emergency override', followUp:'URGENT – emergency care' };
-      displayResults(res); saveScreening(name,age,res); },800);
-  }
-
-  function getSelectedSymptoms() {
-    const map={ fever:'Fever', chills:'Chills', fatigue:'Fatigue', weightLoss:'Weight loss', cough:'Cough', dryCough:'Dry cough', wetCough:'Wet cough', bloodCough:'Blood cough', shortnessBreath:'Shortness of breath', chestPain:'Chest pain', nausea:'Nausea', vomiting:'Vomiting', diarrhea:'Diarrhea', bloodStool:'Blood in stool', abdominalPain:'Abdominal pain', headache:'Headache', dizziness:'Dizziness', fainting:'Fainting', confusion:'Confusion' };
-    return Object.keys(map).filter(id=>document.getElementById(id)?.checked).map(id=>map[id]);
-  }
-
-  // enhanced AI with age + rural adaptation
-  function getAIDiagnosis(symptoms, age, temp, bp) {
-    let emergency=false, msg='';
-    if (symptoms.includes('Chest pain')||symptoms.includes('Blood cough')||symptoms.includes('Blood in stool')||symptoms.includes('Fainting')||symptoms.includes('Confusion')) { emergency=true; msg='High risk symptom – urgent'; }
-    if (bp) { let s=parseInt(bp.split('/')[0]); if (s>=180) emergency=true; }
-    if (temp>39.5 && (symptoms.includes('Confusion'))) emergency=true;
-    if (age<5 && (symptoms.includes('Fever')||symptoms.includes('Vomiting'))) emergency=true;
-    if (age>70 && symptoms.includes('Shortness of breath')) emergency=true;
-    if (emergency) return { emergency, message:msg, diagnosis:'EMERGENCY – URGENT CARE', solutions:['call ambulance','rush to hospital'] };
-
-    if (age<12) {
-      if (symptoms.includes('Fever')&&symptoms.includes('Cough')) return { emergency:false, diagnosis:'Childhood viral (age<12)', solutions:['pediatrician consult','hydration','light diet'] };
-      if (symptoms.includes('Diarrhea')||symptoms.includes('Vomiting')) return { emergency:false, diagnosis:'Pediatric gastroenteritis', solutions:['ORS','zinc','monitor urine'] };
+// Translations for small cities - Simple and short
+const translations = {
+    en: {
+        patientInfoTitle: "📋 Patient Information",
+        symptomTitle: "🩺 Select Symptoms",
+        symptomSubtitle: "Choose symptoms for home remedies and gels:",
+        analyzeBtn: "🔍 Check & Save",
+        clearBtn: "🔄 Clear",
+        emergencyBtn: "🚨 Emergency",
+        loadingText: "Checking...",
+        resultsTitle: "📋 Report",
+        emergencyTitle: "🚨 EMERGENCY",
+        advisorBadge: "🌿 REMEDIES",
+        yourSymptomsTitle: "📋 Your Symptoms:",
+        homeTitle: "🏠 Home Remedies",
+        gelsTitle: "🧴 Gels / Ointments",
+        generalTitle: "🤒 General",
+        respiratoryTitle: "🫁 Respiratory",
+        giTitle: "🫃 Stomach",
+        painTitle: "💪 Pain",
+        skinTitle: "🔴 Skin",
+        urinaryTitle: "🚽 Urine",
+        emergencySymTitle: "🚨 Emergency Signs",
+        fever: "Fever",
+        chills: "Chills",
+        fatigue: "Fatigue",
+        weightLoss: "Weight Loss",
+        lossAppetite: "No Appetite",
+        cough: "Cough",
+        dryCough: "Dry Cough",
+        wetCough: "Wet Cough",
+        bloodCough: "Blood in Cough",
+        shortnessBreath: "Breathlessness",
+        wheezing: "Wheezing",
+        chestPain: "Chest Pain",
+        soreThroat: "Sore Throat",
+        runnyNose: "Runny Nose",
+        nausea: "Nausea",
+        vomiting: "Vomiting",
+        diarrhea: "Diarrhea",
+        bloodStool: "Blood in Stool",
+        constipation: "Constipation",
+        abdominalPain: "Stomach Pain",
+        heartburn: "Acidity",
+        headache: "Headache",
+        jointPain: "Joint Pain",
+        musclePain: "Muscle Pain",
+        backPain: "Back Pain",
+        dizziness: "Dizziness",
+        rash: "Rash",
+        itching: "Itching",
+        yellowSkin: "Yellow Skin",
+        painUrination: "Painful Urine",
+        bloodUrine: "Blood in Urine",
+        fainting: "Fainting",
+        seizures: "Seizures",
+        confusion: "Confusion",
+        statusHealthy: "✅ Healthy",
+        statusFollowup: "⚠️ Follow-up",
+        statusEmergency: "🚨 EMERGENCY"
+    },
+    hi: {
+        patientInfoTitle: "📋 मरीज जानकारी",
+        symptomTitle: "🩺 लक्षण चुनें",
+        symptomSubtitle: "घरेलू उपचार और जेल के लिए लक्षण चुनें:",
+        analyzeBtn: "🔍 जांचें और सहेजें",
+        clearBtn: "🔄 साफ करें",
+        emergencyBtn: "🚨 आपातकाल",
+        loadingText: "जांच हो रही है...",
+        resultsTitle: "📋 रिपोर्ट",
+        emergencyTitle: "🚨 आपातकाल",
+        advisorBadge: "🌿 उपचार",
+        yourSymptomsTitle: "📋 आपके लक्षण:",
+        homeTitle: "🏠 घरेलू उपचार",
+        gelsTitle: "🧴 जेल / मलहम",
+        generalTitle: "🤒 सामान्य",
+        respiratoryTitle: "🫁 सांस",
+        giTitle: "🫃 पेट",
+        painTitle: "💪 दर्द",
+        skinTitle: "🔴 त्वचा",
+        urinaryTitle: "🚽 पेशाब",
+        emergencySymTitle: "🚨 आपातकालीन",
+        fever: "बुखार",
+        chills: "कंपकंपी",
+        fatigue: "थकान",
+        weightLoss: "वजन घटना",
+        lossAppetite: "भूख नहीं",
+        cough: "खांसी",
+        dryCough: "सूखी खांसी",
+        wetCough: "गीली खांसी",
+        bloodCough: "खून वाली खांसी",
+        shortnessBreath: "सांस फूलना",
+        wheezing: "घरघराहट",
+        chestPain: "सीने में दर्द",
+        soreThroat: "गला दर्द",
+        runnyNose: "नाक बहना",
+        nausea: "मतली",
+        vomiting: "उल्टी",
+        diarrhea: "दस्त",
+        bloodStool: "मल में खून",
+        constipation: "कब्ज",
+        abdominalPain: "पेट दर्द",
+        heartburn: "एसिडिटी",
+        headache: "सिर दर्द",
+        jointPain: "जोड़ों का दर्द",
+        musclePain: "मांसपेशी दर्द",
+        backPain: "पीठ दर्द",
+        dizziness: "चक्कर",
+        rash: "दाने",
+        itching: "खुजली",
+        yellowSkin: "पीली त्वचा",
+        painUrination: "पेशाब में जलन",
+        bloodUrine: "पेशाब में खून",
+        fainting: "बेहोशी",
+        seizures: "दौरे",
+        confusion: "भ्रम",
+        statusHealthy: "✅ स्वस्थ",
+        statusFollowup: "⚠️ जांच जरूरी",
+        statusEmergency: "🚨 आपातकाल"
+    },
+    ta: {
+        patientInfoTitle: "📋 நோயாளி தகவல்",
+        symptomTitle: "🩺 அறிகுறிகளை தேர்வு",
+        symptomSubtitle: "வீட்டு வைத்தியம் மற்றும் ஜெல் க்கு அறிகுறிகளை தேர்வு:",
+        analyzeBtn: "🔍 பரிசோதி & சேமி",
+        clearBtn: "🔄 அழி",
+        emergencyBtn: "🚨 அவசரம்",
+        loadingText: "பரிசோதிக்கிறது...",
+        resultsTitle: "📋 அறிக்கை",
+        emergencyTitle: "🚨 அவசரம்",
+        advisorBadge: "🌿 வைத்தியம்",
+        yourSymptomsTitle: "📋 உங்கள் அறிகுறிகள்:",
+        homeTitle: "🏠 வீட்டு வைத்தியம்",
+        gelsTitle: "🧴 ஜெல் / மருந்து",
+        generalTitle: "🤒 பொதுவான",
+        respiratoryTitle: "🫁 மூச்சு",
+        giTitle: "🫃 வயிறு",
+        painTitle: "💪 வலி",
+        skinTitle: "🔴 தோல்",
+        urinaryTitle: "🚽 சிறுநீர்",
+        emergencySymTitle: "🚨 அவசர அறிகுறிகள்",
+        fever: "காய்ச்சல்",
+        chills: "நடுக்கம்",
+        fatigue: "சோர்வு",
+        weightLoss: "எடை குறைவு",
+        lossAppetite: "பசியின்மை",
+        cough: "இருமல்",
+        dryCough: "உலர் இருமல்",
+        wetCough: "ஈர இருமல்",
+        bloodCough: "இரத்த இருமல்",
+        shortnessBreath: "மூச்சுத் திணறல்",
+        wheezing: "மூச்சுத்திணறல்",
+        chestPain: "மார்பு வலி",
+        soreThroat: "தொண்டை வலி",
+        runnyNose: "மூக்கு ஒழுகல்",
+        nausea: "குமட்டல்",
+        vomiting: "வாந்தி",
+        diarrhea: "வயிற்றுப்போக்கு",
+        bloodStool: "மலத்தில் இரத்தம்",
+        constipation: "மலச்சிக்கல்",
+        abdominalPain: "வயிற்று வலி",
+        heartburn: "அமிலத்தன்மை",
+        headache: "தலைவலி",
+        jointPain: "மூட்டு வலி",
+        musclePain: "தசை வலி",
+        backPain: "முதுகு வலி",
+        dizziness: "தலைச்சுற்றல்",
+        rash: "தடிப்பு",
+        itching: "அரிப்பு",
+        yellowSkin: "மஞ்சள் தோல்",
+        painUrination: "சிறுநீரில் எரிச்சல்",
+        bloodUrine: "சிறுநீரில் இரத்தம்",
+        fainting: "மயக்கம்",
+        seizures: "வலிப்பு",
+        confusion: "குழப்பம்",
+        statusHealthy: "✅ ஆரோக்கியம்",
+        statusFollowup: "⚠️ மருத்துவர் தேவை",
+        statusEmergency: "🚨 அவசரம்"
+    },
+    te: {
+        patientInfoTitle: "📋 రోగి సమాచారం",
+        symptomTitle: "🩺 లక్షణాలు ఎంచుకోండి",
+        symptomSubtitle: "ఇంటి నివారణలు మరియు జెల్ల కోసం లక్షణాలు ఎంచుకోండి:",
+        analyzeBtn: "🔍 తనిఖీ & సేవ్",
+        clearBtn: "🔄 క్లియర్",
+        emergencyBtn: "🚨 అత్యవసరం",
+        loadingText: "తనిఖీ చేస్తోంది...",
+        resultsTitle: "📋 నివేదిక",
+        emergencyTitle: "🚨 అత్యవసరం",
+        advisorBadge: "🌿 నివారణలు",
+        yourSymptomsTitle: "📋 మీ లక్షణాలు:",
+        homeTitle: "🏠 ఇంటి నివారణలు",
+        gelsTitle: "🧴 జెల్ / లేపనాలు",
+        generalTitle: "🤒 సాధారణ",
+        respiratoryTitle: "🫁 శ్వాస",
+        giTitle: "🫃 కడుపు",
+        painTitle: "💪 నొప్పి",
+        skinTitle: "🔴 చర్మం",
+        urinaryTitle: "🚽 మూత్రం",
+        emergencySymTitle: "🚨 అత్యవసర సంకేతాలు",
+        fever: "జ్వరం",
+        chills: "చలి",
+        fatigue: "అలసట",
+        weightLoss: "బరువు తగ్గడం",
+        lossAppetite: "ఆకలి లేదు",
+        cough: "దగ్గు",
+        dryCough: "పొడి దగ్గు",
+        wetCough: "తడి దగ్గు",
+        bloodCough: "రక్త దగ్గు",
+        shortnessBreath: "ఊపిరి ఆడకపోవడం",
+        wheezing: "గురక",
+        chestPain: "ఛాతీ నొప్పి",
+        soreThroat: "గొంతు నొప్పి",
+        runnyNose: "ముక్కు కారడం",
+        nausea: "వికారం",
+        vomiting: "వాంతులు",
+        diarrhea: "విరేచనాలు",
+        bloodStool: "మలంలో రక్తం",
+        constipation: "మలబద్ధకం",
+        abdominalPain: "కడుపు నొప్పి",
+        heartburn: "ఆమ్లత్వం",
+        headache: "తలనొప్పి",
+        jointPain: "కీళ్ల నొప్పి",
+        musclePain: "కండరాల నొప్పి",
+        backPain: "వెన్ను నొప్పి",
+        dizziness: "తల తిరగడం",
+        rash: "దద్దుర్లు",
+        itching: "దురద",
+        yellowSkin: "పసుపు చర్మం",
+        painUrination: "మూత్రంలో మంట",
+        bloodUrine: "మూత్రంలో రక్తం",
+        fainting: "మూర్ఛ",
+        seizures: "మూర్ఛలు",
+        confusion: "గందరగోళం",
+        statusHealthy: "✅ ఆరోగ్యం",
+        statusFollowup: "⚠️ వైద్యుడు అవసరం",
+        statusEmergency: "🚨 అత్యవసరం"
+    },
+    bn: {
+        patientInfoTitle: "📋 রোগীর তথ্য",
+        symptomTitle: "🩺 লক্ষণ নির্বাচন",
+        symptomSubtitle: "ঘরোয়া প্রতিকার এবং জেলের জন্য লক্ষণ নির্বাচন করুন:",
+        analyzeBtn: "🔍 পরীক্ষা ও সংরক্ষণ",
+        clearBtn: "🔄 মুছুন",
+        emergencyBtn: "🚨 জরুরি",
+        loadingText: "পরীক্ষা হচ্ছে...",
+        resultsTitle: "📋 রিপোর্ট",
+        emergencyTitle: "🚨 জরুরি",
+        advisorBadge: "🌿 প্রতিকার",
+        yourSymptomsTitle: "📋 আপনার লক্ষণ:",
+        homeTitle: "🏠 ঘরোয়া প্রতিকার",
+        gelsTitle: "🧴 জেল / মলম",
+        generalTitle: "🤒 সাধারণ",
+        respiratoryTitle: "🫁 শ্বাস",
+        giTitle: "🫃 পেট",
+        painTitle: "💪 ব্যথা",
+        skinTitle: "🔴 ত্বক",
+        urinaryTitle: "🚽 প্রস্রাব",
+        emergencySymTitle: "🚨 জরুরি লক্ষণ",
+        fever: "জ্বর",
+        chills: "কাঁপুনি",
+        fatigue: "ক্লান্তি",
+        weightLoss: "ওজন হ্রাস",
+        lossAppetite: "অরুচি",
+        cough: "কাশি",
+        dryCough: "শুকনো কাশি",
+        wetCough: "ভেজা কাশি",
+        bloodCough: "রক্ত কাশি",
+        shortnessBreath: "শ্বাসকষ্ট",
+        wheezing: "ঘড়ঘড়",
+        chestPain: "বুক ব্যথা",
+        soreThroat: "গলা ব্যথা",
+        runnyNose: "নাক দিয়ে পানি",
+        nausea: "বমি বমি ভাব",
+        vomiting: "বমি",
+        diarrhea: "ডায়রিয়া",
+        bloodStool: "মলে রক্ত",
+        constipation: "কোষ্ঠকাঠিন্য",
+        abdominalPain: "পেট ব্যথা",
+        heartburn: "অম্বল",
+        headache: "মাথা ব্যথা",
+        jointPain: "গাঁটে ব্যথা",
+        musclePain: "পেশি ব্যথা",
+        backPain: "পিঠে ব্যথা",
+        dizziness: "মাথা ঘোরা",
+        rash: "ফুসকুড়ি",
+        itching: "চুলকানি",
+        yellowSkin: "হলুদ ত্বক",
+        painUrination: "প্রস্রাবে জ্বালা",
+        bloodUrine: "প্রস্রাবে রক্ত",
+        fainting: "অজ্ঞান",
+        seizures: "খিঁচুনি",
+        confusion: "দ্বিধা",
+        statusHealthy: "✅ সুস্থ",
+        statusFollowup: "⚠️ ডাক্তার দেখান",
+        statusEmergency: "🚨 জরুরি"
+    },
+    mr: {
+        patientInfoTitle: "📋 रुग्ण माहिती",
+        symptomTitle: "🩺 लक्षणे निवडा",
+        symptomSubtitle: "घरगुती उपचार आणि जेल साठी लक्षणे निवडा:",
+        analyzeBtn: "🔍 तपासा आणि जतन करा",
+        clearBtn: "🔄 साफ करा",
+        emergencyBtn: "🚨 आणीबाणी",
+        loadingText: "तपासत आहे...",
+        resultsTitle: "📋 अहवाल",
+        emergencyTitle: "🚨 आणीबाणी",
+        advisorBadge: "🌿 उपचार",
+        yourSymptomsTitle: "📋 आपली लक्षणे:",
+        homeTitle: "🏠 घरगुती उपचार",
+        gelsTitle: "🧴 जेल / मलम",
+        generalTitle: "🤒 सामान्य",
+        respiratoryTitle: "🫁 श्वास",
+        giTitle: "🫃 पोट",
+        painTitle: "💪 दुखणे",
+        skinTitle: "🔴 त्वचा",
+        urinaryTitle: "🚽 मूत्र",
+        emergencySymTitle: "🚨 आणीबाणीची लक्षणे",
+        fever: "ताप",
+        chills: "थंडी",
+        fatigue: "थकवा",
+        weightLoss: "वजन कमी",
+        lossAppetite: "भूक नाही",
+        cough: "खोकला",
+        dryCough: "कोरडा खोकला",
+        wetCough: "ओला खोकला",
+        bloodCough: "रक्ताचा खोकला",
+        shortnessBreath: "धाप लागणे",
+        wheezing: "घरघर",
+        chestPain: "छाती दुखणे",
+        soreThroat: "घसा दुखणे",
+        runnyNose: "नाक वाहणे",
+        nausea: "मळमळ",
+        vomiting: "उलटी",
+        diarrhea: "जुलाब",
+        bloodStool: "मल मध्ये रक्त",
+        constipation: "बद्धकोष्ठता",
+        abdominalPain: "पोट दुखणे",
+        heartburn: "छातीत जळजळ",
+        headache: "डोकेदुखी",
+        jointPain: "सांधे दुखणे",
+        musclePain: "स्नायू दुखणे",
+        backPain: "पाठ दुखणे",
+        dizziness: "चक्कर",
+        rash: "पुरळ",
+        itching: "खाज",
+        yellowSkin: "पिवळी त्वचा",
+        painUrination: "मूत्रात जळजळ",
+        bloodUrine: "मूत्रात रक्त",
+        fainting: "बेशुद्ध",
+        seizures: "झटके",
+        confusion: "गोंधळ",
+        statusHealthy: "✅ निरोगी",
+        statusFollowup: "⚠️ तपासणी गरजेची",
+        statusEmergency: "🚨 आणीबाणी"
+    },
+    gu: {
+        patientInfoTitle: "📋 દર્દી માહિતી",
+        symptomTitle: "🩺 લક્ષણો પસંદ કરો",
+        symptomSubtitle: "ઘરેલું ઉપચાર અને જેલ માટે લક્ષણો પસંદ કરો:",
+        analyzeBtn: "🔍 ચકાસો અને સાચવો",
+        clearBtn: "🔄 સાફ કરો",
+        emergencyBtn: "🚨 કટોકટી",
+        loadingText: "ચકાસી રહ્યા છે...",
+        resultsTitle: "📋 અહેવાલ",
+        emergencyTitle: "🚨 કટોકટી",
+        advisorBadge: "🌿 ઉપચાર",
+        yourSymptomsTitle: "📋 તમારા લક્ષણો:",
+        homeTitle: "🏠 ઘરેલું ઉપચાર",
+        gelsTitle: "🧴 જેલ / મલમ",
+        generalTitle: "🤒 સામાન્ય",
+        respiratoryTitle: "🫁 શ્વાસ",
+        giTitle: "🫃 પેટ",
+        painTitle: "💪 દુખાવો",
+        skinTitle: "🔴 ત્વચા",
+        urinaryTitle: "🚽 પેશાબ",
+        emergencySymTitle: "🚨 કટોકટીના સંકેતો",
+        fever: "તાવ",
+        chills: "ઠંડી",
+        fatigue: "થાક",
+        weightLoss: "વજન ઘટવું",
+        lossAppetite: "ભૂખ ન લાગવી",
+        cough: "ઉધરસ",
+        dryCough: "સુકી ઉધરસ",
+        wetCough: "ભીની ઉધરસ",
+        bloodCough: "લોહીવાળી ઉધરસ",
+        shortnessBreath: "શ્વાસ ચઢવો",
+        wheezing: "ઘરઘરાટી",
+        chestPain: "છાતીમાં દુખાવો",
+        soreThroat: "ગળું દુખવું",
+        runnyNose: "નાક વહેવું",
+        nausea: "ઉબકા",
+        vomiting: "ઉલટી",
+        diarrhea: "ઝાડા",
+        bloodStool: "મળમાં લોહી",
+        constipation: "કબજિયાત",
+        abdominalPain: "પેટ દુખવું",
+        heartburn: "એસિડિટી",
+        headache: "માથું દુખવું",
+        jointPain: "સાંધા દુખવા",
+        musclePain: "સ્નાયુ દુખવા",
+        backPain: "પીઠ દુખવી",
+        dizziness: "ચક્કર",
+        rash: "ફોલ્લીઓ",
+        itching: "ખંજવાળ",
+        yellowSkin: "પીળી ત્વચા",
+        painUrination: "પેશાબમાં બળતરા",
+        bloodUrine: "પેશાબમાં લોહી",
+        fainting: "બેહોશ",
+        seizures: "આંચકી",
+        confusion: "મૂંઝવણ",
+        statusHealthy: "✅ સ્વસ્થ",
+        statusFollowup: "⚠️ તપાસ કરાવો",
+        statusEmergency: "🚨 કટોકટી"
+    },
+    kn: {
+        patientInfoTitle: "📋 ರೋಗಿಯ ಮಾಹಿತಿ",
+        symptomTitle: "🩺 ಲಕ್ಷಣಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿ",
+        symptomSubtitle: "ಮನೆಮದ್ದುಗಳು ಮತ್ತು ಜೆಲ್ ಗಾಗಿ ಲಕ್ಷಣಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿ:",
+        analyzeBtn: "🔍 ಪರಿಶೀಲಿಸಿ ಮತ್ತು ಉಳಿಸಿ",
+        clearBtn: "🔄 ಅಳಿಸಿ",
+        emergencyBtn: "🚨 ತುರ್ತು",
+        loadingText: "ಪರಿಶೀಲಿಸಲಾಗುತ್ತಿದೆ...",
+        resultsTitle: "📋 ವರದಿ",
+        emergencyTitle: "🚨 ತುರ್ತು",
+        advisorBadge: "🌿 ಮದ್ದುಗಳು",
+        yourSymptomsTitle: "📋 ನಿಮ್ಮ ಲಕ್ಷಣಗಳು:",
+        homeTitle: "🏠 ಮನೆಮದ್ದುಗಳು",
+        gelsTitle: "🧴 ಜೆಲ್ / ಮುಲಾಮು",
+        generalTitle: "🤒 ಸಾಮಾನ್ಯ",
+        respiratoryTitle: "🫁 ಉಸಿರಾಟ",
+        giTitle: "🫃 ಹೊಟ್ಟೆ",
+        painTitle: "💪 ನೋವು",
+        skinTitle: "🔴 ಚರ್ಮ",
+        urinaryTitle: "🚽 ಮೂತ್ರ",
+        emergencySymTitle: "🚨 ತುರ್ತು ಲಕ್ಷಣಗಳು",
+        fever: "ಜ್ವರ",
+        chills: "ಶೀತ",
+        fatigue: "ಆಯಾಸ",
+        weightLoss: "ತೂಕ ಇಳಿಕೆ",
+        lossAppetite: "ಹಸಿವಿಲ್ಲ",
+        cough: "ಕೆಮ್ಮು",
+        dryCough: "ಒಣ ಕೆಮ್ಮು",
+        wetCough: "ಒದ್ದೆ ಕೆಮ್ಮು",
+        bloodCough: "ರಕ್ತದ ಕೆಮ್ಮು",
+        shortnessBreath: "ಉಸಿರಾಟದ ತೊಂದರೆ",
+        wheezing: "ಉಬ್ಬಸ",
+        chestPain: "ಎದೆ ನೋವು",
+        soreThroat: "ಗಂಟಲು ನೋವು",
+        runnyNose: "ಮೂಗು ಸೋರುವಿಕೆ",
+        nausea: "ವಾಕರಿಕೆ",
+        vomiting: "ವಾಂತಿ",
+        diarrhea: "ಅತಿಸಾರ",
+        bloodStool: "ಮಲದಲ್ಲಿ ರಕ್ತ",
+        constipation: "ಮಲಬದ್ಧತೆ",
+        abdominalPain: "ಹೊಟ್ಟೆ ನೋವು",
+        heartburn: "ಹುಳಿ",
+        headache: "ತಲೆನೋವು",
+        jointPain: "ಕೀಲು ನೋವು",
+        musclePain: "ಸ್ನಾಯು ನೋವು",
+        backPain: "ಬೆನ್ನು ನೋವು",
+        dizziness: "ತಲೆತಿರುಗುವಿಕೆ",
+        rash: "ದದ್ದು",
+        itching: "ತುರಿಕೆ",
+        yellowSkin: "ಹಳದಿ ಚರ್ಮ",
+        painUrination: "ಮೂತ್ರದಲ್ಲಿ ಉರಿ",
+        bloodUrine: "ಮೂತ್ರದಲ್ಲಿ ರಕ್ತ",
+        fainting: "ಮೂರ್ಛೆ",
+        seizures: "ಸೆಳೆತ",
+        confusion: "ಗೊಂದಲ",
+        statusHealthy: "✅ ಆರೋಗ್ಯ",
+        statusFollowup: "⚠️ ವೈದ್ಯರ ಅಗತ್ಯ",
+        statusEmergency: "🚨 ತುರ್ತು"
     }
-    if (age>60) {
-      if (symptoms.includes('Chest pain')||symptoms.includes('Shortness of breath')) return { emergency:false, diagnosis:'Cardiac evaluation needed (age>60)', solutions:['ECG','avoid strain','doctor visit'] };
+};
+
+// Global variables
+let currentLanguage = 'en';
+let patients = JSON.parse(localStorage.getItem("patients") || "[]");
+
+// Initial render
+updateRecordCount();
+renderTable();
+
+// Change language function
+function changeLanguage(lang) {
+    currentLanguage = lang;
+    
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    event.target.classList.add('active');
+    
+    const t = translations[lang];
+    if (!t) return;
+    
+    // Update UI elements
+    document.getElementById('patientInfoTitle').innerText = t.patientInfoTitle;
+    document.getElementById('symptomTitle').innerText = t.symptomTitle;
+    document.getElementById('symptomSubtitle').innerText = t.symptomSubtitle;
+    document.getElementById('analyzeBtn').innerText = t.analyzeBtn;
+    document.getElementById('clearBtn').innerText = t.clearBtn;
+    document.getElementById('emergencyBtn').innerText = t.emergencyBtn;
+    document.getElementById('loadingText').innerText = t.loadingText;
+    document.getElementById('resultsTitle').innerText = t.resultsTitle;
+    document.getElementById('emergencyTitle').innerText = t.emergencyTitle;
+    document.getElementById('advisorBadge').innerText = t.advisorBadge;
+    document.getElementById('yourSymptomsTitle').innerText = t.yourSymptomsTitle;
+    document.getElementById('homeTitle').innerText = t.homeTitle;
+    document.getElementById('gelsTitle').innerText = t.gelsTitle;
+    
+    // Category titles
+    document.getElementById('generalTitle').innerText = t.generalTitle;
+    document.getElementById('respiratoryTitle').innerText = t.respiratoryTitle;
+    document.getElementById('giTitle').innerText = t.giTitle;
+    document.getElementById('painTitle').innerText = t.painTitle;
+    document.getElementById('skinTitle').innerText = t.skinTitle;
+    document.getElementById('urinaryTitle').innerText = t.urinaryTitle;
+    document.getElementById('emergencySymTitle').innerText = t.emergencySymTitle;
+    
+    // Symptom labels
+    const symptomIds = [
+        'fever','chills','fatigue','weightLoss','lossAppetite',
+        'cough','dryCough','wetCough','bloodCough','shortnessBreath','wheezing','chestPain','soreThroat','runnyNose',
+        'nausea','vomiting','diarrhea','bloodStool','constipation','abdominalPain','heartburn',
+        'headache','jointPain','musclePain','backPain','dizziness',
+        'rash','itching','yellowSkin',
+        'painUrination','bloodUrine',
+        'fainting','seizures','confusion'
+    ];
+    
+    symptomIds.forEach(id => {
+        const label = document.getElementById('lbl' + id.charAt(0).toUpperCase() + id.slice(1));
+        if (label && t[id]) {
+            label.innerText = t[id];
+        }
+    });
+}
+
+// Symptom search
+function filterSymptoms() {
+    let searchText = document.getElementById('symptomSearch').value.toLowerCase();
+    let symptomItems = document.querySelectorAll('.symptom-item');
+    
+    symptomItems.forEach(item => {
+        let label = item.querySelector('label').textContent.toLowerCase();
+        if (label.includes(searchText) || searchText === '') {
+            item.style.display = 'flex';
+        } else {
+            item.style.display = 'none';
+        }
+    });
+}
+
+// Clear form
+function clearForm() {
+    document.getElementById('patientName').value = '';
+    document.getElementById('patientAge').value = '';
+    document.getElementById('patientGender').value = 'Male';
+    document.getElementById('height').value = '';
+    document.getElementById('weight').value = '';
+    document.getElementById('temperature').value = '';
+    document.getElementById('bp').value = '';
+    document.getElementById('village').value = '';
+    document.getElementById('mobile').value = '';
+    document.getElementById('additionalSymptoms').value = '';
+    document.getElementById('symptomSearch').value = '';
+    
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach(cb => cb.checked = false);
+    
+    document.getElementById('results').style.display = 'none';
+    document.getElementById('emergencyAlert').style.display = 'none';
+    filterSymptoms();
+}
+
+// Emergency override
+function emergencyOverride() {
+    const name = document.getElementById("patientName").value.trim();
+    const age = document.getElementById("patientAge").value;
+    
+    if (!name || !age) {
+        alert("⚠️ Please fill Name and Age");
+        return;
     }
-    if (symptoms.includes('Wet cough')&&symptoms.includes('Fever')) return { emergency:false, diagnosis:'Bronchitis', solutions:['steam','warm fluids','avoid smoke'] };
-    if (symptoms.includes('Fever')&&symptoms.includes('Cough')&&symptoms.includes('Fatigue')) return { emergency:false, diagnosis:'Viral fever', solutions:['rest','paracetamol if needed','soup'] };
-    if (symptoms.includes('Diarrhea')||symptoms.includes('Vomiting')) return { emergency:false, diagnosis:'Gastroenteritis', solutions:['ORS','banana','rice'] };
-    if (symptoms.includes('Headache')) return { emergency:false, diagnosis:'Tension headache', solutions:['rest','cold compress','hydration'] };
-    if (symptoms.length===0) return { emergency:false, diagnosis:'Healthy (no symptoms)', solutions:['balanced diet','exercise','sleep'] };
-    return { emergency:false, diagnosis:'Mild symptoms', solutions:['monitor','visit clinic if persists'] };
-  }
+    
+    document.getElementById('loader').style.display = 'block';
+    document.getElementById('results').style.display = 'none';
+    
+    setTimeout(() => {
+        document.getElementById('loader').style.display = 'none';
+        
+        const t = translations[currentLanguage];
+        
+        const emergencyResult = {
+            status: "emergency",
+            statusText: t.statusEmergency,
+            diagnosis: "EMERGENCY",
+            description: "🚨 URGENT - Go to hospital immediately!",
+            homeRemedies: ["🚑 GO TO HOSPITAL NOW"],
+            gels: ["🚑 GO TO HOSPITAL NOW"],
+            symptoms: "Emergency",
+            followUp: "🚑 RUSH TO NEAREST HOSPITAL"
+        };
+        
+        displayResults(emergencyResult);
+        savePatient(name, age, emergencyResult);
+    }, 500);
+}
 
-  function analyzeHealth() {
-    let name=document.getElementById('patientName').value.trim()||'Unknown'; let age=parseInt(document.getElementById('patientAge').value)||35; let temp=parseFloat(document.getElementById('temperature').value)||36.5; let bp=document.getElementById('bp').value||'';
-    document.getElementById('loader').style.display='block'; document.getElementById('results').style.display='none';
-    setTimeout(()=>{
-      document.getElementById('loader').style.display='none';
-      let symptoms=getSelectedSymptoms(); let analysis=getAIDiagnosis(symptoms,age,temp,bp);
-      let result;
-      if (analysis.emergency) result={ status:'emergency', statusText:'🚨 EMERGENCY', diagnosis:analysis.diagnosis, description:analysis.message||'Urgent', solutions:analysis.solutions, symptoms:symptoms.join(', ')||'none', followUp:'IMMEDIATE CARE' };
-      else if (symptoms.length) result={ status:'followup', statusText:'⚠️ Needs follow‑up', diagnosis:analysis.diagnosis, description:'AI advice based on profile', solutions:analysis.solutions, symptoms:symptoms.join(', '), followUp:'revisit if no improvement in 3 days' };
-      else result={ status:'healthy', statusText:'✅ Healthy', diagnosis:'No issues', description:'maintain wellness', solutions:analysis.solutions, symptoms:'none', followUp:'regular checkup' };
-      displayResults(result); saveScreening(name,age,result);
-    },1300);
-  }
+// Get selected symptoms
+function getSelectedSymptoms() {
+    const symptoms = [];
+    const t = translations[currentLanguage];
+    const symptomIds = [
+        'fever','chills','fatigue','weightLoss','lossAppetite',
+        'cough','dryCough','wetCough','bloodCough','shortnessBreath','wheezing','chestPain','soreThroat','runnyNose',
+        'nausea','vomiting','diarrhea','bloodStool','constipation','abdominalPain','heartburn',
+        'headache','jointPain','musclePain','backPain','dizziness',
+        'rash','itching','yellowSkin',
+        'painUrination','bloodUrine',
+        'fainting','seizures','confusion'
+    ];
+    
+    symptomIds.forEach(id => {
+        if (document.getElementById(id) && document.getElementById(id).checked) {
+            symptoms.push(t[id] || id);
+        }
+    });
+    
+    return symptoms;
+}
 
-  function displayResults(r) {
-    document.getElementById('results').style.display='block';
-    let cls=r.status==='emergency'?'status-emergency':r.status==='followup'?'status-followup':'status-healthy';
-    document.getElementById('statusText').innerHTML=`<span class="${cls}">${r.statusText}</span>`;
-    document.getElementById('description').innerText=r.description;
-    let sym=r.symptoms; let symHtml='';
-    if(sym && sym!=='none') sym.split(', ').forEach(s=>symHtml+=`<span style="background:#e6f4ea; padding:8px 22px; border-radius:60px; margin:5px; display:inline-block;">${s}</span> `);
-    else symHtml='none';
-    document.getElementById('symptomList').innerHTML=symHtml;
-    let solHtml=''; r.solutions.forEach(s=>solHtml+=`<div class="recommendation-card"><i class="fas fa-check-circle" style="color:#1f5e41;"></i> ${s}</div>`);
-    document.getElementById('solutionsList').innerHTML=solHtml;
-    document.getElementById('followUp').innerHTML=`<i class="fas fa-clock"></i> ${r.followUp}`;
-    if(r.status==='emergency') { document.getElementById('emergencyAlert').style.display='block'; document.getElementById('emergencyMessage').innerText=r.description; }
-    else document.getElementById('emergencyAlert').style.display='none';
-  }
+// Simple natural remedies - only home remedies and gels
+function getRemedies(symptoms) {
+    let diagnosis = "General Check";
+    let homeRemedies = [];
+    let gels = [];
+    let emergency = false;
+    let emergencyMsg = "";
+    
+    // Emergency checks
+    const emergencySymptoms = ['bloodCough','bloodStool','bloodUrine','fainting','seizures','confusion','chestPain','yellowSkin'];
+    for (let id of emergencySymptoms) {
+        if (document.getElementById(id) && document.getElementById(id).checked) {
+            emergency = true;
+            emergencyMsg = "🚨 EMERGENCY - Go to hospital immediately!";
+        }
+    }
+    
+    if (emergency) {
+        return {
+            emergency: true,
+            message: emergencyMsg,
+            diagnosis: "EMERGENCY",
+            homeRemedies: ["🚑 GO TO HOSPITAL NOW"],
+            gels: ["🚑 GO TO HOSPITAL NOW"]
+        };
+    }
+    
+    // Cold/Flu
+    if (document.getElementById('fever')?.checked || document.getElementById('cough')?.checked) {
+        diagnosis = "Cold/Flu";
+        homeRemedies = [
+            "🫖 Ginger tea with honey",
+            "💧 Warm water with lemon",
+            "🛌 Rest for 2-3 days",
+            "🧄 Garlic with honey"
+        ];
+        gels = [
+            "❄️ Vicks Vaporub on chest",
+            "🌱 Eucalyptus oil on chest"
+        ];
+    }
+    
+    // Body Pain
+    else if (document.getElementById('jointPain')?.checked || document.getElementById('musclePain')?.checked || document.getElementById('backPain')?.checked) {
+        diagnosis = "Body Pain";
+        homeRemedies = [
+            "🔥 Warm compress on pain area",
+            "🛀 Warm water bath",
+            "🧘 Light stretching"
+        ];
+        gels = [
+            "🌱 Diclofenac gel",
+            "❄️ Volini gel",
+            "🧴 Moov spray"
+        ];
+    }
+    
+    // Headache
+    else if (document.getElementById('headache')?.checked) {
+        diagnosis = "Headache";
+        homeRemedies = [
+            "🧊 Cold compress on forehead",
+            "😴 Rest in dark room",
+            "💧 Drink water"
+        ];
+        gels = [
+            "❄️ Balm on forehead",
+            "🌱 Peppermint oil on temples"
+        ];
+    }
+    
+    // Stomach issues
+    else if (document.getElementById('diarrhea')?.checked || document.getElementById('vomiting')?.checked) {
+        diagnosis = "Stomach Upset";
+        homeRemedies = [
+            "💧 ORS - 1L water + 6 tsp sugar + 1/2 tsp salt",
+            "🍚 Rice water",
+            "🍌 Eat bananas"
+        ];
+        gels = ["🧴 Not needed"];
+    }
+    
+    // Acidity
+    else if (document.getElementById('heartburn')?.checked) {
+        diagnosis = "Acidity";
+        homeRemedies = [
+            "🥛 Cold milk",
+            "🍌 Ripe banana",
+            "💧 Coconut water"
+        ];
+        gels = ["🧴 Not needed"];
+    }
+    
+    // Constipation
+    else if (document.getElementById('constipation')?.checked) {
+        diagnosis = "Constipation";
+        homeRemedies = [
+            "💧 Warm water with lemon",
+            "🍌 Banana with warm milk",
+            "🥣 Isabgol with milk"
+        ];
+        gels = ["🧴 Not needed"];
+    }
+    
+    // Skin
+    else if (document.getElementById('rash')?.checked || document.getElementById('itching')?.checked) {
+        diagnosis = "Skin Irritation";
+        homeRemedies = [
+            "🧴 Aloe vera gel",
+            "🥥 Coconut oil",
+            "🌿 Neem paste"
+        ];
+        gels = [
+            "🌱 Calamine lotion",
+            "❄️ Itch relief gel"
+        ];
+    }
+    
+    // Throat
+    else if (document.getElementById('soreThroat')?.checked) {
+        diagnosis = "Sore Throat";
+        homeRemedies = [
+            "🧂 Salt water gargle",
+            "🍯 Honey with lemon",
+            "🫖 Ginger tea"
+        ];
+        gels = ["❄️ Balm on throat"];
+    }
+    
+    // No symptoms
+    else {
+        diagnosis = "No Issues";
+        homeRemedies = [
+            "🥗 Eat healthy",
+            "💧 Drink water",
+            "🚶 Walk daily"
+        ];
+        gels = ["🧴 Not needed"];
+    }
+    
+    return {
+        emergency: false,
+        diagnosis: diagnosis,
+        homeRemedies: homeRemedies,
+        gels: gels
+    };
+}
 
-  function saveScreening(name,age,result) {
-    let rec={ time:new Date().toLocaleString(), name, age, diagnosis:result.diagnosis, status:result.statusText };
-    screenings.unshift(rec); if(screenings.length>30) screenings.pop();
-    localStorage.setItem('rural_premium_screenings',JSON.stringify(screenings));
-    renderTables();
-  }
+// Main analysis
+function analyzeHealth() {
+    const name = document.getElementById("patientName").value.trim();
+    const age = document.getElementById("patientAge").value;
+    
+    if (!name || !age) {
+        alert("⚠️ Please fill Name and Age");
+        return;
+    }
+    
+    document.getElementById('loader').style.display = 'block';
+    document.getElementById('results').style.display = 'none';
+    
+    setTimeout(() => {
+        document.getElementById('loader').style.display = 'none';
+        
+        const symptoms = getSelectedSymptoms();
+        const remedies = getRemedies(symptoms);
+        const t = translations[currentLanguage];
+        
+        let result;
+        
+        if (remedies.emergency) {
+            result = {
+                status: "emergency",
+                statusText: t.statusEmergency,
+                diagnosis: remedies.diagnosis,
+                description: remedies.message,
+                homeRemedies: remedies.homeRemedies,
+                gels: remedies.gels,
+                symptoms: symptoms.join(", ") || "None",
+                followUp: "🚑 GO TO HOSPITAL NOW"
+            };
+        } else if (symptoms.length > 0) {
+            result = {
+                status: "followup",
+                statusText: t.statusFollowup,
+                diagnosis: remedies.diagnosis,
+                description: "Try these remedies. See doctor if not better in 3 days.",
+                homeRemedies: remedies.homeRemedies,
+                gels: remedies.gels,
+                symptoms: symptoms.join(", "),
+                followUp: "Use for 3 days. See doctor if no improvement."
+            };
+        } else {
+            result = {
+                status: "healthy",
+                statusText: t.statusHealthy,
+                diagnosis: "Healthy",
+                description: "No symptoms reported.",
+                homeRemedies: remedies.homeRemedies,
+                gels: remedies.gels,
+                symptoms: "None",
+                followUp: "Stay healthy!"
+            };
+        }
+        
+        displayResults(result);
+        savePatient(name, age, result);
+    }, 500);
+}
 
-  function renderTables() {
-    let tbody=document.getElementById('tableBody'); let docBody=document.getElementById('doctorTableBody');
-    if(!screenings.length) { tbody.innerHTML='<tr><td colspan="5" style="text-align:center;">no records</td></tr>'; if(docBody) docBody.innerHTML='<tr><td colspan="5">no records</td></tr>'; return; }
-    tbody.innerHTML=screenings.map(s=>`<tr><td>${s.time}</td><td>${s.name}</td><td>${s.age}</td><td>${s.diagnosis}</td><td>${s.status}</td></tr>`).join('');
-    if(docBody) docBody.innerHTML=screenings.map(s=>`<tr><td>${s.time}</td><td>${s.name}</td><td>${s.age}</td><td>${s.diagnosis}</td><td>${s.status}</td></tr>`).join('');
-  }
+// Display results
+function displayResults(result) {
+    document.getElementById('results').style.display = 'block';
+    
+    if (result.status === "healthy") {
+        document.getElementById('statusText').innerHTML = "<span class='status-healthy'>" + result.statusText + "</span>";
+    } else if (result.status === "emergency") {
+        document.getElementById('statusText').innerHTML = "<span class='status-emergency'>" + result.statusText + "</span>";
+    } else {
+        document.getElementById('statusText').innerHTML = "<span class='status-followup'>" + result.statusText + "</span>";
+    }
+    
+    document.getElementById('description').innerText = result.description;
+    
+    let symptomsHtml = "";
+    if (result.symptoms && result.symptoms !== "None") {
+        let symptomArray = result.symptoms.split(", ");
+        symptomArray.forEach(s => {
+            symptomsHtml += `<span class="symptom-tag">${s}</span> `;
+        });
+    } else {
+        symptomsHtml = "No symptoms";
+    }
+    document.getElementById('symptomList').innerHTML = symptomsHtml;
+    
+    let diagnosisHtml = `<div class="possible-condition">
+        <span class="condition-name">${result.diagnosis}</span>
+        <p>${result.description}</p>
+    </div>`;
+    document.getElementById('diagnosisContent').innerHTML = diagnosisHtml;
+    
+    let homeHtml = "";
+    result.homeRemedies.forEach(r => {
+        homeHtml += `<div class="remedy-item">🏠 ${r}</div>`;
+    });
+    document.getElementById('homeRemediesList').innerHTML = homeHtml;
+    
+    let gelsHtml = "";
+    result.gels.forEach(g => {
+        gelsHtml += `<div class="gel-item">🧴 ${g}</div>`;
+    });
+    document.getElementById('gelsList').innerHTML = gelsHtml;
+    
+    document.getElementById('followUp').innerText = result.followUp;
+    
+    if (result.status === "emergency") {
+        document.getElementById('emergencyAlert').style.display = 'block';
+        document.getElementById('emergencyMessage').innerText = result.description;
+    } else {
+        document.getElementById('emergencyAlert').style.display = 'none';
+    }
+}
 
-  function doctorLogin() { if(document.getElementById('docUser').value==='doctor' && document.getElementById('docPass').value==='123') { document.getElementById('doctorLoginBox').classList.add('hidden'); document.getElementById('doctorRecords').classList.remove('hidden'); renderTables(); } else alert('Invalid (doctor/123)'); }
-  function logoutDoctor() { document.getElementById('doctorLoginBox').classList.remove('hidden'); document.getElementById('doctorRecords').classList.add('hidden'); }
+// Save patient to records
+function savePatient(name, age, result) {
+    const gender = document.getElementById('patientGender').value;
+    const village = document.getElementById('village').value || '-';
+    const mobile = document.getElementById('mobile').value || '-';
+    
+    const symptoms = document.getElementById('symptomList').innerText.replace(/[🏠🧴]/g, '').trim();
+    
+    const patient = {
+        time: new Date().toLocaleString(),
+        name: name,
+        age: age,
+        gender: gender,
+        village: village,
+        mobile: mobile,
+        symptoms: result.symptoms || symptoms,
+        diagnosis: result.diagnosis,
+        status: result.statusText,
+        id: Date.now()
+    };
+    
+    patients.unshift(patient);
+    if (patients.length > 100) patients.pop();
+    localStorage.setItem("patients", JSON.stringify(patients));
+    
+    updateRecordCount();
+    renderTable();
+}
 
-  function startVoiceInput() {
-    let btn=document.getElementById('voiceBtn'); btn.classList.add('listening'); document.getElementById('voiceStatus').innerHTML='<i class="fas fa-spinner fa-pulse"></i> listening ...';
-    setTimeout(()=>{ btn.classList.remove('listening'); document.getElementById('voiceStatus').innerHTML='✓ "fever, cough" captured'; document.getElementById('fever').checked=true; document.getElementById('cough').checked=true; },2000);
-  }
+// Render table
+function renderTable() {
+    const tbody = document.getElementById("tableBody");
+    
+    if (patients.length === 0) {
+        tbody.innerHTML = "<tr><td colspan='10' style='text-align:center'>No records found</td></tr>";
+        return;
+    }
+    
+    tbody.innerHTML = patients.map(p => `
+        <tr>
+            <td>${p.time}</td>
+            <td>${p.name}</td>
+            <td>${p.age}</td>
+            <td>${p.gender}</td>
+            <td>${p.village}</td>
+            <td>${p.mobile}</td>
+            <td>${p.symptoms.substring(0,30)}${p.symptoms.length > 30 ? '...' : ''}</td>
+            <td>${p.diagnosis}</td>
+            <td>${p.status}</td>
+            <td><button class="delete-btn" onclick="deletePatient(${p.id})">🗑️</button></td>
+        </tr>
+    `).join("");
+}
 
-  window.onload=function(){ renderTables(); switchLang('en'); setHealthTip(); };
-  function setHealthTip() { let tips=['🥗 Eat seasonal vegetables','💧 8-10 glasses water','🧘 Walk 30 min daily','🌙 Sleep 7-8 hours']; document.getElementById('healthTip').innerText=tips[Math.floor(Math.random()*tips.length)]; }
+// Delete patient
+function deletePatient(id) {
+    if (confirm("Delete this record?")) {
+        patients = patients.filter(p => p.id !== id);
+        localStorage.setItem("patients", JSON.stringify(patients));
+        updateRecordCount();
+        renderTable();
+    }
+}
+
+// Clear all records
+function clearAllRecords() {
+    if (confirm("Delete ALL records? This cannot be undone!")) {
+        patients = [];
+        localStorage.setItem("patients", JSON.stringify(patients));
+        updateRecordCount();
+        renderTable();
+    }
+}
+
+// Search records
+function searchRecords() {
+    const searchText = document.getElementById('searchRecord').value.toLowerCase();
+    
+    if (!searchText) {
+        renderTable();
+        return;
+    }
+    
+    const filtered = patients.filter(p => 
+        p.name.toLowerCase().includes(searchText) ||
+        p.village.toLowerCase().includes(searchText) ||
+        p.mobile.includes(searchText)
+    );
+    
+    const tbody = document.getElementById("tableBody");
+    if (filtered.length === 0) {
+        tbody.innerHTML = "<tr><td colspan='10' style='text-align:center'>No matching records</td></tr>";
+        return;
+    }
+    
+    tbody.innerHTML = filtered.map(p => `
+        <tr>
+            <td>${p.time}</td>
+            <td>${p.name}</td>
+            <td>${p.age}</td>
+            <td>${p.gender}</td>
+            <td>${p.village}</td>
+            <td>${p.mobile}</td>
+            <td>${p.symptoms.substring(0,30)}${p.symptoms.length > 30 ? '...' : ''}</td>
+            <td>${p.diagnosis}</td>
+            <td>${p.status}</td>
+            <td><button class="delete-btn" onclick="deletePatient(${p.id})">🗑️</button></td>
+        </tr>
+    `).join("");
+}
+
+// Export records
+function exportRecords() {
+    let csv = "Date/Time,Name,Age,Gender,Village,Mobile,Symptoms,Diagnosis,Status\n";
+    
+    patients.forEach(p => {
+        csv += `"${p.time}","${p.name}","${p.age}","${p.gender}","${p.village}","${p.mobile}","${p.symptoms}","${p.diagnosis}","${p.status}"\n`;
+    });
+    
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'patient_records.csv';
+    a.click();
+}
+
+// Update record count
+function updateRecordCount() {
+    document.getElementById('recordCount').innerText = `Total Patients: ${patients.length}`;
+}
+
+// Initialize
+changeLanguage('en');
 </script>
+
 </body>
 </html>

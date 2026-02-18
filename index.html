@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RuralCare AI - Complete Health Screening with Symptoms</title>
+<title>RuralCare AI - Smart Symptom Analyzer with AI Suggestions</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:Segoe UI,Arial;background:#f5f5f6;padding:20px;color:#263238}
@@ -20,6 +20,7 @@ button:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(0,0,0,0.2)}
 .btn-primary{background:#1b5e20;color:#fff}
 .btn-warning{background:#ef6c00;color:#fff}
 .btn-secondary{background:#eee;color:#333}
+.btn-danger{background:#c62828;color:#fff}
 .btn-group{display:flex;gap:15px;flex-wrap:wrap;margin:20px 0}
 #results{display:none;margin-top:20px}
 .status-healthy{color:#2e7d32;font-weight:bold;font-size:18px}
@@ -31,7 +32,6 @@ table{width:100%;border-collapse:collapse;margin-top:15px;background:white;borde
 th,td{padding:12px;border-bottom:1px solid #e0e0e0;text-align:left}
 th{background:#1b5e20;color:white;font-weight:500}
 tr:hover{background:#f5f5f5}
-.preview{max-width:300px;max-height:300px;margin-top:15px;border-radius:10px;border:2px solid #1b5e20}
 .symptom-category{background:#f1f8e9;padding:15px;border-radius:10px;margin-bottom:15px}
 .symptom-item{display:flex;align-items:center;gap:8px;padding:8px;background:white;border-radius:6px;border:1px solid #c8e6c9}
 .symptom-item input[type="checkbox"]{width:18px;height:18px;cursor:pointer}
@@ -47,6 +47,16 @@ tr:hover{background:#f5f5f5}
 .filter-buttons{display:flex;gap:10px;margin-bottom:15px;flex-wrap:wrap}
 .filter-btn{padding:8px 15px;background:#e0e0e0;border-radius:20px;cursor:pointer}
 .filter-btn.active{background:#1b5e20;color:white}
+.symptom-tag{display:inline-block;background:#e8f5e9;padding:5px 12px;border-radius:20px;margin:3px;font-size:13px;border:1px solid #a5d6a7}
+.medicine-item{background:#e3f2fd;padding:10px;margin:5px 0;border-radius:6px;border-left:4px solid #1565c0}
+.ai-suggestion{background:#f3e5f5;padding:15px;border-radius:10px;margin:15px 0;border-left:4px solid #7b1fa2}
+.ai-badge{background:#7b1fa2;color:white;padding:3px 10px;border-radius:15px;font-size:12px;display:inline-block;margin-bottom:10px}
+.possible-condition{background:#fff3e0;padding:10px;border-radius:8px;margin:8px 0;border-left:4px solid #ef6c00}
+.condition-name{font-weight:bold;color:#ef6c00}
+.confidence-score{font-size:12px;color:#666}
+.loader{display:none;text-align:center;padding:20px}
+.loader-spinner{border:4px solid #f3f3f3;border-top:4px solid #1b5e20;border-radius:50%;width:40px;height:40px;animation:spin 1s linear infinite;margin:auto}
+@keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
@@ -73,8 +83,13 @@ tr:hover{background:#f5f5f5}
 
 <!-- Symptoms Assessment Section -->
 <div class="section">
-<h2>🩺 Complete Symptom Assessment</h2>
-<p style="margin-bottom:15px;color:#666;">Select all symptoms the patient is experiencing:</p>
+<h2>🩺 AI-Powered Symptom Assessment</h2>
+<p style="margin-bottom:15px;color:#666;">Select symptoms for AI analysis and smart suggestions:</p>
+
+<!-- Quick Symptom Search -->
+<div style="margin-bottom:20px">
+<input type="text" id="symptomSearch" placeholder="🔍 Search symptoms..." onkeyup="filterSymptoms()">
+</div>
 
 <!-- General Symptoms -->
 <div class="symptom-category">
@@ -198,51 +213,64 @@ tr:hover{background:#f5f5f5}
 
 <!-- Additional Notes -->
 <div style="margin-top:20px">
-<textarea id="additionalSymptoms" placeholder="Additional symptoms or notes not listed above..."></textarea>
+<textarea id="additionalSymptoms" placeholder="Describe any other symptoms in detail... (This helps AI provide better analysis)"></textarea>
 </div>
-</div>
-
-<!-- Photo Upload Section -->
-<div class="section">
-<h2>📸 Patient Photo</h2>
-<input type="file" id="imageUpload" accept="image/*">
-<img id="preview" class="preview" style="display:none">
 </div>
 
 <!-- Action Buttons -->
 <div class="btn-group">
-<button class="btn-primary" onclick="analyzeHealth()">🔬 Complete Health Analysis</button>
+<button class="btn-primary" onclick="analyzeHealth()">🤖 AI Health Analysis</button>
 <button class="btn-secondary" onclick="clearForm()">🔄 Clear Form</button>
-<button class="btn-warning" onclick="emergencyOverride()">🚨 Emergency Override</button>
+<button class="btn-danger" onclick="emergencyOverride()">🚨 Emergency Override</button>
+</div>
+
+<!-- Loading Indicator -->
+<div id="loader" class="loader">
+<div class="loader-spinner"></div>
+<p style="margin-top:10px">AI is analyzing symptoms...</p>
 </div>
 
 <!-- Results Section -->
 <div id="results" class="section">
-<h2>📊 Comprehensive Screening Report</h2>
+<h2>📊 AI-Powered Health Report</h2>
 <div id="emergencyAlert" style="display:none" class="emergency-box">
 <div class="emergency-text">🚨 EMERGENCY - Immediate Action Required</div>
 <p id="emergencyMessage">Patient requires urgent medical attention.</p>
 </div>
+
+<!-- AI Suggestions Box -->
+<div id="aiSuggestions" class="ai-suggestion">
+<div class="ai-badge">🤖 AI ANALYSIS</div>
+<h3>Possible Conditions:</h3>
+<div id="possibleConditions"></div>
+<p style="margin-top:10px;font-style:italic;color:#666;">*This is an AI-generated suggestion. Please consult a doctor for proper diagnosis.</p>
+</div>
+
 <p id="statusText"></p>
 <p id="description"></p>
+
 <div>
 <h3>Analysis Confidence</h3>
 <div class="progress"><div id="confidenceBar" class="progress-bar"></div></div>
 <p id="confidenceText"></p>
 </div>
+
 <div id="symptomSummary" style="margin:15px 0;padding:15px;background:#f5f5f5;border-radius:8px">
 <h3>📋 Reported Symptoms:</h3>
 <div id="symptomList"></div>
 </div>
+
 <div id="recommendations" style="margin:20px 0">
-<h3>💡 Personalized Recommendations:</h3>
+<h3>💡 AI-Powered Recommendations:</h3>
 <div id="recommendationsList"></div>
 </div>
+
 <div id="medicines" style="margin:20px 0;padding:15px;background:#e3f2fd;border-radius:8px">
 <h3>💊 Suggested Medicines (Consult Doctor Before Use):</h3>
 <div id="medicinesList"></div>
 <p style="font-size:12px;color:#666;margin-top:10px;">⚠️ Always consult a healthcare professional before taking any medication</p>
 </div>
+
 <div id="followUp"></div>
 </div>
 
@@ -257,7 +285,7 @@ tr:hover{background:#f5f5f5}
 </div>
 <table>
 <thead>
-<tr><th>Time</th><th>ID</th><th>Name</th><th>Age</th><th>Symptoms</th><th>Status</th></tr>
+<tr><th>Time</th><th>ID</th><th>Name</th><th>Age</th><th>Symptoms</th><th>AI Diagnosis</th><th>Status</th></tr>
 </thead>
 <tbody id="tableBody"></tbody>
 </table>
@@ -267,262 +295,229 @@ tr:hover{background:#f5f5f5}
 
 <script>
 // Global variables
-let capturedImage = null;
 let screenings = JSON.parse(localStorage.getItem("screenings") || "[]");
 
-// Image upload handling
-document.getElementById("imageUpload").addEventListener("change", function(e) {
-    const file = e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = function(event) {
-        capturedImage = event.target.result;
-        const preview = document.getElementById("preview");
-        preview.src = capturedImage;
-        preview.style.display = "block";
-    }
-    reader.readAsDataURL(file);
-});
-
-// Symptom checking function
-function getSelectedSymptoms() {
-    const symptoms = [];
-    const symptomTypes = [
-        'fever', 'chills', 'fatigue', 'nightSweats', 'weightLoss', 'lossAppetite',
-        'cough', 'dryCough', 'wetCough', 'bloodCough', 'shortnessBreath', 'wheezing', 'chestPain', 'soreThroat', 'runnyNose',
-        'nausea', 'vomiting', 'diarrhea', 'bloodStool', 'constipation', 'abdominalPain', 'bloating', 'heartburn',
-        'headache', 'migraine', 'dizziness', 'fainting', 'seizures', 'confusion', 'numbness', 'tremor',
-        'jointPain', 'musclePain', 'backPain', 'neckPain', 'swellingJoints', 'injury',
-        'rash', 'itching', 'wounds', 'infection', 'yellowSkin', 'bruising',
-        'painUrination', 'frequentUrination', 'bloodUrine', 'urineLeakage', 'flankPain',
-        'palpitations', 'chestPressure', 'swellingFeet', 'irregularHeartbeat',
-        'blurredVision', 'eyePain', 'hearingLoss', 'earPain', 'ringingEars'
-    ];
+// Symptom search filter
+function filterSymptoms() {
+    let searchText = document.getElementById('symptomSearch').value.toLowerCase();
+    let symptomItems = document.querySelectorAll('.symptom-item');
     
-    symptomTypes.forEach(symptom => {
-        const element = document.getElementById(symptom);
-        if (element && element.checked) {
-            symptoms.push(symptom.replace(/([A-Z])/g, ' $1').toLowerCase().trim());
+    symptomItems.forEach(item => {
+        let label = item.querySelector('label').textContent.toLowerCase();
+        if (label.includes(searchText) || searchText === '') {
+            item.style.display = 'flex';
+        } else {
+            item.style.display = 'none';
         }
     });
+}
+
+// Get selected symptoms with labels
+function getSelectedSymptoms() {
+    const symptoms = [];
+    const symptomElements = {
+        'fever': 'Fever',
+        'chills': 'Chills',
+        'fatigue': 'Fatigue',
+        'nightSweats': 'Night Sweats',
+        'weightLoss': 'Weight Loss',
+        'lossAppetite': 'Loss of Appetite',
+        'cough': 'Cough',
+        'dryCough': 'Dry Cough',
+        'wetCough': 'Wet Cough',
+        'bloodCough': 'Coughing Blood',
+        'shortnessBreath': 'Shortness of Breath',
+        'wheezing': 'Wheezing',
+        'chestPain': 'Chest Pain',
+        'soreThroat': 'Sore Throat',
+        'runnyNose': 'Runny Nose',
+        'nausea': 'Nausea',
+        'vomiting': 'Vomiting',
+        'diarrhea': 'Diarrhea',
+        'bloodStool': 'Blood in Stool',
+        'constipation': 'Constipation',
+        'abdominalPain': 'Abdominal Pain',
+        'bloating': 'Bloating',
+        'heartburn': 'Heartburn',
+        'headache': 'Headache',
+        'migraine': 'Migraine',
+        'dizziness': 'Dizziness',
+        'fainting': 'Fainting',
+        'seizures': 'Seizures',
+        'confusion': 'Confusion',
+        'numbness': 'Numbness',
+        'tremor': 'Tremor',
+        'jointPain': 'Joint Pain',
+        'musclePain': 'Muscle Pain',
+        'backPain': 'Back Pain',
+        'neckPain': 'Neck Pain',
+        'swellingJoints': 'Swollen Joints',
+        'injury': 'Injury',
+        'rash': 'Rash',
+        'itching': 'Itching',
+        'wounds': 'Wounds',
+        'infection': 'Infection',
+        'yellowSkin': 'Yellow Skin',
+        'bruising': 'Bruising',
+        'painUrination': 'Painful Urination',
+        'frequentUrination': 'Frequent Urination',
+        'bloodUrine': 'Blood in Urine',
+        'urineLeakage': 'Urine Leakage',
+        'flankPain': 'Flank Pain',
+        'palpitations': 'Palpitations',
+        'chestPressure': 'Chest Pressure',
+        'swellingFeet': 'Swollen Feet',
+        'irregularHeartbeat': 'Irregular Heartbeat',
+        'blurredVision': 'Blurred Vision',
+        'eyePain': 'Eye Pain',
+        'hearingLoss': 'Hearing Loss',
+        'earPain': 'Ear Pain',
+        'ringingEars': 'Ringing in Ears'
+    };
+    
+    for (let [id, label] of Object.entries(symptomElements)) {
+        const element = document.getElementById(id);
+        if (element && element.checked) {
+            symptoms.push(label);
+        }
+    }
     
     return symptoms;
 }
 
-// Symptom-based recommendations
-function getSymptomBasedRecommendations(symptoms, age, bp, temp) {
+// AI Symptom Analysis
+function analyzeWithAI(symptoms, age, temp, bp) {
+    const possibleConditions = [];
     const recommendations = [];
     const medicines = [];
-    let emergency = false;
-    let emergencyMessage = "";
+    let primaryDiagnosis = "";
     
-    // Emergency symptoms check
-    const emergencySymptoms = ['bloodCough', 'bloodStool', 'bloodUrine', 'fainting', 'seizures', 'confusion', 'chestPressure', 'irregularHeartbeat', 'yellowSkin'];
-    emergencySymptoms.forEach(sym => {
-        if (document.getElementById(sym) && document.getElementById(sym).checked) {
-            emergency = true;
-            emergencyMessage = "Patient shows signs of serious condition requiring immediate medical attention.";
-        }
-    });
-    
-    // Chest pain emergency
-    if (document.getElementById('chestPain') && document.getElementById('chestPain').checked) {
-        emergency = true;
-        emergencyMessage = "Chest pain detected - Possible cardiac event. Seek emergency care immediately.";
+    // Respiratory Conditions
+    if (symptoms.includes('Cough') && symptoms.includes('Fever') && symptoms.includes('Fatigue')) {
+        possibleConditions.push({
+            name: "Upper Respiratory Infection / Common Cold",
+            confidence: "85%",
+            description: "Viral infection affecting nose and throat"
+        });
+        recommendations.push("🛌 Get plenty of rest");
+        recommendations.push("💧 Drink warm fluids like soup and tea");
+        recommendations.push("💨 Use steam inhalation");
+        medicines.push("Paracetamol for fever");
+        medicines.push("Cough syrup (Dextromethorphan for dry cough)");
     }
     
-    // High fever with severe symptoms
-    if (temp > 39.5 && (document.getElementById('seizures')?.checked || document.getElementById('confusion')?.checked)) {
-        emergency = true;
-        emergencyMessage = "Very high fever with neurological symptoms - Possible severe infection.";
+    if (symptoms.includes('Wet Cough') && symptoms.includes('Fever') && symptoms.includes('Fatigue')) {
+        possibleConditions.push({
+            name: "Bronchitis or Chest Infection",
+            confidence: "78%",
+            description: "Inflammation of bronchial tubes, often with phlegm"
+        });
+        recommendations.push("💨 Do steam inhalation 3-4 times daily");
+        recommendations.push("🚭 Avoid smoke and pollutants");
+        recommendations.push("🛌 Take complete rest");
+        medicines.push("Ambroxol for mucus clearance");
+        medicines.push("Antibiotics (if bacterial, consult doctor)");
     }
     
-    // Blood pressure emergency
-    if (bp.includes("180") || bp.includes("200")) {
-        emergency = true;
-        emergencyMessage = "Critically high blood pressure - Hypertensive emergency.";
+    if (symptoms.includes('Shortness of Breath') && symptoms.includes('Wheezing') && symptoms.includes('Chest Pain')) {
+        possibleConditions.push({
+            name: "Asthma or COPD Exacerbation",
+            confidence: "82%",
+            description: "Airway inflammation causing breathing difficulty"
+        });
+        recommendations.push("🫁 Use prescribed inhaler immediately");
+        recommendations.push("💨 Sit upright and practice slow breathing");
+        recommendations.push("🚑 Seek medical help if severe");
+        medicines.push("Salbutamol inhaler");
+        medicines.push("Steroid inhaler (if prescribed)");
     }
     
-    // Generate recommendations based on symptoms
-    if (document.getElementById('fever')?.checked) {
-        recommendations.push("🌡️ Monitor temperature every 4 hours");
-        recommendations.push("💧 Increase fluid intake to prevent dehydration");
-        medicines.push("Paracetamol (for fever > 101°F / 38.3°C)");
+    // Gastrointestinal Conditions
+    if (symptoms.includes('Nausea') && symptoms.includes('Vomiting') && symptoms.includes('Diarrhea')) {
+        possibleConditions.push({
+            name: "Acute Gastroenteritis",
+            confidence: "90%",
+            description: "Stomach flu or food poisoning"
+        });
+        recommendations.push("💧 Drink ORS solution frequently");
+        recommendations.push("🍚 Eat bland foods like rice and bananas");
+        recommendations.push("🚫 Avoid dairy and spicy foods");
+        medicines.push("ORS packets");
+        medicines.push("Zinc supplements");
+        medicines.push("Probiotics");
     }
     
-    if (document.getElementById('cough')?.checked || document.getElementById('dryCough')?.checked || document.getElementById('wetCough')?.checked) {
-        recommendations.push("🍯 Use honey and warm water for cough relief");
-        recommendations.push("🚭 Avoid smoke and dust");
-        if (document.getElementById('wetCough')?.checked) {
-            medicines.push("Ambroxol or Guaifenesin (for wet cough)");
-        } else {
-            medicines.push("Dextromethorphan (for dry cough)");
-        }
+    if (symptoms.includes('Abdominal Pain') && symptoms.includes('Nausea') && symptoms.includes('Heartburn')) {
+        possibleConditions.push({
+            name: "Gastritis / Acidity",
+            confidence: "75%",
+            description: "Inflammation of stomach lining"
+        });
+        recommendations.push("🍽️ Eat small, frequent meals");
+        recommendations.push("🚫 Avoid spicy and oily food");
+        recommendations.push("🛌 Don't lie down immediately after eating");
+        medicines.push("Antacids");
+        medicines.push("Proton pump inhibitors (consult doctor)");
     }
     
-    if (document.getElementById('shortnessBreath')?.checked || document.getElementById('wheezing')?.checked) {
-        recommendations.push("🫁 Practice deep breathing exercises");
-        recommendations.push("💨 Use steam inhalation for relief");
-        medicines.push("Salbutamol inhaler (if prescribed)");
-        emergency = emergency || true; // Shortness of breath needs attention
+    // Fever-related conditions
+    if (symptoms.includes('Fever') && symptoms.includes('Chills') && symptoms.includes('Muscle Pain')) {
+        possibleConditions.push({
+            name: "Viral Fever / Flu",
+            confidence: "88%",
+            description: "Common viral infection"
+        });
+        recommendations.push("🌡️ Monitor temperature every 6 hours");
+        recommendations.push("💧 Drink plenty of fluids");
+        recommendations.push("🛌 Complete bed rest");
+        medicines.push("Paracetamol 500mg");
+        medicines.push("Multivitamins");
     }
     
-    if (document.getElementById('nausea')?.checked || document.getElementById('vomiting')?.checked) {
-        recommendations.push("🍚 Eat small, frequent meals");
-        recommendations.push("🧊 Sip clear fluids slowly");
-        medicines.push("Ondansetron (for severe nausea/vomiting)");
-    }
-    
-    if (document.getElementById('diarrhea')?.checked) {
-        recommendations.push("💧 Drink ORS solution regularly");
-        recommendations.push("🍌 Eat bananas and rice to bind stool");
-        medicines.push("Loperamide (if no blood in stool)");
-    }
-    
-    if (document.getElementById('headache')?.checked || document.getElementById('migraine')?.checked) {
-        recommendations.push("😴 Rest in a quiet, dark room");
-        recommendations.push("🧊 Apply cold compress to forehead");
+    // Neurological conditions
+    if (symptoms.includes('Headache') && symptoms.includes('Dizziness') && symptoms.includes('Fatigue')) {
+        possibleConditions.push({
+            name: "Tension Headache / Migraine",
+            confidence: "70%",
+            description: "Stress-related headache"
+        });
+        recommendations.push("😴 Rest in dark, quiet room");
+        recommendations.push("🧊 Apply cold compress to head");
+        recommendations.push("💆 Massage neck and shoulders");
         medicines.push("Ibuprofen or Paracetamol");
     }
     
-    if (document.getElementById('jointPain')?.checked || document.getElementById('musclePain')?.checked) {
+    if (symptoms.includes('Fainting') || symptoms.includes('Seizures') || symptoms.includes('Confusion')) {
+        possibleConditions.push({
+            name: "Neurological Emergency",
+            confidence: "95%",
+            description: "Requires immediate medical attention"
+        });
+        recommendations.push("🚑 SEEK EMERGENCY CARE IMMEDIATELY");
+        recommendations.push("🛌 Keep patient in recovery position");
+        recommendations.push("📞 Call ambulance or rush to hospital");
+    }
+    
+    // Joint and muscle conditions
+    if (symptoms.includes('Joint Pain') && symptoms.includes('Muscle Pain') && symptoms.includes('Fatigue')) {
+        possibleConditions.push({
+            name: "Viral Arthritis / Body Pain",
+            confidence: "65%",
+            description: "Inflammation due to viral infection"
+        });
+        recommendations.push("🔥 Apply warm compress to painful joints");
         recommendations.push("🧘 Gentle stretching exercises");
-        recommendations.push("🔥 Apply warm compress to painful areas");
-        medicines.push("Topical diclofenac gel or Ibuprofen");
+        recommendations.push("💧 Stay hydrated");
+        medicines.push("Ibuprofen for pain");
+        medicines.push("Topical pain relief gel");
     }
     
-    if (document.getElementById('rash')?.checked || document.getElementById('itching')?.checked) {
+    // Skin conditions
+    if (symptoms.includes('Rash') && symptoms.includes('Itching')) {
+        possibleConditions.push({
+            name: "Allergic Reaction / Dermatitis",
+            confidence: "72%",
+            description: "Skin inflammation due to allergy"
+        });
         recommendations.push("🧴 Apply calamine lotion");
-        recommendations.push("🚫 Avoid scratching");
-        medicines.push("Antihistamine like Cetirizine");
-    }
-    
-    if (document.getElementById('painUrination')?.checked) {
-        recommendations.push("🚰 Drink plenty of water");
-        recommendations.push("🚽 Maintain hygiene");
-        medicines.push("Consult doctor for UTI antibiotics");
-    }
-    
-    if (document.getElementById('blurredVision')?.checked) {
-        recommendations.push("👁️ Rest eyes, avoid screen time");
-        recommendations.push("🏥 Get eyes checked by specialist");
-    }
-    
-    // BP specific recommendations
-    if (bp) {
-        const bpParts = bp.split('/');
-        if (bpParts.length === 2) {
-            const systolic = parseInt(bpParts[0]);
-            if (systolic > 140) {
-                recommendations.push("❤️ Reduce salt intake");
-                recommendations.push("🚶 Walk for 30 minutes daily");
-                medicines.push("Consult doctor for blood pressure medication");
-            }
-        }
-    }
-    
-    // Age specific
-    if (age > 60) {
-        recommendations.push("👴 Regular check-ups every 3 months");
-        recommendations.push("🚶 Maintain light physical activity");
-    }
-    
-    if (age < 5 && (document.getElementById('fever')?.checked || document.getElementById('vomiting')?.checked)) {
-        emergency = true;
-        emergencyMessage = "Young child with fever/vomiting needs immediate medical attention.";
-    }
-    
-    // Remove duplicates
-    const uniqueRecs = [...new Set(recommendations)];
-    const uniqueMeds = [...new Set(medicines)];
-    
-    return { recommendations: uniqueRecs, medicines: uniqueMeds, emergency, emergencyMessage };
-}
-
-// Main analysis function
-function analyzeHealth() {
-    try {
-        // Get basic info
-        const id = document.getElementById("patientId").value.trim();
-        const name = document.getElementById("patientName").value.trim();
-        const age = parseInt(document.getElementById("patientAge").value);
-        const gender = document.getElementById("patientGender").value;
-        const height = parseFloat(document.getElementById("height").value) || 0;
-        const weight = parseFloat(document.getElementById("weight").value) || 0;
-        const temp = parseFloat(document.getElementById("temperature").value) || 36.5;
-        const bp = document.getElementById("bp").value || "";
-
-        if (!id || !name || !age) {
-            alert("Please fill all required fields (Patient ID, Name, Age)");
-            return;
-        }
-
-        // Get selected symptoms
-        const symptoms = getSelectedSymptoms();
-        const symptomsText = symptoms.length > 0 ? symptoms.join(", ") : "No specific symptoms reported";
-
-        // Calculate BMI
-        let bmi = 0;
-        if (height > 0 && weight > 0) {
-            bmi = (weight / Math.pow(height / 100, 2)).toFixed(1);
-        }
-
-        // Get symptom-based recommendations
-        const symptomAdvice = getSymptomBasedRecommendations(symptoms, age, bp, temp);
-        
-        // Determine follow-up need
-        let followUp = symptomAdvice.emergency;
-        let confidence = 85;
-
-        // Age Logic
-        if (age > 70 || age < 3) { followUp = true; confidence += 5; }
-
-        // Temperature Logic
-        if (temp > 38.5 || temp < 35) { followUp = true; confidence += 5; }
-
-        // BP Logic
-        if (bp.includes("160") || bp.includes("170") || bp.includes("180")) { followUp = true; confidence += 5; }
-
-        // BMI Logic
-        if (bmi > 32 || (bmi < 16 && bmi > 0)) { followUp = true; confidence += 5; }
-
-        // Symptom count logic
-        if (symptoms.length >= 3) { followUp = true; confidence += 5; }
-        if (symptoms.length >= 5) { followUp = true; confidence += 5; }
-
-        confidence = Math.min(confidence, 98);
-
-        // Prepare result
-        let result;
-        
-        if (symptomAdvice.emergency) {
-            result = {
-                status: "emergency",
-                statusText: "🚨 EMERGENCY",
-                description: symptomAdvice.emergencyMessage || "Emergency symptoms detected. Immediate medical attention required!",
-                confidence: confidence,
-                recommendations: symptomAdvice.recommendations,
-                medicines: symptomAdvice.medicines,
-                symptoms: symptomsText,
-                followUp: "URGENT: Seek emergency care immediately. Do NOT wait.",
-                emergency: true
-            };
-        } else if (followUp || symptoms.length > 0) {
-            result = {
-                status: "followup",
-                statusText: "⚠️ Needs Follow-up",
-                description: "Health assessment indicates need for medical consultation.",
-                confidence: confidence,
-                recommendations: symptomAdvice.recommendations,
-                medicines: symptomAdvice.medicines,
-                symptoms: symptomsText,
-                followUp: "Schedule a visit to Primary Health Center within 3-7 days."
-            };
-        } else {
-            result = {
-                status: "healthy",
-                statusText: "✅ Healthy",
-                description: "No major health indicators detected. Maintaining healthy practices recommended.",
-                confidence: confidence,
-                recommendations: [
-                    "🥗
+        recommendations.push

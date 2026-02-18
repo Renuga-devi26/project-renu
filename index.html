@@ -753,7 +753,7 @@
     <!-- MAIN APPLICATION (Visible after patient login) -->
     <div class="main-app" id="mainApp">
         <div class="container">
-            <!-- Logout Button -->
+            <!-- Logout Button - Made More Visible -->
             <button class="logout-btn" onclick="handleLogout()">
                 <i class="fas fa-sign-out-alt"></i> Logout
             </button>
@@ -1078,7 +1078,7 @@
             { id: 16, name: 'Chills', category: 'general' }
         ];
 
-        // ==================== DISEASE DATABASE ====================
+        // ==================== DISEASE DATABASE (WITHOUT MEDICINES) ====================
         const diseasesDB = [
             {
                 id: 1,
@@ -1086,10 +1086,10 @@
                 symptoms: [1, 5, 6, 14],
                 severity: 'low',
                 description: 'Viral infection of upper respiratory tract',
-                recommendations: ['Rest', 'Hydrate', 'OTC medications'],
-                homeRemedies: ['Ginger tea', 'Honey', 'Steam inhalation'],
-                medicines: ['Paracetamol 650mg', 'Cetirizine 10mg'],
-                warningSigns: ['High fever', 'Difficulty breathing']
+                recommendations: ['Rest and sleep well', 'Drink warm fluids throughout the day', 'Use saline nasal spray for congestion', 'Gargle with warm salt water'],
+                homeRemedies: ['Ginger tea with honey', 'Steam inhalation with menthol', 'Warm chicken soup', 'Honey and lemon in warm water'],
+                patientAdvice: ['Stay home and rest', 'Avoid cold drinks', 'Keep yourself warm', 'Use a humidifier'],
+                warningSigns: ['High fever above 101°F', 'Difficulty breathing', 'Symptoms lasting more than 10 days']
             },
             {
                 id: 2,
@@ -1097,10 +1097,10 @@
                 symptoms: [1, 14, 15, 16],
                 severity: 'medium',
                 description: 'Viral infection affecting respiratory system',
-                recommendations: ['Rest', 'Isolate', 'Antiviral medications'],
-                homeRemedies: ['Warm fluids', 'Honey lemon tea'],
-                medicines: ['Oseltamivir 75mg', 'Paracetamol 650mg'],
-                warningSigns: ['Breathing difficulty', 'Chest pain']
+                recommendations: ['Complete bed rest', 'Isolate to prevent spreading', 'Drink plenty of fluids', 'Take lukewarm baths for fever'],
+                homeRemedies: ['Warm turmeric milk', 'Honey and ginger tea', 'Garlic soup', 'Steam inhalation with eucalyptus'],
+                patientAdvice: ['Stay in a well-ventilated room', 'Use separate utensils', 'Wear a mask around others', 'Monitor temperature regularly'],
+                warningSigns: ['Difficulty breathing', 'Chest pain', 'Confusion', 'Severe vomiting', 'Symptoms improving then returning with fever']
             },
             {
                 id: 3,
@@ -1108,10 +1108,10 @@
                 symptoms: [7, 8, 9, 10],
                 severity: 'medium',
                 description: 'Stomach and intestinal inflammation',
-                recommendations: ['ORS', 'Bland diet', 'Rest'],
-                homeRemedies: ['Coconut water', 'Ginger tea'],
-                medicines: ['ORS packets', 'Zinc 20mg'],
-                warningSigns: ['Severe dehydration', 'Blood in stool']
+                recommendations: ['Drink ORS solution frequently', 'Eat bland foods like bananas, rice, applesauce', 'Avoid dairy and spicy foods', 'Get complete rest'],
+                homeRemedies: ['Coconut water for hydration', 'Ginger tea for nausea', 'Mint leaves juice', 'Rice water (kanji)'],
+                patientAdvice: ['Wash hands frequently', 'Avoid street food', 'Stay hydrated', 'Eat small, frequent meals'],
+                warningSigns: ['Severe dehydration (dry mouth, no urination)', 'Blood in stool', 'High fever', 'Unable to keep fluids down']
             },
             {
                 id: 4,
@@ -1119,10 +1119,10 @@
                 symptoms: [11, 12, 15],
                 severity: 'medium',
                 description: 'Severe headache disorder',
-                recommendations: ['Dark room', 'Avoid triggers', 'Rest'],
-                homeRemedies: ['Cold compress', 'Peppermint oil'],
-                medicines: ['Sumatriptan', 'Ibuprofen 400mg'],
-                warningSigns: ['Sudden severe headache', 'Neurological symptoms']
+                recommendations: ['Rest in a dark, quiet room', 'Apply cold compress to forehead', 'Avoid bright lights and loud noises', 'Identify and avoid triggers'],
+                homeRemedies: ['Peppermint oil on temples', 'Ginger tea', 'Caffeine in small amounts', 'Lavender oil inhalation'],
+                patientAdvice: ['Maintain regular sleep schedule', 'Don\'t skip meals', 'Stay hydrated', 'Practice stress management'],
+                warningSigns: ['Sudden, severe headache', 'Headache with fever', 'Headache after head injury', 'Neurological symptoms like speech problems']
             }
         ];
 
@@ -1522,18 +1522,18 @@
                 </div>
                 
                 <div style="margin: 20px 0;">
-                    <h4>📋 Recommendations:</h4>
+                    <h4>📋 Professional Recommendations:</h4>
                     <ul>${disease.recommendations.map(r => `<li>${r}</li>`).join('')}</ul>
                 </div>
                 
                 <div style="margin: 20px 0;">
-                    <h4>🏠 Home Remedies:</h4>
+                    <h4>🏠 Home Care & Remedies:</h4>
                     <ul>${disease.homeRemedies.map(r => `<li>${r}</li>`).join('')}</ul>
                 </div>
                 
                 <div style="margin: 20px 0;">
-                    <h4>💊 Medicines:</h4>
-                    <ul>${disease.medicines.map(m => `<li>${m}</li>`).join('')}</ul>
+                    <h4>💚 Patient Advice:</h4>
+                    <ul>${disease.patientAdvice.map(a => `<li>${a}</li>`).join('')}</ul>
                 </div>
             `;
             

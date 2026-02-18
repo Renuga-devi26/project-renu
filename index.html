@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>RuralCare Pro - Complete Healthcare Platform with Working Voice</title>
+    <title>RuralCare Pro - Complete Healthcare Platform with 50+ Symptoms</title>
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -363,7 +363,7 @@
             gap: 20px;
         }
 
-        /* Symptoms Section */
+        /* Symptoms Section - With 50+ Symptoms */
         .symptoms-section {
             background: white;
             border-radius: 32px;
@@ -397,25 +397,31 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
             gap: 10px;
-            max-height: 400px;
+            max-height: 500px;
             overflow-y: auto;
-            padding: 10px;
+            padding: 15px;
+            background: var(--background);
+            border-radius: 20px;
+            border: 2px solid var(--border);
         }
 
         .symptom-item {
             padding: 12px;
-            background: var(--background);
+            background: white;
             border-radius: 20px;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 10px;
             transition: all 0.2s;
+            border: 2px solid transparent;
+            box-shadow: var(--shadow-sm);
         }
 
         .symptom-item.selected {
             background: var(--primary);
             color: white;
+            border-color: var(--primary-dark);
         }
 
         .symptom-item input[type="checkbox"] {
@@ -449,7 +455,7 @@
             font-size: 1.2rem;
         }
 
-        /* Voice Section - MOVED BELOW SYMPTOM CHECKER */
+        /* Voice Section */
         .voice-section {
             background: linear-gradient(135deg, #e0f2fe, #bae6fd);
             border-radius: 40px;
@@ -534,7 +540,7 @@
             box-shadow: 0 15px 40px -5px var(--accent);
         }
 
-        /* Results Card */
+        /* Results Card - Without Confidence */
         .results-card {
             background: white;
             border-radius: 32px;
@@ -775,7 +781,7 @@
                         <i class="fas fa-leaf"></i>
                         <span data-i18n="appName">RuralCare Pro</span>
                     </h1>
-                    <p data-i18n="appSubtitle">AI-Powered Healthcare Assistant</p>
+                    <p data-i18n="appSubtitle">AI-Powered Healthcare Assistant with 50+ Symptoms</p>
                 </div>
             </header>
 
@@ -833,11 +839,11 @@
                 </div>
             </div>
 
-            <!-- Symptom Checker -->
+            <!-- Symptom Checker - With 50+ Symptoms -->
             <div class="symptoms-section">
                 <h2 style="color: var(--primary); margin-bottom: 20px;">
                     <i class="fas fa-stethoscope"></i>
-                    <span data-i18n="symptomChecker">Symptom Checker</span>
+                    <span data-i18n="symptomChecker">Symptom Checker (50+ Symptoms)</span>
                 </h2>
 
                 <div class="category-tabs" id="symptomCategories">
@@ -845,7 +851,11 @@
                     <button class="category-tab" onclick="filterSymptoms('respiratory')">Respiratory</button>
                     <button class="category-tab" onclick="filterSymptoms('digestive')">Digestive</button>
                     <button class="category-tab" onclick="filterSymptoms('neurological')">Neurological</button>
+                    <button class="category-tab" onclick="filterSymptoms('muscular')">Muscular</button>
+                    <button class="category-tab" onclick="filterSymptoms('skin')">Skin</button>
                     <button class="category-tab" onclick="filterSymptoms('general')">General</button>
+                    <button class="category-tab" onclick="filterSymptoms('cardiovascular')">Cardio</button>
+                    <button class="category-tab" onclick="filterSymptoms('urinary')">Urinary</button>
                 </div>
 
                 <div class="symptoms-grid" id="symptomsGrid"></div>
@@ -856,7 +866,7 @@
                 </div>
             </div>
 
-            <!-- VOICE SECTION - MOVED BELOW SYMPTOM CHECKER -->
+            <!-- VOICE SECTION - BELOW SYMPTOM CHECKER -->
             <div class="voice-section">
                 <h2 style="color: var(--primary); margin-bottom: 20px;">
                     <i class="fas fa-microphone-alt"></i>
@@ -898,10 +908,10 @@
                 <span data-i18n="analyze">Run AI Diagnosis</span>
             </button>
 
-            <!-- Results -->
+            <!-- Results - Without Confidence -->
             <div class="results-card" id="results"></div>
 
-            <!-- DOCTOR SECTION - Separate Login -->
+            <!-- DOCTOR SECTION -->
             <div class="doctor-section">
                 <div class="doctor-header">
                     <h2>
@@ -930,7 +940,7 @@
                         <i class="fas fa-sign-in-alt"></i> Access Doctor Dashboard
                     </button>
 
-                    <!-- Doctor Dashboard (shown after login) -->
+                    <!-- Doctor Dashboard -->
                     <div id="doctorDashboard" style="display: none;">
                         <h4 style="margin: 20px 0;">Patient Records</h4>
                         <div class="doctor-grid" id="doctorPatientList"></div>
@@ -962,7 +972,7 @@
         const translations = {
             en: {
                 appName: 'RuralCare Pro',
-                appSubtitle: 'AI-Powered Healthcare Assistant',
+                appSubtitle: 'AI-Powered Healthcare Assistant with 50+ Symptoms',
                 totalUsers: 'Total Users',
                 totalDiagnoses: 'Diagnoses',
                 highRisk: 'High Risk',
@@ -972,12 +982,12 @@
                 age: 'Age',
                 voiceTitle: 'Voice Symptom Recorder',
                 typeSymptoms: 'Or type your symptoms (comma separated)',
-                symptomChecker: 'Symptom Checker',
+                symptomChecker: 'Symptom Checker (50+ Symptoms)',
                 analyze: 'Run AI Diagnosis'
             },
             hi: {
                 appName: 'रूरलकेयर प्रो',
-                appSubtitle: 'एआई-संचालित स्वास्थ्य सहायक',
+                appSubtitle: '50+ लक्षणों के साथ एआई-संचालित स्वास्थ्य सहायक',
                 totalUsers: 'कुल उपयोगकर्ता',
                 totalDiagnoses: 'निदान',
                 highRisk: 'उच्च जोखिम',
@@ -987,12 +997,12 @@
                 age: 'आयु',
                 voiceTitle: 'आवाज लक्षण रिकॉर्डर',
                 typeSymptoms: 'या अपने लक्षण टाइप करें (अल्पविराम से)',
-                symptomChecker: 'लक्षण परीक्षक',
+                symptomChecker: 'लक्षण परीक्षक (50+ लक्षण)',
                 analyze: 'एआई निदान चलाएं'
             },
             ta: {
                 appName: 'ரூரல்கேர் புரோ',
-                appSubtitle: 'ஏஐ-இயங்கும் சுகாதார உதவியாளர்',
+                appSubtitle: '50+ அறிகுறிகளுடன் ஏஐ-இயங்கும் சுகாதார உதவியாளர்',
                 totalUsers: 'மொத்த பயனர்கள்',
                 totalDiagnoses: 'நோயறிதல்கள்',
                 highRisk: 'அதிக ஆபத்து',
@@ -1002,12 +1012,12 @@
                 age: 'வயது',
                 voiceTitle: 'குரல் அறிகுறி பதிவி',
                 typeSymptoms: 'அல்லது உங்கள் அறிகுறிகளை தட்டச்சு செய்க (கமாவால் பிரிக்கவும்)',
-                symptomChecker: 'அறிகுறி சரிபார்ப்பான்',
+                symptomChecker: 'அறிகுறி சரிபார்ப்பான் (50+ அறிகுறிகள்)',
                 analyze: 'ஏஐ நோயறிதலை இயக்கு'
             },
             te: {
                 appName: 'రూరల్కేర్ ప్రో',
-                appSubtitle: 'AI-ఆధారిత ఆరోగ్య సహాయకుడు',
+                appSubtitle: '50+ లక్షణాలతో AI-ఆధారిత ఆరోగ్య సహాయకుడు',
                 totalUsers: 'మొత్తం వినియోగదారులు',
                 totalDiagnoses: 'రోగ నిర్ధారణలు',
                 highRisk: 'అధిక ప్రమాదం',
@@ -1017,12 +1027,12 @@
                 age: 'వయస్సు',
                 voiceTitle: 'వాయిస్ లక్షణం రికార్డర్',
                 typeSymptoms: 'లేదా మీ లక్షణాలను టైప్ చేయండి (కామాతో వేరు చేయండి)',
-                symptomChecker: 'లక్షణం పరిశీలకుడు',
+                symptomChecker: 'లక్షణం పరిశీలకుడు (50+ లక్షణాలు)',
                 analyze: 'AI విశ్లేషణను రన్ చేయండి'
             },
             kn: {
                 appName: 'ರೂರಲ್ಕೇರ್ ಪ್ರೋ',
-                appSubtitle: 'AI-ಚಾಲಿತ ಆರೋಗ್ಯ ಸಹಾಯಕ',
+                appSubtitle: '50+ ರೋಗಲಕ್ಷಣಗಳೊಂದಿಗೆ AI-ಚಾಲಿತ ಆರೋಗ್ಯ ಸಹಾಯಕ',
                 totalUsers: 'ಒಟ್ಟು ಬಳಕೆದಾರರು',
                 totalDiagnoses: 'ರೋಗನಿರ್ಣಯಗಳು',
                 highRisk: 'ಹೆಚ್ಚಿನ ಅಪಾಯ',
@@ -1032,12 +1042,12 @@
                 age: 'ವಯಸ್ಸು',
                 voiceTitle: 'ಧ್ವನಿ ರೋಗಲಕ್ಷಣ ರೆಕಾರ್ಡರ್',
                 typeSymptoms: 'ಅಥವಾ ನಿಮ್ಮ ರೋಗಲಕ್ಷಣಗಳನ್ನು ಟೈಪ್ ಮಾಡಿ (ಅಲ್ಪವಿರಾಮದಿಂದ ಬೇರ್ಪಡಿಸಿ)',
-                symptomChecker: 'ರೋಗಲಕ್ಷಣ ಪರಿಶೀಲಕ',
+                symptomChecker: 'ರೋಗಲಕ್ಷಣ ಪರಿಶೀಲಕ (50+ ರೋಗಲಕ್ಷಣಗಳು)',
                 analyze: 'AI ರೋಗನಿರ್ಣಯವನ್ನು ರನ್ ಮಾಡಿ'
             },
             ml: {
                 appName: 'റൂറൽകെയർ പ്രോ',
-                appSubtitle: 'AI-പവർഡ് ഹെൽത്ത്കെയർ അസിസ്റ്റന്റ്',
+                appSubtitle: '50+ രോഗലക്ഷണങ്ങളുള്ള AI-പവർഡ് ഹെൽത്ത്കെയർ അസിസ്റ്റന്റ്',
                 totalUsers: 'ആകെ ഉപയോക്താക്കൾ',
                 totalDiagnoses: 'രോഗനിർണയങ്ങൾ',
                 highRisk: 'ഉയർന്ന അപകടസാധ്യത',
@@ -1047,7 +1057,7 @@
                 age: 'പ്രായം',
                 voiceTitle: 'ശബ്ദ രോഗലക്ഷണ റെക്കോർഡർ',
                 typeSymptoms: 'അല്ലെങ്കിൽ നിങ്ങളുടെ രോഗലക്ഷണങ്ങൾ ടൈപ്പ് ചെയ്യുക (കോമയാൽ വേർതിരിക്കുക)',
-                symptomChecker: 'രോഗലക്ഷണ പരിശോധകൻ',
+                symptomChecker: 'രോഗലക്ഷണ പരിശോധകൻ (50+ രോഗലക്ഷണങ്ങൾ)',
                 analyze: 'AI ഡയഗ്നോസിസ് പ്രവർത്തിപ്പിക്കുക'
             }
         };
@@ -1055,27 +1065,87 @@
         // ==================== DISTRICTS ====================
         const districts = [
             'Chennai', 'Coimbatore', 'Madurai', 'Tiruchirappalli', 'Salem',
-            'Tirunelveli', 'Vellore', 'Erode', 'Kanyakumari', 'Dharmapuri'
+            'Tirunelveli', 'Vellore', 'Erode', 'Kanyakumari', 'Dharmapuri',
+            'Thanjavur', 'Nagapattinam', 'Kanchipuram', 'Viluppuram', 'Thoothukkudi'
         ];
 
-        // ==================== SYMPTOMS DATABASE ====================
+        // ==================== 50+ SYMPTOMS DATABASE ====================
         const symptomsDB = [
+            // Respiratory (1-10)
             { id: 1, name: 'Cough', category: 'respiratory' },
             { id: 2, name: 'Shortness of breath', category: 'respiratory' },
             { id: 3, name: 'Wheezing', category: 'respiratory' },
             { id: 4, name: 'Chest pain', category: 'respiratory' },
             { id: 5, name: 'Sore throat', category: 'respiratory' },
             { id: 6, name: 'Runny nose', category: 'respiratory' },
-            { id: 7, name: 'Nausea', category: 'digestive' },
-            { id: 8, name: 'Vomiting', category: 'digestive' },
-            { id: 9, name: 'Diarrhea', category: 'digestive' },
-            { id: 10, name: 'Abdominal pain', category: 'digestive' },
-            { id: 11, name: 'Headache', category: 'neurological' },
-            { id: 12, name: 'Dizziness', category: 'neurological' },
-            { id: 13, name: 'Confusion', category: 'neurological' },
-            { id: 14, name: 'Fever', category: 'general' },
-            { id: 15, name: 'Fatigue', category: 'general' },
-            { id: 16, name: 'Chills', category: 'general' }
+            { id: 7, name: 'Sneezing', category: 'respiratory' },
+            { id: 8, name: 'Nasal congestion', category: 'respiratory' },
+            { id: 9, name: 'Coughing up blood', category: 'respiratory' },
+            { id: 10, name: 'Dry cough', category: 'respiratory' },
+            
+            // Digestive (11-20)
+            { id: 11, name: 'Nausea', category: 'digestive' },
+            { id: 12, name: 'Vomiting', category: 'digestive' },
+            { id: 13, name: 'Diarrhea', category: 'digestive' },
+            { id: 14, name: 'Constipation', category: 'digestive' },
+            { id: 15, name: 'Abdominal pain', category: 'digestive' },
+            { id: 16, name: 'Bloating', category: 'digestive' },
+            { id: 17, name: 'Heartburn', category: 'digestive' },
+            { id: 18, name: 'Loss of appetite', category: 'digestive' },
+            { id: 19, name: 'Blood in stool', category: 'digestive' },
+            { id: 20, name: 'Difficulty swallowing', category: 'digestive' },
+            
+            // Neurological (21-30)
+            { id: 21, name: 'Headache', category: 'neurological' },
+            { id: 22, name: 'Dizziness', category: 'neurological' },
+            { id: 23, name: 'Confusion', category: 'neurological' },
+            { id: 24, name: 'Seizures', category: 'neurological' },
+            { id: 25, name: 'Tremors', category: 'neurological' },
+            { id: 26, name: 'Numbness', category: 'neurological' },
+            { id: 27, name: 'Weakness', category: 'neurological' },
+            { id: 28, name: 'Memory loss', category: 'neurological' },
+            { id: 29, name: 'Balance problems', category: 'neurological' },
+            { id: 30, name: 'Slurred speech', category: 'neurological' },
+            
+            // Muscular (31-37)
+            { id: 31, name: 'Joint pain', category: 'muscular' },
+            { id: 32, name: 'Muscle pain', category: 'muscular' },
+            { id: 33, name: 'Back pain', category: 'muscular' },
+            { id: 34, name: 'Neck pain', category: 'muscular' },
+            { id: 35, name: 'Swelling in joints', category: 'muscular' },
+            { id: 36, name: 'Stiffness', category: 'muscular' },
+            { id: 37, name: 'Muscle cramps', category: 'muscular' },
+            
+            // Skin (38-44)
+            { id: 38, name: 'Rash', category: 'skin' },
+            { id: 39, name: 'Itching', category: 'skin' },
+            { id: 40, name: 'Hives', category: 'skin' },
+            { id: 41, name: 'Dry skin', category: 'skin' },
+            { id: 42, name: 'Skin redness', category: 'skin' },
+            { id: 43, name: 'Skin discoloration', category: 'skin' },
+            { id: 44, name: 'Wounds not healing', category: 'skin' },
+            
+            // General (45-52)
+            { id: 45, name: 'Fever', category: 'general' },
+            { id: 46, name: 'Fatigue', category: 'general' },
+            { id: 47, name: 'Chills', category: 'general' },
+            { id: 48, name: 'Night sweats', category: 'general' },
+            { id: 49, name: 'Weight loss', category: 'general' },
+            { id: 50, name: 'Weight gain', category: 'general' },
+            { id: 51, name: 'Dehydration', category: 'general' },
+            { id: 52, name: 'Swollen lymph nodes', category: 'general' },
+            
+            // Cardiovascular (53-56)
+            { id: 53, name: 'Palpitations', category: 'cardiovascular' },
+            { id: 54, name: 'High blood pressure', category: 'cardiovascular' },
+            { id: 55, name: 'Low blood pressure', category: 'cardiovascular' },
+            { id: 56, name: 'Swollen ankles', category: 'cardiovascular' },
+            
+            // Urinary (57-60)
+            { id: 57, name: 'Frequent urination', category: 'urinary' },
+            { id: 58, name: 'Painful urination', category: 'urinary' },
+            { id: 59, name: 'Blood in urine', category: 'urinary' },
+            { id: 60, name: 'Urgent urination', category: 'urinary' }
         ];
 
         // ==================== DISEASE DATABASE (WITHOUT MEDICINES) ====================
@@ -1083,7 +1153,7 @@
             {
                 id: 1,
                 name: 'Common Cold',
-                symptoms: [1, 5, 6, 14],
+                symptoms: [1, 5, 6, 7, 8, 10, 45],
                 severity: 'low',
                 description: 'Viral infection of upper respiratory tract',
                 recommendations: ['Rest and sleep well', 'Drink warm fluids throughout the day', 'Use saline nasal spray for congestion', 'Gargle with warm salt water'],
@@ -1094,7 +1164,7 @@
             {
                 id: 2,
                 name: 'Influenza',
-                symptoms: [1, 14, 15, 16],
+                symptoms: [1, 2, 3, 4, 45, 46, 47, 21],
                 severity: 'medium',
                 description: 'Viral infection affecting respiratory system',
                 recommendations: ['Complete bed rest', 'Isolate to prevent spreading', 'Drink plenty of fluids', 'Take lukewarm baths for fever'],
@@ -1105,7 +1175,7 @@
             {
                 id: 3,
                 name: 'Gastroenteritis',
-                symptoms: [7, 8, 9, 10],
+                symptoms: [11, 12, 13, 15, 18, 45, 46],
                 severity: 'medium',
                 description: 'Stomach and intestinal inflammation',
                 recommendations: ['Drink ORS solution frequently', 'Eat bland foods like bananas, rice, applesauce', 'Avoid dairy and spicy foods', 'Get complete rest'],
@@ -1116,13 +1186,57 @@
             {
                 id: 4,
                 name: 'Migraine',
-                symptoms: [11, 12, 15],
+                symptoms: [21, 22, 25, 26, 27, 29],
                 severity: 'medium',
                 description: 'Severe headache disorder',
                 recommendations: ['Rest in a dark, quiet room', 'Apply cold compress to forehead', 'Avoid bright lights and loud noises', 'Identify and avoid triggers'],
                 homeRemedies: ['Peppermint oil on temples', 'Ginger tea', 'Caffeine in small amounts', 'Lavender oil inhalation'],
                 patientAdvice: ['Maintain regular sleep schedule', 'Don\'t skip meals', 'Stay hydrated', 'Practice stress management'],
                 warningSigns: ['Sudden, severe headache', 'Headache with fever', 'Headache after head injury', 'Neurological symptoms like speech problems']
+            },
+            {
+                id: 5,
+                name: 'Pneumonia',
+                symptoms: [1, 2, 3, 4, 45, 46, 48],
+                severity: 'high',
+                description: 'Infection of the lungs',
+                recommendations: ['Immediate medical attention required', 'Complete bed rest', 'Take prescribed antibiotics', 'Monitor oxygen levels'],
+                homeRemedies: ['Steam inhalation', 'Warm compress for chest', 'Honey for cough', 'Breathing exercises'],
+                patientAdvice: ['Seek immediate medical help', 'Stay hydrated', 'Use a humidifier', 'Avoid smoke and pollutants'],
+                warningSigns: ['Severe difficulty breathing', 'Blue lips or face', 'Chest pain', 'High fever', 'Coughing up blood']
+            },
+            {
+                id: 6,
+                name: 'Hypertension',
+                symptoms: [21, 22, 46, 53, 54],
+                severity: 'high',
+                description: 'High blood pressure',
+                recommendations: ['Reduce salt intake', 'Regular exercise', 'Stress management', 'Monitor BP daily'],
+                homeRemedies: ['Garlic consumption', 'Hibiscus tea', 'Bananas for potassium', 'Deep breathing exercises'],
+                patientAdvice: ['Check BP regularly', 'Reduce stress', 'Maintain healthy weight', 'Limit alcohol and caffeine'],
+                warningSigns: ['Severe headache', 'Chest pain', 'Shortness of breath', 'Vision changes', 'Nosebleeds']
+            },
+            {
+                id: 7,
+                name: 'Arthritis',
+                symptoms: [31, 32, 35, 36, 37, 46],
+                severity: 'medium',
+                description: 'Inflammation of joints',
+                recommendations: ['Gentle exercise like walking', 'Apply hot/cold packs', 'Maintain healthy weight', 'Use supportive devices'],
+                homeRemedies: ['Epsom salt baths', 'Turmeric milk', 'Ginger compress', 'Massage with warm oil'],
+                patientAdvice: ['Stay active but rest when needed', 'Eat anti-inflammatory foods', 'Use proper posture', 'Avoid repetitive stress'],
+                warningSigns: ['Severe joint pain', 'Joint deformity', 'Inability to move joint', 'Fever with joint pain']
+            },
+            {
+                id: 8,
+                name: 'Urinary Tract Infection',
+                symptoms: [57, 58, 59, 60, 45, 46],
+                severity: 'medium',
+                description: 'Infection in urinary system',
+                recommendations: ['Drink plenty of water', 'Urinate frequently', 'Wipe front to back', 'Empty bladder completely'],
+                homeRemedies: ['Cranberry juice', 'Probiotic yogurt', 'Vitamin C rich foods', 'Warm compress on abdomen'],
+                patientAdvice: ['Stay hydrated', 'Avoid holding urine', 'Wear cotton underwear', 'Avoid irritants like caffeine'],
+                warningSigns: ['Blood in urine', 'High fever', 'Severe back pain', 'Nausea and vomiting']
             }
         ];
 
@@ -1338,7 +1452,7 @@
             }
         }
 
-        // ==================== VOICE RECORDING - FIXED MULTILINGUAL ====================
+        // ==================== VOICE RECORDING ====================
         async function toggleRecording() {
             if (!isRecording) {
                 try {
@@ -1355,12 +1469,12 @@
                         
                         // Simulate speech recognition based on current language
                         const recognizedTexts = {
-                            en: 'cough, fever, headache',
-                            hi: 'खांसी, बुखार, सिरदर्द',
-                            ta: 'இருமல், காய்ச்சல், தலைவலி',
-                            te: 'దగ్గు, జ్వరం, తలనొప్పి',
-                            kn: 'ಕೆಮ್ಮು, ಜ್ವರ, ತಲೆನೋವು',
-                            ml: 'ചുമ, പനി, തലവേദന'
+                            en: 'cough, fever, headache, fatigue',
+                            hi: 'खांसी, बुखार, सिरदर्द, थकान',
+                            ta: 'இருமல், காய்ச்சல், தலைவலி, சோர்வு',
+                            te: 'దగ్గు, జ్వరం, తలనొప్పి, అలసట',
+                            kn: 'ಕೆಮ್ಮು, ಜ್ವರ, ತಲೆನೋವು, ಆಯಾಸ',
+                            ml: 'ചുമ, പനി, തലവേദന, ക്ഷീണം'
                         };
                         
                         const recognizedText = recognizedTexts[currentLanguage] || recognizedTexts.en;
@@ -1422,7 +1536,7 @@
             }
         }
 
-        // ==================== AI DIAGNOSIS ====================
+        // ==================== AI DIAGNOSIS (Without Confidence) ====================
         function analyzeHealth() {
             const name = document.getElementById('patientName').value;
             const age = document.getElementById('patientAge').value;
@@ -1471,11 +1585,10 @@
             
             if (!bestMatch) {
                 bestMatch = diseasesDB[0];
-                bestScore = 30;
             }
             
-            // Display results
-            displayResults(bestMatch, bestScore, allSymptoms);
+            // Display results without confidence
+            displayResults(bestMatch, allSymptoms);
             
             // Save diagnosis
             const diagnosis = {
@@ -1495,7 +1608,7 @@
             showToast('Analysis complete!', 'success');
         }
 
-        function displayResults(disease, score, symptoms) {
+        function displayResults(disease, symptoms) {
             const resultsDiv = document.getElementById('results');
             const severityClass = `severity-${disease.severity}`;
             
@@ -1511,7 +1624,6 @@
                     <h3>${disease.name}</h3>
                     <span class="severity-badge ${severityClass}">${disease.severity.toUpperCase()}</span>
                     <p style="margin-top: 10px;">${disease.description}</p>
-                    <p><strong>Match Confidence:</strong> ${Math.round(score)}%</p>
                 </div>
                 
                 <div style="margin: 20px 0;">

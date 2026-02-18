@@ -363,70 +363,6 @@
             gap: 20px;
         }
 
-        /* Voice Section - FIXED */
-        .voice-section {
-            background: linear-gradient(135deg, #e0f2fe, #bae6fd);
-            border-radius: 40px;
-            padding: 30px;
-            margin: 30px 0;
-        }
-
-        .voice-controls {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .record-btn {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: var(--danger);
-            color: white;
-            border: none;
-            font-size: 2rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .record-btn.recording {
-            animation: pulse 1.5s infinite;
-            background: #b91c1c;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        .voice-status {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            margin-top: 10px;
-            padding: 10px;
-            background: white;
-            border-radius: 30px;
-            text-align: center;
-        }
-
-        .voice-transcript {
-            background: white;
-            border-radius: 30px;
-            padding: 20px;
-            margin-top: 20px;
-            font-size: 1.1rem;
-            border: 2px solid var(--primary);
-        }
-
-        .voice-transcript span {
-            color: var(--primary);
-            font-weight: 600;
-        }
-
         /* Symptoms Section */
         .symptoms-section {
             background: white;
@@ -511,6 +447,70 @@
             color: white;
             cursor: pointer;
             font-size: 1.2rem;
+        }
+
+        /* Voice Section - MOVED BELOW SYMPTOM CHECKER */
+        .voice-section {
+            background: linear-gradient(135deg, #e0f2fe, #bae6fd);
+            border-radius: 40px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .voice-controls {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .record-btn {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--danger);
+            color: white;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .record-btn.recording {
+            animation: pulse 1.5s infinite;
+            background: #b91c1c;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .voice-status {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 30px;
+            text-align: center;
+        }
+
+        .voice-transcript {
+            background: white;
+            border-radius: 30px;
+            padding: 20px;
+            margin-top: 20px;
+            font-size: 1.1rem;
+            border: 2px solid var(--primary);
+        }
+
+        .voice-transcript span {
+            color: var(--primary);
+            font-weight: 600;
         }
 
         /* Analyze Button */
@@ -669,7 +669,7 @@
     </style>
 </head>
 <body>
-    <!-- LOGIN PAGE -->
+    <!-- LOGIN PAGE (Patient First) -->
     <div class="login-container" id="loginPage">
         <div class="login-card">
             <div class="login-header">
@@ -677,13 +677,13 @@
                     <i class="fas fa-leaf"></i>
                     RuralCare Pro
                 </h1>
-                <p>Your Complete Healthcare Assistant</p>
+                <p>Patient Login - Your Complete Healthcare Assistant</p>
             </div>
 
             <div class="login-tabs">
-                <button class="login-tab active" onclick="switchAuthTab('login')">Login</button>
-                <button class="login-tab" onclick="switchAuthTab('signup')">Sign Up</button>
-                <button class="login-tab" onclick="switchAuthTab('forgot')">Forgot</button>
+                <button class="login-tab active" onclick="switchAuthTab('login')">Patient Login</button>
+                <button class="login-tab" onclick="switchAuthTab('signup')">New Patient</button>
+                <button class="login-tab" onclick="switchAuthTab('forgot')">Forgot Password</button>
             </div>
 
             <!-- Login Form -->
@@ -702,7 +702,7 @@
                     <a onclick="switchAuthTab('forgot')">Forgot Password?</a>
                 </div>
                 <button class="login-btn" onclick="handleLogin()">
-                    <i class="fas fa-sign-in-alt"></i> Login
+                    <i class="fas fa-sign-in-alt"></i> Login to Dashboard
                 </button>
             </div>
 
@@ -750,7 +750,7 @@
         </div>
     </div>
 
-    <!-- MAIN APPLICATION -->
+    <!-- MAIN APPLICATION (Visible after patient login) -->
     <div class="main-app" id="mainApp">
         <div class="container">
             <!-- Logout Button -->
@@ -833,7 +833,30 @@
                 </div>
             </div>
 
-            <!-- VOICE SECTION - FIXED MULTILINGUAL -->
+            <!-- Symptom Checker -->
+            <div class="symptoms-section">
+                <h2 style="color: var(--primary); margin-bottom: 20px;">
+                    <i class="fas fa-stethoscope"></i>
+                    <span data-i18n="symptomChecker">Symptom Checker</span>
+                </h2>
+
+                <div class="category-tabs" id="symptomCategories">
+                    <button class="category-tab active" onclick="filterSymptoms('all')">All</button>
+                    <button class="category-tab" onclick="filterSymptoms('respiratory')">Respiratory</button>
+                    <button class="category-tab" onclick="filterSymptoms('digestive')">Digestive</button>
+                    <button class="category-tab" onclick="filterSymptoms('neurological')">Neurological</button>
+                    <button class="category-tab" onclick="filterSymptoms('general')">General</button>
+                </div>
+
+                <div class="symptoms-grid" id="symptomsGrid"></div>
+
+                <div style="margin-top: 20px;">
+                    <h4>Selected Symptoms:</h4>
+                    <div class="symptom-tags" id="symptomTags"></div>
+                </div>
+            </div>
+
+            <!-- VOICE SECTION - MOVED BELOW SYMPTOM CHECKER -->
             <div class="voice-section">
                 <h2 style="color: var(--primary); margin-bottom: 20px;">
                     <i class="fas fa-microphone-alt"></i>
@@ -866,29 +889,6 @@
                         <textarea id="symptomsText" placeholder=" " rows="2"></textarea>
                         <label data-i18n="typeSymptoms">Or type your symptoms (comma separated)</label>
                     </div>
-                </div>
-            </div>
-
-            <!-- Symptom Checker -->
-            <div class="symptoms-section">
-                <h2 style="color: var(--primary); margin-bottom: 20px;">
-                    <i class="fas fa-stethoscope"></i>
-                    <span data-i18n="symptomChecker">Symptom Checker</span>
-                </h2>
-
-                <div class="category-tabs" id="symptomCategories">
-                    <button class="category-tab active" onclick="filterSymptoms('all')">All</button>
-                    <button class="category-tab" onclick="filterSymptoms('respiratory')">Respiratory</button>
-                    <button class="category-tab" onclick="filterSymptoms('digestive')">Digestive</button>
-                    <button class="category-tab" onclick="filterSymptoms('neurological')">Neurological</button>
-                    <button class="category-tab" onclick="filterSymptoms('general')">General</button>
-                </div>
-
-                <div class="symptoms-grid" id="symptomsGrid"></div>
-
-                <div style="margin-top: 20px;">
-                    <h4>Selected Symptoms:</h4>
-                    <div class="symptom-tags" id="symptomTags"></div>
                 </div>
             </div>
 

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>RuralCare AI - Complete Health Screening with Districts</title>
+    <title>RuralCare AI - Complete Health Screening with Voice & Smart Recommendations</title>
     <style>
         * {
             margin: 0;
@@ -338,7 +338,7 @@
             margin-top: 3px;
         }
 
-        /* Voice Recording Section - Mobile Optimized */
+        /* Voice Recording Section - Fixed */
         .voice-section {
             background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
             border-radius: 16px;
@@ -368,11 +368,17 @@
             align-items: center;
             justify-content: center;
             box-shadow: 0 5px 10px rgba(220, 38, 38, 0.2);
+            transition: all 0.3s;
         }
 
         .record-btn.recording {
             animation: pulse 1s infinite;
             background: #b91c1c;
+        }
+
+        .record-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
 
         .play-btn {
@@ -387,6 +393,12 @@
             align-items: center;
             justify-content: center;
             font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+
+        .play-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
 
         .audio-wave {
@@ -406,6 +418,12 @@
             font-weight: bold;
             color: var(--primary);
             font-family: monospace;
+        }
+
+        .voice-status {
+            font-size: 0.8rem;
+            color: var(--info);
+            margin-top: 5px;
         }
 
         .symptoms-text textarea {
@@ -431,6 +449,7 @@
             cursor: pointer;
             margin: 15px 0;
             box-shadow: 0 5px 15px rgba(249,115,22,0.3);
+            transition: all 0.3s;
         }
 
         .analyze-btn:disabled {
@@ -438,7 +457,7 @@
             cursor: not-allowed;
         }
 
-        /* Results Card - Mobile Optimized */
+        /* Results Card - Enhanced for recommendations */
         .results-card {
             background: white;
             border-radius: 16px;
@@ -493,6 +512,60 @@
         .severity-high {
             background: #fee2e2;
             color: #991b1b;
+        }
+
+        .recommendation-box {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            margin: 15px 0;
+            border: 2px solid var(--success);
+        }
+
+        .recommendation-box.consult-doctor {
+            border-color: var(--danger);
+            background: #fff5f5;
+        }
+
+        .recommendation-box h3 {
+            color: var(--success);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .recommendation-box.consult-doctor h3 {
+            color: var(--danger);
+        }
+
+        .medicine-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .medicine-item {
+            background: var(--light);
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .medicine-item strong {
+            color: var(--primary);
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .warning-signs {
+            background: #fee2e2;
+            padding: 12px;
+            border-radius: 8px;
+            margin: 10px 0;
+            color: #991b1b;
+            font-weight: 500;
         }
 
         .disease-info {
@@ -660,6 +733,7 @@
             font-size: 0.9rem;
             font-weight: 600;
             cursor: pointer;
+            transition: all 0.3s;
         }
 
         .btn-primary {
@@ -674,6 +748,11 @@
 
         .btn-success {
             background: var(--success);
+            color: white;
+        }
+
+        .btn-danger {
+            background: var(--danger);
             color: white;
         }
 
@@ -750,7 +829,7 @@
     <!-- Header -->
     <header class="header">
         <h1 id="appName">🏥 RuralCare AI</h1>
-        <p id="appSubtitle">Complete Health Screening with Voice & AI</p>
+        <p id="appSubtitle">Complete Health Screening with Smart Recommendations</p>
     </header>
 
     <!-- Stats -->
@@ -875,7 +954,7 @@
         </div>
     </div>
 
-    <!-- Voice Recording Section -->
+    <!-- Voice Recording Section - Fixed -->
     <div class="voice-section">
         <div class="section-header">
             <span class="icon">🎤</span>
@@ -889,6 +968,7 @@
                 <span class="timer" id="timer">00:00</span>
             </div>
         </div>
+        <div class="voice-status" id="voiceStatus"></div>
 
         <div class="symptoms-text">
             <textarea id="symptomsText" placeholder="Or type symptoms..." rows="2"></textarea>
@@ -963,7 +1043,7 @@
         const translations = {
             en: {
                 appName: 'RuralCare AI',
-                appSubtitle: 'Complete Health Screening with Voice & AI',
+                appSubtitle: 'Complete Health Screening with Smart Recommendations',
                 totalLabel: 'Total',
                 todayLabel: 'Today',
                 highRiskLabel: 'High Risk',
@@ -1013,11 +1093,15 @@
                 recommendations: 'Recommendations',
                 riskFactors: 'Risk Factors',
                 prevention: 'Prevention',
-                matchingSymptoms: 'Matching Symptoms'
+                matchingSymptoms: 'Matching Symptoms',
+                consultDoctor: 'Consult Doctor',
+                homeRemedies: 'Home Remedies',
+                warningSigns: 'Warning Signs',
+                medicines: 'Recommended Medicines'
             },
             ta: {
                 appName: 'ரூரல்கேர் ஏஐ',
-                appSubtitle: 'குரல் & AI உடன் முழுமையான சுகாதார பரிசோதனை',
+                appSubtitle: 'ஸ்மார்ட் பரிந்துரைகளுடன் முழுமையான சுகாதார பரிசோதனை',
                 totalLabel: 'மொத்தம்',
                 todayLabel: 'இன்று',
                 highRiskLabel: 'அதிக ஆபத்து',
@@ -1067,11 +1151,15 @@
                 recommendations: 'பரிந்துரைகள்',
                 riskFactors: 'ஆபத்து காரணிகள்',
                 prevention: 'தடுப்பு',
-                matchingSymptoms: 'பொருந்தும் அறிகுறிகள்'
+                matchingSymptoms: 'பொருந்தும் அறிகுறிகள்',
+                consultDoctor: 'மருத்துவரை அணுகவும்',
+                homeRemedies: 'வீட்டு வைத்தியம்',
+                warningSigns: 'எச்சரிக்கை அறிகுறிகள்',
+                medicines: 'பரிந்துரைக்கப்பட்ட மருந்துகள்'
             },
             te: {
                 appName: 'రూరల్‌కేర్ AI',
-                appSubtitle: 'వాయిస్ & AI తో పూర్తి ఆరోగ్య స్క్రీనింగ్',
+                appSubtitle: 'స్మార్ట్ సిఫార్సులతో పూర్తి ఆరోగ్య స్క్రీనింగ్',
                 totalLabel: 'మొత్తం',
                 todayLabel: 'ఈరోజు',
                 highRiskLabel: 'అధిక ప్రమాదం',
@@ -1121,11 +1209,15 @@
                 recommendations: 'సిఫార్సులు',
                 riskFactors: 'ప్రమాదాలు',
                 prevention: 'నివారణ',
-                matchingSymptoms: 'సరిపోలే లక్షణాలు'
+                matchingSymptoms: 'సరిపోలే లక్షణాలు',
+                consultDoctor: 'డాక్టర్ను సంప్రదించండి',
+                homeRemedies: 'ఇంటి నివారణలు',
+                warningSigns: 'హెచ్చరిక సంకేతాలు',
+                medicines: 'సిఫార్సు చేసిన మందులు'
             },
             kn: {
                 appName: 'ರೂರಲ್‌ಕೇರ್ AI',
-                appSubtitle: 'ಧ್ವನಿ & AI ಯೊಂದಿಗೆ ಸಂಪೂರ್ಣ ಆರೋಗ್ಯ ತಪಾಸಣೆ',
+                appSubtitle: 'ಸ್ಮಾರ್ಟ್ ಶಿಫಾರಸುಗಳೊಂದಿಗೆ ಸಂಪೂರ್ಣ ಆರೋಗ್ಯ ತಪಾಸಣೆ',
                 totalLabel: 'ಒಟ್ಟು',
                 todayLabel: 'ಇಂದು',
                 highRiskLabel: 'ಹೆಚ್ಚಿನ ಅಪಾಯ',
@@ -1175,11 +1267,15 @@
                 recommendations: 'ಶಿಫಾರಸುಗಳು',
                 riskFactors: 'ಅಪಾಯಗಳು',
                 prevention: 'ತಡೆಗಟ್ಟುವಿಕೆ',
-                matchingSymptoms: 'ಹೊಂದಾಣಿಕೆ ಲಕ್ಷಣಗಳು'
+                matchingSymptoms: 'ಹೊಂದಾಣಿಕೆ ಲಕ್ಷಣಗಳು',
+                consultDoctor: 'ವೈದ್ಯರನ್ನು ಸಂಪರ್ಕಿಸಿ',
+                homeRemedies: 'ಮನೆಮದ್ದುಗಳು',
+                warningSigns: 'ಎಚ್ಚರಿಕೆ ಚಿಹ್ನೆಗಳು',
+                medicines: 'ಶಿಫಾರಸು ಮಾಡಿದ ಔಷಧಗಳು'
             },
             hi: {
                 appName: 'रूरलकेयर एआई',
-                appSubtitle: 'वॉयस और एआई के साथ संपूर्ण स्वास्थ्य जांच',
+                appSubtitle: 'स्मार्ट सिफारिशों के साथ संपूर्ण स्वास्थ्य जांच',
                 totalLabel: 'कुल',
                 todayLabel: 'आज',
                 highRiskLabel: 'उच्च जोखिम',
@@ -1229,11 +1325,15 @@
                 recommendations: 'सिफारिशें',
                 riskFactors: 'जोखिम कारक',
                 prevention: 'रोकथाम',
-                matchingSymptoms: 'मिलान लक्षण'
+                matchingSymptoms: 'मिलान लक्षण',
+                consultDoctor: 'डॉक्टर से परामर्श करें',
+                homeRemedies: 'घरेलू उपचार',
+                warningSigns: 'चेतावनी संकेत',
+                medicines: 'अनुशंसित दवाएं'
             },
             ml: {
                 appName: 'റൂറൽകെയർ AI',
-                appSubtitle: 'വോയ്സ് & AI ഉള്ള സമ്പൂർണ ആരോഗ്യ പരിശോധന',
+                appSubtitle: 'സ്മാർട്ട് ശുപാർശകളോടെ സമ്പൂർണ ആരോഗ്യ പരിശോധന',
                 totalLabel: 'ആകെ',
                 todayLabel: 'ഇന്ന്',
                 highRiskLabel: 'ഉയർന്ന അപകടം',
@@ -1283,7 +1383,11 @@
                 recommendations: 'ശുപാർശകൾ',
                 riskFactors: 'അപകട ഘടകങ്ങൾ',
                 prevention: 'പ്രതിരോധം',
-                matchingSymptoms: 'പൊരുത്തമുള്ള ലക്ഷണങ്ങൾ'
+                matchingSymptoms: 'പൊരുത്തമുള്ള ലക്ഷണങ്ങൾ',
+                consultDoctor: 'ഡോക്ടറെ സമീപിക്കുക',
+                homeRemedies: 'വീട്ടുവൈദ്യങ്ങൾ',
+                warningSigns: 'മുന്നറിയിപ്പ് അടയാളങ്ങൾ',
+                medicines: 'ശുപാർശ ചെയ്യുന്ന മരുന്നുകൾ'
             }
         };
 
@@ -1310,7 +1414,7 @@
             // Update placeholders
             document.getElementById('patientName').placeholder = translations[lang].fullNameLabel.replace(' *', '');
             document.getElementById('patientAge').placeholder = 'Years';
-            document.getElementById('symptomsText').placeholder = 'Or type symptoms...';
+            document.getElementById('symptomsText').placeholder = translations[lang].voiceTitle === 'Voice Recording' ? 'Or type symptoms...' : 'அல்லது அறிகுறிகளைத் தட்டச்சு செய்யவும்...';
             
             // Special handling for buttons with icons
             document.getElementById('analyzeBtn').innerHTML = translations[lang].analyzeBtn;
@@ -1371,31 +1475,55 @@
             { id: 51, name: 'Body aches', category: 'infectious' }
         ];
 
-        // ==================== DISEASE DATABASE ====================
+        // ==================== DISEASE DATABASE WITH MEDICINES ====================
         const diseaseDatabase = [
             {
                 id: 1, name: 'Common Cold', category: 'respiratory',
                 symptoms: [1, 5, 6, 7, 8, 37], severity: 'low',
                 description: 'Viral infection of upper respiratory tract',
-                recommendations: ['Rest and stay hydrated', 'Take cold medications', 'Use saline nasal spray'],
+                recommendations: ['Rest and stay hydrated', 'Take over-the-counter cold medications', 'Use saline nasal spray'],
                 riskFactors: ['Close contact with infected persons', 'Weakened immune system'],
-                prevention: ['Wash hands frequently', 'Avoid close contact with sick people']
+                prevention: ['Wash hands frequently', 'Avoid close contact with sick people'],
+                medicines: [
+                    { name: 'Paracetamol', dosage: '650mg every 6-8 hours for fever' },
+                    { name: 'Cetirizine', dosage: '10mg once daily for runny nose' },
+                    { name: 'Cough syrup', dosage: '10ml three times daily' }
+                ],
+                homeRemedies: ['Warm water gargle', 'Honey with ginger tea', 'Steam inhalation'],
+                consultDoctor: false,
+                warningSigns: ['High fever > 101°F for more than 3 days', 'Difficulty breathing', 'Severe headache']
             },
             {
                 id: 2, name: 'Influenza (Flu)', category: 'respiratory',
                 symptoms: [1, 2, 37, 38, 39, 40], severity: 'medium',
                 description: 'Viral infection affecting respiratory system',
-                recommendations: ['Rest and isolate', 'Take antiviral medications', 'Stay hydrated'],
+                recommendations: ['Rest and isolate', 'Take antiviral medications if prescribed', 'Stay hydrated'],
                 riskFactors: ['Elderly', 'Pregnant women', 'Chronic conditions'],
-                prevention: ['Annual flu vaccine', 'Hand hygiene', 'Avoid crowded places']
+                prevention: ['Annual flu vaccine', 'Hand hygiene', 'Avoid crowded places'],
+                medicines: [
+                    { name: 'Oseltamivir', dosage: '75mg twice daily for 5 days (prescription required)' },
+                    { name: 'Paracetamol', dosage: '650mg every 6 hours for fever' },
+                    { name: 'Cough suppressant', dosage: 'As directed' }
+                ],
+                homeRemedies: ['Warm fluids', 'Honey and lemon tea', 'Rest in well-ventilated room'],
+                consultDoctor: true,
+                warningSigns: ['Difficulty breathing', 'Chest pain', 'Confusion', 'Severe vomiting']
             },
             {
                 id: 3, name: 'Pneumonia', category: 'respiratory',
                 symptoms: [1, 2, 4, 37, 38], severity: 'high',
                 description: 'Infection of lung tissue',
-                recommendations: ['Immediate medical attention', 'Take antibiotics', 'Rest and hydrate'],
+                recommendations: ['Immediate medical attention required', 'Take prescribed antibiotics', 'Rest and hydrate'],
                 riskFactors: ['Smoking', 'Chronic lung disease', 'Weakened immune system'],
-                prevention: ['Vaccination', 'No smoking', 'Good hygiene']
+                prevention: ['Vaccination', 'No smoking', 'Good hygiene'],
+                medicines: [
+                    { name: 'Amoxicillin', dosage: '500mg three times daily (prescription only)' },
+                    { name: 'Azithromycin', dosage: '500mg once daily (prescription only)' },
+                    { name: 'Paracetamol', dosage: '650mg for fever' }
+                ],
+                homeRemedies: ['Steam inhalation', 'Warm compress for chest', 'Honey for cough'],
+                consultDoctor: true,
+                warningSigns: ['Severe difficulty breathing', 'Blue lips or face', 'Chest pain', 'High fever']
             },
             {
                 id: 4, name: 'Gastroenteritis', category: 'digestive',
@@ -1403,7 +1531,15 @@
                 description: 'Inflammation of stomach and intestines',
                 recommendations: ['Stay hydrated with ORS', 'Bland diet', 'Rest'],
                 riskFactors: ['Contaminated food/water', 'Poor hygiene'],
-                prevention: ['Hand washing', 'Food safety', 'Clean water']
+                prevention: ['Hand washing', 'Food safety', 'Clean water'],
+                medicines: [
+                    { name: 'ORS', dosage: 'Frequent sips throughout the day' },
+                    { name: 'Zinc supplements', dosage: '20mg daily for children' },
+                    { name: 'Probiotics', dosage: 'Once daily' }
+                ],
+                homeRemedies: ['Rice water', 'Banana', 'Coconut water', 'Ginger tea'],
+                consultDoctor: false,
+                warningSigns: ['Blood in stool', 'Severe dehydration', 'High fever', 'Unable to keep fluids down']
             },
             {
                 id: 5, name: 'Hypertension', category: 'cardiovascular',
@@ -1411,7 +1547,14 @@
                 description: 'High blood pressure',
                 recommendations: ['Regular BP monitoring', 'Reduce salt intake', 'Regular exercise'],
                 riskFactors: ['Family history', 'Obesity', 'Sedentary lifestyle'],
-                prevention: ['Healthy diet', 'Regular exercise', 'Limit alcohol']
+                prevention: ['Healthy diet', 'Regular exercise', 'Limit alcohol'],
+                medicines: [
+                    { name: 'Amlodipine', dosage: '5mg once daily (prescription only)' },
+                    { name: 'Losartan', dosage: '50mg once daily (prescription only)' }
+                ],
+                homeRemedies: ['Garlic', 'Hibiscus tea', 'Stress reduction', 'Regular walking'],
+                consultDoctor: true,
+                warningSigns: ['Severe headache', 'Chest pain', 'Shortness of breath', 'Vision changes']
             },
             {
                 id: 6, name: 'Diabetes Type 2', category: 'metabolic',
@@ -1419,7 +1562,14 @@
                 description: 'Chronic condition affecting blood sugar',
                 recommendations: ['Monitor blood sugar', 'Follow diabetic diet', 'Regular exercise'],
                 riskFactors: ['Obesity', 'Family history', 'Sedentary lifestyle'],
-                prevention: ['Healthy weight', 'Regular exercise', 'Balanced diet']
+                prevention: ['Healthy weight', 'Regular exercise', 'Balanced diet'],
+                medicines: [
+                    { name: 'Metformin', dosage: '500mg twice daily (prescription only)' },
+                    { name: 'Glimepiride', dosage: '1mg once daily (prescription only)' }
+                ],
+                homeRemedies: ['Fenugreek seeds', 'Bitter gourd juice', 'Cinnamon', 'Regular walking'],
+                consultDoctor: true,
+                warningSigns: ['Very high blood sugar', 'Frequent infections', 'Slow healing wounds']
             },
             {
                 id: 7, name: 'Migraine', category: 'neurological',
@@ -1427,7 +1577,15 @@
                 description: 'Severe recurring headaches',
                 recommendations: ['Rest in dark quiet room', 'Identify triggers', 'Pain medication'],
                 riskFactors: ['Stress', 'Hormonal changes', 'Certain foods'],
-                prevention: ['Regular sleep', 'Avoid triggers', 'Stress reduction']
+                prevention: ['Regular sleep', 'Avoid triggers', 'Stress reduction'],
+                medicines: [
+                    { name: 'Sumatriptan', dosage: '50mg at onset (prescription only)' },
+                    { name: 'Ibuprofen', dosage: '400mg for pain' },
+                    { name: 'Paracetamol', dosage: '650mg for pain' }
+                ],
+                homeRemedies: ['Cold compress on forehead', 'Peppermint oil', 'Ginger tea', 'Dark room rest'],
+                consultDoctor: false,
+                warningSigns: ['Sudden severe headache', 'Fever with headache', 'Neck stiffness']
             },
             {
                 id: 8, name: 'Arthritis', category: 'muscular',
@@ -1435,7 +1593,15 @@
                 description: 'Inflammation of joints',
                 recommendations: ['Pain management', 'Gentle exercise', 'Hot/cold therapy'],
                 riskFactors: ['Age', 'Family history', 'Previous injury'],
-                prevention: ['Regular exercise', 'Healthy weight', 'Joint protection']
+                prevention: ['Regular exercise', 'Healthy weight', 'Joint protection'],
+                medicines: [
+                    { name: 'Ibuprofen', dosage: '400mg for pain' },
+                    { name: 'Diclofenac gel', dosage: 'Apply locally 2-3 times daily' },
+                    { name: 'Paracetamol', dosage: '650mg for pain' }
+                ],
+                homeRemedies: ['Hot compress', 'Epsom salt bath', 'Turmeric milk', 'Gentle stretching'],
+                consultDoctor: false,
+                warningSigns: ['Severe joint swelling', 'Fever with joint pain', 'Inability to move joint']
             },
             {
                 id: 9, name: 'Dengue Fever', category: 'infectious',
@@ -1443,7 +1609,14 @@
                 description: 'Mosquito-borne viral infection',
                 recommendations: ['Immediate medical attention', 'Rest and hydration', 'Monitor platelets'],
                 riskFactors: ['Mosquito exposure', 'Travel to endemic areas'],
-                prevention: ['Mosquito repellent', 'Remove standing water', 'Mosquito nets']
+                prevention: ['Mosquito repellent', 'Remove standing water', 'Mosquito nets'],
+                medicines: [
+                    { name: 'Paracetamol', dosage: '650mg for fever (avoid aspirin)' },
+                    { name: 'ORS', dosage: 'Frequent sips' }
+                ],
+                homeRemedies: ['Papaya leaf juice', 'Coconut water', 'Kiwifruit', 'Pomegranate juice'],
+                consultDoctor: true,
+                warningSigns: ['Severe abdominal pain', 'Bleeding gums', 'Vomiting blood', 'Difficulty breathing']
             },
             {
                 id: 10, name: 'Malaria', category: 'infectious',
@@ -1451,7 +1624,14 @@
                 description: 'Mosquito-borne parasitic infection',
                 recommendations: ['Urgent medical care', 'Antimalarial medication', 'Rest'],
                 riskFactors: ['Mosquito exposure', 'Travel to endemic areas'],
-                prevention: ['Antimalarial prophylaxis', 'Mosquito protection', 'Bed nets']
+                prevention: ['Antimalarial prophylaxis', 'Mosquito protection', 'Bed nets'],
+                medicines: [
+                    { name: 'Artemisinin combination', dosage: 'As prescribed by doctor' },
+                    { name: 'Chloroquine', dosage: 'As prescribed based on region' }
+                ],
+                homeRemedies: ['Stay hydrated', 'Nutritious diet', 'Ginger tea for nausea'],
+                consultDoctor: true,
+                warningSigns: ['Severe headache', 'Confusion', 'Seizures', 'Difficulty breathing']
             }
         ];
 
@@ -1459,8 +1639,8 @@
         let diagnoses = JSON.parse(localStorage.getItem('diagnoses') || '[]');
         let selectedSymptoms = [];
         let currentSymptomCategory = 'all';
-        let audioChunks = [];
         let mediaRecorder = null;
+        let audioChunks = [];
         let audioBlob = null;
         let audioUrl = null;
         let isRecording = false;
@@ -1475,6 +1655,12 @@
             updateStats();
             displayDiagnoses();
             switchLanguage('en');
+            
+            // Check for microphone support
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                document.getElementById('recordBtn').disabled = true;
+                document.getElementById('voiceStatus').textContent = 'Voice recording not supported in this browser';
+            }
         });
 
         // ==================== LOAD DISTRICTS ====================
@@ -1559,7 +1745,7 @@
             }
         }
 
-        // ==================== VOICE RECORDING ====================
+        // ==================== VOICE RECORDING - FIXED ====================
         async function toggleRecording() {
             if (!isRecording) {
                 try {
@@ -1567,13 +1753,19 @@
                     mediaRecorder = new MediaRecorder(stream);
                     audioChunks = [];
                     
-                    mediaRecorder.ondataavailable = event => audioChunks.push(event.data);
+                    mediaRecorder.ondataavailable = (event) => {
+                        audioChunks.push(event.data);
+                    };
                     
                     mediaRecorder.onstop = () => {
                         audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
                         audioUrl = URL.createObjectURL(audioBlob);
                         document.getElementById('playBtn').disabled = false;
                         document.getElementById('audioWave').innerHTML = `<span class="timer">${formatTime(recordingSeconds)}</span>`;
+                        document.getElementById('voiceStatus').textContent = 'Recording saved! Click play to listen';
+                        
+                        // Stop all tracks
+                        stream.getTracks().forEach(track => track.stop());
                     };
                     
                     mediaRecorder.start();
@@ -1581,6 +1773,7 @@
                     
                     document.getElementById('recordBtn').classList.add('recording');
                     document.getElementById('recordBtn').textContent = '⏹️';
+                    document.getElementById('voiceStatus').textContent = 'Recording...';
                     
                     recordingSeconds = 0;
                     recordingTimer = setInterval(() => {
@@ -1589,15 +1782,18 @@
                     }, 1000);
                     
                 } catch (err) {
-                    showToast('Microphone access denied', 'error');
+                    console.error('Recording error:', err);
+                    document.getElementById('voiceStatus').textContent = 'Microphone access denied. Please check permissions.';
+                    showToast('Microphone access denied. Please check permissions.', 'error');
                 }
             } else {
                 if (mediaRecorder && mediaRecorder.state !== 'inactive') {
                     mediaRecorder.stop();
-                    mediaRecorder.stream.getTracks().forEach(track => track.stop());
                 }
+                
                 clearInterval(recordingTimer);
                 isRecording = false;
+                
                 document.getElementById('recordBtn').classList.remove('recording');
                 document.getElementById('recordBtn').textContent = '⏺️';
             }
@@ -1607,6 +1803,10 @@
             if (audioUrl) {
                 const audio = new Audio(audioUrl);
                 audio.play();
+                document.getElementById('voiceStatus').textContent = 'Playing recording...';
+                audio.onended = () => {
+                    document.getElementById('voiceStatus').textContent = 'Recording played';
+                };
             }
         }
 
@@ -1616,7 +1816,7 @@
             return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
         }
 
-        // ==================== AI DIAGNOSIS ====================
+        // ==================== AI DIAGNOSIS WITH SMART RECOMMENDATIONS ====================
         function validateForm() {
             const patientName = document.getElementById('patientName').value;
             const patientAge = document.getElementById('patientAge').value;
@@ -1635,7 +1835,7 @@
             
             setTimeout(() => {
                 const diagnosis = performAIDiagnosis();
-                displayDiagnosis(diagnosis);
+                displayDiagnosisWithRecommendations(diagnosis);
                 saveDiagnosis(diagnosis);
                 
                 document.getElementById('analyzeBtn').disabled = false;
@@ -1656,6 +1856,17 @@
             if (weight && height) {
                 bmi = (weight / ((height/100) * (height/100))).toFixed(1);
             }
+            
+            // Calculate severity based on number of symptoms and vitals
+            const symptomCount = selectedSymptoms.length;
+            let severityScore = 0;
+            
+            if (symptomCount > 5) severityScore += 20;
+            else if (symptomCount > 3) severityScore += 10;
+            
+            if (temperature > 39) severityScore += 15;
+            if (bp > 160) severityScore += 15;
+            if (heartRate > 120) severityScore += 10;
             
             const matches = diseaseDatabase.map(disease => {
                 const matchingSymptoms = disease.symptoms.filter(s => selectedSymptoms.includes(s));
@@ -1683,27 +1894,38 @@
                     if (bloodSugar > 140) vitalScore += 5;
                 }
                 
-                if (bmi) {
-                    if (bmi > 30 && disease.category === 'metabolic') vitalScore += 5;
-                    if (bmi < 18.5) vitalScore += 3;
-                }
-                
-                if (patientAge > 60 && disease.severity === 'high') vitalScore += 5;
-                
                 const totalScore = Math.min(99, Math.round(symptomScore + vitalScore));
                 
-                return { ...disease, matchScore: totalScore, matchingSymptoms: matchingSymptoms.length };
+                // Adjust severity based on score
+                let finalSeverity = disease.severity;
+                if (severityScore > 20 && disease.severity === 'low') finalSeverity = 'medium';
+                if (severityScore > 30 && disease.severity === 'medium') finalSeverity = 'high';
+                
+                return { 
+                    ...disease, 
+                    matchScore: totalScore, 
+                    matchingSymptoms: matchingSymptoms.length,
+                    severity: finalSeverity,
+                    consultDoctor: finalSeverity === 'high' || disease.consultDoctor || severityScore > 25
+                };
             }).filter(d => d.matchScore > 30).sort((a, b) => b.matchScore - a.matchScore);
             
             return matches[0] || {
-                name: 'Unable to Determine', severity: 'low', matchScore: 50,
+                name: 'Unable to Determine', 
+                severity: 'low', 
+                matchScore: 50,
                 description: 'Specific condition could not be identified',
                 recommendations: ['Consult a healthcare provider', 'Monitor symptoms', 'Rest and hydrate'],
-                riskFactors: ['Insufficient data'], prevention: ['Regular checkups', 'Healthy lifestyle']
+                riskFactors: ['Insufficient data'], 
+                prevention: ['Regular checkups', 'Healthy lifestyle'],
+                medicines: [],
+                homeRemedies: ['Rest', 'Hydration', 'Healthy diet'],
+                consultDoctor: true,
+                warningSigns: ['Symptoms persist for more than 3 days', 'Severe pain', 'High fever']
             };
         }
 
-        function displayDiagnosis(diagnosis) {
+        function displayDiagnosisWithRecommendations(diagnosis) {
             const resultsDiv = document.getElementById('results');
             const severityClass = diagnosis.severity === 'low' ? 'severity-low' : 
                                 diagnosis.severity === 'medium' ? 'severity-medium' : 'severity-high';
@@ -1734,19 +1956,67 @@
                 `;
             }
             
+            // Main recommendation box - Consult Doctor or Home Remedies
+            if (diagnosis.consultDoctor) {
+                html += `
+                    <div class="recommendation-box consult-doctor">
+                        <h3>⚠️ ${translations[currentLanguage].consultDoctor}</h3>
+                        <p>Based on your symptoms and severity, please consult a doctor immediately.</p>
+                `;
+                
+                if (diagnosis.warningSigns && diagnosis.warningSigns.length > 0) {
+                    html += `
+                        <div class="warning-signs">
+                            <strong>${translations[currentLanguage].warningSigns}:</strong>
+                            <ul style="margin-top: 5px;">
+                                ${diagnosis.warningSigns.map(sign => `<li>${sign}</li>`).join('')}
+                            </ul>
+                        </div>
+                    `;
+                }
+                
+                html += `</div>`;
+            } else {
+                html += `
+                    <div class="recommendation-box">
+                        <h3>🏠 ${translations[currentLanguage].homeRemedies}</h3>
+                        <ul>
+                            ${diagnosis.homeRemedies ? diagnosis.homeRemedies.map(r => `<li>${r}</li>`).join('') : '<li>Rest and stay hydrated</li>'}
+                        </ul>
+                    </div>
+                `;
+            }
+            
+            // Medicines section
+            if (diagnosis.medicines && diagnosis.medicines.length > 0) {
+                html += `
+                    <div class="disease-info">
+                        <h3>💊 ${translations[currentLanguage].medicines}</h3>
+                        <div class="medicine-list">
+                            ${diagnosis.medicines.map(med => `
+                                <div class="medicine-item">
+                                    <strong>${med.name}</strong>
+                                    <span>${med.dosage}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                        ${diagnosis.consultDoctor ? '<p style="font-size:0.8rem; color:var(--danger); margin-top:5px;">⚠️ Some medicines require prescription</p>' : ''}
+                    </div>
+                `;
+            }
+            
+            // General recommendations
             html += `
                 <div class="disease-info">
                     <h3>📋 ${translations[currentLanguage].recommendations}</h3>
                     <ul>${diagnosis.recommendations.map(r => `<li>${r}</li>`).join('')}</ul>
                 </div>
-                <div class="disease-info">
-                    <h3>⚠️ ${translations[currentLanguage].riskFactors}</h3>
-                    <ul>${diagnosis.riskFactors.map(r => `<li>${r}</li>`).join('')}</ul>
-                </div>
+                
                 <div class="disease-info">
                     <h3>🛡️ ${translations[currentLanguage].prevention}</h3>
                     <ul>${diagnosis.prevention.map(p => `<li>${p}</li>`).join('')}</ul>
                 </div>
+                
                 <div class="result-actions">
                     <button class="btn btn-secondary" onclick="saveToLocal()">💾 ${translations[currentLanguage].save}</button>
                     <button class="btn btn-primary" onclick="printReport()">🖨️ ${translations[currentLanguage].print}</button>
@@ -1833,7 +2103,7 @@
             const severityClass = disease.severity === 'low' ? 'severity-low' : 
                                 disease.severity === 'medium' ? 'severity-medium' : 'severity-high';
             
-            resultsDiv.innerHTML = `
+            let html = `
                 <div class="diagnosis-header">
                     <div class="diagnosis-icon">📚</div>
                     <div class="diagnosis-info">
@@ -1842,6 +2112,34 @@
                         <p style="margin-top: 8px;">${disease.description}</p>
                     </div>
                 </div>
+            `;
+            
+            if (disease.medicines && disease.medicines.length > 0) {
+                html += `
+                    <div class="disease-info">
+                        <h3>💊 ${translations[currentLanguage].medicines}</h3>
+                        <div class="medicine-list">
+                            ${disease.medicines.map(med => `
+                                <div class="medicine-item">
+                                    <strong>${med.name}</strong>
+                                    <span>${med.dosage}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            
+            if (disease.homeRemedies && disease.homeRemedies.length > 0) {
+                html += `
+                    <div class="disease-info">
+                        <h3>🏠 ${translations[currentLanguage].homeRemedies}</h3>
+                        <ul>${disease.homeRemedies.map(r => `<li>${r}</li>`).join('')}</ul>
+                    </div>
+                `;
+            }
+            
+            html += `
                 <div class="disease-info">
                     <h3>📋 ${translations[currentLanguage].recommendations}</h3>
                     <ul>${disease.recommendations.map(r => `<li>${r}</li>`).join('')}</ul>
@@ -1859,6 +2157,7 @@
                 </div>
             `;
             
+            resultsDiv.innerHTML = html;
             resultsDiv.style.display = 'block';
             resultsDiv.scrollIntoView({ behavior: 'smooth' });
         }
@@ -1923,15 +2222,25 @@
             document.getElementById('bloodSugar').value = '';
             document.getElementById('symptomsText').value = '';
             
-            audioBlob = null; audioUrl = null; recordingSeconds = 0;
+            // Reset voice recording
+            audioBlob = null; 
+            audioUrl = null; 
+            recordingSeconds = 0;
             document.getElementById('timer').textContent = '00:00';
             document.getElementById('playBtn').disabled = true;
+            document.getElementById('voiceStatus').textContent = '';
+            
             document.getElementById('results').style.display = 'none';
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function saveToLocal() { showToast('Saved'); }
-        function printReport() { window.print(); }
+        function saveToLocal() { 
+            showToast(translations[currentLanguage].save + 'd'); 
+        }
+        
+        function printReport() { 
+            window.print(); 
+        }
         
         function showToast(message, type = 'success') {
             const toast = document.getElementById('toast');

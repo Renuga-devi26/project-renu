@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>RuralCare AI - Complete Health Screening</title>
+    <title>RuralCare AI - Complete Health Screening with Districts</title>
     <style>
         * {
             margin: 0;
@@ -769,7 +769,7 @@
         </div>
     </div>
 
-    <!-- Patient Information Section -->
+    <!-- Patient Information Section with District -->
     <div class="form-section">
         <div class="section-header">
             <span class="icon">📋</span>
@@ -791,6 +791,12 @@
                     <option value="male" id="maleOption">Male</option>
                     <option value="female" id="femaleOption">Female</option>
                     <option value="other" id="otherOption">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label id="districtLabel">District *</label>
+                <select id="patientDistrict">
+                    <option value="">Select District</option>
                 </select>
             </div>
         </div>
@@ -924,13 +930,14 @@
                     <tr>
                         <th id="dateCol">Date</th>
                         <th id="patientCol">Patient</th>
+                        <th id="districtCol">District</th>
                         <th id="diagnosisCol">Diagnosis</th>
                         <th id="severityCol">Severity</th>
                         <th id="actionCol">Action</th>
                     </tr>
                 </thead>
                 <tbody id="tableBody">
-                    <tr><td colspan="5" style="text-align: center;" id="noDataText">No diagnoses yet</td></tr>
+                    <tr><td colspan="6" style="text-align: center;" id="noDataText">No diagnoses yet</td></tr>
                 </tbody>
             </table>
         </div>
@@ -940,6 +947,18 @@
     <div class="toast" id="toast">Message</div>
 
     <script>
+        // ==================== TAMIL NADU DISTRICTS ====================
+        const tamilNaduDistricts = [
+            'Ariyalur', 'Chengalpattu', 'Chennai', 'Coimbatore', 'Cuddalore',
+            'Dharmapuri', 'Dindigul', 'Erode', 'Kallakurichi', 'Kanchipuram',
+            'Kanyakumari', 'Karur', 'Krishnagiri', 'Madurai', 'Mayiladuthurai',
+            'Nagapattinam', 'Namakkal', 'Nilgiris', 'Perambalur', 'Pudukkottai',
+            'Ramanathapuram', 'Ranipet', 'Salem', 'Sivaganga', 'Tenkasi',
+            'Thanjavur', 'Theni', 'Thoothukkudi', 'Tiruchirappalli', 'Tirunelveli',
+            'Tirupathur', 'Tiruppur', 'Tiruvallur', 'Tiruvannamalai', 'Tiruvarur',
+            'Vellore', 'Viluppuram', 'Virudhunagar'
+        ];
+
         // ==================== MULTILINGUAL SUPPORT ====================
         const translations = {
             en: {
@@ -955,6 +974,7 @@
                 maleOption: 'Male',
                 femaleOption: 'Female',
                 otherOption: 'Other',
+                districtLabel: 'District *',
                 vitalsTitle: 'Vitals',
                 weightLabel: 'Weight (kg)',
                 heightLabel: 'Height (cm)',
@@ -981,6 +1001,7 @@
                 recentTitle: 'Recent Diagnoses',
                 dateCol: 'Date',
                 patientCol: 'Patient',
+                districtCol: 'District',
                 diagnosisCol: 'Diagnosis',
                 severityCol: 'Severity',
                 actionCol: 'Action',
@@ -1007,6 +1028,7 @@
                 maleOption: 'ஆண்',
                 femaleOption: 'பெண்',
                 otherOption: 'மற்றவை',
+                districtLabel: 'மாவட்டம் *',
                 vitalsTitle: 'உயிர்குறிகள்',
                 weightLabel: 'எடை (கிலோ)',
                 heightLabel: 'உயரம் (செ.மீ)',
@@ -1033,6 +1055,7 @@
                 recentTitle: 'சமீபத்தியவை',
                 dateCol: 'தேதி',
                 patientCol: 'நோயாளி',
+                districtCol: 'மாவட்டம்',
                 diagnosisCol: 'நோய்',
                 severityCol: 'தீவிரம்',
                 actionCol: 'செயல்',
@@ -1059,6 +1082,7 @@
                 maleOption: 'పురుషుడు',
                 femaleOption: 'స్త్రీ',
                 otherOption: 'ఇతర',
+                districtLabel: 'జిల్లా *',
                 vitalsTitle: 'ముఖ్యమైన సూచికలు',
                 weightLabel: 'బరువు (కిలో)',
                 heightLabel: 'ఎత్తు (సెం.మీ)',
@@ -1085,6 +1109,7 @@
                 recentTitle: 'ఇటీవలి నిర్ధారణలు',
                 dateCol: 'తేదీ',
                 patientCol: 'రోగి',
+                districtCol: 'జిల్లా',
                 diagnosisCol: 'నిర్ధారణ',
                 severityCol: 'తీవ్రత',
                 actionCol: 'చర్య',
@@ -1111,6 +1136,7 @@
                 maleOption: 'ಪುರುಷ',
                 femaleOption: 'ಸ್ತ್ರೀ',
                 otherOption: 'ಇತರೆ',
+                districtLabel: 'ಜಿಲ್ಲೆ *',
                 vitalsTitle: 'ಪ್ರಮುಖ ಸೂಚಕಗಳು',
                 weightLabel: 'ತೂಕ (ಕೆಜಿ)',
                 heightLabel: 'ಎತ್ತರ (ಸೆಂ.ಮೀ)',
@@ -1137,6 +1163,7 @@
                 recentTitle: 'ಇತ್ತೀಚಿನ ನಿರ್ಣಯಗಳು',
                 dateCol: 'ದಿನಾಂಕ',
                 patientCol: 'ರೋಗಿ',
+                districtCol: 'ಜಿಲ್ಲೆ',
                 diagnosisCol: 'ನಿರ್ಣಯ',
                 severityCol: 'ತೀವ್ರತೆ',
                 actionCol: 'ಕ್ರಿಯೆ',
@@ -1163,6 +1190,7 @@
                 maleOption: 'पुरुष',
                 femaleOption: 'महिला',
                 otherOption: 'अन्य',
+                districtLabel: 'जिला *',
                 vitalsTitle: 'महत्वपूर्ण संकेत',
                 weightLabel: 'वजन (किलो)',
                 heightLabel: 'ऊंचाई (सेमी)',
@@ -1189,6 +1217,7 @@
                 recentTitle: 'हालिया निदान',
                 dateCol: 'तारीख',
                 patientCol: 'रोगी',
+                districtCol: 'जिला',
                 diagnosisCol: 'निदान',
                 severityCol: 'गंभीरता',
                 actionCol: 'कार्रवाई',
@@ -1215,6 +1244,7 @@
                 maleOption: 'പുരുഷൻ',
                 femaleOption: 'സ്ത്രീ',
                 otherOption: 'മറ്റുള്ളവ',
+                districtLabel: 'ജില്ല *',
                 vitalsTitle: 'സുപ്രധാന അടയാളങ്ങൾ',
                 weightLabel: 'ഭാരം (കിലോ)',
                 heightLabel: 'ഉയരം (സെ.മീ)',
@@ -1241,6 +1271,7 @@
                 recentTitle: 'സമീപകാല നിർണയങ്ങൾ',
                 dateCol: 'തിയതി',
                 patientCol: 'രോഗി',
+                districtCol: 'ജില്ല',
                 diagnosisCol: 'നിർണയം',
                 severityCol: 'തീവ്രത',
                 actionCol: 'പ്രവർത്തനം',
@@ -1264,19 +1295,22 @@
             document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById(`lang${lang.charAt(0).toUpperCase() + lang.slice(1)}`).classList.add('active');
             
-            // Update all elements
+            // Update all elements with IDs
             for (let key in translations[lang]) {
                 let element = document.getElementById(key);
                 if (element) {
-                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
-                        element.placeholder = translations[lang][key];
-                    } else if (element.tagName === 'OPTION') {
+                    if (element.tagName === 'OPTION') {
                         element.textContent = translations[lang][key];
-                    } else {
+                    } else if (element.tagName !== 'INPUT' && element.tagName !== 'TEXTAREA') {
                         element.textContent = translations[lang][key];
                     }
                 }
             }
+            
+            // Update placeholders
+            document.getElementById('patientName').placeholder = translations[lang].fullNameLabel.replace(' *', '');
+            document.getElementById('patientAge').placeholder = 'Years';
+            document.getElementById('symptomsText').placeholder = 'Or type symptoms...';
             
             // Special handling for buttons with icons
             document.getElementById('analyzeBtn').innerHTML = translations[lang].analyzeBtn;
@@ -1435,12 +1469,25 @@
 
         // ==================== INITIALIZATION ====================
         document.addEventListener('DOMContentLoaded', () => {
+            loadDistricts();
             loadSymptoms();
             loadDiseaseLibrary();
             updateStats();
             displayDiagnoses();
             switchLanguage('en');
         });
+
+        // ==================== LOAD DISTRICTS ====================
+        function loadDistricts() {
+            const districtSelect = document.getElementById('patientDistrict');
+            
+            tamilNaduDistricts.forEach(district => {
+                const option = document.createElement('option');
+                option.value = district;
+                option.textContent = district;
+                districtSelect.appendChild(option);
+            });
+        }
 
         // ==================== SYMPTOM CHECKER ====================
         function loadSymptoms() {
@@ -1573,7 +1620,8 @@
         function validateForm() {
             const patientName = document.getElementById('patientName').value;
             const patientAge = document.getElementById('patientAge').value;
-            return patientName && patientAge && selectedSymptoms.length > 0;
+            const patientDistrict = document.getElementById('patientDistrict').value;
+            return patientName && patientAge && patientDistrict && selectedSymptoms.length > 0;
         }
 
         function analyzeHealth() {
@@ -1715,6 +1763,7 @@
             const newDiagnosis = {
                 id: Date.now(),
                 patientName: document.getElementById('patientName').value,
+                district: document.getElementById('patientDistrict').value,
                 diagnosis: diagnosis.name,
                 severity: diagnosis.severity,
                 date: new Date().toISOString()
@@ -1831,7 +1880,7 @@
             const recent = diagnoses.slice(0, 10);
             
             if (recent.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="5" style="text-align: center;">' + 
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">' + 
                     translations[currentLanguage].noDataText + '</td></tr>';
                 return;
             }
@@ -1844,6 +1893,7 @@
                     <tr>
                         <td>${date}</td>
                         <td>${d.patientName}</td>
+                        <td>${d.district || 'N/A'}</td>
                         <td>${d.diagnosis}</td>
                         <td><span class="status-badge ${severityClass}">${d.severity.toUpperCase()}</span></td>
                         <td><button class="action-btn" onclick="viewDiagnosis(${d.id})">View</button></td>
@@ -1854,7 +1904,7 @@
 
         function viewDiagnosis(id) {
             const d = diagnoses.find(d => d.id === id);
-            if (d) alert(`Patient: ${d.patientName}\nDiagnosis: ${d.diagnosis}\nSeverity: ${d.severity}\nDate: ${new Date(d.date).toLocaleString()}`);
+            if (d) alert(`Patient: ${d.patientName}\nDistrict: ${d.district}\nDiagnosis: ${d.diagnosis}\nSeverity: ${d.severity}\nDate: ${new Date(d.date).toLocaleString()}`);
         }
 
         function newDiagnosis() {
@@ -1864,6 +1914,7 @@
             
             document.getElementById('patientName').value = '';
             document.getElementById('patientAge').value = '';
+            document.getElementById('patientDistrict').value = '';
             document.getElementById('weight').value = '';
             document.getElementById('height').value = '';
             document.getElementById('bp').value = '';

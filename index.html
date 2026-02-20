@@ -610,7 +610,7 @@
             </div>
 
             <div class="form-group">
-                <input type="email" id="patientEmail" placeholder="Email or Phone" value="patient@demo.com">
+                <input type="text" id="patientEmail" placeholder="Email or Phone Number" value="patient@demo.com">
             </div>
             <div class="form-group">
                 <input type="password" id="patientPassword" placeholder="Password" value="patient123">
@@ -621,7 +621,9 @@
 
             <div class="demo-credentials">
                 <i class="fas fa-info-circle"></i>
-                <strong data-i18n="demoPatient">Demo Patient:</strong> <span data-i18n="patientCred">patient@demo.com / patient123</span>
+                <strong data-i18n="demoPatient">Demo Patient:</strong><br>
+                <span data-i18n="patientCred">Email: patient@demo.com / Password: patient123</span><br>
+                <span data-i18n="patientCred2">Phone: 9876543210 / Password: patient123</span>
             </div>
         </div>
 
@@ -636,7 +638,7 @@
             </div>
 
             <div class="form-group">
-                <input type="text" id="doctorId" placeholder="Doctor ID" value="DOC001">
+                <input type="text" id="doctorEmail" placeholder="Email or Phone Number" value="doctor@demo.com">
             </div>
             <div class="form-group">
                 <input type="password" id="doctorPassword" placeholder="Password" value="doctor123">
@@ -648,8 +650,9 @@
             <div class="demo-credentials">
                 <i class="fas fa-info-circle"></i>
                 <strong data-i18n="demoDoctor">Demo Doctors:</strong><br>
-                <span data-i18n="doctorCred1">DOC001 / doctor123 (Dr. Sharma)</span><br>
-                <span data-i18n="doctorCred2">DOC002 / doctor123 (Dr. Gupta)</span>
+                <span data-i18n="doctorCred1">Email: doctor@demo.com / Password: doctor123 (Dr. Sharma)</span><br>
+                <span data-i18n="doctorCred2">Email: dr.gupta@demo.com / Password: doctor123 (Dr. Gupta)</span><br>
+                <span data-i18n="doctorCred3">Phone: 9988776655 / Password: doctor123 (Dr. Verma)</span>
             </div>
         </div>
     </div>
@@ -664,6 +667,7 @@
                 <div class="user-details">
                     <h3 id="patientName">Patient Name</h3>
                     <p><i class="fas fa-envelope"></i> <span id="patientEmail">email@example.com</span></p>
+                    <p><i class="fas fa-phone"></i> <span id="patientPhone">phone</span></p>
                 </div>
             </div>
             <button class="logout-btn" onclick="logout('patient')">
@@ -703,10 +707,10 @@
             </h3>
             <div class="form-grid">
                 <div class="form-group">
-                    <input type="text" id="fullName" placeholder="Full Name" value="Rahul Sharma">
+                    <input type="text" id="fullName" placeholder="Full Name">
                 </div>
                 <div class="form-group">
-                    <input type="number" id="age" placeholder="Age" value="32">
+                    <input type="number" id="age" placeholder="Age">
                 </div>
                 <div class="form-group">
                     <select id="gender">
@@ -782,7 +786,8 @@
                 </div>
                 <div class="user-details">
                     <h3 id="doctorName">Dr. Sharma</h3>
-                    <p><i class="fas fa-id-card"></i> ID: <span id="doctorID">DOC001</span></p>
+                    <p><i class="fas fa-envelope"></i> <span id="doctorEmail">doctor@demo.com</span></p>
+                    <p><i class="fas fa-phone"></i> <span id="doctorPhone">phone</span></p>
                 </div>
             </div>
             <button class="logout-btn" onclick="logout('doctor')">
@@ -845,11 +850,13 @@
                 doctorSubtitle: 'Access patient records',
                 loginBtn: 'Login as Patient',
                 doctorBtn: 'Login as Doctor',
-                demoPatient: 'Demo Patient:',
-                patientCred: 'patient@demo.com / patient123',
+                demoPatient: 'Demo Patients:',
+                patientCred: 'Email: patient@demo.com / Password: patient123',
+                patientCred2: 'Phone: 9876543210 / Password: patient123',
                 demoDoctor: 'Demo Doctors:',
-                doctorCred1: 'DOC001 / doctor123 (Dr. Sharma)',
-                doctorCred2: 'DOC002 / doctor123 (Dr. Gupta)',
+                doctorCred1: 'Email: doctor@demo.com / Password: doctor123 (Dr. Sharma)',
+                doctorCred2: 'Email: dr.gupta@demo.com / Password: doctor123 (Dr. Gupta)',
+                doctorCred3: 'Phone: 9988776655 / Password: doctor123 (Dr. Verma)',
                 logout: 'Logout',
                 totalVisits: 'Total Visits',
                 diagnoses: 'Diagnoses',
@@ -874,19 +881,27 @@
                 patientRecords: 'Patient Records',
                 addNote: 'Add Clinical Note',
                 saveNote: 'Save Note',
-                cough: 'Cough',
-                fever: 'Fever',
-                headache: 'Headache',
-                soreThroat: 'Sore throat',
-                runnyNose: 'Runny nose',
-                nausea: 'Nausea',
-                vomiting: 'Vomiting',
-                diarrhea: 'Diarrhea',
-                fatigue: 'Fatigue',
-                bodyAche: 'Body ache',
-                commonCold: 'Common Cold',
-                viralFever: 'Viral Fever',
-                foodPoisoning: 'Food Poisoning'
+                noSymptoms: 'No symptoms selected',
+                loginFirst: 'Please login first',
+                selectSymptoms: 'Please select symptoms',
+                analysisComplete: 'Analysis complete!',
+                diagnosisReport: 'Diagnosis Report',
+                matchedSymptoms: 'Matched Symptoms',
+                advice: 'Advice',
+                homeRemedies: 'Home Remedies',
+                warningSigns: 'Warning Signs',
+                printReport: 'Print Report',
+                loginSuccess: 'Login successful!',
+                invalidCred: 'Invalid email/phone or password',
+                doctorLoginSuccess: 'Doctor login successful!',
+                invalidDoctorCred: 'Invalid doctor credentials',
+                logoutSuccess: 'Logged out successfully',
+                voiceCaptured: 'Voice captured!',
+                noRecords: 'No patient records yet',
+                visits: 'visits',
+                viewDetails: 'View Details',
+                noteSaved: 'Note saved successfully',
+                loginWithEmail: 'Login with your email or phone number'
             },
             hi: {
                 patientLogin: 'रोगी लॉगिन',
@@ -896,10 +911,12 @@
                 loginBtn: 'रोगी के रूप में लॉगिन करें',
                 doctorBtn: 'डॉक्टर के रूप में लॉगिन करें',
                 demoPatient: 'डेमो रोगी:',
-                patientCred: 'patient@demo.com / patient123',
+                patientCred: 'ईमेल: patient@demo.com / पासवर्ड: patient123',
+                patientCred2: 'फोन: 9876543210 / पासवर्ड: patient123',
                 demoDoctor: 'डेमो डॉक्टर:',
-                doctorCred1: 'DOC001 / doctor123 (डॉ. शर्मा)',
-                doctorCred2: 'DOC002 / doctor123 (डॉ. गुप्ता)',
+                doctorCred1: 'ईमेल: doctor@demo.com / पासवर्ड: doctor123 (डॉ. शर्मा)',
+                doctorCred2: 'ईमेल: dr.gupta@demo.com / पासवर्ड: doctor123 (डॉ. गुप्ता)',
+                doctorCred3: 'फोन: 9988776655 / पासवर्ड: doctor123 (डॉ. वर्मा)',
                 logout: 'लॉगआउट',
                 totalVisits: 'कुल विज़िट',
                 diagnoses: 'निदान',
@@ -924,19 +941,27 @@
                 patientRecords: 'रोगी रिकॉर्ड',
                 addNote: 'क्लिनिकल नोट जोड़ें',
                 saveNote: 'नोट सहेजें',
-                cough: 'खांसी',
-                fever: 'बुखार',
-                headache: 'सिरदर्द',
-                soreThroat: 'गले में खराश',
-                runnyNose: 'बहती नाक',
-                nausea: 'मतली',
-                vomiting: 'उल्टी',
-                diarrhea: 'दस्त',
-                fatigue: 'थकान',
-                bodyAche: 'शरीर दर्द',
-                commonCold: 'सामान्य सर्दी',
-                viralFever: 'वायरल बुखार',
-                foodPoisoning: 'फूड पॉइजनिंग'
+                noSymptoms: 'कोई लक्षण चयनित नहीं',
+                loginFirst: 'कृपया पहले लॉगिन करें',
+                selectSymptoms: 'कृपया लक्षण चुनें',
+                analysisComplete: 'विश्लेषण पूरा हुआ!',
+                diagnosisReport: 'निदान रिपोर्ट',
+                matchedSymptoms: 'मिलान लक्षण',
+                advice: 'सलाह',
+                homeRemedies: 'घरेलू उपचार',
+                warningSigns: 'चेतावनी संकेत',
+                printReport: 'रिपोर्ट प्रिंट करें',
+                loginSuccess: 'लॉगिन सफल!',
+                invalidCred: 'गलत ईमेल/फोन या पासवर्ड',
+                doctorLoginSuccess: 'डॉक्टर लॉगिन सफल!',
+                invalidDoctorCred: 'गलत डॉक्टर क्रेडेंशियल्स',
+                logoutSuccess: 'सफलतापूर्वक लॉगआउट किया',
+                voiceCaptured: 'आवाज कैप्चर हुई!',
+                noRecords: 'अभी तक कोई रोगी रिकॉर्ड नहीं',
+                visits: 'विज़िट',
+                viewDetails: 'विवरण देखें',
+                noteSaved: 'नोट सफलतापूर्वक सहेजा गया',
+                loginWithEmail: 'अपने ईमेल या फोन नंबर से लॉगिन करें'
             },
             ta: {
                 patientLogin: 'நோயாளி உள்நுழைவு',
@@ -945,11 +970,13 @@
                 doctorSubtitle: 'நோயாளி பதிவுகளை அணுகவும்',
                 loginBtn: 'நோயாளியாக உள்நுழைக',
                 doctorBtn: 'மருத்துவராக உள்நுழைக',
-                demoPatient: 'டெமோ நோயாளி:',
-                patientCred: 'patient@demo.com / patient123',
+                demoPatient: 'டெமோ நோயாளிகள்:',
+                patientCred: 'மின்னஞ்சல்: patient@demo.com / கடவுச்சொல்: patient123',
+                patientCred2: 'தொலைபேசி: 9876543210 / கடவுச்சொல்: patient123',
                 demoDoctor: 'டெமோ மருத்துவர்கள்:',
-                doctorCred1: 'DOC001 / doctor123 (டாக்டர் சர்மா)',
-                doctorCred2: 'DOC002 / doctor123 (டாக்டர் குப்தா)',
+                doctorCred1: 'மின்னஞ்சல்: doctor@demo.com / கடவுச்சொல்: doctor123 (டாக்டர் சர்மா)',
+                doctorCred2: 'மின்னஞ்சல்: dr.gupta@demo.com / கடவுச்சொல்: doctor123 (டாக்டர் குப்தா)',
+                doctorCred3: 'தொலைபேசி: 9988776655 / கடவுச்சொல்: doctor123 (டாக்டர் வர்மா)',
                 logout: 'வெளியேறு',
                 totalVisits: 'மொத்த வருகைகள்',
                 diagnoses: 'நோயறிதல்கள்',
@@ -974,19 +1001,27 @@
                 patientRecords: 'நோயாளி பதிவுகள்',
                 addNote: 'மருத்துவ குறிப்பு சேர்க்கவும்',
                 saveNote: 'குறிப்பை சேமிக்கவும்',
-                cough: 'இருமல்',
-                fever: 'காய்ச்சல்',
-                headache: 'தலைவலி',
-                soreThroat: 'தொண்டை வலி',
-                runnyNose: 'மூக்கு ஒழுகுதல்',
-                nausea: 'குமட்டல்',
-                vomiting: 'வாந்தி',
-                diarrhea: 'வயிற்றுப்போக்கு',
-                fatigue: 'சோர்வு',
-                bodyAche: 'உடல் வலி',
-                commonCold: 'சாதாரண சளி',
-                viralFever: 'வைரல் காய்ச்சல்',
-                foodPoisoning: 'உணவு விஷம்'
+                noSymptoms: 'அறிகுறிகள் எதுவும் தேர்ந்தெடுக்கப்படவில்லை',
+                loginFirst: 'முதலில் உள்நுழையவும்',
+                selectSymptoms: 'அறிகுறிகளைத் தேர்ந்தெடுக்கவும்',
+                analysisComplete: 'பகுப்பாய்வு முடிந்தது!',
+                diagnosisReport: 'நோயறிதல் அறிக்கை',
+                matchedSymptoms: 'பொருந்திய அறிகுறிகள்',
+                advice: 'ஆலோசனை',
+                homeRemedies: 'வீட்டு வைத்தியம்',
+                warningSigns: 'எச்சரிக்கை அறிகுறிகள்',
+                printReport: 'அறிக்கையை அச்சிடுக',
+                loginSuccess: 'உள்நுழைவு வெற்றிகரமானது!',
+                invalidCred: 'தவறான மின்னஞ்சல்/தொலைபேசி அல்லது கடவுச்சொல்',
+                doctorLoginSuccess: 'மருத்துவர் உள்நுழைவு வெற்றிகரமானது!',
+                invalidDoctorCred: 'தவறான மருத்துவர் சான்றுகள்',
+                logoutSuccess: 'வெளியேறியது',
+                voiceCaptured: 'குரல் பதிவு செய்யப்பட்டது!',
+                noRecords: 'இதுவரை நோயாளி பதிவுகள் இல்லை',
+                visits: 'வருகைகள்',
+                viewDetails: 'விவரங்களைக் காண்க',
+                noteSaved: 'குறிப்பு சேமிக்கப்பட்டது',
+                loginWithEmail: 'உங்கள் மின்னஞ்சல் அல்லது தொலைபேசி எண்ணுடன் உள்நுழைக'
             },
             te: {
                 patientLogin: 'రోగి లాగిన్',
@@ -995,11 +1030,13 @@
                 doctorSubtitle: 'రోగి రికార్డులను యాక్సెస్ చేయండి',
                 loginBtn: 'రోగిగా లాగిన్ చేయండి',
                 doctorBtn: 'డాక్టర్గా లాగిన్ చేయండి',
-                demoPatient: 'డెమో రోగి:',
-                patientCred: 'patient@demo.com / patient123',
+                demoPatient: 'డెమో రోగులు:',
+                patientCred: 'ఇమెయిల్: patient@demo.com / పాస్‌వర్డ్: patient123',
+                patientCred2: 'ఫోన్: 9876543210 / పాస్‌వర్డ్: patient123',
                 demoDoctor: 'డెమో డాక్టర్లు:',
-                doctorCred1: 'DOC001 / doctor123 (డా. శర్మ)',
-                doctorCred2: 'DOC002 / doctor123 (డా. గుప్తా)',
+                doctorCred1: 'ఇమెయిల్: doctor@demo.com / పాస్‌వర్డ్: doctor123 (డా. శర్మ)',
+                doctorCred2: 'ఇమెయిల్: dr.gupta@demo.com / పాస్‌వర్డ్: doctor123 (డా. గుప్తా)',
+                doctorCred3: 'ఫోన్: 9988776655 / పాస్‌వర్డ్: doctor123 (డా. వర్మ)',
                 logout: 'లాగ్అవుట్',
                 totalVisits: 'మొత్తం సందర్శనలు',
                 diagnoses: 'రోగ నిర్ధారణలు',
@@ -1024,19 +1061,27 @@
                 patientRecords: 'రోగి రికార్డులు',
                 addNote: 'క్లినికల్ నోట్ జోడించండి',
                 saveNote: 'నోట్ సేవ్ చేయండి',
-                cough: 'దగ్గు',
-                fever: 'జ్వరం',
-                headache: 'తలనొప్పి',
-                soreThroat: 'గొంతు నొప్పి',
-                runnyNose: 'ముక్కు కారడం',
-                nausea: 'వికారం',
-                vomiting: 'వాంతులు',
-                diarrhea: 'విరేచనాలు',
-                fatigue: 'అలసట',
-                bodyAche: 'శరీర నొప్పి',
-                commonCold: 'సాధారణ జలుబు',
-                viralFever: 'వైరల్ జ్వరం',
-                foodPoisoning: 'ఫుడ్ పాయిజనింగ్'
+                noSymptoms: 'లక్షణాలు ఏవీ ఎంచుకోలేదు',
+                loginFirst: 'దయచేసి ముందు లాగిన్ చేయండి',
+                selectSymptoms: 'దయచేసి లక్షణాలను ఎంచుకోండి',
+                analysisComplete: 'విశ్లేషణ పూర్తయింది!',
+                diagnosisReport: 'రోగ నిర్ధారణ నివేదిక',
+                matchedSymptoms: 'సరిపోలిన లక్షణాలు',
+                advice: 'సలహా',
+                homeRemedies: 'ఇంటి నివారణలు',
+                warningSigns: 'హెచ్చరిక సంకేతాలు',
+                printReport: 'నివేదికను ప్రింట్ చేయండి',
+                loginSuccess: 'లాగిన్ విజయవంతమైంది!',
+                invalidCred: 'చెల్లని ఇమెయిల్/ఫోన్ లేదా పాస్‌వర్డ్',
+                doctorLoginSuccess: 'డాక్టర్ లాగిన్ విజయవంతమైంది!',
+                invalidDoctorCred: 'చెల్లని డాక్టర్ ఆధారాలు',
+                logoutSuccess: 'లాగ్అవుట్ విజయవంతమైంది',
+                voiceCaptured: 'వాయిస్ క్యాప్చర్ చేయబడింది!',
+                noRecords: 'ఇంకా రోగి రికార్డులు లేవు',
+                visits: 'సందర్శనలు',
+                viewDetails: 'వివరాలు చూడండి',
+                noteSaved: 'నోట్ సేవ్ చేయబడింది',
+                loginWithEmail: 'మీ ఇమెయిల్ లేదా ఫోన్ నంబర్‌తో లాగిన్ చేయండి'
             },
             kn: {
                 patientLogin: 'ರೋಗಿಯ ಲಾಗಿನ್',
@@ -1045,11 +1090,13 @@
                 doctorSubtitle: 'ರೋಗಿಯ ದಾಖಲೆಗಳನ್ನು ಪ್ರವೇಶಿಸಿ',
                 loginBtn: 'ರೋಗಿಯಾಗಿ ಲಾಗಿನ್ ಮಾಡಿ',
                 doctorBtn: 'ವೈದ್ಯರಾಗಿ ಲಾಗಿನ್ ಮಾಡಿ',
-                demoPatient: 'ಡೆಮೊ ರೋಗಿ:',
-                patientCred: 'patient@demo.com / patient123',
+                demoPatient: 'ಡೆಮೊ ರೋಗಿಗಳು:',
+                patientCred: 'ಇಮೇಲ್: patient@demo.com / ಪಾಸ್‌ವರ್ಡ್: patient123',
+                patientCred2: 'ಫೋನ್: 9876543210 / ಪಾಸ್‌ವರ್ಡ್: patient123',
                 demoDoctor: 'ಡೆಮೊ ವೈದ್ಯರು:',
-                doctorCred1: 'DOC001 / doctor123 (ಡಾ. ಶರ್ಮಾ)',
-                doctorCred2: 'DOC002 / doctor123 (ಡಾ. ಗುಪ್ತಾ)',
+                doctorCred1: 'ಇಮೇಲ್: doctor@demo.com / ಪಾಸ್‌ವರ್ಡ್: doctor123 (ಡಾ. ಶರ್ಮಾ)',
+                doctorCred2: 'ಇಮೇಲ್: dr.gupta@demo.com / ಪಾಸ್‌ವರ್ಡ್: doctor123 (ಡಾ. ಗುಪ್ತಾ)',
+                doctorCred3: 'ಫೋನ್: 9988776655 / ಪಾಸ್‌ವರ್ಡ್: doctor123 (ಡಾ. ವರ್ಮಾ)',
                 logout: 'ಲಾಗೌಟ್',
                 totalVisits: 'ಒಟ್ಟು ಭೇಟಿಗಳು',
                 diagnoses: 'ರೋಗನಿರ್ಣಯಗಳು',
@@ -1074,19 +1121,27 @@
                 patientRecords: 'ರೋಗಿಯ ದಾಖಲೆಗಳು',
                 addNote: 'ಕ್ಲಿನಿಕಲ್ ಟಿಪ್ಪಣಿ ಸೇರಿಸಿ',
                 saveNote: 'ಟಿಪ್ಪಣಿ ಉಳಿಸಿ',
-                cough: 'ಕೆಮ್ಮು',
-                fever: 'ಜ್ವರ',
-                headache: 'ತಲೆನೋವು',
-                soreThroat: 'ಗಂಟಲು ನೋವು',
-                runnyNose: 'ಸ್ರವಿಸುವ ಮೂಗು',
-                nausea: 'ವಾಕರಿಕೆ',
-                vomiting: 'ವಾಂತಿ',
-                diarrhea: 'ಅತಿಸಾರ',
-                fatigue: 'ಆಯಾಸ',
-                bodyAche: 'ದೇಹ ನೋವು',
-                commonCold: 'ಸಾಮಾನ್ಯ ಶೀತ',
-                viralFever: 'ವೈರಲ್ ಜ್ವರ',
-                foodPoisoning: 'ಫುಡ್ ಪಾಯ್ಸನಿಂಗ್'
+                noSymptoms: 'ಯಾವುದೇ ರೋಗಲಕ್ಷಣಗಳನ್ನು ಆಯ್ಕೆ ಮಾಡಿಲ್ಲ',
+                loginFirst: 'ದಯವಿಟ್ಟು ಮೊದಲು ಲಾಗಿನ್ ಮಾಡಿ',
+                selectSymptoms: 'ದಯವಿಟ್ಟು ರೋಗಲಕ್ಷಣಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿ',
+                analysisComplete: 'ವಿಶ್ಲೇಷಣೆ ಪೂರ್ಣಗೊಂಡಿದೆ!',
+                diagnosisReport: 'ರೋಗನಿರ್ಣಯ ವರದಿ',
+                matchedSymptoms: 'ಹೊಂದಾಣಿಕೆಯ ರೋಗಲಕ್ಷಣಗಳು',
+                advice: 'ಸಲಹೆ',
+                homeRemedies: 'ಮನೆಮದ್ದುಗಳು',
+                warningSigns: 'ಎಚ್ಚರಿಕೆ ಚಿಹ್ನೆಗಳು',
+                printReport: 'ವರದಿಯನ್ನು ಮುದ್ರಿಸಿ',
+                loginSuccess: 'ಲಾಗಿನ್ ಯಶಸ್ವಿ!',
+                invalidCred: 'ಅಮಾನ್ಯ ಇಮೇಲ್/ಫೋನ್ ಅಥವಾ ಪಾಸ್‌ವರ್ಡ್',
+                doctorLoginSuccess: 'ವೈದ್ಯರ ಲಾಗಿನ್ ಯಶಸ್ವಿ!',
+                invalidDoctorCred: 'ಅಮಾನ್ಯ ವೈದ್ಯರ ರುಜುವಾತುಗಳು',
+                logoutSuccess: 'ಯಶಸ್ವಿಯಾಗಿ ಲಾಗೌಟ್ ಮಾಡಲಾಗಿದೆ',
+                voiceCaptured: 'ಧ್ವನಿ ಸೆರೆಹಿಡಿಯಲಾಗಿದೆ!',
+                noRecords: 'ಇನ್ನೂ ರೋಗಿಯ ದಾಖಲೆಗಳಿಲ್ಲ',
+                visits: 'ಭೇಟಿಗಳು',
+                viewDetails: 'ವಿವರಗಳನ್ನು ನೋಡಿ',
+                noteSaved: 'ಟಿಪ್ಪಣಿ ಉಳಿಸಲಾಗಿದೆ',
+                loginWithEmail: 'ನಿಮ್ಮ ಇಮೇಲ್ ಅಥವಾ ಫೋನ್ ಸಂಖ್ಯೆಯೊಂದಿಗೆ ಲಾಗಿನ್ ಮಾಡಿ'
             },
             ml: {
                 patientLogin: 'രോഗി ലോഗിൻ',
@@ -1095,11 +1150,13 @@
                 doctorSubtitle: 'രോഗിയുടെ രേഖകൾ ആക്സസ് ചെയ്യുക',
                 loginBtn: 'രോഗിയായി ലോഗിൻ ചെയ്യുക',
                 doctorBtn: 'ഡോക്ടറായി ലോഗിൻ ചെയ്യുക',
-                demoPatient: 'ഡെമോ രോഗി:',
-                patientCred: 'patient@demo.com / patient123',
+                demoPatient: 'ഡെമോ രോഗികൾ:',
+                patientCred: 'ഇമെയിൽ: patient@demo.com / പാസ്‌വേഡ്: patient123',
+                patientCred2: 'ഫോൺ: 9876543210 / പാസ്‌വേഡ്: patient123',
                 demoDoctor: 'ഡെമോ ഡോക്ടർമാർ:',
-                doctorCred1: 'DOC001 / doctor123 (ഡോ. ശർമ്മ)',
-                doctorCred2: 'DOC002 / doctor123 (ഡോ. ഗുപ്ത)',
+                doctorCred1: 'ഇമെയിൽ: doctor@demo.com / പാസ്‌വേഡ്: doctor123 (ഡോ. ശർമ്മ)',
+                doctorCred2: 'ഇമെയിൽ: dr.gupta@demo.com / പാസ്‌വേഡ്: doctor123 (ഡോ. ഗുപ്ത)',
+                doctorCred3: 'ഫോൺ: 9988776655 / പാസ്‌വേഡ്: doctor123 (ഡോ. വർമ)',
                 logout: 'ലോഗൗട്ട്',
                 totalVisits: 'ആകെ സന്ദർശനങ്ങൾ',
                 diagnoses: 'രോഗനിർണയങ്ങൾ',
@@ -1124,31 +1181,41 @@
                 patientRecords: 'രോഗിയുടെ രേഖകൾ',
                 addNote: 'ക്ലിനിക്കൽ കുറിപ്പ് ചേർക്കുക',
                 saveNote: 'കുറിപ്പ് സംരക്ഷിക്കുക',
-                cough: 'ചുമ',
-                fever: 'പനി',
-                headache: 'തലവേദന',
-                soreThroat: 'തൊണ്ടവേദന',
-                runnyNose: 'മൂക്കൊലിപ്പ്',
-                nausea: 'ഓക്കാനം',
-                vomiting: 'ഛർദ്ദി',
-                diarrhea: 'വയറിളക്കം',
-                fatigue: 'ക്ഷീണം',
-                bodyAche: 'ശരീരവേദന',
-                commonCold: 'സാധാരണ ജലദോഷം',
-                viralFever: 'വൈറൽ പനി',
-                foodPoisoning: 'ഫുഡ് പോയിസണിംഗ്'
+                noSymptoms: 'രോഗലക്ഷണങ്ങളൊന്നും തിരഞ്ഞെടുത്തിട്ടില്ല',
+                loginFirst: 'ദയവായി ആദ്യം ലോഗിൻ ചെയ്യുക',
+                selectSymptoms: 'ദയവായി രോഗലക്ഷണങ്ങൾ തിരഞ്ഞെടുക്കുക',
+                analysisComplete: 'വിശകലനം പൂർത്തിയായി!',
+                diagnosisReport: 'രോഗനിർണയ റിപ്പോർട്ട്',
+                matchedSymptoms: 'പൊരുത്തപ്പെടുന്ന രോഗലക്ഷണങ്ങൾ',
+                advice: 'ഉപദേശം',
+                homeRemedies: 'വീട്ടുവൈദ്യങ്ങൾ',
+                warningSigns: 'മുന്നറിയിപ്പ് അടയാളങ്ങൾ',
+                printReport: 'റിപ്പോർട്ട് പ്രിന്റ് ചെയ്യുക',
+                loginSuccess: 'ലോഗിൻ വിജയകരം!',
+                invalidCred: 'അസാധുവായ ഇമെയിൽ/ഫോൺ അല്ലെങ്കിൽ പാസ്‌വേഡ്',
+                doctorLoginSuccess: 'ഡോക്ടർ ലോഗിൻ വിജയകരം!',
+                invalidDoctorCred: 'അസാധുവായ ഡോക്ടർ ക്രെഡൻഷ്യലുകൾ',
+                logoutSuccess: 'വിജയകരമായി ലോഗൗട്ട് ചെയ്തു',
+                voiceCaptured: 'ശബ്ദം പകർത്തി!',
+                noRecords: 'ഇതുവരെ രോഗിയുടെ രേഖകളൊന്നുമില്ല',
+                visits: 'സന്ദർശനങ്ങൾ',
+                viewDetails: 'വിശദാംശങ്ങൾ കാണുക',
+                noteSaved: 'കുറിപ്പ് സംരക്ഷിച്ചു',
+                loginWithEmail: 'നിങ്ങളുടെ ഇമെയിൽ അല്ലെങ്കിൽ ഫോൺ നമ്പർ ഉപയോഗിച്ച് ലോഗിൻ ചെയ്യുക'
             }
         };
 
         // ==================== DATABASES ====================
         let patients = JSON.parse(localStorage.getItem('patients')) || [
-            { id: 'PAT001', name: 'Rahul Sharma', email: 'patient@demo.com', password: 'patient123', age: 32, gender: 'male', district: 'Chennai' },
-            { id: 'PAT002', name: 'Priya Patel', email: 'priya@example.com', password: 'priya123', age: 28, gender: 'female', district: 'Coimbatore' }
+            { id: 'PAT001', name: 'Rahul Sharma', email: 'patient@demo.com', phone: '9876543210', password: 'patient123', age: 32, gender: 'male', district: 'Chennai' },
+            { id: 'PAT002', name: 'Priya Patel', email: 'priya@example.com', phone: '8765432109', password: 'priya123', age: 28, gender: 'female', district: 'Coimbatore' },
+            { id: 'PAT003', name: 'Amit Kumar', email: 'amit@example.com', phone: '7654321098', password: 'amit123', age: 45, gender: 'male', district: 'Madurai' }
         ];
 
         let doctors = JSON.parse(localStorage.getItem('doctors')) || [
-            { id: 'DOC001', name: 'Dr. Sharma', password: 'doctor123', specialty: 'General Physician' },
-            { id: 'DOC002', name: 'Dr. Gupta', password: 'doctor123', specialty: 'Cardiologist' }
+            { id: 'DOC001', name: 'Dr. Sharma', email: 'doctor@demo.com', phone: '9988776655', password: 'doctor123', specialty: 'General Physician' },
+            { id: 'DOC002', name: 'Dr. Gupta', email: 'dr.gupta@demo.com', phone: '8877665544', password: 'doctor123', specialty: 'Cardiologist' },
+            { id: 'DOC003', name: 'Dr. Verma', email: 'dr.verma@demo.com', phone: '7766554433', password: 'doctor123', specialty: 'Pediatrician' }
         ];
 
         let diagnoses = JSON.parse(localStorage.getItem('diagnoses')) || [];
@@ -1277,14 +1344,17 @@
             return translations[currentLanguage]?.[key] || translations.en[key] || key;
         }
 
-        // ==================== PATIENT LOGIN ====================
+        // ==================== PATIENT LOGIN (Email/Phone) ====================
         function patientLogin() {
-            const email = document.getElementById('patientEmail').value;
-            const password = document.getElementById('patientPassword').value;
+            const emailOrPhone = document.getElementById('patientEmail').value.trim();
+            const password = document.getElementById('patientPassword').value.trim();
             
-            const patient = patients.find(p => p.email === email && p.password === password);
+            // Find patient by email OR phone
+            const patient = patients.find(p => 
+                p.email === emailOrPhone || p.phone === emailOrPhone
+            );
             
-            if (patient) {
+            if (patient && patient.password === password) {
                 currentPatient = patient;
                 document.getElementById('loginPage').style.display = 'none';
                 document.getElementById('patientApp').classList.add('visible');
@@ -1292,38 +1362,48 @@
                 
                 document.getElementById('patientName').textContent = patient.name;
                 document.getElementById('patientEmail').textContent = patient.email;
+                document.getElementById('patientPhone').textContent = patient.phone;
                 document.getElementById('fullName').value = patient.name;
                 document.getElementById('age').value = patient.age || 32;
                 document.getElementById('gender').value = patient.gender || 'male';
                 
+                // Set district if available
+                if (patient.district) {
+                    document.getElementById('district').value = patient.district;
+                }
+                
                 updatePatientStats();
-                showToast(getTranslation('loginSuccess') || 'Login successful!', 'success');
+                showToast(getTranslation('loginSuccess'), 'success');
             } else {
-                showToast(getTranslation('invalidCred') || 'Invalid credentials', 'error');
+                showToast(getTranslation('invalidCred'), 'error');
             }
         }
 
-        // ==================== DOCTOR LOGIN ====================
+        // ==================== DOCTOR LOGIN (Email/Phone) ====================
         function doctorLogin() {
-            const docId = document.getElementById('doctorId').value;
-            const password = document.getElementById('doctorPassword').value;
+            const emailOrPhone = document.getElementById('doctorEmail').value.trim();
+            const password = document.getElementById('doctorPassword').value.trim();
             
-            const doctor = doctors.find(d => d.id === docId && d.password === password);
+            // Find doctor by email OR phone
+            const doctor = doctors.find(d => 
+                d.email === emailOrPhone || d.phone === emailOrPhone
+            );
             
-            if (doctor) {
+            if (doctor && doctor.password === password) {
                 currentDoctor = doctor;
                 document.getElementById('loginPage').style.display = 'none';
                 document.getElementById('doctorApp').classList.add('visible');
                 document.getElementById('patientApp').classList.remove('visible');
                 
                 document.getElementById('doctorName').textContent = doctor.name;
-                document.getElementById('doctorID').textContent = doctor.id;
+                document.getElementById('doctorEmail').textContent = doctor.email;
+                document.getElementById('doctorPhone').textContent = doctor.phone;
                 
                 displayPatientRecords();
                 updateDoctorStats();
-                showToast(getTranslation('doctorLoginSuccess') || 'Doctor login successful!', 'success');
+                showToast(getTranslation('doctorLoginSuccess'), 'success');
             } else {
-                showToast(getTranslation('invalidDoctorCred') || 'Invalid doctor credentials', 'error');
+                showToast(getTranslation('invalidDoctorCred'), 'error');
             }
         }
 
@@ -1337,7 +1417,7 @@
                 document.getElementById('doctorApp').classList.remove('visible');
             }
             document.getElementById('loginPage').style.display = 'grid';
-            showToast(getTranslation('logoutSuccess') || 'Logged out successfully');
+            showToast(getTranslation('logoutSuccess'));
         }
 
         // ==================== SYMPTOMS ====================
@@ -1420,7 +1500,7 @@
                     if (isRecording) {
                         toggleRecording();
                         document.getElementById('typedSymptoms').value = 'fever, cough, headache';
-                        showToast(getTranslation('voiceCaptured') || 'Voice captured!');
+                        showToast(getTranslation('voiceCaptured'));
                     }
                 }, 3000);
             } else {
@@ -1434,7 +1514,7 @@
         // ==================== AI DIAGNOSIS ====================
         function analyzeHealth() {
             if (!currentPatient) {
-                showToast(getTranslation('loginFirst') || 'Please login first', 'error');
+                showToast(getTranslation('loginFirst'), 'error');
                 return;
             }
 
@@ -1455,7 +1535,7 @@
             }
 
             if (selectedSymptoms.length === 0) {
-                showToast(getTranslation('selectSymptoms') || 'Please select symptoms', 'error');
+                showToast(getTranslation('selectSymptoms'), 'error');
                 return;
             }
 
@@ -1480,6 +1560,7 @@
                 patientId: currentPatient.id,
                 patientName: currentPatient.name,
                 patientEmail: currentPatient.email,
+                patientPhone: currentPatient.phone,
                 diagnosis: getTranslation(bestMatch.name),
                 severity: bestMatch.severity,
                 symptoms: selectedSymptoms.map(id => {
@@ -1494,7 +1575,7 @@
             localStorage.setItem('diagnoses', JSON.stringify(diagnoses));
             updatePatientStats();
             
-            showToast(getTranslation('analysisComplete') || 'Analysis complete!');
+            showToast(getTranslation('analysisComplete'));
         }
 
         function displayResults(disease, symptoms) {
@@ -1585,6 +1666,7 @@
                     patientGroups[d.patientId] = {
                         patientName: d.patientName,
                         patientEmail: d.patientEmail,
+                        patientPhone: d.patientPhone,
                         records: []
                     };
                 }
@@ -1599,6 +1681,7 @@
                     <div class="patient-info">
                         <h4>${group.patientName}</h4>
                         <p><i class="fas fa-envelope"></i> ${group.patientEmail}</p>
+                        <p><i class="fas fa-phone"></i> ${group.patientPhone || 'N/A'}</p>
                         <p><i class="fas fa-notes-medical"></i> ${group.records.length} ${getTranslation('visits')}</p>
                     </div>
                     <div>
@@ -1623,7 +1706,7 @@
         function saveClinicalNote() {
             const note = document.getElementById('clinicalNote').value;
             if (note) {
-                showToast(getTranslation('noteSaved') || 'Note saved');
+                showToast(getTranslation('noteSaved'));
                 document.getElementById('clinicalNote').value = '';
             }
         }

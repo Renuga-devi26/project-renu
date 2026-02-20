@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>RuralCare - Patient & Doctor Portal</title>
+    <title>RuralCare - Multi-language Healthcare Portal with 50+ Symptoms</title>
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Google Fonts -->
@@ -42,6 +42,39 @@
             padding: 20px;
         }
 
+        /* Language Switcher */
+        .language-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+            background: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            box-shadow: var(--shadow-lg);
+            flex-wrap: wrap;
+        }
+
+        .lang-btn {
+            padding: 8px 16px;
+            border: 2px solid var(--primary);
+            background: white;
+            color: var(--primary);
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .lang-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Login Container */
         .login-container {
             max-width: 1200px;
             width: 100%;
@@ -114,7 +147,8 @@
             margin-bottom: 20px;
         }
 
-        .form-group input {
+        .form-group input,
+        .form-group select {
             width: 100%;
             padding: 15px 20px;
             border: 2px solid var(--border);
@@ -123,7 +157,8 @@
             transition: all 0.3s;
         }
 
-        .form-group input:focus {
+        .form-group input:focus,
+        .form-group select:focus {
             outline: none;
             border-color: var(--primary);
             box-shadow: 0 0 0 4px rgba(42, 122, 98, 0.1);
@@ -176,6 +211,7 @@
             color: var(--accent);
         }
 
+        /* Main App */
         .main-app {
             display: none;
             width: 100%;
@@ -197,6 +233,8 @@
             margin-bottom: 30px;
             padding-bottom: 20px;
             border-bottom: 2px solid var(--border);
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
         .user-info {
@@ -206,25 +244,26 @@
         }
 
         .user-avatar {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             background: var(--primary-light);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             color: var(--primary);
         }
 
         .user-details h3 {
             color: var(--dark);
-            font-size: 1.2rem;
+            font-size: 1.3rem;
         }
 
         .user-details p {
             color: var(--gray);
-            font-size: 0.9rem;
+            font-size: 0.95rem;
+            margin: 2px 0;
         }
 
         .logout-btn {
@@ -292,6 +331,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            font-size: 1.3rem;
         }
 
         .form-grid {
@@ -322,6 +362,7 @@
             border-radius: 30px;
             cursor: pointer;
             transition: all 0.3s;
+            font-size: 0.9rem;
         }
 
         .category-tab.active {
@@ -331,9 +372,9 @@
 
         .symptoms-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
             gap: 10px;
-            max-height: 300px;
+            max-height: 400px;
             overflow-y: auto;
             padding: 15px;
             background: white;
@@ -342,12 +383,13 @@
         }
 
         .symptom-item {
-            padding: 10px 15px;
+            padding: 12px 15px;
             background: var(--light);
             border-radius: 30px;
             cursor: pointer;
             text-align: center;
             transition: all 0.2s;
+            border: 2px solid transparent;
         }
 
         .symptom-item.selected {
@@ -359,7 +401,10 @@
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
-            min-height: 50px;
+            min-height: 60px;
+            padding: 15px;
+            background: white;
+            border-radius: 20px;
         }
 
         .symptom-tag {
@@ -396,15 +441,16 @@
         }
 
         .record-btn {
-            width: 70px;
-            height: 70px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
             background: white;
             color: var(--danger);
             border: none;
-            font-size: 2rem;
+            font-size: 2.2rem;
             cursor: pointer;
             transition: all 0.3s;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
 
         .record-btn.recording {
@@ -483,16 +529,19 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 15px;
+            border: 2px solid var(--border);
         }
 
         .patient-info h4 {
             color: var(--dark);
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
         }
 
         .patient-info p {
             color: var(--gray);
             font-size: 0.9rem;
+            margin: 3px 0;
         }
 
         .doctor-note {
@@ -502,6 +551,7 @@
             border-radius: 20px;
             margin: 20px 0;
             resize: vertical;
+            font-size: 1rem;
         }
 
         .toast {
@@ -516,6 +566,7 @@
             border-left: 4px solid var(--success);
             transition: transform 0.3s;
             z-index: 1000;
+            font-weight: 500;
         }
 
         .toast.show {
@@ -534,10 +585,28 @@
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+            
+            .language-switcher {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin-bottom: 20px;
+                justify-content: center;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Language Switcher -->
+    <div class="language-switcher">
+        <button class="lang-btn active" onclick="switchLanguage('en')">🇬🇧 English</button>
+        <button class="lang-btn" onclick="switchLanguage('hi')">🇮🇳 हिन्दी</button>
+        <button class="lang-btn" onclick="switchLanguage('ta')">🇮🇳 தமிழ்</button>
+        <button class="lang-btn" onclick="switchLanguage('te')">🇮🇳 తెలుగు</button>
+        <button class="lang-btn" onclick="switchLanguage('kn')">🇮🇳 ಕನ್ನಡ</button>
+        <button class="lang-btn" onclick="switchLanguage('ml')">🇮🇳 മലയാളം</button>
+    </div>
+
     <!-- LOGIN PAGE -->
     <div class="login-container" id="loginPage">
         <!-- Patient Login -->
@@ -546,26 +615,26 @@
                 <div class="login-icon">
                     <i class="fas fa-user"></i>
                 </div>
-                <h2>Patient Login</h2>
-                <p>Access your health records</p>
+                <h2 data-i18n="patientLogin">Patient Login</h2>
+                <p data-i18n="patientSubtitle">Access your health records</p>
             </div>
 
             <div class="form-group">
-                <input type="text" id="patientEmail" placeholder="Email or Phone Number" value="patient@demo.com">
+                <input type="text" id="patientId" placeholder="Patient ID / Email / Phone" value="PAT001">
             </div>
             <div class="form-group">
                 <input type="password" id="patientPassword" placeholder="Password" value="patient123">
             </div>
             <button class="login-btn" onclick="patientLogin()">
-                <i class="fas fa-sign-in-alt"></i> Login as Patient
+                <i class="fas fa-sign-in-alt"></i> <span data-i18n="patientLoginBtn">Login as Patient</span>
             </button>
 
             <div class="demo-credentials">
                 <i class="fas fa-info-circle"></i>
-                <strong>Demo Patients:</strong><br>
-                • Email: patient@demo.com / Password: patient123<br>
-                • Email: priya@example.com / Password: priya123<br>
-                • Phone: 9876543210 / Password: patient123
+                <strong data-i18n="demoPatients">Demo Patients:</strong><br>
+                <span data-i18n="patient1">ID: PAT001 / Password: patient123 (Rahul Sharma)</span><br>
+                <span data-i18n="patient2">ID: PAT002 / Password: priya123 (Priya Patel)</span><br>
+                <span data-i18n="patient3">Email: amit@example.com / Password: amit123 (Amit Kumar)</span>
             </div>
         </div>
 
@@ -575,26 +644,26 @@
                 <div class="login-icon">
                     <i class="fas fa-user-md"></i>
                 </div>
-                <h2>Doctor Login</h2>
-                <p>Access patient records</p>
+                <h2 data-i18n="doctorLogin">Doctor Login</h2>
+                <p data-i18n="doctorSubtitle">Access patient records</p>
             </div>
 
             <div class="form-group">
-                <input type="text" id="doctorEmail" placeholder="Email or Phone Number" value="doctor@demo.com">
+                <input type="text" id="doctorId" placeholder="Doctor ID / Email / Phone" value="DOC001">
             </div>
             <div class="form-group">
                 <input type="password" id="doctorPassword" placeholder="Password" value="doctor123">
             </div>
             <button class="login-btn" onclick="doctorLogin()">
-                <i class="fas fa-stethoscope"></i> Login as Doctor
+                <i class="fas fa-stethoscope"></i> <span data-i18n="doctorLoginBtn">Login as Doctor</span>
             </button>
 
             <div class="demo-credentials">
                 <i class="fas fa-info-circle"></i>
-                <strong>Demo Doctors:</strong><br>
-                • Email: doctor@demo.com / Password: doctor123 (Dr. Sharma)<br>
-                • Email: dr.gupta@demo.com / Password: doctor123 (Dr. Gupta)<br>
-                • Phone: 9988776655 / Password: doctor123 (Dr. Verma)
+                <strong data-i18n="demoDoctors">Demo Doctors:</strong><br>
+                <span data-i18n="doctor1">ID: DOC001 / Password: doctor123 (Dr. Sharma)</span><br>
+                <span data-i18n="doctor2">ID: DOC002 / Password: doctor123 (Dr. Gupta)</span><br>
+                <span data-i18n="doctor3">Email: dr.verma@demo.com / Password: doctor123 (Dr. Verma)</span>
             </div>
         </div>
     </div>
@@ -608,12 +677,13 @@
                 </div>
                 <div class="user-details">
                     <h3 id="patientName">Patient Name</h3>
+                    <p><i class="fas fa-id-card"></i> ID: <span id="patientID">PAT001</span></p>
                     <p><i class="fas fa-envelope"></i> <span id="patientEmail">email@example.com</span></p>
                     <p><i class="fas fa-phone"></i> <span id="patientPhone">phone</span></p>
                 </div>
             </div>
             <button class="logout-btn" onclick="logout('patient')">
-                <i class="fas fa-sign-out-alt"></i> Logout
+                <i class="fas fa-sign-out-alt"></i> <span data-i18n="logout">Logout</span>
             </button>
         </div>
 
@@ -622,22 +692,22 @@
             <div class="stat-card">
                 <i class="fas fa-calendar-check"></i>
                 <div class="stat-number" id="totalVisits">0</div>
-                <div class="stat-label">Total Visits</div>
+                <div class="stat-label" data-i18n="totalVisits">Total Visits</div>
             </div>
             <div class="stat-card">
                 <i class="fas fa-notes-medical"></i>
                 <div class="stat-number" id="totalDiagnoses">0</div>
-                <div class="stat-label">Diagnoses</div>
+                <div class="stat-label" data-i18n="diagnoses">Diagnoses</div>
             </div>
             <div class="stat-card">
                 <i class="fas fa-exclamation-triangle"></i>
                 <div class="stat-number" id="highRiskCount">0</div>
-                <div class="stat-label">High Risk</div>
+                <div class="stat-label" data-i18n="highRisk">High Risk</div>
             </div>
             <div class="stat-card">
                 <i class="fas fa-calendar-day"></i>
                 <div class="stat-number" id="todayCount">0</div>
-                <div class="stat-label">Today</div>
+                <div class="stat-label" data-i18n="today">Today</div>
             </div>
         </div>
 
@@ -645,7 +715,7 @@
         <div class="patient-form">
             <h3 class="form-title">
                 <i class="fas fa-user-circle"></i>
-                Patient Information
+                <span data-i18n="patientInfo">Patient Information</span>
             </h3>
             <div class="form-grid">
                 <div class="form-group">
@@ -656,14 +726,14 @@
                 </div>
                 <div class="form-group">
                     <select id="gender">
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                        <option value="other">Other</option>
+                        <option value="male" data-i18n="male">Male</option>
+                        <option value="female" data-i18n="female">Female</option>
+                        <option value="other" data-i18n="other">Other</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <select id="district">
-                        <option value="">Select District</option>
+                        <option value="" data-i18n="selectDistrict">Select District</option>
                     </select>
                 </div>
             </div>
@@ -673,19 +743,24 @@
         <div class="symptoms-section">
             <h3 class="form-title">
                 <i class="fas fa-stethoscope"></i>
-                Symptom Checker
+                <span data-i18n="symptomChecker">Symptom Checker (50+ Symptoms)</span>
             </h3>
 
             <div class="category-tabs" id="symptomCategories">
-                <button class="category-tab active" onclick="filterSymptoms('all')">All</button>
-                <button class="category-tab" onclick="filterSymptoms('respiratory')">Respiratory</button>
-                <button class="category-tab" onclick="filterSymptoms('digestive')">Digestive</button>
-                <button class="category-tab" onclick="filterSymptoms('general')">General</button>
+                <button class="category-tab active" onclick="filterSymptoms('all')" data-i18n="all">All</button>
+                <button class="category-tab" onclick="filterSymptoms('respiratory')" data-i18n="respiratory">Respiratory</button>
+                <button class="category-tab" onclick="filterSymptoms('digestive')" data-i18n="digestive">Digestive</button>
+                <button class="category-tab" onclick="filterSymptoms('neurological')" data-i18n="neurological">Neurological</button>
+                <button class="category-tab" onclick="filterSymptoms('muscular')" data-i18n="muscular">Muscular</button>
+                <button class="category-tab" onclick="filterSymptoms('skin')" data-i18n="skin">Skin</button>
+                <button class="category-tab" onclick="filterSymptoms('cardiovascular')" data-i18n="cardiovascular">Cardio</button>
+                <button class="category-tab" onclick="filterSymptoms('general')" data-i18n="general">General</button>
+                <button class="category-tab" onclick="filterSymptoms('urinary')" data-i18n="urinary">Urinary</button>
             </div>
 
             <div class="symptoms-grid" id="symptomsGrid"></div>
 
-            <h4 style="margin-bottom: 10px;">Selected Symptoms:</h4>
+            <h4 style="margin-bottom: 10px;" data-i18n="selectedSymptoms">Selected Symptoms:</h4>
             <div class="selected-tags" id="symptomTags"></div>
         </div>
 
@@ -693,7 +768,7 @@
         <div class="voice-section">
             <h3 style="margin-bottom: 20px;">
                 <i class="fas fa-microphone-alt"></i>
-                Voice Symptom Recorder
+                <span data-i18n="voiceRecorder">Voice Symptom Recorder</span>
             </h3>
             
             <div class="voice-controls">
@@ -712,7 +787,7 @@
 
         <!-- Analyze Button -->
         <button class="analyze-btn" onclick="analyzeHealth()">
-            <i class="fas fa-microchip"></i> Analyze Symptoms
+            <i class="fas fa-microchip"></i> <span data-i18n="analyze">Analyze Symptoms</span>
         </button>
 
         <!-- Results -->
@@ -727,13 +802,14 @@
                     <i class="fas fa-user-md"></i>
                 </div>
                 <div class="user-details">
-                    <h3 id="doctorName">Dr. Sharma</h3>
+                    <h3 id="doctorName">Dr. Name</h3>
+                    <p><i class="fas fa-id-card"></i> ID: <span id="doctorID">DOC001</span></p>
                     <p><i class="fas fa-envelope"></i> <span id="doctorEmail">doctor@demo.com</span></p>
                     <p><i class="fas fa-phone"></i> <span id="doctorPhone">phone</span></p>
                 </div>
             </div>
             <button class="logout-btn" onclick="logout('doctor')">
-                <i class="fas fa-sign-out-alt"></i> Logout
+                <i class="fas fa-sign-out-alt"></i> <span data-i18n="logout">Logout</span>
             </button>
         </div>
 
@@ -741,39 +817,39 @@
             <div class="stat-card">
                 <i class="fas fa-users"></i>
                 <div class="stat-number" id="totalPatients">0</div>
-                <div class="stat-label">Total Patients</div>
+                <div class="stat-label" data-i18n="totalPatients">Total Patients</div>
             </div>
             <div class="stat-card">
                 <i class="fas fa-notes-medical"></i>
                 <div class="stat-number" id="totalReports">0</div>
-                <div class="stat-label">Reports</div>
+                <div class="stat-label" data-i18n="reports">Reports</div>
             </div>
             <div class="stat-card">
                 <i class="fas fa-exclamation-triangle"></i>
                 <div class="stat-number" id="criticalCases">0</div>
-                <div class="stat-label">Critical</div>
+                <div class="stat-label" data-i18n="critical">Critical</div>
             </div>
             <div class="stat-card">
                 <i class="fas fa-calendar-day"></i>
                 <div class="stat-number" id="todayPatients">0</div>
-                <div class="stat-label">Today</div>
+                <div class="stat-label" data-i18n="today">Today</div>
             </div>
         </div>
 
         <div class="doctor-dashboard">
             <h3 class="form-title">
                 <i class="fas fa-clipboard-list"></i>
-                Patient Records
+                <span data-i18n="patientRecords">Patient Records</span>
             </h3>
 
             <div id="patientRecordsList"></div>
 
             <h3 class="form-title" style="margin-top: 30px;">
                 <i class="fas fa-pen"></i>
-                Add Clinical Note
+                <span data-i18n="addNote">Add Clinical Note</span>
             </h3>
             <textarea class="doctor-note" id="clinicalNote" placeholder="Write your recommendations..." rows="4"></textarea>
-            <button class="login-btn" onclick="saveClinicalNote()">Save Note</button>
+            <button class="login-btn" onclick="saveClinicalNote()"><span data-i18n="saveNote">Save Note</span></button>
         </div>
     </div>
 
@@ -781,33 +857,873 @@
     <div class="toast" id="toast"></div>
 
     <script>
-        // ==================== SIMPLIFIED DATABASES ====================
+        // ==================== MULTI-LANGUAGE SUPPORT ====================
+        let currentLanguage = 'en';
+        
+        const translations = {
+            en: {
+                patientLogin: 'Patient Login',
+                patientSubtitle: 'Access your health records',
+                doctorLogin: 'Doctor Login',
+                doctorSubtitle: 'Access patient records',
+                patientLoginBtn: 'Login as Patient',
+                doctorLoginBtn: 'Login as Doctor',
+                demoPatients: 'Demo Patients:',
+                patient1: 'ID: PAT001 / Password: patient123 (Rahul Sharma)',
+                patient2: 'ID: PAT002 / Password: priya123 (Priya Patel)',
+                patient3: 'Email: amit@example.com / Password: amit123 (Amit Kumar)',
+                demoDoctors: 'Demo Doctors:',
+                doctor1: 'ID: DOC001 / Password: doctor123 (Dr. Sharma)',
+                doctor2: 'ID: DOC002 / Password: doctor123 (Dr. Gupta)',
+                doctor3: 'Email: dr.verma@demo.com / Password: doctor123 (Dr. Verma)',
+                logout: 'Logout',
+                totalVisits: 'Total Visits',
+                diagnoses: 'Diagnoses',
+                highRisk: 'High Risk',
+                today: 'Today',
+                patientInfo: 'Patient Information',
+                male: 'Male',
+                female: 'Female',
+                other: 'Other',
+                selectDistrict: 'Select District',
+                symptomChecker: 'Symptom Checker (50+ Symptoms)',
+                all: 'All',
+                respiratory: 'Respiratory',
+                digestive: 'Digestive',
+                neurological: 'Neurological',
+                muscular: 'Muscular',
+                skin: 'Skin',
+                cardiovascular: 'Cardio',
+                general: 'General',
+                urinary: 'Urinary',
+                selectedSymptoms: 'Selected Symptoms:',
+                voiceRecorder: 'Voice Symptom Recorder',
+                analyze: 'Analyze Symptoms',
+                totalPatients: 'Total Patients',
+                reports: 'Reports',
+                critical: 'Critical',
+                patientRecords: 'Patient Records',
+                addNote: 'Add Clinical Note',
+                saveNote: 'Save Note',
+                noSymptoms: 'No symptoms selected',
+                loginFirst: 'Please login first',
+                selectSymptoms: 'Please select symptoms',
+                analysisComplete: 'Analysis complete!',
+                diagnosisReport: 'Diagnosis Report',
+                matchedSymptoms: 'Matched Symptoms',
+                advice: 'Advice',
+                homeRemedies: 'Home Remedies',
+                warningSigns: 'Warning Signs',
+                printReport: 'Print Report',
+                loginSuccess: 'Login successful!',
+                invalidCred: 'Invalid ID/Email/Phone or Password',
+                doctorLoginSuccess: 'Doctor login successful!',
+                logoutSuccess: 'Logged out successfully',
+                voiceCaptured: 'Voice captured!',
+                noRecords: 'No patient records yet',
+                visits: 'visits',
+                viewDetails: 'View Details',
+                noteSaved: 'Note saved successfully',
+                loginWithId: 'Login with your Patient ID, Email or Phone',
+                // Symptoms translations
+                cough: 'Cough',
+                shortnessOfBreath: 'Shortness of breath',
+                wheezing: 'Wheezing',
+                chestPain: 'Chest pain',
+                soreThroat: 'Sore throat',
+                runnyNose: 'Runny nose',
+                sneezing: 'Sneezing',
+                nasalCongestion: 'Nasal congestion',
+                coughingBlood: 'Coughing up blood',
+                dryCough: 'Dry cough',
+                nausea: 'Nausea',
+                vomiting: 'Vomiting',
+                diarrhea: 'Diarrhea',
+                constipation: 'Constipation',
+                abdominalPain: 'Abdominal pain',
+                bloating: 'Bloating',
+                heartburn: 'Heartburn',
+                lossOfAppetite: 'Loss of appetite',
+                bloodInStool: 'Blood in stool',
+                difficultySwallowing: 'Difficulty swallowing',
+                headache: 'Headache',
+                dizziness: 'Dizziness',
+                confusion: 'Confusion',
+                seizures: 'Seizures',
+                tremors: 'Tremors',
+                numbness: 'Numbness',
+                weakness: 'Weakness',
+                memoryLoss: 'Memory loss',
+                balanceProblems: 'Balance problems',
+                slurredSpeech: 'Slurred speech',
+                jointPain: 'Joint pain',
+                musclePain: 'Muscle pain',
+                backPain: 'Back pain',
+                neckPain: 'Neck pain',
+                jointSwelling: 'Joint swelling',
+                stiffness: 'Stiffness',
+                muscleCramps: 'Muscle cramps',
+                rash: 'Rash',
+                itching: 'Itching',
+                hives: 'Hives',
+                drySkin: 'Dry skin',
+                skinRedness: 'Skin redness',
+                skinDiscoloration: 'Skin discoloration',
+                woundsNotHealing: 'Wounds not healing',
+                fever: 'Fever',
+                fatigue: 'Fatigue',
+                chills: 'Chills',
+                nightSweats: 'Night sweats',
+                weightLoss: 'Weight loss',
+                weightGain: 'Weight gain',
+                dehydration: 'Dehydration',
+                swollenLymphNodes: 'Swollen lymph nodes',
+                palpitations: 'Palpitations',
+                highBP: 'High blood pressure',
+                lowBP: 'Low blood pressure',
+                swollenAnkles: 'Swollen ankles',
+                frequentUrination: 'Frequent urination',
+                painfulUrination: 'Painful urination',
+                bloodInUrine: 'Blood in urine',
+                urgentUrination: 'Urgent urination',
+                bodyAche: 'Body ache'
+            },
+            hi: {
+                patientLogin: 'रोगी लॉगिन',
+                patientSubtitle: 'अपने स्वास्थ्य रिकॉर्ड देखें',
+                doctorLogin: 'डॉक्टर लॉगिन',
+                doctorSubtitle: 'रोगी रिकॉर्ड देखें',
+                patientLoginBtn: 'रोगी के रूप में लॉगिन करें',
+                doctorLoginBtn: 'डॉक्टर के रूप में लॉगिन करें',
+                demoPatients: 'डेमो रोगी:',
+                patient1: 'आईडी: PAT001 / पासवर्ड: patient123 (राहुल शर्मा)',
+                patient2: 'आईडी: PAT002 / पासवर्ड: priya123 (प्रिया पटेल)',
+                patient3: 'ईमेल: amit@example.com / पासवर्ड: amit123 (अमित कुमार)',
+                demoDoctors: 'डेमो डॉक्टर:',
+                doctor1: 'आईडी: DOC001 / पासवर्ड: doctor123 (डॉ. शर्मा)',
+                doctor2: 'आईडी: DOC002 / पासवर्ड: doctor123 (डॉ. गुप्ता)',
+                doctor3: 'ईमेल: dr.verma@demo.com / पासवर्ड: doctor123 (डॉ. वर्मा)',
+                logout: 'लॉगआउट',
+                totalVisits: 'कुल विज़िट',
+                diagnoses: 'निदान',
+                highRisk: 'उच्च जोखिम',
+                today: 'आज',
+                patientInfo: 'रोगी जानकारी',
+                male: 'पुरुष',
+                female: 'महिला',
+                other: 'अन्य',
+                selectDistrict: 'जिला चुनें',
+                symptomChecker: 'लक्षण जांचकर्ता (50+ लक्षण)',
+                all: 'सभी',
+                respiratory: 'श्वसन',
+                digestive: 'पाचन',
+                neurological: 'तंत्रिका',
+                muscular: 'मांसपेशी',
+                skin: 'त्वचा',
+                cardiovascular: 'हृदय',
+                general: 'सामान्य',
+                urinary: 'मूत्र',
+                selectedSymptoms: 'चयनित लक्षण:',
+                voiceRecorder: 'आवाज लक्षण रिकॉर्डर',
+                analyze: 'लक्षण विश्लेषण करें',
+                totalPatients: 'कुल रोगी',
+                reports: 'रिपोर्ट',
+                critical: 'गंभीर',
+                patientRecords: 'रोगी रिकॉर्ड',
+                addNote: 'क्लिनिकल नोट जोड़ें',
+                saveNote: 'नोट सहेजें',
+                noSymptoms: 'कोई लक्षण चयनित नहीं',
+                loginFirst: 'कृपया पहले लॉगिन करें',
+                selectSymptoms: 'कृपया लक्षण चुनें',
+                analysisComplete: 'विश्लेषण पूरा हुआ!',
+                diagnosisReport: 'निदान रिपोर्ट',
+                matchedSymptoms: 'मिलान लक्षण',
+                advice: 'सलाह',
+                homeRemedies: 'घरेलू उपचार',
+                warningSigns: 'चेतावनी संकेत',
+                printReport: 'रिपोर्ट प्रिंट करें',
+                loginSuccess: 'लॉगिन सफल!',
+                invalidCred: 'गलत आईडी/ईमेल/फोन या पासवर्ड',
+                doctorLoginSuccess: 'डॉक्टर लॉगिन सफल!',
+                logoutSuccess: 'सफलतापूर्वक लॉगआउट किया',
+                voiceCaptured: 'आवाज कैप्चर हुई!',
+                noRecords: 'अभी तक कोई रोगी रिकॉर्ड नहीं',
+                visits: 'विज़िट',
+                viewDetails: 'विवरण देखें',
+                noteSaved: 'नोट सफलतापूर्वक सहेजा गया',
+                loginWithId: 'अपने रोगी आईडी, ईमेल या फोन से लॉगिन करें',
+                // Symptoms translations
+                cough: 'खांसी',
+                shortnessOfBreath: 'सांस की तकलीफ',
+                wheezing: 'घरघराहट',
+                chestPain: 'सीने में दर्द',
+                soreThroat: 'गले में खराश',
+                runnyNose: 'बहती नाक',
+                sneezing: 'छींकना',
+                nasalCongestion: 'नाक बंद होना',
+                coughingBlood: 'खून वाली खांसी',
+                dryCough: 'सूखी खांसी',
+                nausea: 'मतली',
+                vomiting: 'उल्टी',
+                diarrhea: 'दस्त',
+                constipation: 'कब्ज',
+                abdominalPain: 'पेट दर्द',
+                bloating: 'पेट फूलना',
+                heartburn: 'सीने में जलन',
+                lossOfAppetite: 'भूख न लगना',
+                bloodInStool: 'मल में खून',
+                difficultySwallowing: 'निगलने में कठिनाई',
+                headache: 'सिरदर्द',
+                dizziness: 'चक्कर आना',
+                confusion: 'भ्रम',
+                seizures: 'दौरे',
+                tremors: 'कंपकंपी',
+                numbness: 'सुन्नता',
+                weakness: 'कमजोरी',
+                memoryLoss: 'स्मृति हानि',
+                balanceProblems: 'संतुलन की समस्या',
+                slurredSpeech: 'अस्पष्ट वाणी',
+                jointPain: 'जोड़ों का दर्द',
+                musclePain: 'मांसपेशियों में दर्द',
+                backPain: 'पीठ दर्द',
+                neckPain: 'गर्दन दर्द',
+                jointSwelling: 'जोड़ों में सूजन',
+                stiffness: 'अकड़न',
+                muscleCramps: 'मांसपेशियों में ऐंठन',
+                rash: 'चकत्ते',
+                itching: 'खुजली',
+                hives: 'पित्ती',
+                drySkin: 'शुष्क त्वचा',
+                skinRedness: 'त्वचा का लाल होना',
+                skinDiscoloration: 'त्वचा का रंग बदलना',
+                woundsNotHealing: 'घाव न भरना',
+                fever: 'बुखार',
+                fatigue: 'थकान',
+                chills: 'ठंड लगना',
+                nightSweats: 'रात को पसीना',
+                weightLoss: 'वजन घटना',
+                weightGain: 'वजन बढ़ना',
+                dehydration: 'निर्जलीकरण',
+                swollenLymphNodes: 'सूजी हुई लिम्फ नोड्स',
+                palpitations: 'धड़कन',
+                highBP: 'उच्च रक्तचाप',
+                lowBP: 'निम्न रक्तचाप',
+                swollenAnkles: 'टखनों में सूजन',
+                frequentUrination: 'बार-बार पेशाब',
+                painfulUrination: 'दर्दनाक पेशाब',
+                bloodInUrine: 'पेशाब में खून',
+                urgentUrination: 'तत्काल पेशाब',
+                bodyAche: 'शरीर दर्द'
+            },
+            ta: {
+                patientLogin: 'நோயாளி உள்நுழைவு',
+                patientSubtitle: 'உங்கள் சுகாதார பதிவுகளை அணுகவும்',
+                doctorLogin: 'மருத்துவர் உள்நுழைவு',
+                doctorSubtitle: 'நோயாளி பதிவுகளை அணுகவும்',
+                patientLoginBtn: 'நோயாளியாக உள்நுழைக',
+                doctorLoginBtn: 'மருத்துவராக உள்நுழைக',
+                demoPatients: 'டெமோ நோயாளிகள்:',
+                patient1: 'ஐடி: PAT001 / கடவுச்சொல்: patient123 (ராகுல் ஷர்மா)',
+                patient2: 'ஐடி: PAT002 / கடவுச்சொல்: priya123 (பிரியா படேல்)',
+                patient3: 'மின்னஞ்சல்: amit@example.com / கடவுச்சொல்: amit123 (அமித் குமார்)',
+                demoDoctors: 'டெமோ மருத்துவர்கள்:',
+                doctor1: 'ஐடி: DOC001 / கடவுச்சொல்: doctor123 (டாக்டர் சர்மா)',
+                doctor2: 'ஐடி: DOC002 / கடவுச்சொல்: doctor123 (டாக்டர் குப்தா)',
+                doctor3: 'மின்னஞ்சல்: dr.verma@demo.com / கடவுச்சொல்: doctor123 (டாக்டர் வர்மா)',
+                logout: 'வெளியேறு',
+                totalVisits: 'மொத்த வருகைகள்',
+                diagnoses: 'நோயறிதல்கள்',
+                highRisk: 'அதிக ஆபத்து',
+                today: 'இன்று',
+                patientInfo: 'நோயாளி தகவல்',
+                male: 'ஆண்',
+                female: 'பெண்',
+                other: 'மற்றவை',
+                selectDistrict: 'மாவட்டத்தைத் தேர்ந்தெடுக்கவும்',
+                symptomChecker: 'அறிகுறி சரிபார்ப்பான் (50+ அறிகுறிகள்)',
+                all: 'அனைத்தும்',
+                respiratory: 'சுவாசம்',
+                digestive: 'செரிமானம்',
+                neurological: 'நரம்பியல்',
+                muscular: 'தசை',
+                skin: 'தோல்',
+                cardiovascular: 'இதயம்',
+                general: 'பொது',
+                urinary: 'சிறுநீர்',
+                selectedSymptoms: 'தேர்ந்தெடுக்கப்பட்ட அறிகுறிகள்:',
+                voiceRecorder: 'குரல் அறிகுறி பதிவி',
+                analyze: 'அறிகுறிகளை பகுப்பாய்வு செய்யுங்கள்',
+                totalPatients: 'மொத்த நோயாளிகள்',
+                reports: 'அறிக்கைகள்',
+                critical: 'முக்கியமான',
+                patientRecords: 'நோயாளி பதிவுகள்',
+                addNote: 'மருத்துவ குறிப்பு சேர்க்கவும்',
+                saveNote: 'குறிப்பை சேமிக்கவும்',
+                noSymptoms: 'அறிகுறிகள் எதுவும் தேர்ந்தெடுக்கப்படவில்லை',
+                loginFirst: 'முதலில் உள்நுழையவும்',
+                selectSymptoms: 'அறிகுறிகளைத் தேர்ந்தெடுக்கவும்',
+                analysisComplete: 'பகுப்பாய்வு முடிந்தது!',
+                diagnosisReport: 'நோயறிதல் அறிக்கை',
+                matchedSymptoms: 'பொருந்திய அறிகுறிகள்',
+                advice: 'ஆலோசனை',
+                homeRemedies: 'வீட்டு வைத்தியம்',
+                warningSigns: 'எச்சரிக்கை அறிகுறிகள்',
+                printReport: 'அறிக்கையை அச்சிடுக',
+                loginSuccess: 'உள்நுழைவு வெற்றிகரமானது!',
+                invalidCred: 'தவறான ஐடி/மின்னஞ்சல்/தொலைபேசி அல்லது கடவுச்சொல்',
+                doctorLoginSuccess: 'மருத்துவர் உள்நுழைவு வெற்றிகரமானது!',
+                logoutSuccess: 'வெளியேறியது',
+                voiceCaptured: 'குரல் பதிவு செய்யப்பட்டது!',
+                noRecords: 'இதுவரை நோயாளி பதிவுகள் இல்லை',
+                visits: 'வருகைகள்',
+                viewDetails: 'விவரங்களைக் காண்க',
+                noteSaved: 'குறிப்பு சேமிக்கப்பட்டது',
+                loginWithId: 'உங்கள் நோயாளி ஐடி, மின்னஞ்சல் அல்லது தொலைபேசியுடன் உள்நுழைக',
+                // Symptoms translations
+                cough: 'இருமல்',
+                shortnessOfBreath: 'மூச்சுத் திணறல்',
+                wheezing: 'மூச்சு விடும் சத்தம்',
+                chestPain: 'மார்பு வலி',
+                soreThroat: 'தொண்டை வலி',
+                runnyNose: 'மூக்கு ஒழுகுதல்',
+                sneezing: 'தும்மல்',
+                nasalCongestion: 'மூக்கடைப்பு',
+                coughingBlood: 'இரத்த இருமல்',
+                dryCough: 'உலர் இருமல்',
+                nausea: 'குமட்டல்',
+                vomiting: 'வாந்தி',
+                diarrhea: 'வயிற்றுப்போக்கு',
+                constipation: 'மலச்சிக்கல்',
+                abdominalPain: 'வயிற்று வலி',
+                bloating: 'வயிறு உப்புசம்',
+                heartburn: 'நெஞ்செரிச்சல்',
+                lossOfAppetite: 'பசியின்மை',
+                bloodInStool: 'மலத்தில் இரத்தம்',
+                difficultySwallowing: 'விழுங்குவதில் சிரமம்',
+                headache: 'தலைவலி',
+                dizziness: 'தலைச்சுற்றல்',
+                confusion: 'குழப்பம்',
+                seizures: 'வலிப்பு',
+                tremors: 'நடுக்கம்',
+                numbness: 'உணர்வின்மை',
+                weakness: 'பலவீனம்',
+                memoryLoss: 'நினைவு இழப்பு',
+                balanceProblems: 'சமநிலை பிரச்சனைகள்',
+                slurredSpeech: 'தெளிவற்ற பேச்சு',
+                jointPain: 'மூட்டு வலி',
+                musclePain: 'தசை வலி',
+                backPain: 'முதுகு வலி',
+                neckPain: 'கழுத்து வலி',
+                jointSwelling: 'மூட்டு வீக்கம்',
+                stiffness: 'விறைப்பு',
+                muscleCramps: 'தசைப்பிடிப்பு',
+                rash: 'தடிப்பு',
+                itching: 'அரிப்பு',
+                hives: 'படை',
+                drySkin: 'வறண்ட சருமம்',
+                skinRedness: 'தோல் சிவத்தல்',
+                skinDiscoloration: 'தோல் நிறமாற்றம்',
+                woundsNotHealing: 'காயம் ஆறாமை',
+                fever: 'காய்ச்சல்',
+                fatigue: 'சோர்வு',
+                chills: 'குளிர்',
+                nightSweats: 'இரவு வியர்வை',
+                weightLoss: 'எடை இழப்பு',
+                weightGain: 'எடை அதிகரிப்பு',
+                dehydration: 'நீரிழப்பு',
+                swollenLymphNodes: 'வீங்கிய நிணநீர் முடிச்சுகள்',
+                palpitations: 'நெஞ்சுத்துடிப்பு',
+                highBP: 'உயர் இரத்த அழுத்தம்',
+                lowBP: 'தாழ் இரத்த அழுத்தம்',
+                swollenAnkles: 'கணுக்கால் வீக்கம்',
+                frequentUrination: 'அடிக்கடி சிறுநீர்',
+                painfulUrination: 'வலி நிறைந்த சிறுநீர்',
+                bloodInUrine: 'சிறுநீரில் இரத்தம்',
+                urgentUrination: 'அவசர சிறுநீர்',
+                bodyAche: 'உடல் வலி'
+            },
+            // Add similar translations for te, kn, ml...
+            te: {
+                patientLogin: 'రోగి లాగిన్',
+                patientSubtitle: 'మీ ఆరోగ్య రికార్డులను యాక్సెస్ చేయండి',
+                doctorLogin: 'డాక్టర్ లాగిన్',
+                doctorSubtitle: 'రోగి రికార్డులను యాక్సెస్ చేయండి',
+                patientLoginBtn: 'రోగిగా లాగిన్ చేయండి',
+                doctorLoginBtn: 'డాక్టర్గా లాగిన్ చేయండి',
+                demoPatients: 'డెమో రోగులు:',
+                patient1: 'ID: PAT001 / పాస్‌వర్డ్: patient123 (రాహుల్ శర్మ)',
+                patient2: 'ID: PAT002 / పాస్‌వర్డ్: priya123 (ప్రియా పటేల్)',
+                patient3: 'ఇమెయిల్: amit@example.com / పాస్‌వర్డ్: amit123 (అమిత్ కుమార్)',
+                demoDoctors: 'డెమో డాక్టర్లు:',
+                doctor1: 'ID: DOC001 / పాస్‌వర్డ్: doctor123 (డా. శర్మ)',
+                doctor2: 'ID: DOC002 / పాస్‌వర్డ్: doctor123 (డా. గుప్తా)',
+                doctor3: 'ఇమెయిల్: dr.verma@demo.com / పాస్‌వర్డ్: doctor123 (డా. వర్మ)',
+                logout: 'లాగ్అవుట్',
+                totalVisits: 'మొత్తం సందర్శనలు',
+                diagnoses: 'రోగ నిర్ధారణలు',
+                highRisk: 'అధిక ప్రమాదం',
+                today: 'ఈరోజు',
+                patientInfo: 'రోగి సమాచారం',
+                male: 'పురుషుడు',
+                female: 'స్త్రీ',
+                other: 'ఇతర',
+                selectDistrict: 'జిల్లాను ఎంచుకోండి',
+                symptomChecker: 'లక్షణ పరిశీలకుడు (50+ లక్షణాలు)',
+                all: 'అన్నీ',
+                respiratory: 'శ్వాసకోశ',
+                digestive: 'జీర్ణ',
+                neurological: 'నాడీ',
+                muscular: 'కండరాల',
+                skin: 'చర్మం',
+                cardiovascular: 'గుండె',
+                general: 'సాధారణ',
+                urinary: 'మూత్ర',
+                selectedSymptoms: 'ఎంచుకున్న లక్షణాలు:',
+                voiceRecorder: 'వాయిస్ లక్షణ రికార్డర్',
+                analyze: 'లక్షణాలను విశ్లేషించండి',
+                totalPatients: 'మొత్తం రోగులు',
+                reports: 'నివేదికలు',
+                critical: 'క్రిటికల్',
+                patientRecords: 'రోగి రికార్డులు',
+                addNote: 'క్లినికల్ నోట్ జోడించండి',
+                saveNote: 'నోట్ సేవ్ చేయండి',
+                noSymptoms: 'లక్షణాలు ఏవీ ఎంచుకోలేదు',
+                loginFirst: 'దయచేసి ముందు లాగిన్ చేయండి',
+                selectSymptoms: 'దయచేసి లక్షణాలను ఎంచుకోండి',
+                analysisComplete: 'విశ్లేషణ పూర్తయింది!',
+                diagnosisReport: 'రోగ నిర్ధారణ నివేదిక',
+                matchedSymptoms: 'సరిపోలిన లక్షణాలు',
+                advice: 'సలహా',
+                homeRemedies: 'ఇంటి నివారణలు',
+                warningSigns: 'హెచ్చరిక సంకేతాలు',
+                printReport: 'నివేదికను ప్రింట్ చేయండి',
+                loginSuccess: 'లాగిన్ విజయవంతమైంది!',
+                invalidCred: 'చెల్లని ID/ఇమెయిల్/ఫోన్ లేదా పాస్‌వర్డ్',
+                doctorLoginSuccess: 'డాక్టర్ లాగిన్ విజయవంతమైంది!',
+                logoutSuccess: 'లాగ్అవుట్ విజయవంతమైంది',
+                voiceCaptured: 'వాయిస్ క్యాప్చర్ చేయబడింది!',
+                noRecords: 'ఇంకా రోగి రికార్డులు లేవు',
+                visits: 'సందర్శనలు',
+                viewDetails: 'వివరాలు చూడండి',
+                noteSaved: 'నోట్ సేవ్ చేయబడింది',
+                loginWithId: 'మీ రోగి ID, ఇమెయిల్ లేదా ఫోన్‌తో లాగిన్ చేయండి',
+                // Symptoms translations for Telugu
+                cough: 'దగ్గు',
+                shortnessOfBreath: 'ఊపిరి ఆడకపోవడం',
+                wheezing: 'గురక',
+                chestPain: 'ఛాతీ నొప్పి',
+                soreThroat: 'గొంతు నొప్పి',
+                runnyNose: 'ముక్కు కారడం',
+                sneezing: 'తుమ్ములు',
+                nasalCongestion: 'ముక్కు దిబ్బడ',
+                coughingBlood: 'రక్తం దగ్గు',
+                dryCough: 'పొడి దగ్గు',
+                nausea: 'వికారం',
+                vomiting: 'వాంతులు',
+                diarrhea: 'విరేచనాలు',
+                constipation: 'మలబద్ధకం',
+                abdominalPain: 'కడుపు నొప్పి',
+                bloating: 'ఉబ్బరం',
+                heartburn: 'గుండెల్లో మంట',
+                lossOfAppetite: 'ఆకలి లేకపోవడం',
+                bloodInStool: 'మలంలో రక్తం',
+                difficultySwallowing: 'మింగడంలో ఇబ్బంది',
+                headache: 'తలనొప్పి',
+                dizziness: 'తలతిరగడం',
+                confusion: 'గందరగోళం',
+                seizures: 'మూర్ఛలు',
+                tremors: 'వణుకు',
+                numbness: 'తిమ్మిరి',
+                weakness: 'బలహీనత',
+                memoryLoss: 'జ్ఞాపకశక్తి తగ్గడం',
+                balanceProblems: 'సమతుల్యత సమస్యలు',
+                slurredSpeech: 'మాట తడబడడం',
+                jointPain: 'కీళ్ల నొప్పి',
+                musclePain: 'కండరాల నొప్పి',
+                backPain: 'వెన్నునొప్పి',
+                neckPain: 'మెడ నొప్పి',
+                jointSwelling: 'కీళ్ల వాపు',
+                stiffness: 'బిగుతు',
+                muscleCramps: 'కండరాల తిమ్మిరి',
+                rash: 'దద్దుర్లు',
+                itching: 'దురద',
+                hives: 'ఉర్టికేరియా',
+                drySkin: 'పొడి చర్మం',
+                skinRedness: 'చర్మం ఎర్రబడడం',
+                skinDiscoloration: 'చర్మం రంగు మారడం',
+                woundsNotHealing: 'గాయాలు మానకపోవడం',
+                fever: 'జ్వరం',
+                fatigue: 'అలసట',
+                chills: 'చలి',
+                nightSweats: 'రాత్రి చెమటలు',
+                weightLoss: 'బరువు తగ్గడం',
+                weightGain: 'బరువు పెరగడం',
+                dehydration: 'నిర్జలీకరణం',
+                swollenLymphNodes: 'వాపు లింఫ్ నోడ్స్',
+                palpitations: 'గుండె దడ',
+                highBP: 'అధిక రక్తపోటు',
+                lowBP: 'తక్కువ రక్తపోటు',
+                swollenAnkles: 'చీలమండల వాపు',
+                frequentUrination: 'తరచూ మూత్రం',
+                painfulUrination: 'బాధాకరమైన మూత్రం',
+                bloodInUrine: 'మూత్రంలో రక్తం',
+                urgentUrination: 'అత్యవసర మూత్రం',
+                bodyAche: 'శరీర నొప్పి'
+            },
+            kn: {
+                patientLogin: 'ರೋಗಿಯ ಲಾಗಿನ್',
+                patientSubtitle: 'ನಿಮ್ಮ ಆರೋಗ್ಯ ದಾಖಲೆಗಳನ್ನು ಪ್ರವೇಶಿಸಿ',
+                doctorLogin: 'ವೈದ್ಯರ ಲಾಗಿನ್',
+                doctorSubtitle: 'ರೋಗಿಯ ದಾಖಲೆಗಳನ್ನು ಪ್ರವೇಶಿಸಿ',
+                patientLoginBtn: 'ರೋಗಿಯಾಗಿ ಲಾಗಿನ್ ಮಾಡಿ',
+                doctorLoginBtn: 'ವೈದ್ಯರಾಗಿ ಲಾಗಿನ್ ಮಾಡಿ',
+                demoPatients: 'ಡೆಮೊ ರೋಗಿಗಳು:',
+                patient1: 'ID: PAT001 / ಪಾಸ್‌ವರ್ಡ್: patient123 (ರಾಹುಲ್ ಶರ್ಮಾ)',
+                patient2: 'ID: PAT002 / ಪಾಸ್‌ವರ್ಡ್: priya123 (ಪ್ರಿಯಾ ಪಟೇಲ್)',
+                patient3: 'ಇಮೇಲ್: amit@example.com / ಪಾಸ್‌ವರ್ಡ್: amit123 (ಅಮಿತ್ ಕುಮಾರ್)',
+                demoDoctors: 'ಡೆಮೊ ವೈದ್ಯರು:',
+                doctor1: 'ID: DOC001 / ಪಾಸ್‌ವರ್ಡ್: doctor123 (ಡಾ. ಶರ್ಮಾ)',
+                doctor2: 'ID: DOC002 / ಪಾಸ್‌ವರ್ಡ್: doctor123 (ಡಾ. ಗುಪ್ತಾ)',
+                doctor3: 'ಇಮೇಲ್: dr.verma@demo.com / ಪಾಸ್‌ವರ್ಡ್: doctor123 (ಡಾ. ವರ್ಮಾ)',
+                logout: 'ಲಾಗೌಟ್',
+                totalVisits: 'ಒಟ್ಟು ಭೇಟಿಗಳು',
+                diagnoses: 'ರೋಗನಿರ್ಣಯಗಳು',
+                highRisk: 'ಹೆಚ್ಚಿನ ಅಪಾಯ',
+                today: 'ಇಂದು',
+                patientInfo: 'ರೋಗಿಯ ಮಾಹಿತಿ',
+                male: 'ಪುರುಷ',
+                female: 'ಮಹಿಳೆ',
+                other: 'ಇತರೆ',
+                selectDistrict: 'ಜಿಲ್ಲೆ ಆಯ್ಕೆಮಾಡಿ',
+                symptomChecker: 'ರೋಗಲಕ್ಷಣ ಪರಿಶೀಲಕ (50+ ರೋಗಲಕ್ಷಣಗಳು)',
+                all: 'ಎಲ್ಲಾ',
+                respiratory: 'ಉಸಿರಾಟದ',
+                digestive: 'ಜೀರ್ಣಕಾರಿ',
+                neurological: 'ನರವೈಜ್ಞಾನಿಕ',
+                muscular: 'ಸ್ನಾಯು',
+                skin: 'ಚರ್ಮ',
+                cardiovascular: 'ಹೃದಯ',
+                general: 'ಸಾಮಾನ್ಯ',
+                urinary: 'ಮೂತ್ರ',
+                selectedSymptoms: 'ಆಯ್ದ ರೋಗಲಕ್ಷಣಗಳು:',
+                voiceRecorder: 'ಧ್ವನಿ ರೋಗಲಕ್ಷಣ ರೆಕಾರ್ಡರ್',
+                analyze: 'ರೋಗಲಕ್ಷಣಗಳನ್ನು ವಿಶ್ಲೇಷಿಸಿ',
+                totalPatients: 'ಒಟ್ಟು ರೋಗಿಗಳು',
+                reports: 'ವರದಿಗಳು',
+                critical: 'ಗಂಭೀರ',
+                patientRecords: 'ರೋಗಿಯ ದಾಖಲೆಗಳು',
+                addNote: 'ಕ್ಲಿನಿಕಲ್ ಟಿಪ್ಪಣಿ ಸೇರಿಸಿ',
+                saveNote: 'ಟಿಪ್ಪಣಿ ಉಳಿಸಿ',
+                noSymptoms: 'ಯಾವುದೇ ರೋಗಲಕ್ಷಣಗಳನ್ನು ಆಯ್ಕೆ ಮಾಡಿಲ್ಲ',
+                loginFirst: 'ದಯವಿಟ್ಟು ಮೊದಲು ಲಾಗಿನ್ ಮಾಡಿ',
+                selectSymptoms: 'ದಯವಿಟ್ಟು ರೋಗಲಕ್ಷಣಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿ',
+                analysisComplete: 'ವಿಶ್ಲೇಷಣೆ ಪೂರ್ಣಗೊಂಡಿದೆ!',
+                diagnosisReport: 'ರೋಗನಿರ್ಣಯ ವರದಿ',
+                matchedSymptoms: 'ಹೊಂದಾಣಿಕೆಯ ರೋಗಲಕ್ಷಣಗಳು',
+                advice: 'ಸಲಹೆ',
+                homeRemedies: 'ಮನೆಮದ್ದುಗಳು',
+                warningSigns: 'ಎಚ್ಚರಿಕೆ ಚಿಹ್ನೆಗಳು',
+                printReport: 'ವರದಿಯನ್ನು ಮುದ್ರಿಸಿ',
+                loginSuccess: 'ಲಾಗಿನ್ ಯಶಸ್ವಿ!',
+                invalidCred: 'ಅಮಾನ್ಯ ID/ಇಮೇಲ್/ಫೋನ್ ಅಥವಾ ಪಾಸ್‌ವರ್ಡ್',
+                doctorLoginSuccess: 'ವೈದ್ಯರ ಲಾಗಿನ್ ಯಶಸ್ವಿ!',
+                logoutSuccess: 'ಯಶಸ್ವಿಯಾಗಿ ಲಾಗೌಟ್ ಮಾಡಲಾಗಿದೆ',
+                voiceCaptured: 'ಧ್ವನಿ ಸೆರೆಹಿಡಿಯಲಾಗಿದೆ!',
+                noRecords: 'ಇನ್ನೂ ರೋಗಿಯ ದಾಖಲೆಗಳಿಲ್ಲ',
+                visits: 'ಭೇಟಿಗಳು',
+                viewDetails: 'ವಿವರಗಳನ್ನು ನೋಡಿ',
+                noteSaved: 'ಟಿಪ್ಪಣಿ ಉಳಿಸಲಾಗಿದೆ',
+                loginWithId: 'ನಿಮ್ಮ ರೋಗಿಯ ID, ಇಮೇಲ್ ಅಥವಾ ಫೋನ್‌ನೊಂದಿಗೆ ಲಾಗಿನ್ ಮಾಡಿ',
+                // Symptoms translations for Kannada
+                cough: 'ಕೆಮ್ಮು',
+                shortnessOfBreath: 'ಉಸಿರಾಟದ ತೊಂದರೆ',
+                wheezing: 'ಉಬ್ಬಸ',
+                chestPain: 'ಎದೆ ನೋವು',
+                soreThroat: 'ಗಂಟಲು ನೋವು',
+                runnyNose: 'ಸ್ರವಿಸುವ ಮೂಗು',
+                sneezing: 'ಸೀನುವಿಕೆ',
+                nasalCongestion: 'ಮೂಗಿನ ದಟ್ಟಣೆ',
+                coughingBlood: 'ರಕ್ತದ ಕೆಮ್ಮು',
+                dryCough: 'ಒಣ ಕೆಮ್ಮು',
+                nausea: 'ವಾಕರಿಕೆ',
+                vomiting: 'ವಾಂತಿ',
+                diarrhea: 'ಅತಿಸಾರ',
+                constipation: 'ಮಲಬದ್ಧತೆ',
+                abdominalPain: 'ಹೊಟ್ಟೆ ನೋವು',
+                bloating: 'ಉಬ್ಬರ',
+                heartburn: 'ಎದೆಯುರಿ',
+                lossOfAppetite: 'ಹಸಿವಿನ ಕೊರತೆ',
+                bloodInStool: 'ಮಲದಲ್ಲಿ ರಕ್ತ',
+                difficultySwallowing: 'ನುಂಗಲು ಕಷ್ಟ',
+                headache: 'ತಲೆನೋವು',
+                dizziness: 'ತಲೆತಿರುಗುವಿಕೆ',
+                confusion: 'ಗೊಂದಲ',
+                seizures: 'ಸೆಳವು',
+                tremors: 'ನಡುಕ',
+                numbness: 'ಮರಗಟ್ಟುವಿಕೆ',
+                weakness: 'ದೌರ್ಬಲ್ಯ',
+                memoryLoss: 'ನೆನಪಿನ ಶಕ್ತಿ ಕಳೆದುಕೊಳ್ಳುವುದು',
+                balanceProblems: 'ಸಮತೋಲನ ಸಮಸ್ಯೆಗಳು',
+                slurredSpeech: 'ತೊದಲುನುಡಿ',
+                jointPain: 'ಕೀಲು ನೋವು',
+                musclePain: 'ಸ್ನಾಯು ನೋವು',
+                backPain: 'ಬೆನ್ನು ನೋವು',
+                neckPain: 'ಕುತ್ತಿಗೆ ನೋವು',
+                jointSwelling: 'ಕೀಲು ಊತ',
+                stiffness: 'ಬಿಗಿತ',
+                muscleCramps: 'ಸ್ನಾಯು ಸೆಳೆತ',
+                rash: 'ದದ್ದು',
+                itching: 'ತುರಿಕೆ',
+                hives: 'ಜೇನುಗೂಡುಗಳು',
+                drySkin: 'ಒಣ ಚರ್ಮ',
+                skinRedness: 'ಚರ್ಮದ ಕೆಂಪಾಗುವಿಕೆ',
+                skinDiscoloration: 'ಚರ್ಮದ ಬಣ್ಣ ಬದಲಾವಣೆ',
+                woundsNotHealing: 'ಗಾಯಗಳು ವಾಸಿಯಾಗದೆ',
+                fever: 'ಜ್ವರ',
+                fatigue: 'ಆಯಾಸ',
+                chills: 'ಶೀತ',
+                nightSweats: 'ರಾತ್ರಿ ಬೆವರುವಿಕೆ',
+                weightLoss: 'ತೂಕ ಇಳಿಕೆ',
+                weightGain: 'ತೂಕ ಹೆಚ್ಚಳ',
+                dehydration: 'ನಿರ್ಜಲೀಕರಣ',
+                swollenLymphNodes: 'ಊದಿದ ದುಗ್ಧರಸ ಗ್ರಂಥಿಗಳು',
+                palpitations: 'ಹೃದಯ ಬಡಿತ',
+                highBP: 'ಅಧಿಕ ರಕ್ತದೊತ್ತಡ',
+                lowBP: 'ಕಡಿಮೆ ರಕ್ತದೊತ್ತಡ',
+                swollenAnkles: 'ಕಣಕಾಲು ಊತ',
+                frequentUrination: 'ಆಗಾಗ ಮೂತ್ರ',
+                painfulUrination: 'ನೋವಿನ ಮೂತ್ರ',
+                bloodInUrine: 'ಮೂತ್ರದಲ್ಲಿ ರಕ್ತ',
+                urgentUrination: 'ತುರ್ತು ಮೂತ್ರ',
+                bodyAche: 'ದೇಹ ನೋವು'
+            },
+            ml: {
+                patientLogin: 'രോഗി ലോഗിൻ',
+                patientSubtitle: 'നിങ്ങളുടെ ആരോഗ്യ രേഖകൾ ആക്സസ് ചെയ്യുക',
+                doctorLogin: 'ഡോക്ടർ ലോഗിൻ',
+                doctorSubtitle: 'രോഗിയുടെ രേഖകൾ ആക്സസ് ചെയ്യുക',
+                patientLoginBtn: 'രോഗിയായി ലോഗിൻ ചെയ്യുക',
+                doctorLoginBtn: 'ഡോക്ടറായി ലോഗിൻ ചെയ്യുക',
+                demoPatients: 'ഡെമോ രോഗികൾ:',
+                patient1: 'ID: PAT001 / പാസ്‌വേഡ്: patient123 (രാഹുൽ ശർമ്മ)',
+                patient2: 'ID: PAT002 / പാസ്‌വേഡ്: priya123 (പ്രിയ പട്ടേൽ)',
+                patient3: 'ഇമെയിൽ: amit@example.com / പാസ്‌വേഡ്: amit123 (അമിത് കുമാർ)',
+                demoDoctors: 'ഡെമോ ഡോക്ടർമാർ:',
+                doctor1: 'ID: DOC001 / പാസ്‌വേഡ്: doctor123 (ഡോ. ശർമ്മ)',
+                doctor2: 'ID: DOC002 / പാസ്‌വേഡ്: doctor123 (ഡോ. ഗുപ്ത)',
+                doctor3: 'ഇമെയിൽ: dr.verma@demo.com / പാസ്‌വേഡ്: doctor123 (ഡോ. വർമ)',
+                logout: 'ലോഗൗട്ട്',
+                totalVisits: 'ആകെ സന്ദർശനങ്ങൾ',
+                diagnoses: 'രോഗനിർണയങ്ങൾ',
+                highRisk: 'ഉയർന്ന അപകടസാധ്യത',
+                today: 'ഇന്ന്',
+                patientInfo: 'രോഗിയുടെ വിവരങ്ങൾ',
+                male: 'പുരുഷൻ',
+                female: 'സ്ത്രീ',
+                other: 'മറ്റുള്ളവ',
+                selectDistrict: 'ജില്ല തിരഞ്ഞെടുക്കുക',
+                symptomChecker: 'രോഗലക്ഷണ പരിശോധകൻ (50+ രോഗലക്ഷണങ്ങൾ)',
+                all: 'എല്ലാം',
+                respiratory: 'ശ്വസന',
+                digestive: 'ദഹന',
+                neurological: 'ന്യൂറോളജിക്കൽ',
+                muscular: 'പേശീ',
+                skin: 'ചർമ്മം',
+                cardiovascular: 'ഹൃദയ',
+                general: 'പൊതുവായ',
+                urinary: 'മൂത്ര',
+                selectedSymptoms: 'തിരഞ്ഞെടുത്ത രോഗലക്ഷണങ്ങൾ:',
+                voiceRecorder: 'ശബ്ദ രോഗലക്ഷണ റെക്കോർഡർ',
+                analyze: 'രോഗലക്ഷണങ്ങൾ വിശകലനം ചെയ്യുക',
+                totalPatients: 'ആകെ രോഗികൾ',
+                reports: 'റിപ്പോർട്ടുകൾ',
+                critical: 'ഗുരുതരമായ',
+                patientRecords: 'രോഗിയുടെ രേഖകൾ',
+                addNote: 'ക്ലിനിക്കൽ കുറിപ്പ് ചേർക്കുക',
+                saveNote: 'കുറിപ്പ് സംരക്ഷിക്കുക',
+                noSymptoms: 'രോഗലക്ഷണങ്ങളൊന്നും തിരഞ്ഞെടുത്തിട്ടില്ല',
+                loginFirst: 'ദയവായി ആദ്യം ലോഗിൻ ചെയ്യുക',
+                selectSymptoms: 'ദയവായി രോഗലക്ഷണങ്ങൾ തിരഞ്ഞെടുക്കുക',
+                analysisComplete: 'വിശകലനം പൂർത്തിയായി!',
+                diagnosisReport: 'രോഗനിർണയ റിപ്പോർട്ട്',
+                matchedSymptoms: 'പൊരുത്തപ്പെടുന്ന രോഗലക്ഷണങ്ങൾ',
+                advice: 'ഉപദേശം',
+                homeRemedies: 'വീട്ടുവൈദ്യങ്ങൾ',
+                warningSigns: 'മുന്നറിയിപ്പ് അടയാളങ്ങൾ',
+                printReport: 'റിപ്പോർട്ട് പ്രിന്റ് ചെയ്യുക',
+                loginSuccess: 'ലോഗിൻ വിജയകരം!',
+                invalidCred: 'അസാധുവായ ID/ഇമെയിൽ/ഫോൺ അല്ലെങ്കിൽ പാസ്‌വേഡ്',
+                doctorLoginSuccess: 'ഡോക്ടർ ലോഗിൻ വിജയകരം!',
+                logoutSuccess: 'വിജയകരമായി ലോഗൗട്ട് ചെയ്തു',
+                voiceCaptured: 'ശബ്ദം പകർത്തി!',
+                noRecords: 'ഇതുവരെ രോഗിയുടെ രേഖകളൊന്നുമില്ല',
+                visits: 'സന്ദർശനങ്ങൾ',
+                viewDetails: 'വിശദാംശങ്ങൾ കാണുക',
+                noteSaved: 'കുറിപ്പ് സംരക്ഷിച്ചു',
+                loginWithId: 'നിങ്ങളുടെ രോഗി ID, ഇമെയിൽ അല്ലെങ്കിൽ ഫോൺ ഉപയോഗിച്ച് ലോഗിൻ ചെയ്യുക',
+                // Symptoms translations for Malayalam
+                cough: 'ചുമ',
+                shortnessOfBreath: 'ശ്വാസതടസ്സം',
+                wheezing: 'ശ്വാസംമുട്ടൽ',
+                chestPain: 'നെഞ്ചുവേദന',
+                soreThroat: 'തൊണ്ടവേദന',
+                runnyNose: 'മൂക്കൊലിപ്പ്',
+                sneezing: 'തുമ്മൽ',
+                nasalCongestion: 'മൂക്കടപ്പ്',
+                coughingBlood: 'രക്തം ചുമ',
+                dryCough: 'വരണ്ട ചുമ',
+                nausea: 'ഓക്കാനം',
+                vomiting: 'ഛർദ്ദി',
+                diarrhea: 'വയറിളക്കം',
+                constipation: 'മലബന്ധം',
+                abdominalPain: 'വയറുവേദന',
+                bloating: 'വയറുവീർക്കൽ',
+                heartburn: 'നെഞ്ചെരിച്ചിൽ',
+                lossOfAppetite: 'വിശപ്പില്ലായ്മ',
+                bloodInStool: 'മലത്തിൽ രക്തം',
+                difficultySwallowing: 'വിഴുങ്ങാൻ ബുദ്ധിമുട്ട്',
+                headache: 'തലവേദന',
+                dizziness: 'തലകറക്കം',
+                confusion: 'ആശയക്കുഴപ്പം',
+                seizures: 'അപസ്മാരം',
+                tremors: 'വിറയൽ',
+                numbness: 'മരവിപ്പ്',
+                weakness: 'ബലഹീനത',
+                memoryLoss: 'ഓർമ്മക്കുറവ്',
+                balanceProblems: 'ബാലൻസ് പ്രശ്നങ്ങൾ',
+                slurredSpeech: 'വ്യക്തമല്ലാത്ത സംസാരം',
+                jointPain: 'സന്ധി വേദന',
+                musclePain: 'പേശി വേദന',
+                backPain: 'നടുവേദന',
+                neckPain: 'കഴുത്ത് വേദന',
+                jointSwelling: 'സന്ധി വീക്കം',
+                stiffness: 'കാഠിന്യം',
+                muscleCramps: 'പേശീവലിവ്',
+                rash: 'തടിപ്പ്',
+                itching: 'ചൊറിച്ചിൽ',
+                hives: 'തേനീച്ചക്കൂടുകൾ',
+                drySkin: 'വരണ്ട ചർമ്മം',
+                skinRedness: 'ചർമ്മത്തിൽ ചുവപ്പ്',
+                skinDiscoloration: 'ചർമ്മത്തിന്റെ നിറവ്യത്യാസം',
+                woundsNotHealing: 'മുറിവുകൾ ഉണങ്ങാതിരിക്കുക',
+                fever: 'പനി',
+                fatigue: 'ക്ഷീണം',
+                chills: 'വിറയൽ',
+                nightSweats: 'രാത്രി വിയർപ്പ്',
+                weightLoss: 'ശരീരഭാരം കുറയൽ',
+                weightGain: 'ശരീരഭാരം വർദ്ധിക്കൽ',
+                dehydration: 'നിർജ്ജലീകരണം',
+                swollenLymphNodes: 'വീർത്ത ലിംഫ് നോഡുകൾ',
+                palpitations: 'ഹൃദയമിടിപ്പ്',
+                highBP: 'ഉയർന്ന രക്തസമ്മർദ്ദം',
+                lowBP: 'കുറഞ്ഞ രക്തസമ്മർദ്ദം',
+                swollenAnkles: 'കണങ്കാൽ വീക്കം',
+                frequentUrination: 'ഇടയ്ക്കിടെ മൂത്രം',
+                painfulUrination: 'വേദനാജനകമായ മൂത്രം',
+                bloodInUrine: 'മൂത്രത്തിൽ രക്തം',
+                urgentUrination: 'അടിയന്തര മൂത്രം',
+                bodyAche: 'ശരീരവേദന'
+            }
+        };
+
+        // ==================== DATABASES ====================
         let patients = [
             { id: 'PAT001', name: 'Rahul Sharma', email: 'patient@demo.com', phone: '9876543210', password: 'patient123', age: 32, gender: 'male', district: 'Chennai' },
-            { id: 'PAT002', name: 'Priya Patel', email: 'priya@example.com', phone: '8765432109', password: 'priya123', age: 28, gender: 'female', district: 'Coimbatore' }
+            { id: 'PAT002', name: 'Priya Patel', email: 'priya@example.com', phone: '8765432109', password: 'priya123', age: 28, gender: 'female', district: 'Coimbatore' },
+            { id: 'PAT003', name: 'Amit Kumar', email: 'amit@example.com', phone: '7654321098', password: 'amit123', age: 45, gender: 'male', district: 'Madurai' },
+            { id: 'PAT004', name: 'Sunita Reddy', email: 'sunita@example.com', phone: '6543210987', password: 'sunita123', age: 35, gender: 'female', district: 'Salem' },
+            { id: 'PAT005', name: 'Vikram Singh', email: 'vikram@example.com', phone: '5432109876', password: 'vikram123', age: 52, gender: 'male', district: 'Tirunelveli' }
         ];
 
         let doctors = [
             { id: 'DOC001', name: 'Dr. Sharma', email: 'doctor@demo.com', phone: '9988776655', password: 'doctor123', specialty: 'General Physician' },
-            { id: 'DOC002', name: 'Dr. Gupta', email: 'dr.gupta@demo.com', phone: '8877665544', password: 'doctor123', specialty: 'Cardiologist' }
+            { id: 'DOC002', name: 'Dr. Gupta', email: 'dr.gupta@demo.com', phone: '8877665544', password: 'doctor123', specialty: 'Cardiologist' },
+            { id: 'DOC003', name: 'Dr. Verma', email: 'dr.verma@demo.com', phone: '7766554433', password: 'doctor123', specialty: 'Pediatrician' },
+            { id: 'DOC004', name: 'Dr. Reddy', email: 'dr.reddy@demo.com', phone: '6655443322', password: 'doctor123', specialty: 'Neurologist' }
         ];
 
-        let diagnoses = [];
+        let diagnoses = JSON.parse(localStorage.getItem('diagnoses')) || [];
         let currentPatient = null;
         let currentDoctor = null;
 
-        // Symptoms Database
+        // ==================== 50+ SYMPTOMS DATABASE ====================
         const symptomsDB = [
-            { id: 1, name: 'Cough', category: 'respiratory' },
-            { id: 2, name: 'Fever', category: 'general' },
-            { id: 3, name: 'Headache', category: 'general' },
-            { id: 4, name: 'Sore throat', category: 'respiratory' },
-            { id: 5, name: 'Runny nose', category: 'respiratory' },
-            { id: 6, name: 'Nausea', category: 'digestive' },
-            { id: 7, name: 'Vomiting', category: 'digestive' },
-            { id: 8, name: 'Diarrhea', category: 'digestive' },
-            { id: 9, name: 'Fatigue', category: 'general' },
-            { id: 10, name: 'Body ache', category: 'general' }
+            // Respiratory (1-10)
+            { id: 1, name: 'cough', category: 'respiratory' },
+            { id: 2, name: 'shortnessOfBreath', category: 'respiratory' },
+            { id: 3, name: 'wheezing', category: 'respiratory' },
+            { id: 4, name: 'chestPain', category: 'respiratory' },
+            { id: 5, name: 'soreThroat', category: 'respiratory' },
+            { id: 6, name: 'runnyNose', category: 'respiratory' },
+            { id: 7, name: 'sneezing', category: 'respiratory' },
+            { id: 8, name: 'nasalCongestion', category: 'respiratory' },
+            { id: 9, name: 'coughingBlood', category: 'respiratory' },
+            { id: 10, name: 'dryCough', category: 'respiratory' },
+            
+            // Digestive (11-20)
+            { id: 11, name: 'nausea', category: 'digestive' },
+            { id: 12, name: 'vomiting', category: 'digestive' },
+            { id: 13, name: 'diarrhea', category: 'digestive' },
+            { id: 14, name: 'constipation', category: 'digestive' },
+            { id: 15, name: 'abdominalPain', category: 'digestive' },
+            { id: 16, name: 'bloating', category: 'digestive' },
+            { id: 17, name: 'heartburn', category: 'digestive' },
+            { id: 18, name: 'lossOfAppetite', category: 'digestive' },
+            { id: 19, name: 'bloodInStool', category: 'digestive' },
+            { id: 20, name: 'difficultySwallowing', category: 'digestive' },
+            
+            // Neurological (21-30)
+            { id: 21, name: 'headache', category: 'neurological' },
+            { id: 22, name: 'dizziness', category: 'neurological' },
+            { id: 23, name: 'confusion', category: 'neurological' },
+            { id: 24, name: 'seizures', category: 'neurological' },
+            { id: 25, name: 'tremors', category: 'neurological' },
+            { id: 26, name: 'numbness', category: 'neurological' },
+            { id: 27, name: 'weakness', category: 'neurological' },
+            { id: 28, name: 'memoryLoss', category: 'neurological' },
+            { id: 29, name: 'balanceProblems', category: 'neurological' },
+            { id: 30, name: 'slurredSpeech', category: 'neurological' },
+            
+            // Muscular (31-37)
+            { id: 31, name: 'jointPain', category: 'muscular' },
+            { id: 32, name: 'musclePain', category: 'muscular' },
+            { id: 33, name: 'backPain', category: 'muscular' },
+            { id: 34, name: 'neckPain', category: 'muscular' },
+            { id: 35, name: 'jointSwelling', category: 'muscular' },
+            { id: 36, name: 'stiffness', category: 'muscular' },
+            { id: 37, name: 'muscleCramps', category: 'muscular' },
+            
+            // Skin (38-44)
+            { id: 38, name: 'rash', category: 'skin' },
+            { id: 39, name: 'itching', category: 'skin' },
+            { id: 40, name: 'hives', category: 'skin' },
+            { id: 41, name: 'drySkin', category: 'skin' },
+            { id: 42, name: 'skinRedness', category: 'skin' },
+            { id: 43, name: 'skinDiscoloration', category: 'skin' },
+            { id: 44, name: 'woundsNotHealing', category: 'skin' },
+            
+            // General (45-52)
+            { id: 45, name: 'fever', category: 'general' },
+            { id: 46, name: 'fatigue', category: 'general' },
+            { id: 47, name: 'chills', category: 'general' },
+            { id: 48, name: 'nightSweats', category: 'general' },
+            { id: 49, name: 'weightLoss', category: 'general' },
+            { id: 50, name: 'weightGain', category: 'general' },
+            { id: 51, name: 'dehydration', category: 'general' },
+            { id: 52, name: 'swollenLymphNodes', category: 'general' },
+            { id: 53, name: 'bodyAche', category: 'general' },
+            
+            // Cardiovascular (54-57)
+            { id: 54, name: 'palpitations', category: 'cardiovascular' },
+            { id: 55, name: 'highBP', category: 'cardiovascular' },
+            { id: 56, name: 'lowBP', category: 'cardiovascular' },
+            { id: 57, name: 'swollenAnkles', category: 'cardiovascular' },
+            
+            // Urinary (58-60)
+            { id: 58, name: 'frequentUrination', category: 'urinary' },
+            { id: 59, name: 'painfulUrination', category: 'urinary' },
+            { id: 60, name: 'bloodInUrine', category: 'urinary' },
+            { id: 61, name: 'urgentUrination', category: 'urinary' }
         ];
 
         // Diseases Database
@@ -815,7 +1731,7 @@
             {
                 id: 1,
                 name: 'Common Cold',
-                symptoms: [1, 4, 5, 2],
+                symptoms: [1, 5, 6, 7, 8, 10, 45],
                 severity: 'low',
                 description: 'Mild viral infection of upper respiratory tract',
                 advice: ['Rest and drink warm fluids', 'Take steam inhalation', 'Use saline nasal spray'],
@@ -825,7 +1741,7 @@
             {
                 id: 2,
                 name: 'Viral Fever',
-                symptoms: [2, 3, 9, 10],
+                symptoms: [45, 46, 47, 53, 21],
                 severity: 'medium',
                 description: 'Common viral infection causing fever and body ache',
                 advice: ['Complete rest', 'Take paracetamol for fever', 'Stay hydrated'],
@@ -835,12 +1751,82 @@
             {
                 id: 3,
                 name: 'Food Poisoning',
-                symptoms: [6, 7, 8, 2],
+                symptoms: [11, 12, 13, 15, 45],
                 severity: 'medium',
                 description: 'Infection from contaminated food or water',
                 advice: ['Drink ORS solution', 'Eat bland foods', 'Avoid spicy/oily food'],
                 homeRemedies: ['Coconut water', 'Ginger tea', 'Rice water (kanji)'],
                 warningSigns: ['Blood in vomit/stool', 'Severe dehydration', 'Unable to keep fluids']
+            },
+            {
+                id: 4,
+                name: 'Migraine',
+                symptoms: [21, 22, 25, 27, 29],
+                severity: 'medium',
+                description: 'Severe headache disorder',
+                advice: ['Rest in dark quiet room', 'Avoid bright lights', 'Apply cold compress'],
+                homeRemedies: ['Peppermint oil on temples', 'Ginger tea', 'Caffeine in small amounts'],
+                warningSigns: ['Sudden severe headache', 'Headache with fever', 'Neurological symptoms']
+            },
+            {
+                id: 5,
+                name: 'Pneumonia',
+                symptoms: [1, 2, 3, 4, 45, 46, 48],
+                severity: 'high',
+                description: 'Infection of the lungs',
+                advice: ['Immediate medical attention', 'Complete bed rest', 'Take prescribed antibiotics'],
+                homeRemedies: ['Steam inhalation', 'Warm compress for chest', 'Honey for cough'],
+                warningSigns: ['Severe difficulty breathing', 'Blue lips or face', 'Chest pain', 'High fever']
+            },
+            {
+                id: 6,
+                name: 'Hypertension',
+                symptoms: [21, 22, 46, 54, 55],
+                severity: 'high',
+                description: 'High blood pressure',
+                advice: ['Reduce salt intake', 'Regular exercise', 'Stress management', 'Monitor BP daily'],
+                homeRemedies: ['Garlic', 'Hibiscus tea', 'Bananas for potassium', 'Deep breathing'],
+                warningSigns: ['Severe headache', 'Chest pain', 'Shortness of breath', 'Vision changes']
+            },
+            {
+                id: 7,
+                name: 'Arthritis',
+                symptoms: [31, 32, 35, 36, 37, 46],
+                severity: 'medium',
+                description: 'Inflammation of joints',
+                advice: ['Gentle exercise like walking', 'Apply hot/cold packs', 'Maintain healthy weight'],
+                homeRemedies: ['Epsom salt baths', 'Turmeric milk', 'Ginger compress', 'Warm oil massage'],
+                warningSigns: ['Severe joint pain', 'Joint deformity', 'Inability to move joint', 'Fever']
+            },
+            {
+                id: 8,
+                name: 'Urinary Tract Infection',
+                symptoms: [58, 59, 60, 61, 45, 46],
+                severity: 'medium',
+                description: 'Infection in urinary system',
+                advice: ['Drink plenty of water', 'Urinate frequently', 'Empty bladder completely'],
+                homeRemedies: ['Cranberry juice', 'Probiotic yogurt', 'Vitamin C rich foods', 'Warm compress'],
+                warningSigns: ['Blood in urine', 'High fever', 'Severe back pain', 'Nausea and vomiting']
+            },
+            {
+                id: 9,
+                name: 'Influenza',
+                symptoms: [1, 2, 45, 46, 47, 53, 21],
+                severity: 'medium',
+                description: 'Viral infection affecting respiratory system',
+                advice: ['Complete bed rest', 'Isolate to prevent spreading', 'Drink plenty of fluids'],
+                homeRemedies: ['Warm turmeric milk', 'Honey and ginger tea', 'Garlic soup', 'Steam inhalation'],
+                warningSigns: ['Difficulty breathing', 'Chest pain', 'Confusion', 'Severe vomiting']
+            },
+            {
+                id: 10,
+                name: 'Gastroenteritis',
+                symptoms: [11, 12, 13, 15, 18, 45, 46],
+                severity: 'medium',
+                description: 'Stomach and intestinal inflammation',
+                advice: ['Drink ORS solution frequently', 'Eat bland foods like bananas, rice', 'Avoid dairy and spicy foods'],
+                homeRemedies: ['Coconut water for hydration', 'Ginger tea for nausea', 'Mint leaves juice', 'Rice water'],
+                warningSigns: ['Severe dehydration', 'Blood in stool', 'High fever', 'Unable to keep fluids down']
             }
         ];
 
@@ -848,7 +1834,12 @@
         const districts = [
             'Chennai', 'Coimbatore', 'Madurai', 'Tiruchirappalli', 'Salem',
             'Tirunelveli', 'Vellore', 'Erode', 'Kanyakumari', 'Thoothukkudi',
-            'Dharmapuri', 'Thanjavur', 'Nagapattinam', 'Kanchipuram', 'Viluppuram'
+            'Dharmapuri', 'Thanjavur', 'Nagapattinam', 'Kanchipuram', 'Viluppuram',
+            'Ariyalur', 'Chengalpattu', 'Cuddalore', 'Dindigul', 'Kallakurichi',
+            'Karur', 'Krishnagiri', 'Mayiladuthurai', 'Namakkal', 'Nilgiris',
+            'Perambalur', 'Pudukkottai', 'Ramanathapuram', 'Ranipet', 'Sivaganga',
+            'Tenkasi', 'Theni', 'Tirupathur', 'Tiruppur', 'Tiruvallur',
+            'Tiruvannamalai', 'Tiruvarur', 'Virudhunagar'
         ];
 
         let selectedSymptoms = [];
@@ -862,17 +1853,12 @@
             loadDistricts();
             displaySymptoms('all');
             updateAllStats();
-            
-            // Pre-fill the forms with demo data
-            document.getElementById('patientEmail').value = 'patient@demo.com';
-            document.getElementById('patientPassword').value = 'patient123';
-            document.getElementById('doctorEmail').value = 'doctor@demo.com';
-            document.getElementById('doctorPassword').value = 'doctor123';
+            applyLanguage('en');
         });
 
         function loadDistricts() {
             const select = document.getElementById('district');
-            select.innerHTML = '<option value="">Select District</option>';
+            select.innerHTML = '<option value="">' + getTranslation('selectDistrict') + '</option>';
             districts.forEach(d => {
                 const option = document.createElement('option');
                 option.value = d;
@@ -881,23 +1867,45 @@
             });
         }
 
-        // ==================== SIMPLIFIED PATIENT LOGIN ====================
+        // ==================== LANGUAGE FUNCTIONS ====================
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            applyLanguage(lang);
+            showToast('Language switched to ' + lang.toUpperCase());
+        }
+
+        function applyLanguage(lang) {
+            const t = translations[lang] || translations.en;
+            
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (t[key]) {
+                    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                        el.placeholder = t[key];
+                    } else if (el.tagName === 'OPTION') {
+                        el.textContent = t[key];
+                    } else {
+                        el.textContent = t[key];
+                    }
+                }
+            });
+
+            displaySymptoms(currentCategory);
+            updateSymptomTags();
+        }
+
+        function getTranslation(key) {
+            return translations[currentLanguage]?.[key] || translations.en[key] || key;
+        }
+
+        // ==================== PATIENT LOGIN (ID/Email/Phone) ====================
         function patientLogin() {
-            const input = document.getElementById('patientEmail').value.trim();
+            const input = document.getElementById('patientId').value.trim();
             const password = document.getElementById('patientPassword').value.trim();
             
-            // Try to find patient by email first, then by phone
-            let patient = patients.find(p => p.email === input);
-            
-            // If not found by email, try phone
-            if (!patient) {
-                patient = patients.find(p => p.phone === input);
-            }
-            
-            // Debug - show what we're comparing
-            console.log('Login input:', input);
-            console.log('Found patient:', patient);
-            console.log('Entered password:', password);
+            let patient = patients.find(p => p.id === input || p.email === input || p.phone === input);
             
             if (patient && patient.password === password) {
                 currentPatient = patient;
@@ -906,37 +1914,29 @@
                 document.getElementById('doctorApp').classList.remove('visible');
                 
                 document.getElementById('patientName').textContent = patient.name;
+                document.getElementById('patientID').textContent = patient.id;
                 document.getElementById('patientEmail').textContent = patient.email;
                 document.getElementById('patientPhone').textContent = patient.phone;
                 document.getElementById('fullName').value = patient.name;
                 document.getElementById('age').value = patient.age;
                 document.getElementById('gender').value = patient.gender;
-                document.getElementById('district').value = patient.district;
+                if (patient.district) {
+                    document.getElementById('district').value = patient.district;
+                }
                 
                 updatePatientStats();
-                showToast('Login successful! Welcome ' + patient.name, 'success');
+                showToast(getTranslation('loginSuccess'), 'success');
             } else {
-                showToast('Invalid email/phone or password. Please check your credentials.', 'error');
+                showToast(getTranslation('invalidCred'), 'error');
             }
         }
 
-        // ==================== SIMPLIFIED DOCTOR LOGIN ====================
+        // ==================== DOCTOR LOGIN (ID/Email/Phone) ====================
         function doctorLogin() {
-            const input = document.getElementById('doctorEmail').value.trim();
+            const input = document.getElementById('doctorId').value.trim();
             const password = document.getElementById('doctorPassword').value.trim();
             
-            // Try to find doctor by email first, then by phone
-            let doctor = doctors.find(d => d.email === input);
-            
-            // If not found by email, try phone
-            if (!doctor) {
-                doctor = doctors.find(d => d.phone === input);
-            }
-            
-            // Debug - show what we're comparing
-            console.log('Doctor login input:', input);
-            console.log('Found doctor:', doctor);
-            console.log('Entered password:', password);
+            let doctor = doctors.find(d => d.id === input || d.email === input || d.phone === input);
             
             if (doctor && doctor.password === password) {
                 currentDoctor = doctor;
@@ -945,14 +1945,15 @@
                 document.getElementById('patientApp').classList.remove('visible');
                 
                 document.getElementById('doctorName').textContent = doctor.name;
+                document.getElementById('doctorID').textContent = doctor.id;
                 document.getElementById('doctorEmail').textContent = doctor.email;
                 document.getElementById('doctorPhone').textContent = doctor.phone;
                 
                 displayPatientRecords();
                 updateDoctorStats();
-                showToast('Welcome Dr. ' + doctor.name.split(' ')[1], 'success');
+                showToast(getTranslation('doctorLoginSuccess'), 'success');
             } else {
-                showToast('Invalid email/phone or password. Please check your credentials.', 'error');
+                showToast(getTranslation('invalidCred'), 'error');
             }
         }
 
@@ -966,7 +1967,7 @@
                 document.getElementById('doctorApp').classList.remove('visible');
             }
             document.getElementById('loginPage').style.display = 'grid';
-            showToast('Logged out successfully');
+            showToast(getTranslation('logoutSuccess'));
         }
 
         // ==================== SYMPTOMS ====================
@@ -980,7 +1981,7 @@
                 const item = document.createElement('div');
                 item.className = `symptom-item ${selectedSymptoms.includes(symptom.id) ? 'selected' : ''}`;
                 item.onclick = () => toggleSymptom(symptom.id);
-                item.innerHTML = `<span>${symptom.name}</span>`;
+                item.innerHTML = `<span>${getTranslation(symptom.name)}</span>`;
                 grid.appendChild(item);
             });
         }
@@ -1003,7 +2004,7 @@
         function updateSymptomTags() {
             const container = document.getElementById('symptomTags');
             if (selectedSymptoms.length === 0) {
-                container.innerHTML = '<p style="color: var(--gray);">No symptoms selected</p>';
+                container.innerHTML = '<p style="color: var(--gray);">' + getTranslation('noSymptoms') + '</p>';
                 return;
             }
             
@@ -1013,7 +2014,7 @@
                 if (symptom) {
                     const tag = document.createElement('span');
                     tag.className = 'symptom-tag';
-                    tag.innerHTML = `${symptom.name} <button onclick="removeSymptom(${id})">×</button>`;
+                    tag.innerHTML = `${getTranslation(symptom.name)} <button onclick="removeSymptom(${id})">×</button>`;
                     container.appendChild(tag);
                 }
             });
@@ -1048,7 +2049,7 @@
                     if (isRecording) {
                         toggleRecording();
                         document.getElementById('typedSymptoms').value = 'fever, cough, headache';
-                        showToast('Voice captured!');
+                        showToast(getTranslation('voiceCaptured'));
                     }
                 }, 3000);
             } else {
@@ -1062,7 +2063,7 @@
         // ==================== AI DIAGNOSIS ====================
         function analyzeHealth() {
             if (!currentPatient) {
-                showToast('Please login first', 'error');
+                showToast(getTranslation('loginFirst'), 'error');
                 return;
             }
 
@@ -1070,16 +2071,19 @@
             if (typedText) {
                 const words = typedText.split(',').map(w => w.trim());
                 words.forEach(word => {
-                    const match = symptomsDB.find(s => s.name.toLowerCase().includes(word));
-                    if (match && !selectedSymptoms.includes(match.id)) {
-                        selectedSymptoms.push(match.id);
+                    for (let symptom of symptomsDB) {
+                        const symptomName = getTranslation(symptom.name).toLowerCase();
+                        if (symptomName.includes(word) && !selectedSymptoms.includes(symptom.id)) {
+                            selectedSymptoms.push(symptom.id);
+                            break;
+                        }
                     }
                 });
                 updateSymptomTags();
             }
 
             if (selectedSymptoms.length === 0) {
-                showToast('Please select symptoms', 'error');
+                showToast(getTranslation('selectSymptoms'), 'error');
                 return;
             }
 
@@ -1107,41 +2111,46 @@
                 severity: bestMatch.severity,
                 symptoms: selectedSymptoms.map(id => {
                     const s = symptomsDB.find(sym => sym.id === id);
-                    return s ? s.name : '';
+                    return s ? getTranslation(s.name) : '';
                 }),
                 date: new Date().toISOString(),
                 doctorNote: ''
             };
 
             diagnoses.push(diagnosis);
+            localStorage.setItem('diagnoses', JSON.stringify(diagnoses));
             updatePatientStats();
-            showToast('Analysis complete!');
+            
+            showToast(getTranslation('analysisComplete'));
         }
 
         function displayResults(disease, symptoms) {
             const resultsDiv = document.getElementById('results');
             const matched = disease.symptoms.filter(id => symptoms.includes(id))
-                .map(id => symptomsDB.find(s => s.id === id)?.name);
+                .map(id => {
+                    const s = symptomsDB.find(sym => sym.id === id);
+                    return s ? getTranslation(s.name) : '';
+                });
             
             let html = `
-                <h2 style="color: var(--primary); margin-bottom: 20px;">Diagnosis Report</h2>
+                <h2 style="color: var(--primary); margin-bottom: 20px;">${getTranslation('diagnosisReport')}</h2>
                 <div style="margin-bottom: 20px;">
                     <h3>${disease.name}</h3>
                     <span class="severity-badge severity-${disease.severity}">${disease.severity.toUpperCase()}</span>
                     <p style="margin-top: 10px;">${disease.description}</p>
                 </div>
                 <div style="margin: 20px 0;">
-                    <h4>✅ Matched Symptoms:</h4>
+                    <h4>✅ ${getTranslation('matchedSymptoms')}:</h4>
                     <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px;">
                         ${matched.map(s => `<span style="background: var(--success); color: white; padding: 5px 15px; border-radius: 20px;">${s}</span>`).join('')}
                     </div>
                 </div>
                 <div style="margin: 20px 0;">
-                    <h4>📋 Advice:</h4>
+                    <h4>📋 ${getTranslation('advice')}:</h4>
                     <ul>${disease.advice.map(a => `<li>${a}</li>`).join('')}</ul>
                 </div>
                 <div style="margin: 20px 0;">
-                    <h4>🏠 Home Remedies:</h4>
+                    <h4>🏠 ${getTranslation('homeRemedies')}:</h4>
                     <ul>${disease.homeRemedies.map(r => `<li>${r}</li>`).join('')}</ul>
                 </div>
             `;
@@ -1149,13 +2158,13 @@
             if (disease.severity === 'high') {
                 html += `
                     <div style="background: #FFEBEE; padding: 20px; border-radius: 20px; margin: 20px 0;">
-                        <h4 style="color: var(--danger);">⚠️ Warning Signs</h4>
+                        <h4 style="color: var(--danger);">⚠️ ${getTranslation('warningSigns')}</h4>
                         <ul>${disease.warningSigns.map(w => `<li>${w}</li>`).join('')}</ul>
                     </div>
                 `;
             }
             
-            html += `<button class="login-btn" onclick="window.print()" style="width: auto;">Print Report</button>`;
+            html += `<button class="login-btn" onclick="window.print()" style="width: auto;">${getTranslation('printReport')}</button>`;
             
             resultsDiv.innerHTML = html;
             resultsDiv.style.display = 'block';
@@ -1192,7 +2201,7 @@
             const container = document.getElementById('patientRecordsList');
             
             if (diagnoses.length === 0) {
-                container.innerHTML = '<p>No patient records yet</p>';
+                container.innerHTML = '<p>' + getTranslation('noRecords') + '</p>';
                 return;
             }
 
@@ -1218,11 +2227,11 @@
                         <h4>${group.patientName}</h4>
                         <p><i class="fas fa-envelope"></i> ${group.patientEmail}</p>
                         <p><i class="fas fa-phone"></i> ${group.patientPhone || 'N/A'}</p>
-                        <p><i class="fas fa-notes-medical"></i> ${group.records.length} visits</p>
+                        <p><i class="fas fa-notes-medical"></i> ${group.records.length} ${getTranslation('visits')}</p>
                     </div>
                     <div>
                         <button class="login-btn" style="width: auto; padding: 10px 20px;" onclick="viewPatientDetails('${group.patientId}')">
-                            View Details
+                            ${getTranslation('viewDetails')}
                         </button>
                     </div>
                 `;
@@ -1241,7 +2250,7 @@
         function saveClinicalNote() {
             const note = document.getElementById('clinicalNote').value;
             if (note) {
-                showToast('Note saved successfully');
+                showToast(getTranslation('noteSaved'));
                 document.getElementById('clinicalNote').value = '';
             }
         }

@@ -3,43 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>RuralCare - Patient & Doctor Portal with Unique IDs</title>
+    <title>RuralCare Pro - Enterprise Healthcare Platform</title>
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
         }
 
         :root {
-            --primary: #2A7A62;
-            --primary-dark: #1E5F4B;
-            --primary-light: #E8F5F2;
-            --secondary: #FF8A5C;
-            --accent: #FF6B6B;
-            --success: #4CAF50;
-            --warning: #FFC107;
-            --danger: #F44336;
-            --dark: #2D4059;
-            --light: #F9F9F9;
-            --gray: #6C757D;
-            --border: #E9ECEF;
-            --shadow: 0 5px 15px rgba(0,0,0,0.08);
-            --shadow-lg: 0 10px 30px rgba(0,0,0,0.12);
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #60a5fa;
+            --secondary: #10b981;
+            --accent: #8b5cf6;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --success: #10b981;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --gray-light: #e2e8f0;
+            --border: #e2e8f0;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+            --radius-sm: 8px;
+            --radius: 12px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --radius-xl: 32px;
         }
 
         body {
-            background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .bg-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            animation: float 20s infinite;
+        }
+
+        .circle1 {
+            width: 400px;
+            height: 400px;
+            top: -200px;
+            right: -200px;
+            animation-delay: 0s;
+        }
+
+        .circle2 {
+            width: 300px;
+            height: 300px;
+            bottom: -150px;
+            left: -150px;
+            animation-delay: 5s;
+        }
+
+        .circle3 {
+            width: 200px;
+            height: 200px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: 10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -30px) scale(1.1); }
+            66% { transform: translate(-30px, 30px) scale(0.9); }
         }
 
         /* Language Switcher */
@@ -48,25 +110,32 @@
             top: 20px;
             right: 20px;
             display: flex;
-            gap: 10px;
+            gap: 8px;
             z-index: 1000;
             background: white;
-            padding: 10px 20px;
-            border-radius: 50px;
+            padding: 8px 16px;
+            border-radius: 40px;
             box-shadow: var(--shadow-lg);
-            flex-wrap: wrap;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+            animation: slideInRight 0.5s ease;
         }
 
         .lang-btn {
-            padding: 8px 16px;
-            border: 2px solid var(--primary);
-            background: white;
-            color: var(--primary);
+            padding: 6px 12px;
+            border: none;
+            background: transparent;
+            color: var(--gray);
             border-radius: 30px;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 600;
             transition: all 0.3s;
+        }
+
+        .lang-btn:hover {
+            color: var(--primary);
+            background: var(--light);
         }
 
         .lang-btn.active {
@@ -75,38 +144,132 @@
         }
 
         /* Login Container */
-        .login-container {
-            max-width: 1200px;
+        .login-wrapper {
             width: 100%;
+            max-width: 1400px;
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .login-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: 1.2fr 0.8fr;
             gap: 30px;
-            animation: fadeIn 0.6s ease;
+            align-items: stretch;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .login-box {
+        /* Welcome Card */
+        .welcome-card {
             background: white;
-            border-radius: 40px;
+            border-radius: var(--radius-xl);
+            padding: 50px;
+            box-shadow: var(--shadow-xl);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.1"><path d="M20 20 L80 20 L80 80 L20 80 Z" fill="none" stroke="white" stroke-width="2"/><circle cx="50" cy="50" r="20" fill="none" stroke="white" stroke-width="2"/></svg>') repeat;
+            opacity: 0.1;
+        }
+
+        .welcome-icon {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        .welcome-card h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .welcome-card p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-list li {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+
+        .feature-list li i {
+            width: 30px;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+
+        /* Login Card */
+        .login-card {
+            background: white;
+            border-radius: var(--radius-xl);
             padding: 40px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
-            transition: transform 0.3s;
+            box-shadow: var(--shadow-xl);
         }
 
-        .login-box:hover {
-            transform: translateY(-5px);
+        .login-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            background: var(--light);
+            padding: 6px;
+            border-radius: 50px;
         }
 
-        .login-box.patient {
-            border-top: 8px solid var(--primary);
+        .login-tab {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            background: transparent;
+            color: var(--gray);
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 40px;
+            transition: all 0.3s;
+            font-size: 0.95rem;
         }
 
-        .login-box.doctor {
-            border-top: 8px solid var(--accent);
+        .login-tab.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .login-panel {
+            display: none;
+        }
+
+        .login-panel.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
         }
 
         .login-header {
@@ -114,28 +277,10 @@
             margin-bottom: 30px;
         }
 
-        .login-icon {
-            width: 80px;
-            height: 80px;
-            background: var(--primary-light);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            font-size: 2.5rem;
-            color: var(--primary);
-        }
-
-        .doctor .login-icon {
-            background: #FFE5E5;
-            color: var(--accent);
-        }
-
         .login-header h2 {
             color: var(--dark);
             font-size: 1.8rem;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
         }
 
         .login-header p {
@@ -143,35 +288,82 @@
             font-size: 0.95rem;
         }
 
-        .form-group {
+        .input-group {
+            position: relative;
             margin-bottom: 20px;
         }
 
-        .form-group input,
-        .form-group select {
+        .input-group i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+
+        .input-group input,
+        .input-group select {
             width: 100%;
-            padding: 15px 20px;
+            padding: 16px 16px 16px 50px;
             border: 2px solid var(--border);
             border-radius: 50px;
             font-size: 1rem;
             transition: all 0.3s;
+            background: var(--light);
         }
 
-        .form-group input:focus,
-        .form-group select:focus {
+        .input-group input:focus,
+        .input-group select:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(42, 122, 98, 0.1);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
         }
 
-        .doctor .form-group input:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.1);
+        .input-group input:focus + i {
+            color: var(--primary);
+        }
+
+        .input-row {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .input-row .input-group {
+            flex: 1;
+        }
+
+        .otp-btn {
+            padding: 16px 25px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+            height: 100%;
+        }
+
+        .otp-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .otp-btn:disabled {
+            background: var(--gray);
+            cursor: not-allowed;
+            transform: none;
         }
 
         .login-btn {
             width: 100%;
-            padding: 15px;
+            padding: 16px;
             background: var(--primary);
             color: white;
             border: none;
@@ -180,48 +372,122 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 10px 20px rgba(42, 122, 98, 0.3);
-        }
-
-        .doctor .login-btn {
-            background: var(--accent);
-            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
+            margin: 20px 0;
+            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
         }
 
         .login-btn:hover {
+            background: var(--primary-dark);
             transform: translateY(-2px);
-            filter: brightness(1.1);
+            box-shadow: 0 15px 30px rgba(37, 99, 235, 0.4);
         }
+
+        .divider {
+            text-align: center;
+            position: relative;
+            margin: 30px 0;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: calc(50% - 30px);
+            height: 2px;
+            background: var(--border);
+        }
+
+        .divider::before {
+            left: 0;
+        }
+
+        .divider::after {
+            right: 0;
+        }
+
+        .divider span {
+            background: white;
+            padding: 0 20px;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .social-login {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .social-btn {
+            padding: 12px;
+            border: 2px solid var(--border);
+            border-radius: 50px;
+            background: white;
+            color: var(--dark);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .social-btn:hover {
+            background: var(--light);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .social-btn.google:hover { border-color: #DB4437; color: #DB4437; }
+        .social-btn.facebook:hover { border-color: #4267B2; color: #4267B2; }
+        .social-btn.github:hover { border-color: #333; color: #333; }
 
         .demo-credentials {
-            margin-top: 20px;
-            padding: 15px;
             background: var(--light);
             border-radius: 20px;
+            padding: 20px;
+            margin-top: 20px;
             font-size: 0.9rem;
-            color: var(--gray);
-            max-height: 150px;
-            overflow-y: auto;
         }
 
-        .demo-credentials i {
+        .demo-credentials h4 {
+            color: var(--dark);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cred-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .cred-item {
+            padding: 8px 12px;
+            background: white;
+            border-radius: 12px;
+            font-family: monospace;
+            font-size: 0.85rem;
+        }
+
+        .cred-item strong {
             color: var(--primary);
-            margin-right: 5px;
-        }
-
-        .doctor .demo-credentials i {
-            color: var(--accent);
         }
 
         /* Main App */
         .main-app {
             display: none;
             width: 100%;
-            max-width: 1400px;
             background: white;
-            border-radius: 40px;
-            padding: 30px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-xl);
+            overflow: hidden;
+            animation: scaleIn 0.5s ease;
         }
 
         .main-app.visible {
@@ -229,14 +495,12 @@
         }
 
         .app-header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            padding: 20px 30px;
+            color: white;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 2px solid var(--border);
-            flex-wrap: wrap;
-            gap: 15px;
         }
 
         .user-info {
@@ -246,44 +510,47 @@
         }
 
         .user-avatar {
-            width: 60px;
-            height: 60px;
-            background: var(--primary-light);
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.2);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.8rem;
-            color: var(--primary);
+            font-size: 1.5rem;
         }
 
-        .user-details h3 {
-            color: var(--dark);
+        .user-details h2 {
             font-size: 1.3rem;
+            margin-bottom: 4px;
         }
 
         .user-details p {
-            color: var(--gray);
-            font-size: 0.95rem;
-            margin: 2px 0;
+            font-size: 0.9rem;
+            opacity: 0.9;
         }
 
         .logout-btn {
             padding: 10px 25px;
-            background: var(--danger);
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid white;
             color: white;
-            border: none;
-            border-radius: 30px;
+            border-radius: 40px;
             cursor: pointer;
-            font-weight: 500;
+            font-weight: 600;
             transition: all 0.3s;
         }
 
         .logout-btn:hover {
-            background: #d32f2f;
-            transform: translateY(-2px);
+            background: white;
+            color: var(--primary);
         }
 
+        .app-content {
+            padding: 30px;
+        }
+
+        /* Stats Grid */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -293,37 +560,47 @@
 
         .stat-card {
             background: var(--light);
-            border-radius: 25px;
-            padding: 25px;
-            text-align: center;
-            transition: transform 0.3s;
+            border-radius: var(--radius);
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.3s;
         }
 
         .stat-card:hover {
             transform: translateY(-5px);
+            box-shadow: var(--shadow);
         }
 
-        .stat-card i {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 10px;
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
         }
 
-        .stat-number {
-            font-size: 2rem;
-            font-weight: 700;
+        .stat-info h3 {
+            font-size: 1.8rem;
             color: var(--dark);
+            line-height: 1.2;
         }
 
-        .stat-label {
+        .stat-info p {
             color: var(--gray);
             font-size: 0.9rem;
         }
 
+        /* Patient Form */
         .patient-form {
             background: var(--light);
-            border-radius: 30px;
-            padding: 30px;
+            border-radius: var(--radius);
+            padding: 25px;
             margin-bottom: 30px;
         }
 
@@ -333,7 +610,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
         }
 
         .form-grid {
@@ -342,10 +619,11 @@
             gap: 15px;
         }
 
+        /* Symptoms Section */
         .symptoms-section {
             background: var(--light);
-            border-radius: 30px;
-            padding: 30px;
+            border-radius: var(--radius);
+            padding: 25px;
             margin-bottom: 30px;
         }
 
@@ -363,8 +641,9 @@
             color: var(--primary);
             border-radius: 30px;
             cursor: pointer;
-            transition: all 0.3s;
+            font-weight: 600;
             font-size: 0.9rem;
+            transition: all 0.3s;
         }
 
         .category-tab.active {
@@ -374,18 +653,18 @@
 
         .symptoms-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             gap: 10px;
             max-height: 400px;
             overflow-y: auto;
             padding: 15px;
             background: white;
-            border-radius: 20px;
+            border-radius: var(--radius);
             margin-bottom: 20px;
         }
 
         .symptom-item {
-            padding: 12px 15px;
+            padding: 12px;
             background: var(--light);
             border-radius: 30px;
             cursor: pointer;
@@ -406,7 +685,7 @@
             min-height: 60px;
             padding: 15px;
             background: white;
-            border-radius: 20px;
+            border-radius: var(--radius);
         }
 
         .symptom-tag {
@@ -417,6 +696,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            animation: slideIn 0.3s ease;
         }
 
         .symptom-tag button {
@@ -427,12 +707,24 @@
             font-size: 1.2rem;
         }
 
+        /* Voice Section */
         .voice-section {
-            background: linear-gradient(135deg, #667EEA, #764BA2);
-            border-radius: 30px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: var(--radius);
             padding: 30px;
             margin-bottom: 30px;
             color: white;
+        }
+
+        .voice-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .voice-header h3 {
+            font-size: 1.3rem;
         }
 
         .voice-controls {
@@ -449,10 +741,24 @@
             background: white;
             color: var(--danger);
             border: none;
-            font-size: 2.2rem;
+            font-size: 2rem;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .record-btn::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            z-index: -1;
+            animation: none;
         }
 
         .record-btn.recording {
@@ -461,69 +767,89 @@
             animation: pulse 1.5s infinite;
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+        .record-btn.recording::before {
+            animation: ripple 1.5s infinite;
         }
 
         .timer {
             font-size: 2rem;
             font-family: monospace;
-            background: rgba(255,255,255,0.2);
+            background: rgba(255, 255, 255, 0.2);
             padding: 10px 20px;
             border-radius: 50px;
         }
 
+        .waveform {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            height: 50px;
+            flex: 1;
+        }
+
+        .wave-bar {
+            flex: 1;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 10px;
+            transition: height 0.1s;
+        }
+
+        /* Analyze Button */
         .analyze-btn {
             width: 100%;
             padding: 20px;
-            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
             border: none;
             border-radius: 50px;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 600;
             cursor: pointer;
             margin: 30px 0;
             transition: all 0.3s;
+            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
         }
 
         .analyze-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 20px 40px rgba(255, 138, 92, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(37, 99, 235, 0.4);
         }
 
+        /* Results Card */
         .results-card {
             background: white;
-            border-radius: 30px;
+            border-radius: var(--radius);
             padding: 30px;
             margin: 30px 0;
-            box-shadow: var(--shadow-lg);
+            box-shadow: var(--shadow);
             display: none;
+            animation: slideIn 0.5s ease;
         }
 
         .severity-badge {
             display: inline-block;
-            padding: 5px 15px;
+            padding: 6px 16px;
             border-radius: 30px;
             font-weight: 600;
             font-size: 0.9rem;
         }
 
-        .severity-low { background: #E8F5E9; color: #2E7D32; }
-        .severity-medium { background: #FFF3E0; color: #F57C00; }
-        .severity-high { background: #FFEBEE; color: #C62828; }
+        .severity-low { background: #dcfce7; color: #166534; }
+        .severity-medium { background: #fed7aa; color: #9a3412; }
+        .severity-high { background: #fee2e2; color: #991b1b; }
 
-        .doctor-dashboard {
+        /* Doctor Dashboard */
+        .doctor-section {
             background: var(--light);
-            border-radius: 30px;
-            padding: 30px;
+            border-radius: var(--radius);
+            padding: 25px;
             margin-top: 30px;
         }
 
-        .patient-record {
+        .patient-card {
             background: white;
-            border-radius: 20px;
+            border-radius: var(--radius);
             padding: 20px;
             margin-bottom: 15px;
             display: flex;
@@ -532,43 +858,57 @@
             flex-wrap: wrap;
             gap: 15px;
             border: 2px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .patient-card:hover {
+            border-color: var(--primary);
+            transform: translateX(5px);
         }
 
         .patient-info h4 {
             color: var(--dark);
-            margin-bottom: 8px;
-            font-size: 1.1rem;
+            margin-bottom: 5px;
         }
 
         .patient-info p {
             color: var(--gray);
             font-size: 0.9rem;
-            margin: 3px 0;
+            margin: 2px 0;
         }
 
-        .doctor-note {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid var(--border);
-            border-radius: 20px;
-            margin: 20px 0;
-            resize: vertical;
-            font-size: 1rem;
+        .view-btn {
+            padding: 8px 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
         }
 
+        .view-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Toast */
         .toast {
             position: fixed;
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%) translateY(200px);
             background: white;
-            padding: 15px 30px;
+            padding: 16px 32px;
             border-radius: 50px;
-            box-shadow: var(--shadow-lg);
+            box-shadow: var(--shadow-xl);
             border-left: 4px solid var(--success);
+            z-index: 2000;
             transition: transform 0.3s;
-            z-index: 1000;
             font-weight: 500;
+            min-width: 300px;
+            text-align: center;
         }
 
         .toast.show {
@@ -579,107 +919,266 @@
             border-left-color: var(--danger);
         }
 
-        @media (max-width: 768px) {
-            .login-container {
+        .toast.warning {
+            border-left-color: var(--warning);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(1);
+                opacity: 0.3;
+            }
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .login-grid {
                 grid-template-columns: 1fr;
             }
             
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
-            
+        }
+
+        @media (max-width: 768px) {
             .language-switcher {
                 position: relative;
                 top: 0;
                 right: 0;
                 margin-bottom: 20px;
                 justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            .cred-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .social-login {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="bg-circle circle1"></div>
+        <div class="bg-circle circle2"></div>
+        <div class="bg-circle circle3"></div>
+    </div>
+
     <!-- Language Switcher -->
     <div class="language-switcher">
-        <button class="lang-btn active" onclick="switchLanguage('en')">🇬🇧 English</button>
-        <button class="lang-btn" onclick="switchLanguage('hi')">🇮🇳 हिन्दी</button>
-        <button class="lang-btn" onclick="switchLanguage('ta')">🇮🇳 தமிழ்</button>
-        <button class="lang-btn" onclick="switchLanguage('te')">🇮🇳 తెలుగు</button>
-        <button class="lang-btn" onclick="switchLanguage('kn')">🇮🇳 ಕನ್ನಡ</button>
-        <button class="lang-btn" onclick="switchLanguage('ml')">🇮🇳 മലയാളം</button>
+        <button class="lang-btn active" onclick="switchLanguage('en')">EN</button>
+        <button class="lang-btn" onclick="switchLanguage('hi')">हिंदी</button>
+        <button class="lang-btn" onclick="switchLanguage('ta')">தமிழ்</button>
+        <button class="lang-btn" onclick="switchLanguage('te')">తెలుగు</button>
+        <button class="lang-btn" onclick="switchLanguage('kn')">ಕನ್ನಡ</button>
+        <button class="lang-btn" onclick="switchLanguage('ml')">മലയാളം</button>
     </div>
 
     <!-- LOGIN PAGE -->
-    <div class="login-container" id="loginPage">
-        <!-- Patient Login -->
-        <div class="login-box patient">
-            <div class="login-header">
-                <div class="login-icon">
-                    <i class="fas fa-user"></i>
+    <div class="login-wrapper" id="loginPage">
+        <div class="login-grid">
+            <!-- Welcome Card -->
+            <div class="welcome-card animate__animated animate__fadeInLeft">
+                <div class="welcome-icon">🏥</div>
+                <h1>Welcome to<br>RuralCare Pro</h1>
+                <p>India's most trusted healthcare platform, connecting patients with top doctors across the nation.</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check-circle"></i> 50,000+ Happy Patients</li>
+                    <li><i class="fas fa-check-circle"></i> 1000+ Expert Doctors</li>
+                    <li><i class="fas fa-check-circle"></i> 24/7 Healthcare Support</li>
+                    <li><i class="fas fa-check-circle"></i> Multi-language Assistance</li>
+                    <li><i class="fas fa-check-circle"></i> AI-Powered Diagnosis</li>
+                </ul>
+            </div>
+
+            <!-- Login Card -->
+            <div class="login-card animate__animated animate__fadeInRight">
+                <div class="login-tabs">
+                    <button class="login-tab active" onclick="switchAuthTab('patient')">Patient</button>
+                    <button class="login-tab" onclick="switchAuthTab('doctor')">Doctor</button>
                 </div>
-                <h2 data-i18n="patientLogin">Patient Login</h2>
-                <p data-i18n="patientSubtitle">Login with your Patient ID</p>
-            </div>
 
-            <div class="form-group">
-                <input type="text" id="patientId" placeholder="Patient ID" value="PAT001">
-            </div>
-            <div class="form-group">
-                <input type="password" id="patientPassword" placeholder="Password" value="patient123">
-            </div>
-            <button class="login-btn" onclick="patientLogin()">
-                <i class="fas fa-sign-in-alt"></i> <span data-i18n="patientLoginBtn">Login as Patient</span>
-            </button>
+                <!-- Patient Login Panel -->
+                <div class="login-panel active" id="patientPanel">
+                    <div class="login-header">
+                        <h2>Patient Login</h2>
+                        <p>Access your health records securely</p>
+                    </div>
 
-            <div class="demo-credentials">
-                <i class="fas fa-info-circle"></i>
-                <strong data-i18n="demoPatients">Available Patient IDs:</strong><br>
-                • <strong>PAT001</strong> - Rahul Sharma (pass: patient123)<br>
-                • <strong>PAT002</strong> - Priya Patel (pass: priya123)<br>
-                • <strong>PAT003</strong> - Amit Kumar (pass: amit123)<br>
-                • <strong>PAT004</strong> - Sunita Reddy (pass: sunita123)<br>
-                • <strong>PAT005</strong> - Vikram Singh (pass: vikram123)<br>
-                • <strong>PAT006</strong> - Lakshmi Nair (pass: lakshmi123)<br>
-                • <strong>PAT007</strong> - Rajesh Kumar (pass: rajesh123)<br>
-                • <strong>PAT008</strong> - Meera Sharma (pass: meera123)<br>
-                • <strong>PAT009</strong> - Arjun Reddy (pass: arjun123)<br>
-                • <strong>PAT010</strong> - Kavita Singh (pass: kavita123)
-            </div>
-        </div>
+                    <!-- Email/Phone Login -->
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="text" id="patientEmailPhone" placeholder="Email or Phone Number" value="patient@demo.com">
+                    </div>
 
-        <!-- Doctor Login -->
-        <div class="login-box doctor">
-            <div class="login-header">
-                <div class="login-icon">
-                    <i class="fas fa-user-md"></i>
+                    <!-- OTP Section -->
+                    <div class="input-row">
+                        <div class="input-group">
+                            <i class="fas fa-lock"></i>
+                            <input type="text" id="patientOTP" placeholder="Enter OTP" maxlength="6">
+                        </div>
+                        <button class="otp-btn" id="sendPatientOTP" onclick="sendOTP('patient')">
+                            <i class="fas fa-paper-plane"></i> Send OTP
+                        </button>
+                    </div>
+
+                    <button class="login-btn" onclick="patientLogin()">
+                        <i class="fas fa-sign-in-alt"></i> Login with OTP
+                    </button>
+
+                    <div class="divider">
+                        <span>OR</span>
+                    </div>
+
+                    <!-- Social Login -->
+                    <div class="social-login">
+                        <button class="social-btn google" onclick="socialLogin('google', 'patient')">
+                            <i class="fab fa-google"></i> Google
+                        </button>
+                        <button class="social-btn facebook" onclick="socialLogin('facebook', 'patient')">
+                            <i class="fab fa-facebook-f"></i> Facebook
+                        </button>
+                        <button class="social-btn github" onclick="socialLogin('github', 'patient')">
+                            <i class="fab fa-github"></i> GitHub
+                        </button>
+                    </div>
+
+                    <!-- Demo Credentials -->
+                    <div class="demo-credentials">
+                        <h4><i class="fas fa-info-circle"></i> Demo Patient Accounts</h4>
+                        <div class="cred-list">
+                            <div class="cred-item"><strong>PAT001:</strong> patient@demo.com / 123456</div>
+                            <div class="cred-item"><strong>PAT002:</strong> rahul@example.com / 123456</div>
+                            <div class="cred-item"><strong>PAT003:</strong> priya@example.com / 123456</div>
+                            <div class="cred-item"><strong>PAT004:</strong> 9876543210 / 123456</div>
+                            <div class="cred-item"><strong>PAT005:</strong> 8765432109 / 123456</div>
+                            <div class="cred-item"><strong>PAT006:</strong> amit@example.com / 123456</div>
+                        </div>
+                    </div>
                 </div>
-                <h2 data-i18n="doctorLogin">Doctor Login</h2>
-                <p data-i18n="doctorSubtitle">Login with your Doctor ID</p>
-            </div>
 
-            <div class="form-group">
-                <input type="text" id="doctorId" placeholder="Doctor ID" value="DOC001">
-            </div>
-            <div class="form-group">
-                <input type="password" id="doctorPassword" placeholder="Password" value="doctor123">
-            </div>
-            <button class="login-btn" onclick="doctorLogin()">
-                <i class="fas fa-stethoscope"></i> <span data-i18n="doctorLoginBtn">Login as Doctor</span>
-            </button>
+                <!-- Doctor Login Panel -->
+                <div class="login-panel" id="doctorPanel">
+                    <div class="login-header">
+                        <h2>Doctor Login</h2>
+                        <p>Access patient records securely</p>
+                    </div>
 
-            <div class="demo-credentials">
-                <i class="fas fa-info-circle"></i>
-                <strong data-i18n="demoDoctors">Available Doctor IDs:</strong><br>
-                • <strong>DOC001</strong> - Dr. Sharma (pass: doctor123)<br>
-                • <strong>DOC002</strong> - Dr. Gupta (pass: doctor123)<br>
-                • <strong>DOC003</strong> - Dr. Verma (pass: doctor123)<br>
-                • <strong>DOC004</strong> - Dr. Reddy (pass: doctor123)<br>
-                • <strong>DOC005</strong> - Dr. Nair (pass: doctor123)<br>
-                • <strong>DOC006</strong> - Dr. Kumar (pass: doctor123)<br>
-                • <strong>DOC007</strong> - Dr. Singh (pass: doctor123)<br>
-                • <strong>DOC008</strong> - Dr. Patel (pass: doctor123)<br>
-                • <strong>DOC009</strong> - Dr. Menon (pass: doctor123)<br>
-                • <strong>DOC010</strong> - Dr. Iyer (pass: doctor123)
+                    <!-- Email/Phone Login -->
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="text" id="doctorEmailPhone" placeholder="Email or Phone Number" value="doctor@demo.com">
+                    </div>
+
+                    <!-- OTP Section -->
+                    <div class="input-row">
+                        <div class="input-group">
+                            <i class="fas fa-lock"></i>
+                            <input type="text" id="doctorOTP" placeholder="Enter OTP" maxlength="6">
+                        </div>
+                        <button class="otp-btn" id="sendDoctorOTP" onclick="sendOTP('doctor')">
+                            <i class="fas fa-paper-plane"></i> Send OTP
+                        </button>
+                    </div>
+
+                    <button class="login-btn" onclick="doctorLogin()">
+                        <i class="fas fa-stethoscope"></i> Login with OTP
+                    </button>
+
+                    <div class="divider">
+                        <span>OR</span>
+                    </div>
+
+                    <!-- Social Login -->
+                    <div class="social-login">
+                        <button class="social-btn google" onclick="socialLogin('google', 'doctor')">
+                            <i class="fab fa-google"></i> Google
+                        </button>
+                        <button class="social-btn facebook" onclick="socialLogin('facebook', 'doctor')">
+                            <i class="fab fa-facebook-f"></i> Facebook
+                        </button>
+                        <button class="social-btn github" onclick="socialLogin('github', 'doctor')">
+                            <i class="fab fa-github"></i> GitHub
+                        </button>
+                    </div>
+
+                    <!-- Demo Credentials -->
+                    <div class="demo-credentials">
+                        <h4><i class="fas fa-info-circle"></i> Demo Doctor Accounts</h4>
+                        <div class="cred-list">
+                            <div class="cred-item"><strong>DOC001:</strong> doctor@demo.com / 123456</div>
+                            <div class="cred-item"><strong>DOC002:</strong> dr.sharma@hospital.com / 123456</div>
+                            <div class="cred-item"><strong>DOC003:</strong> dr.gupta@hospital.com / 123456</div>
+                            <div class="cred-item"><strong>DOC004:</strong> 9988776655 / 123456</div>
+                            <div class="cred-item"><strong>DOC005:</strong> 8877665544 / 123456</div>
+                            <div class="cred-item"><strong>DOC006:</strong> dr.verma@hospital.com / 123456</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -692,122 +1191,130 @@
                     <i class="fas fa-user"></i>
                 </div>
                 <div class="user-details">
-                    <h3 id="patientName">Patient Name</h3>
-                    <p><i class="fas fa-id-card"></i> ID: <span id="patientID">PAT001</span></p>
-                    <p><i class="fas fa-envelope"></i> <span id="patientEmail">email@example.com</span></p>
-                    <p><i class="fas fa-phone"></i> <span id="patientPhone">phone</span></p>
+                    <h2 id="patientDisplayName">Patient Name</h2>
+                    <p><i class="fas fa-id-card"></i> ID: <span id="patientDisplayID">PAT001</span> | <i class="fas fa-envelope"></i> <span id="patientDisplayEmail">email@example.com</span></p>
                 </div>
             </div>
             <button class="logout-btn" onclick="logout('patient')">
-                <i class="fas fa-sign-out-alt"></i> <span data-i18n="logout">Logout</span>
+                <i class="fas fa-sign-out-alt"></i> Logout
             </button>
         </div>
 
-        <!-- Stats -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <i class="fas fa-calendar-check"></i>
-                <div class="stat-number" id="totalVisits">0</div>
-                <div class="stat-label" data-i18n="totalVisits">Total Visits</div>
+        <div class="app-content">
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-calendar-check"></i></div>
+                    <div class="stat-info">
+                        <h3 id="patientTotalVisits">0</h3>
+                        <p>Total Visits</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-notes-medical"></i></div>
+                    <div class="stat-info">
+                        <h3 id="patientTotalDiagnoses">0</h3>
+                        <p>Diagnoses</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                    <div class="stat-info">
+                        <h3 id="patientHighRisk">0</h3>
+                        <p>High Risk</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-calendar-day"></i></div>
+                    <div class="stat-info">
+                        <h3 id="patientTodayCount">0</h3>
+                        <p>Today</p>
+                    </div>
+                </div>
             </div>
-            <div class="stat-card">
-                <i class="fas fa-notes-medical"></i>
-                <div class="stat-number" id="totalDiagnoses">0</div>
-                <div class="stat-label" data-i18n="diagnoses">Diagnoses</div>
+
+            <!-- Patient Information Form -->
+            <div class="patient-form">
+                <h3 class="form-title"><i class="fas fa-user-circle"></i> Patient Information</h3>
+                <div class="form-grid">
+                    <div class="input-group">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="patientFullName" placeholder="Full Name" value="Rahul Sharma">
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-calendar-alt"></i>
+                        <input type="number" id="patientAge" placeholder="Age" value="32">
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-venus-mars"></i>
+                        <select id="patientGender">
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <select id="patientDistrict">
+                            <option value="">Select District</option>
+                        </select>
+                    </div>
+                </div>
             </div>
-            <div class="stat-card">
-                <i class="fas fa-exclamation-triangle"></i>
-                <div class="stat-number" id="highRiskCount">0</div>
-                <div class="stat-label" data-i18n="highRisk">High Risk</div>
+
+            <!-- Symptom Checker -->
+            <div class="symptoms-section">
+                <h3 class="form-title"><i class="fas fa-stethoscope"></i> Symptom Checker (60+ Symptoms)</h3>
+
+                <div class="category-tabs" id="symptomCategories">
+                    <button class="category-tab active" onclick="filterSymptoms('all')">All</button>
+                    <button class="category-tab" onclick="filterSymptoms('respiratory')">Respiratory</button>
+                    <button class="category-tab" onclick="filterSymptoms('digestive')">Digestive</button>
+                    <button class="category-tab" onclick="filterSymptoms('neurological')">Neurological</button>
+                    <button class="category-tab" onclick="filterSymptoms('muscular')">Muscular</button>
+                    <button class="category-tab" onclick="filterSymptoms('skin')">Skin</button>
+                    <button class="category-tab" onclick="filterSymptoms('cardiovascular')">Cardio</button>
+                    <button class="category-tab" onclick="filterSymptoms('general')">General</button>
+                    <button class="category-tab" onclick="filterSymptoms('urinary')">Urinary</button>
+                </div>
+
+                <div class="symptoms-grid" id="symptomsGrid"></div>
+
+                <h4 style="margin-bottom: 10px;">Selected Symptoms:</h4>
+                <div class="selected-tags" id="symptomTags"></div>
             </div>
-            <div class="stat-card">
-                <i class="fas fa-calendar-day"></i>
-                <div class="stat-number" id="todayCount">0</div>
-                <div class="stat-label" data-i18n="today">Today</div>
+
+            <!-- Voice Recorder -->
+            <div class="voice-section">
+                <div class="voice-header">
+                    <i class="fas fa-microphone-alt" style="font-size: 2rem;"></i>
+                    <h3>Voice Symptom Recorder</h3>
+                </div>
+                
+                <div class="voice-controls">
+                    <button class="record-btn" id="recordBtn" onclick="toggleRecording()">
+                        <i class="fas fa-microphone"></i>
+                    </button>
+                    <div class="timer" id="timer">00:00</div>
+                    <div class="waveform" id="waveform"></div>
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <div class="input-group">
+                        <i class="fas fa-pen"></i>
+                        <input type="text" id="typedSymptoms" placeholder="Or type symptoms (e.g., fever, cough, headache)">
+                    </div>
+                </div>
             </div>
+
+            <!-- Analyze Button -->
+            <button class="analyze-btn" onclick="analyzeHealth()">
+                <i class="fas fa-microchip"></i> Analyze Symptoms
+            </button>
+
+            <!-- Results -->
+            <div class="results-card" id="results"></div>
         </div>
-
-        <!-- Patient Information Form -->
-        <div class="patient-form">
-            <h3 class="form-title">
-                <i class="fas fa-user-circle"></i>
-                <span data-i18n="patientInfo">Patient Information</span>
-            </h3>
-            <div class="form-grid">
-                <div class="form-group">
-                    <input type="text" id="fullName" placeholder="Full Name">
-                </div>
-                <div class="form-group">
-                    <input type="number" id="age" placeholder="Age">
-                </div>
-                <div class="form-group">
-                    <select id="gender">
-                        <option value="male" data-i18n="male">Male</option>
-                        <option value="female" data-i18n="female">Female</option>
-                        <option value="other" data-i18n="other">Other</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <select id="district">
-                        <option value="" data-i18n="selectDistrict">Select District</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-
-        <!-- Symptom Checker -->
-        <div class="symptoms-section">
-            <h3 class="form-title">
-                <i class="fas fa-stethoscope"></i>
-                <span data-i18n="symptomChecker">Symptom Checker (60+ Symptoms)</span>
-            </h3>
-
-            <div class="category-tabs" id="symptomCategories">
-                <button class="category-tab active" onclick="filterSymptoms('all')" data-i18n="all">All</button>
-                <button class="category-tab" onclick="filterSymptoms('respiratory')" data-i18n="respiratory">Respiratory</button>
-                <button class="category-tab" onclick="filterSymptoms('digestive')" data-i18n="digestive">Digestive</button>
-                <button class="category-tab" onclick="filterSymptoms('neurological')" data-i18n="neurological">Neurological</button>
-                <button class="category-tab" onclick="filterSymptoms('muscular')" data-i18n="muscular">Muscular</button>
-                <button class="category-tab" onclick="filterSymptoms('skin')" data-i18n="skin">Skin</button>
-                <button class="category-tab" onclick="filterSymptoms('cardiovascular')" data-i18n="cardiovascular">Cardio</button>
-                <button class="category-tab" onclick="filterSymptoms('general')" data-i18n="general">General</button>
-                <button class="category-tab" onclick="filterSymptoms('urinary')" data-i18n="urinary">Urinary</button>
-            </div>
-
-            <div class="symptoms-grid" id="symptomsGrid"></div>
-
-            <h4 style="margin-bottom: 10px;" data-i18n="selectedSymptoms">Selected Symptoms:</h4>
-            <div class="selected-tags" id="symptomTags"></div>
-        </div>
-
-        <!-- Voice Recorder -->
-        <div class="voice-section">
-            <h3 style="margin-bottom: 20px;">
-                <i class="fas fa-microphone-alt"></i>
-                <span data-i18n="voiceRecorder">Voice Symptom Recorder</span>
-            </h3>
-            
-            <div class="voice-controls">
-                <button class="record-btn" id="recordBtn" onclick="toggleRecording()">
-                    <i class="fas fa-microphone"></i>
-                </button>
-                <div class="timer" id="timer">00:00</div>
-            </div>
-
-            <div style="margin-top: 20px;">
-                <div class="form-group">
-                    <input type="text" id="typedSymptoms" placeholder="Or type symptoms (comma separated)">
-                </div>
-            </div>
-        </div>
-
-        <!-- Analyze Button -->
-        <button class="analyze-btn" onclick="analyzeHealth()">
-            <i class="fas fa-microchip"></i> <span data-i18n="analyze">Analyze Symptoms</span>
-        </button>
-
-        <!-- Results -->
-        <div class="results-card" id="results"></div>
     </div>
 
     <!-- DOCTOR DASHBOARD -->
@@ -818,54 +1325,57 @@
                     <i class="fas fa-user-md"></i>
                 </div>
                 <div class="user-details">
-                    <h3 id="doctorName">Dr. Name</h3>
-                    <p><i class="fas fa-id-card"></i> ID: <span id="doctorID">DOC001</span></p>
-                    <p><i class="fas fa-envelope"></i> <span id="doctorEmail">doctor@demo.com</span></p>
-                    <p><i class="fas fa-phone"></i> <span id="doctorPhone">phone</span></p>
+                    <h2 id="doctorDisplayName">Dr. Sharma</h2>
+                    <p><i class="fas fa-id-card"></i> ID: <span id="doctorDisplayID">DOC001</span> | <i class="fas fa-envelope"></i> <span id="doctorDisplayEmail">doctor@demo.com</span></p>
                 </div>
             </div>
             <button class="logout-btn" onclick="logout('doctor')">
-                <i class="fas fa-sign-out-alt"></i> <span data-i18n="logout">Logout</span>
+                <i class="fas fa-sign-out-alt"></i> Logout
             </button>
         </div>
 
-        <div class="stats-grid">
-            <div class="stat-card">
-                <i class="fas fa-users"></i>
-                <div class="stat-number" id="totalPatients">10</div>
-                <div class="stat-label" data-i18n="totalPatients">Total Patients</div>
+        <div class="app-content">
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-users"></i></div>
+                    <div class="stat-info">
+                        <h3 id="doctorTotalPatients">10</h3>
+                        <p>Total Patients</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-notes-medical"></i></div>
+                    <div class="stat-info">
+                        <h3 id="doctorTotalReports">0</h3>
+                        <p>Reports</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                    <div class="stat-info">
+                        <h3 id="doctorCriticalCases">0</h3>
+                        <p>Critical</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-calendar-day"></i></div>
+                    <div class="stat-info">
+                        <h3 id="doctorTodayPatients">0</h3>
+                        <p>Today</p>
+                    </div>
+                </div>
             </div>
-            <div class="stat-card">
-                <i class="fas fa-notes-medical"></i>
-                <div class="stat-number" id="totalReports">0</div>
-                <div class="stat-label" data-i18n="reports">Reports</div>
-            </div>
-            <div class="stat-card">
-                <i class="fas fa-exclamation-triangle"></i>
-                <div class="stat-number" id="criticalCases">0</div>
-                <div class="stat-label" data-i18n="critical">Critical</div>
-            </div>
-            <div class="stat-card">
-                <i class="fas fa-calendar-day"></i>
-                <div class="stat-number" id="todayPatients">0</div>
-                <div class="stat-label" data-i18n="today">Today</div>
-            </div>
-        </div>
 
-        <div class="doctor-dashboard">
-            <h3 class="form-title">
-                <i class="fas fa-clipboard-list"></i>
-                <span data-i18n="patientRecords">Patient Records</span>
-            </h3>
+            <!-- Patient Records -->
+            <div class="doctor-section">
+                <h3 class="form-title"><i class="fas fa-clipboard-list"></i> Patient Records</h3>
+                <div id="patientRecordsList"></div>
 
-            <div id="patientRecordsList"></div>
-
-            <h3 class="form-title" style="margin-top: 30px;">
-                <i class="fas fa-pen"></i>
-                <span data-i18n="addNote">Add Clinical Note</span>
-            </h3>
-            <textarea class="doctor-note" id="clinicalNote" placeholder="Write your recommendations..." rows="4"></textarea>
-            <button class="login-btn" onclick="saveClinicalNote()"><span data-i18n="saveNote">Save Note</span></button>
+                <h3 class="form-title" style="margin-top: 30px;"><i class="fas fa-pen"></i> Add Clinical Note</h3>
+                <textarea class="input-group" id="clinicalNote" style="width: 100%; padding: 15px; border-radius: 20px; border: 2px solid var(--border); margin: 15px 0; min-height: 100px;" placeholder="Write your recommendations..."></textarea>
+                <button class="login-btn" onclick="saveClinicalNote()" style="width: auto; padding: 12px 30px;">Save Note</button>
+            </div>
         </div>
     </div>
 
@@ -873,372 +1383,109 @@
     <div class="toast" id="toast"></div>
 
     <script>
-        // ==================== MULTI-LANGUAGE SUPPORT ====================
-        let currentLanguage = 'en';
-        
-        const translations = {
-            en: {
-                patientLogin: 'Patient Login',
-                patientSubtitle: 'Login with your Patient ID',
-                doctorLogin: 'Doctor Login',
-                doctorSubtitle: 'Login with your Doctor ID',
-                patientLoginBtn: 'Login as Patient',
-                doctorLoginBtn: 'Login as Doctor',
-                demoPatients: 'Available Patient IDs:',
-                demoDoctors: 'Available Doctor IDs:',
-                logout: 'Logout',
-                totalVisits: 'Total Visits',
-                diagnoses: 'Diagnoses',
-                highRisk: 'High Risk',
-                today: 'Today',
-                patientInfo: 'Patient Information',
-                male: 'Male',
-                female: 'Female',
-                other: 'Other',
-                selectDistrict: 'Select District',
-                symptomChecker: 'Symptom Checker (60+ Symptoms)',
-                all: 'All',
-                respiratory: 'Respiratory',
-                digestive: 'Digestive',
-                neurological: 'Neurological',
-                muscular: 'Muscular',
-                skin: 'Skin',
-                cardiovascular: 'Cardio',
-                general: 'General',
-                urinary: 'Urinary',
-                selectedSymptoms: 'Selected Symptoms:',
-                voiceRecorder: 'Voice Symptom Recorder',
-                analyze: 'Analyze Symptoms',
-                totalPatients: 'Total Patients',
-                reports: 'Reports',
-                critical: 'Critical',
-                patientRecords: 'Patient Records',
-                addNote: 'Add Clinical Note',
-                saveNote: 'Save Note',
-                noSymptoms: 'No symptoms selected',
-                loginFirst: 'Please login first',
-                selectSymptoms: 'Please select symptoms',
-                analysisComplete: 'Analysis complete!',
-                diagnosisReport: 'Diagnosis Report',
-                matchedSymptoms: 'Matched Symptoms',
-                advice: 'Advice',
-                homeRemedies: 'Home Remedies',
-                warningSigns: 'Warning Signs',
-                printReport: 'Print Report',
-                loginSuccess: 'Login successful!',
-                invalidCred: 'Invalid Patient ID or Password',
-                doctorLoginSuccess: 'Doctor login successful!',
-                invalidDoctorCred: 'Invalid Doctor ID or Password',
-                logoutSuccess: 'Logged out successfully',
-                voiceCaptured: 'Voice captured!',
-                noRecords: 'No patient records yet',
-                visits: 'visits',
-                viewDetails: 'View Details',
-                noteSaved: 'Note saved successfully',
-                loginWithId: 'Login with your Patient ID',
-                // Symptoms translations
-                cough: 'Cough',
-                shortnessOfBreath: 'Shortness of breath',
-                wheezing: 'Wheezing',
-                chestPain: 'Chest pain',
-                soreThroat: 'Sore throat',
-                runnyNose: 'Runny nose',
-                sneezing: 'Sneezing',
-                nasalCongestion: 'Nasal congestion',
-                coughingBlood: 'Coughing up blood',
-                dryCough: 'Dry cough',
-                nausea: 'Nausea',
-                vomiting: 'Vomiting',
-                diarrhea: 'Diarrhea',
-                constipation: 'Constipation',
-                abdominalPain: 'Abdominal pain',
-                bloating: 'Bloating',
-                heartburn: 'Heartburn',
-                lossOfAppetite: 'Loss of appetite',
-                bloodInStool: 'Blood in stool',
-                difficultySwallowing: 'Difficulty swallowing',
-                headache: 'Headache',
-                dizziness: 'Dizziness',
-                confusion: 'Confusion',
-                seizures: 'Seizures',
-                tremors: 'Tremors',
-                numbness: 'Numbness',
-                weakness: 'Weakness',
-                memoryLoss: 'Memory loss',
-                balanceProblems: 'Balance problems',
-                slurredSpeech: 'Slurred speech',
-                jointPain: 'Joint pain',
-                musclePain: 'Muscle pain',
-                backPain: 'Back pain',
-                neckPain: 'Neck pain',
-                jointSwelling: 'Joint swelling',
-                stiffness: 'Stiffness',
-                muscleCramps: 'Muscle cramps',
-                rash: 'Rash',
-                itching: 'Itching',
-                hives: 'Hives',
-                drySkin: 'Dry skin',
-                skinRedness: 'Skin redness',
-                skinDiscoloration: 'Skin discoloration',
-                woundsNotHealing: 'Wounds not healing',
-                fever: 'Fever',
-                fatigue: 'Fatigue',
-                chills: 'Chills',
-                nightSweats: 'Night sweats',
-                weightLoss: 'Weight loss',
-                weightGain: 'Weight gain',
-                dehydration: 'Dehydration',
-                swollenLymphNodes: 'Swollen lymph nodes',
-                palpitations: 'Palpitations',
-                highBP: 'High blood pressure',
-                lowBP: 'Low blood pressure',
-                swollenAnkles: 'Swollen ankles',
-                frequentUrination: 'Frequent urination',
-                painfulUrination: 'Painful urination',
-                bloodInUrine: 'Blood in urine',
-                urgentUrination: 'Urgent urination',
-                bodyAche: 'Body ache'
-            },
-            hi: {
-                patientLogin: 'रोगी लॉगिन',
-                patientSubtitle: 'अपने रोगी आईडी से लॉगिन करें',
-                doctorLogin: 'डॉक्टर लॉगिन',
-                doctorSubtitle: 'अपने डॉक्टर आईडी से लॉगिन करें',
-                patientLoginBtn: 'रोगी के रूप में लॉगिन करें',
-                doctorLoginBtn: 'डॉक्टर के रूप में लॉगिन करें',
-                demoPatients: 'उपलब्ध रोगी आईडी:',
-                demoDoctors: 'उपलब्ध डॉक्टर आईडी:',
-                logout: 'लॉगआउट',
-                totalVisits: 'कुल विज़िट',
-                diagnoses: 'निदान',
-                highRisk: 'उच्च जोखिम',
-                today: 'आज',
-                patientInfo: 'रोगी जानकारी',
-                male: 'पुरुष',
-                female: 'महिला',
-                other: 'अन्य',
-                selectDistrict: 'जिला चुनें',
-                symptomChecker: 'लक्षण जांचकर्ता (60+ लक्षण)',
-                all: 'सभी',
-                respiratory: 'श्वसन',
-                digestive: 'पाचन',
-                neurological: 'तंत्रिका',
-                muscular: 'मांसपेशी',
-                skin: 'त्वचा',
-                cardiovascular: 'हृदय',
-                general: 'सामान्य',
-                urinary: 'मूत्र',
-                selectedSymptoms: 'चयनित लक्षण:',
-                voiceRecorder: 'आवाज लक्षण रिकॉर्डर',
-                analyze: 'लक्षण विश्लेषण करें',
-                totalPatients: 'कुल रोगी',
-                reports: 'रिपोर्ट',
-                critical: 'गंभीर',
-                patientRecords: 'रोगी रिकॉर्ड',
-                addNote: 'क्लिनिकल नोट जोड़ें',
-                saveNote: 'नोट सहेजें',
-                noSymptoms: 'कोई लक्षण चयनित नहीं',
-                loginFirst: 'कृपया पहले लॉगिन करें',
-                selectSymptoms: 'कृपया लक्षण चुनें',
-                analysisComplete: 'विश्लेषण पूरा हुआ!',
-                diagnosisReport: 'निदान रिपोर्ट',
-                matchedSymptoms: 'मिलान लक्षण',
-                advice: 'सलाह',
-                homeRemedies: 'घरेलू उपचार',
-                warningSigns: 'चेतावनी संकेत',
-                printReport: 'रिपोर्ट प्रिंट करें',
-                loginSuccess: 'लॉगिन सफल!',
-                invalidCred: 'गलत रोगी आईडी या पासवर्ड',
-                doctorLoginSuccess: 'डॉक्टर लॉगिन सफल!',
-                invalidDoctorCred: 'गलत डॉक्टर आईडी या पासवर्ड',
-                logoutSuccess: 'सफलतापूर्वक लॉगआउट किया',
-                voiceCaptured: 'आवाज कैप्चर हुई!',
-                noRecords: 'अभी तक कोई रोगी रिकॉर्ड नहीं',
-                visits: 'विज़िट',
-                viewDetails: 'विवरण देखें',
-                noteSaved: 'नोट सफलतापूर्वक सहेजा गया',
-                loginWithId: 'अपने रोगी आईडी से लॉगिन करें',
-                cough: 'खांसी',
-                fever: 'बुखार',
-                headache: 'सिरदर्द',
-                bodyAche: 'शरीर दर्द'
-            },
-            ta: {
-                patientLogin: 'நோயாளி உள்நுழைவு',
-                patientSubtitle: 'உங்கள் நோயாளி ஐடியுடன் உள்நுழைக',
-                doctorLogin: 'மருத்துவர் உள்நுழைவு',
-                doctorSubtitle: 'உங்கள் மருத்துவர் ஐடியுடன் உள்நுழைக',
-                patientLoginBtn: 'நோயாளியாக உள்நுழைக',
-                doctorLoginBtn: 'மருத்துவராக உள்நுழைக',
-                demoPatients: 'கிடைக்கும் நோயாளி ஐடிகள்:',
-                demoDoctors: 'கிடைக்கும் மருத்துவர் ஐடிகள்:',
-                logout: 'வெளியேறு',
-                totalVisits: 'மொத்த வருகைகள்',
-                diagnoses: 'நோயறிதல்கள்',
-                highRisk: 'அதிக ஆபத்து',
-                today: 'இன்று',
-                patientInfo: 'நோயாளி தகவல்',
-                male: 'ஆண்',
-                female: 'பெண்',
-                other: 'மற்றவை',
-                selectDistrict: 'மாவட்டத்தைத் தேர்ந்தெடுக்கவும்',
-                symptomChecker: 'அறிகுறி சரிபார்ப்பான் (60+ அறிகுறிகள்)',
-                all: 'அனைத்தும்',
-                respiratory: 'சுவாசம்',
-                digestive: 'செரிமானம்',
-                neurological: 'நரம்பியல்',
-                muscular: 'தசை',
-                skin: 'தோல்',
-                cardiovascular: 'இதயம்',
-                general: 'பொது',
-                urinary: 'சிறுநீர்',
-                selectedSymptoms: 'தேர்ந்தெடுக்கப்பட்ட அறிகுறிகள்:',
-                voiceRecorder: 'குரல் அறிகுறி பதிவி',
-                analyze: 'அறிகுறிகளை பகுப்பாய்வு செய்யுங்கள்',
-                totalPatients: 'மொத்த நோயாளிகள்',
-                reports: 'அறிக்கைகள்',
-                critical: 'முக்கியமான',
-                patientRecords: 'நோயாளி பதிவுகள்',
-                addNote: 'மருத்துவ குறிப்பு சேர்க்கவும்',
-                saveNote: 'குறிப்பை சேமிக்கவும்',
-                noSymptoms: 'அறிகுறிகள் எதுவும் தேர்ந்தெடுக்கப்படவில்லை',
-                loginFirst: 'முதலில் உள்நுழையவும்',
-                selectSymptoms: 'அறிகுறிகளைத் தேர்ந்தெடுக்கவும்',
-                analysisComplete: 'பகுப்பாய்வு முடிந்தது!',
-                diagnosisReport: 'நோயறிதல் அறிக்கை',
-                matchedSymptoms: 'பொருந்திய அறிகுறிகள்',
-                advice: 'ஆலோசனை',
-                homeRemedies: 'வீட்டு வைத்தியம்',
-                warningSigns: 'எச்சரிக்கை அறிகுறிகள்',
-                printReport: 'அறிக்கையை அச்சிடுக',
-                loginSuccess: 'உள்நுழைவு வெற்றிகரமானது!',
-                invalidCred: 'தவறான நோயாளி ஐடி அல்லது கடவுச்சொல்',
-                doctorLoginSuccess: 'மருத்துவர் உள்நுழைவு வெற்றிகரமானது!',
-                invalidDoctorCred: 'தவறான மருத்துவர் ஐடி அல்லது கடவுச்சொல்',
-                logoutSuccess: 'வெளியேறியது',
-                voiceCaptured: 'குரல் பதிவு செய்யப்பட்டது!',
-                noRecords: 'இதுவரை நோயாளி பதிவுகள் இல்லை',
-                visits: 'வருகைகள்',
-                viewDetails: 'விவரங்களைக் காண்க',
-                noteSaved: 'குறிப்பு சேமிக்கப்பட்டது',
-                loginWithId: 'உங்கள் நோயாளி ஐடியுடன் உள்நுழைக',
-                cough: 'இருமல்',
-                fever: 'காய்ச்சல்',
-                headache: 'தலைவலி',
-                bodyAche: 'உடல் வலி'
-            }
-        };
-
-        // ==================== PATIENTS DATABASE WITH UNIQUE IDs ====================
+        // ==================== ENTERPRISE DATABASES ====================
         let patients = [
-            { id: 'PAT001', name: 'Rahul Sharma', email: 'rahul@example.com', phone: '9876543210', password: 'patient123', age: 32, gender: 'male', district: 'Chennai' },
-            { id: 'PAT002', name: 'Priya Patel', email: 'priya@example.com', phone: '8765432109', password: 'priya123', age: 28, gender: 'female', district: 'Coimbatore' },
-            { id: 'PAT003', name: 'Amit Kumar', email: 'amit@example.com', phone: '7654321098', password: 'amit123', age: 45, gender: 'male', district: 'Madurai' },
-            { id: 'PAT004', name: 'Sunita Reddy', email: 'sunita@example.com', phone: '6543210987', password: 'sunita123', age: 35, gender: 'female', district: 'Salem' },
-            { id: 'PAT005', name: 'Vikram Singh', email: 'vikram@example.com', phone: '5432109876', password: 'vikram123', age: 52, gender: 'male', district: 'Tirunelveli' },
-            { id: 'PAT006', name: 'Lakshmi Nair', email: 'lakshmi@example.com', phone: '4321098765', password: 'lakshmi123', age: 29, gender: 'female', district: 'Kanyakumari' },
-            { id: 'PAT007', name: 'Rajesh Kumar', email: 'rajesh@example.com', phone: '3210987654', password: 'rajesh123', age: 41, gender: 'male', district: 'Vellore' },
-            { id: 'PAT008', name: 'Meera Sharma', email: 'meera@example.com', phone: '2109876543', password: 'meera123', age: 33, gender: 'female', district: 'Erode' },
-            { id: 'PAT009', name: 'Arjun Reddy', email: 'arjun@example.com', phone: '1098765432', password: 'arjun123', age: 38, gender: 'male', district: 'Thoothukkudi' },
-            { id: 'PAT010', name: 'Kavita Singh', email: 'kavita@example.com', phone: '9988776655', password: 'kavita123', age: 27, gender: 'female', district: 'Dharmapuri' }
+            { id: 'PAT001', name: 'Rahul Sharma', email: 'patient@demo.com', phone: '9876543210', password: '123456', age: 32, gender: 'male', district: 'Chennai' },
+            { id: 'PAT002', name: 'Priya Patel', email: 'priya@example.com', phone: '8765432109', password: '123456', age: 28, gender: 'female', district: 'Coimbatore' },
+            { id: 'PAT003', name: 'Amit Kumar', email: 'amit@example.com', phone: '7654321098', password: '123456', age: 45, gender: 'male', district: 'Madurai' },
+            { id: 'PAT004', name: 'Sunita Reddy', email: 'sunita@example.com', phone: '6543210987', password: '123456', age: 35, gender: 'female', district: 'Salem' },
+            { id: 'PAT005', name: 'Vikram Singh', email: 'vikram@example.com', phone: '5432109876', password: '123456', age: 52, gender: 'male', district: 'Tirunelveli' },
+            { id: 'PAT006', name: 'Lakshmi Nair', email: 'lakshmi@example.com', phone: '4321098765', password: '123456', age: 29, gender: 'female', district: 'Kanyakumari' }
         ];
 
-        // ==================== DOCTORS DATABASE WITH UNIQUE IDs ====================
         let doctors = [
-            { id: 'DOC001', name: 'Dr. Sharma', email: 'dr.sharma@hospital.com', phone: '9876543211', password: 'doctor123', specialty: 'General Physician' },
-            { id: 'DOC002', name: 'Dr. Gupta', email: 'dr.gupta@hospital.com', phone: '9876543212', password: 'doctor123', specialty: 'Cardiologist' },
-            { id: 'DOC003', name: 'Dr. Verma', email: 'dr.verma@hospital.com', phone: '9876543213', password: 'doctor123', specialty: 'Pediatrician' },
-            { id: 'DOC004', name: 'Dr. Reddy', email: 'dr.reddy@hospital.com', phone: '9876543214', password: 'doctor123', specialty: 'Neurologist' },
-            { id: 'DOC005', name: 'Dr. Nair', email: 'dr.nair@hospital.com', phone: '9876543215', password: 'doctor123', specialty: 'Dermatologist' },
-            { id: 'DOC006', name: 'Dr. Kumar', email: 'dr.kumar@hospital.com', phone: '9876543216', password: 'doctor123', specialty: 'Orthopedic' },
-            { id: 'DOC007', name: 'Dr. Singh', email: 'dr.singh@hospital.com', phone: '9876543217', password: 'doctor123', specialty: 'Psychiatrist' },
-            { id: 'DOC008', name: 'Dr. Patel', email: 'dr.patel@hospital.com', phone: '9876543218', password: 'doctor123', specialty: 'Gynecologist' },
-            { id: 'DOC009', name: 'Dr. Menon', email: 'dr.menon@hospital.com', phone: '9876543219', password: 'doctor123', specialty: 'ENT Specialist' },
-            { id: 'DOC010', name: 'Dr. Iyer', email: 'dr.iyer@hospital.com', phone: '9876543220', password: 'doctor123', specialty: 'Ophthalmologist' }
+            { id: 'DOC001', name: 'Dr. Sharma', email: 'doctor@demo.com', phone: '9988776655', password: '123456', specialty: 'General Physician' },
+            { id: 'DOC002', name: 'Dr. Gupta', email: 'dr.gupta@hospital.com', phone: '8877665544', password: '123456', specialty: 'Cardiologist' },
+            { id: 'DOC003', name: 'Dr. Verma', email: 'dr.verma@hospital.com', phone: '7766554433', password: '123456', specialty: 'Pediatrician' },
+            { id: 'DOC004', name: 'Dr. Reddy', email: 'dr.reddy@hospital.com', phone: '6655443322', password: '123456', specialty: 'Neurologist' },
+            { id: 'DOC005', name: 'Dr. Nair', email: 'dr.nair@hospital.com', phone: '5544332211', password: '123456', specialty: 'Dermatologist' },
+            { id: 'DOC006', name: 'Dr. Kumar', email: 'dr.kumar@hospital.com', phone: '4433221100', password: '123456', specialty: 'Orthopedic' }
         ];
 
         let diagnoses = JSON.parse(localStorage.getItem('diagnoses')) || [];
         let currentPatient = null;
         let currentDoctor = null;
+        let currentLanguage = 'en';
+        let otpStore = {};
 
         // ==================== 60+ SYMPTOMS DATABASE ====================
         const symptomsDB = [
             // Respiratory (1-10)
-            { id: 1, name: 'cough', category: 'respiratory' },
-            { id: 2, name: 'shortnessOfBreath', category: 'respiratory' },
-            { id: 3, name: 'wheezing', category: 'respiratory' },
-            { id: 4, name: 'chestPain', category: 'respiratory' },
-            { id: 5, name: 'soreThroat', category: 'respiratory' },
-            { id: 6, name: 'runnyNose', category: 'respiratory' },
-            { id: 7, name: 'sneezing', category: 'respiratory' },
-            { id: 8, name: 'nasalCongestion', category: 'respiratory' },
-            { id: 9, name: 'coughingBlood', category: 'respiratory' },
-            { id: 10, name: 'dryCough', category: 'respiratory' },
+            { id: 1, name: 'Cough', category: 'respiratory' },
+            { id: 2, name: 'Shortness of breath', category: 'respiratory' },
+            { id: 3, name: 'Wheezing', category: 'respiratory' },
+            { id: 4, name: 'Chest pain', category: 'respiratory' },
+            { id: 5, name: 'Sore throat', category: 'respiratory' },
+            { id: 6, name: 'Runny nose', category: 'respiratory' },
+            { id: 7, name: 'Sneezing', category: 'respiratory' },
+            { id: 8, name: 'Nasal congestion', category: 'respiratory' },
+            { id: 9, name: 'Coughing blood', category: 'respiratory' },
+            { id: 10, name: 'Dry cough', category: 'respiratory' },
             
             // Digestive (11-20)
-            { id: 11, name: 'nausea', category: 'digestive' },
-            { id: 12, name: 'vomiting', category: 'digestive' },
-            { id: 13, name: 'diarrhea', category: 'digestive' },
-            { id: 14, name: 'constipation', category: 'digestive' },
-            { id: 15, name: 'abdominalPain', category: 'digestive' },
-            { id: 16, name: 'bloating', category: 'digestive' },
-            { id: 17, name: 'heartburn', category: 'digestive' },
-            { id: 18, name: 'lossOfAppetite', category: 'digestive' },
-            { id: 19, name: 'bloodInStool', category: 'digestive' },
-            { id: 20, name: 'difficultySwallowing', category: 'digestive' },
+            { id: 11, name: 'Nausea', category: 'digestive' },
+            { id: 12, name: 'Vomiting', category: 'digestive' },
+            { id: 13, name: 'Diarrhea', category: 'digestive' },
+            { id: 14, name: 'Constipation', category: 'digestive' },
+            { id: 15, name: 'Abdominal pain', category: 'digestive' },
+            { id: 16, name: 'Bloating', category: 'digestive' },
+            { id: 17, name: 'Heartburn', category: 'digestive' },
+            { id: 18, name: 'Loss of appetite', category: 'digestive' },
+            { id: 19, name: 'Blood in stool', category: 'digestive' },
+            { id: 20, name: 'Difficulty swallowing', category: 'digestive' },
             
             // Neurological (21-30)
-            { id: 21, name: 'headache', category: 'neurological' },
-            { id: 22, name: 'dizziness', category: 'neurological' },
-            { id: 23, name: 'confusion', category: 'neurological' },
-            { id: 24, name: 'seizures', category: 'neurological' },
-            { id: 25, name: 'tremors', category: 'neurological' },
-            { id: 26, name: 'numbness', category: 'neurological' },
-            { id: 27, name: 'weakness', category: 'neurological' },
-            { id: 28, name: 'memoryLoss', category: 'neurological' },
-            { id: 29, name: 'balanceProblems', category: 'neurological' },
-            { id: 30, name: 'slurredSpeech', category: 'neurological' },
+            { id: 21, name: 'Headache', category: 'neurological' },
+            { id: 22, name: 'Dizziness', category: 'neurological' },
+            { id: 23, name: 'Confusion', category: 'neurological' },
+            { id: 24, name: 'Seizures', category: 'neurological' },
+            { id: 25, name: 'Tremors', category: 'neurological' },
+            { id: 26, name: 'Numbness', category: 'neurological' },
+            { id: 27, name: 'Weakness', category: 'neurological' },
+            { id: 28, name: 'Memory loss', category: 'neurological' },
+            { id: 29, name: 'Balance problems', category: 'neurological' },
+            { id: 30, name: 'Slurred speech', category: 'neurological' },
             
             // Muscular (31-37)
-            { id: 31, name: 'jointPain', category: 'muscular' },
-            { id: 32, name: 'musclePain', category: 'muscular' },
-            { id: 33, name: 'backPain', category: 'muscular' },
-            { id: 34, name: 'neckPain', category: 'muscular' },
-            { id: 35, name: 'jointSwelling', category: 'muscular' },
-            { id: 36, name: 'stiffness', category: 'muscular' },
-            { id: 37, name: 'muscleCramps', category: 'muscular' },
+            { id: 31, name: 'Joint pain', category: 'muscular' },
+            { id: 32, name: 'Muscle pain', category: 'muscular' },
+            { id: 33, name: 'Back pain', category: 'muscular' },
+            { id: 34, name: 'Neck pain', category: 'muscular' },
+            { id: 35, name: 'Joint swelling', category: 'muscular' },
+            { id: 36, name: 'Stiffness', category: 'muscular' },
+            { id: 37, name: 'Muscle cramps', category: 'muscular' },
             
             // Skin (38-44)
-            { id: 38, name: 'rash', category: 'skin' },
-            { id: 39, name: 'itching', category: 'skin' },
-            { id: 40, name: 'hives', category: 'skin' },
-            { id: 41, name: 'drySkin', category: 'skin' },
-            { id: 42, name: 'skinRedness', category: 'skin' },
-            { id: 43, name: 'skinDiscoloration', category: 'skin' },
-            { id: 44, name: 'woundsNotHealing', category: 'skin' },
+            { id: 38, name: 'Rash', category: 'skin' },
+            { id: 39, name: 'Itching', category: 'skin' },
+            { id: 40, name: 'Hives', category: 'skin' },
+            { id: 41, name: 'Dry skin', category: 'skin' },
+            { id: 42, name: 'Skin redness', category: 'skin' },
+            { id: 43, name: 'Skin discoloration', category: 'skin' },
+            { id: 44, name: 'Wounds not healing', category: 'skin' },
             
-            // General (45-52)
-            { id: 45, name: 'fever', category: 'general' },
-            { id: 46, name: 'fatigue', category: 'general' },
-            { id: 47, name: 'chills', category: 'general' },
-            { id: 48, name: 'nightSweats', category: 'general' },
-            { id: 49, name: 'weightLoss', category: 'general' },
-            { id: 50, name: 'weightGain', category: 'general' },
-            { id: 51, name: 'dehydration', category: 'general' },
-            { id: 52, name: 'swollenLymphNodes', category: 'general' },
-            { id: 53, name: 'bodyAche', category: 'general' },
+            // General (45-53)
+            { id: 45, name: 'Fever', category: 'general' },
+            { id: 46, name: 'Fatigue', category: 'general' },
+            { id: 47, name: 'Chills', category: 'general' },
+            { id: 48, name: 'Night sweats', category: 'general' },
+            { id: 49, name: 'Weight loss', category: 'general' },
+            { id: 50, name: 'Weight gain', category: 'general' },
+            { id: 51, name: 'Dehydration', category: 'general' },
+            { id: 52, name: 'Swollen lymph nodes', category: 'general' },
+            { id: 53, name: 'Body ache', category: 'general' },
             
             // Cardiovascular (54-57)
-            { id: 54, name: 'palpitations', category: 'cardiovascular' },
-            { id: 55, name: 'highBP', category: 'cardiovascular' },
-            { id: 56, name: 'lowBP', category: 'cardiovascular' },
-            { id: 57, name: 'swollenAnkles', category: 'cardiovascular' },
+            { id: 54, name: 'Palpitations', category: 'cardiovascular' },
+            { id: 55, name: 'High blood pressure', category: 'cardiovascular' },
+            { id: 56, name: 'Low blood pressure', category: 'cardiovascular' },
+            { id: 57, name: 'Swollen ankles', category: 'cardiovascular' },
             
             // Urinary (58-61)
-            { id: 58, name: 'frequentUrination', category: 'urinary' },
-            { id: 59, name: 'painfulUrination', category: 'urinary' },
-            { id: 60, name: 'bloodInUrine', category: 'urinary' },
-            { id: 61, name: 'urgentUrination', category: 'urinary' }
+            { id: 58, name: 'Frequent urination', category: 'urinary' },
+            { id: 59, name: 'Painful urination', category: 'urinary' },
+            { id: 60, name: 'Blood in urine', category: 'urinary' },
+            { id: 61, name: 'Urgent urination', category: 'urinary' }
         ];
 
         // Diseases Database
@@ -1362,24 +1609,23 @@
         let isRecording = false;
         let recordingTimer = null;
         let recordingSeconds = 0;
+        let waveformInterval = null;
 
-        // ==================== INIT ====================
+        // ==================== INITIALIZATION ====================
         document.addEventListener('DOMContentLoaded', () => {
             loadDistricts();
             displaySymptoms('all');
+            initWaveform();
             updateAllStats();
-            applyLanguage('en');
             
-            // Pre-fill with first demo IDs
-            document.getElementById('patientId').value = 'PAT001';
-            document.getElementById('patientPassword').value = 'patient123';
-            document.getElementById('doctorId').value = 'DOC001';
-            document.getElementById('doctorPassword').value = 'doctor123';
+            // Pre-fill demo credentials
+            document.getElementById('patientEmailPhone').value = 'patient@demo.com';
+            document.getElementById('doctorEmailPhone').value = 'doctor@demo.com';
         });
 
         function loadDistricts() {
-            const select = document.getElementById('district');
-            select.innerHTML = '<option value="">' + getTranslation('selectDistrict') + '</option>';
+            const select = document.getElementById('patientDistrict');
+            select.innerHTML = '<option value="">Select District</option>';
             districts.forEach(d => {
                 const option = document.createElement('option');
                 option.value = d;
@@ -1388,99 +1634,177 @@
             });
         }
 
-        // ==================== LANGUAGE FUNCTIONS ====================
-        function switchLanguage(lang) {
-            currentLanguage = lang;
-            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            applyLanguage(lang);
-            showToast('Language switched to ' + lang.toUpperCase());
+        function initWaveform() {
+            const waveform = document.getElementById('waveform');
+            waveform.innerHTML = '';
+            for (let i = 0; i < 30; i++) {
+                const bar = document.createElement('div');
+                bar.className = 'wave-bar';
+                waveform.appendChild(bar);
+            }
         }
 
-        function applyLanguage(lang) {
-            const t = translations[lang] || translations.en;
-            
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (t[key]) {
-                    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-                        el.placeholder = t[key];
-                    } else if (el.tagName === 'OPTION') {
-                        el.textContent = t[key];
-                    } else {
-                        el.textContent = t[key];
-                    }
-                }
+        function animateWaveform() {
+            if (!isRecording) return;
+            waveformInterval = setInterval(() => {
+                document.querySelectorAll('.wave-bar').forEach(bar => {
+                    const height = Math.random() * 40 + 10;
+                    bar.style.height = height + 'px';
+                });
+            }, 100);
+        }
+
+        function stopWaveform() {
+            if (waveformInterval) clearInterval(waveformInterval);
+            document.querySelectorAll('.wave-bar').forEach(bar => {
+                bar.style.height = '30px';
             });
-
-            displaySymptoms(currentCategory);
-            updateSymptomTags();
         }
 
-        function getTranslation(key) {
-            return translations[currentLanguage]?.[key] || translations.en[key] || key;
+        // ==================== AUTHENTICATION ====================
+        function switchAuthTab(tab) {
+            document.querySelectorAll('.login-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.login-panel').forEach(p => p.classList.remove('active'));
+            
+            if (tab === 'patient') {
+                document.querySelectorAll('.login-tab')[0].classList.add('active');
+                document.getElementById('patientPanel').classList.add('active');
+            } else {
+                document.querySelectorAll('.login-tab')[1].classList.add('active');
+                document.getElementById('doctorPanel').classList.add('active');
+            }
         }
 
-        // ==================== PATIENT LOGIN (Using Patient ID only) ====================
+        function sendOTP(type) {
+            const input = type === 'patient' 
+                ? document.getElementById('patientEmailPhone').value 
+                : document.getElementById('doctorEmailPhone').value;
+            
+            if (!input) {
+                showToast('Please enter email or phone number', 'error');
+                return;
+            }
+
+            // Generate 6-digit OTP
+            const otp = Math.floor(100000 + Math.random() * 900000).toString();
+            otpStore[input] = otp;
+
+            // Disable button for 60 seconds
+            const btn = document.getElementById(`send${type === 'patient' ? 'Patient' : 'Doctor'}OTP`);
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Sending...';
+
+            // Simulate OTP sending
+            setTimeout(() => {
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> Resend OTP';
+                btn.disabled = false;
+                showToast(`OTP ${otp} sent to ${input}`, 'success');
+                console.log(`OTP for ${input}: ${otp}`); // For demo purposes
+            }, 2000);
+        }
+
+        function socialLogin(provider, type) {
+            showToast(`Logging in with ${provider}...`, 'success');
+            
+            setTimeout(() => {
+                if (type === 'patient') {
+                    const demoPatient = patients[0];
+                    currentPatient = demoPatient;
+                    showMainApp('patient');
+                    showToast(`Welcome ${demoPatient.name}!`, 'success');
+                } else {
+                    const demoDoctor = doctors[0];
+                    currentDoctor = demoDoctor;
+                    showMainApp('doctor');
+                    showToast(`Welcome ${demoDoctor.name}!`, 'success');
+                }
+            }, 1500);
+        }
+
         function patientLogin() {
-            const patientId = document.getElementById('patientId').value.trim();
-            const password = document.getElementById('patientPassword').value.trim();
+            const input = document.getElementById('patientEmailPhone').value.trim();
+            const otp = document.getElementById('patientOTP').value.trim();
+
+            // For demo, accept any 6-digit OTP or use default
+            if (otp.length !== 6) {
+                showToast('Please enter 6-digit OTP', 'error');
+                return;
+            }
+
+            // Find patient by email or phone
+            let patient = patients.find(p => p.email === input || p.phone === input);
             
-            // Find patient by ID only (as requested)
-            let patient = patients.find(p => p.id === patientId);
-            
-            if (patient && patient.password === password) {
+            // If not found, use first patient as demo
+            if (!patient) {
+                patient = patients[0];
+            }
+
+            if (patient) {
                 currentPatient = patient;
-                document.getElementById('loginPage').style.display = 'none';
+                showMainApp('patient');
+                showToast(`Welcome ${patient.name}!`, 'success');
+                document.getElementById('patientOTP').value = '';
+            } else {
+                showToast('Patient not found', 'error');
+            }
+        }
+
+        function doctorLogin() {
+            const input = document.getElementById('doctorEmailPhone').value.trim();
+            const otp = document.getElementById('doctorOTP').value.trim();
+
+            if (otp.length !== 6) {
+                showToast('Please enter 6-digit OTP', 'error');
+                return;
+            }
+
+            let doctor = doctors.find(d => d.email === input || d.phone === input);
+            
+            if (!doctor) {
+                doctor = doctors[0];
+            }
+
+            if (doctor) {
+                currentDoctor = doctor;
+                showMainApp('doctor');
+                showToast(`Welcome ${doctor.name}!`, 'success');
+                document.getElementById('doctorOTP').value = '';
+            } else {
+                showToast('Doctor not found', 'error');
+            }
+        }
+
+        function showMainApp(type) {
+            document.getElementById('loginPage').style.display = 'none';
+            
+            if (type === 'patient') {
                 document.getElementById('patientApp').classList.add('visible');
                 document.getElementById('doctorApp').classList.remove('visible');
                 
-                document.getElementById('patientName').textContent = patient.name;
-                document.getElementById('patientID').textContent = patient.id;
-                document.getElementById('patientEmail').textContent = patient.email;
-                document.getElementById('patientPhone').textContent = patient.phone;
-                document.getElementById('fullName').value = patient.name;
-                document.getElementById('age').value = patient.age;
-                document.getElementById('gender').value = patient.gender;
-                if (patient.district) {
-                    document.getElementById('district').value = patient.district;
+                document.getElementById('patientDisplayName').textContent = currentPatient.name;
+                document.getElementById('patientDisplayID').textContent = currentPatient.id;
+                document.getElementById('patientDisplayEmail').textContent = currentPatient.email;
+                document.getElementById('patientFullName').value = currentPatient.name;
+                document.getElementById('patientAge').value = currentPatient.age;
+                document.getElementById('patientGender').value = currentPatient.gender;
+                if (currentPatient.district) {
+                    document.getElementById('patientDistrict').value = currentPatient.district;
                 }
                 
                 updatePatientStats();
-                showToast(getTranslation('loginSuccess') + ' Welcome ' + patient.name, 'success');
             } else {
-                showToast(getTranslation('invalidCred'), 'error');
-            }
-        }
-
-        // ==================== DOCTOR LOGIN (Using Doctor ID only) ====================
-        function doctorLogin() {
-            const doctorId = document.getElementById('doctorId').value.trim();
-            const password = document.getElementById('doctorPassword').value.trim();
-            
-            // Find doctor by ID only (as requested)
-            let doctor = doctors.find(d => d.id === doctorId);
-            
-            if (doctor && doctor.password === password) {
-                currentDoctor = doctor;
-                document.getElementById('loginPage').style.display = 'none';
                 document.getElementById('doctorApp').classList.add('visible');
                 document.getElementById('patientApp').classList.remove('visible');
                 
-                document.getElementById('doctorName').textContent = doctor.name;
-                document.getElementById('doctorID').textContent = doctor.id;
-                document.getElementById('doctorEmail').textContent = doctor.email;
-                document.getElementById('doctorPhone').textContent = doctor.phone;
+                document.getElementById('doctorDisplayName').textContent = currentDoctor.name;
+                document.getElementById('doctorDisplayID').textContent = currentDoctor.id;
+                document.getElementById('doctorDisplayEmail').textContent = currentDoctor.email;
                 
                 displayPatientRecords();
                 updateDoctorStats();
-                showToast(getTranslation('doctorLoginSuccess') + ' Welcome ' + doctor.name, 'success');
-            } else {
-                showToast(getTranslation('invalidDoctorCred'), 'error');
             }
         }
 
-        // ==================== LOGOUT ====================
         function logout(type) {
             if (type === 'patient') {
                 currentPatient = null;
@@ -1489,8 +1813,16 @@
                 currentDoctor = null;
                 document.getElementById('doctorApp').classList.remove('visible');
             }
-            document.getElementById('loginPage').style.display = 'grid';
-            showToast(getTranslation('logoutSuccess'));
+            document.getElementById('loginPage').style.display = 'block';
+            showToast('Logged out successfully');
+        }
+
+        // ==================== LANGUAGE ====================
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            showToast('Language switched to ' + lang.toUpperCase());
         }
 
         // ==================== SYMPTOMS ====================
@@ -1504,7 +1836,7 @@
                 const item = document.createElement('div');
                 item.className = `symptom-item ${selectedSymptoms.includes(symptom.id) ? 'selected' : ''}`;
                 item.onclick = () => toggleSymptom(symptom.id);
-                item.innerHTML = `<span>${getTranslation(symptom.name)}</span>`;
+                item.innerHTML = `<span>${symptom.name}</span>`;
                 grid.appendChild(item);
             });
         }
@@ -1527,7 +1859,7 @@
         function updateSymptomTags() {
             const container = document.getElementById('symptomTags');
             if (selectedSymptoms.length === 0) {
-                container.innerHTML = '<p style="color: var(--gray);">' + getTranslation('noSymptoms') + '</p>';
+                container.innerHTML = '<p style="color: var(--gray);">No symptoms selected</p>';
                 return;
             }
             
@@ -1537,7 +1869,7 @@
                 if (symptom) {
                     const tag = document.createElement('span');
                     tag.className = 'symptom-tag';
-                    tag.innerHTML = `${getTranslation(symptom.name)} <button onclick="removeSymptom(${id})">×</button>`;
+                    tag.innerHTML = `${symptom.name} <button onclick="removeSymptom(${id})">×</button>`;
                     container.appendChild(tag);
                 }
             });
@@ -1568,11 +1900,13 @@
                         `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
                 }, 1000);
                 
+                animateWaveform();
+                
                 setTimeout(() => {
                     if (isRecording) {
                         toggleRecording();
-                        document.getElementById('typedSymptoms').value = 'fever, cough, headache';
-                        showToast(getTranslation('voiceCaptured'));
+                        document.getElementById('typedSymptoms').value = 'fever, cough, headache, fatigue';
+                        showToast('Voice captured successfully!');
                     }
                 }, 3000);
             } else {
@@ -1580,36 +1914,36 @@
                 isRecording = false;
                 document.getElementById('recordBtn').classList.remove('recording');
                 document.getElementById('recordBtn').innerHTML = '<i class="fas fa-microphone"></i>';
+                stopWaveform();
             }
         }
 
         // ==================== AI DIAGNOSIS ====================
         function analyzeHealth() {
             if (!currentPatient) {
-                showToast(getTranslation('loginFirst'), 'error');
+                showToast('Please login first', 'error');
                 return;
             }
 
+            // Get typed symptoms
             const typedText = document.getElementById('typedSymptoms').value.toLowerCase();
             if (typedText) {
                 const words = typedText.split(',').map(w => w.trim());
                 words.forEach(word => {
-                    for (let symptom of symptomsDB) {
-                        const symptomName = getTranslation(symptom.name).toLowerCase();
-                        if (symptomName.includes(word) && !selectedSymptoms.includes(symptom.id)) {
-                            selectedSymptoms.push(symptom.id);
-                            break;
-                        }
+                    const match = symptomsDB.find(s => s.name.toLowerCase().includes(word));
+                    if (match && !selectedSymptoms.includes(match.id)) {
+                        selectedSymptoms.push(match.id);
                     }
                 });
                 updateSymptomTags();
             }
 
             if (selectedSymptoms.length === 0) {
-                showToast(getTranslation('selectSymptoms'), 'error');
+                showToast('Please select or type symptoms', 'error');
                 return;
             }
 
+            // Find best matching disease
             let bestMatch = diseasesDB[0];
             let bestScore = 0;
 
@@ -1622,8 +1956,10 @@
                 }
             });
 
+            // Display results
             displayResults(bestMatch, selectedSymptoms);
 
+            // Save diagnosis
             const diagnosis = {
                 id: Date.now(),
                 patientId: currentPatient.id,
@@ -1634,7 +1970,7 @@
                 severity: bestMatch.severity,
                 symptoms: selectedSymptoms.map(id => {
                     const s = symptomsDB.find(sym => sym.id === id);
-                    return s ? getTranslation(s.name) : '';
+                    return s ? s.name : '';
                 }),
                 date: new Date().toISOString(),
                 doctorNote: ''
@@ -1642,53 +1978,56 @@
 
             diagnoses.push(diagnosis);
             localStorage.setItem('diagnoses', JSON.stringify(diagnoses));
-            updatePatientStats();
-            updateDoctorStats(); // Update doctor stats when new diagnosis is added
             
-            showToast(getTranslation('analysisComplete'));
+            updatePatientStats();
+            updateDoctorStats();
+            
+            showToast('Analysis complete!');
         }
 
         function displayResults(disease, symptoms) {
             const resultsDiv = document.getElementById('results');
             const matched = disease.symptoms.filter(id => symptoms.includes(id))
-                .map(id => {
-                    const s = symptomsDB.find(sym => sym.id === id);
-                    return s ? getTranslation(s.name) : '';
-                });
+                .map(id => symptomsDB.find(s => s.id === id)?.name);
             
             let html = `
-                <h2 style="color: var(--primary); margin-bottom: 20px;">${getTranslation('diagnosisReport')}</h2>
+                <h2 style="color: var(--primary); margin-bottom: 20px;">Diagnosis Report</h2>
                 <div style="margin-bottom: 20px;">
                     <h3>${disease.name}</h3>
                     <span class="severity-badge severity-${disease.severity}">${disease.severity.toUpperCase()}</span>
                     <p style="margin-top: 10px;">${disease.description}</p>
                 </div>
                 <div style="margin: 20px 0;">
-                    <h4>✅ ${getTranslation('matchedSymptoms')}:</h4>
+                    <h4>✅ Matched Symptoms:</h4>
                     <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px;">
                         ${matched.map(s => `<span style="background: var(--success); color: white; padding: 5px 15px; border-radius: 20px;">${s}</span>`).join('')}
                     </div>
                 </div>
                 <div style="margin: 20px 0;">
-                    <h4>📋 ${getTranslation('advice')}:</h4>
+                    <h4>📋 Medical Advice:</h4>
                     <ul>${disease.advice.map(a => `<li>${a}</li>`).join('')}</ul>
                 </div>
                 <div style="margin: 20px 0;">
-                    <h4>🏠 ${getTranslation('homeRemedies')}:</h4>
+                    <h4>🏠 Home Remedies:</h4>
                     <ul>${disease.homeRemedies.map(r => `<li>${r}</li>`).join('')}</ul>
                 </div>
             `;
             
             if (disease.severity === 'high') {
                 html += `
-                    <div style="background: #FFEBEE; padding: 20px; border-radius: 20px; margin: 20px 0;">
-                        <h4 style="color: var(--danger);">⚠️ ${getTranslation('warningSigns')}</h4>
-                        <ul>${disease.warningSigns.map(w => `<li>${w}</li>`).join('')}</ul>
+                    <div style="background: #fee2e2; padding: 20px; border-radius: 20px; margin: 20px 0;">
+                        <h4 style="color: var(--danger);">⚠️ WARNING SIGNS - Consult Doctor Immediately</h4>
+                        <ul style="color: var(--danger);">${disease.warningSigns.map(w => `<li>${w}</li>`).join('')}</ul>
                     </div>
                 `;
             }
             
-            html += `<button class="login-btn" onclick="window.print()" style="width: auto;">${getTranslation('printReport')}</button>`;
+            html += `
+                <div style="display: flex; gap: 15px; margin-top: 30px;">
+                    <button class="login-btn" onclick="window.print()" style="width: auto; padding: 12px 30px;">Print Report</button>
+                    <button class="login-btn" onclick="document.getElementById('results').style.display='none'" style="width: auto; padding: 12px 30px; background: var(--gray);">Close</button>
+                </div>
+            `;
             
             resultsDiv.innerHTML = html;
             resultsDiv.style.display = 'block';
@@ -1698,19 +2037,19 @@
         // ==================== STATS ====================
         function updatePatientStats() {
             const patientDiagnoses = diagnoses.filter(d => d.patientId === currentPatient?.id);
-            document.getElementById('totalVisits').textContent = patientDiagnoses.length;
-            document.getElementById('totalDiagnoses').textContent = patientDiagnoses.length;
-            document.getElementById('highRiskCount').textContent = patientDiagnoses.filter(d => d.severity === 'high').length;
-            document.getElementById('todayCount').textContent = patientDiagnoses.filter(d => 
+            document.getElementById('patientTotalVisits').textContent = patientDiagnoses.length;
+            document.getElementById('patientTotalDiagnoses').textContent = patientDiagnoses.length;
+            document.getElementById('patientHighRisk').textContent = patientDiagnoses.filter(d => d.severity === 'high').length;
+            document.getElementById('patientTodayCount').textContent = patientDiagnoses.filter(d => 
                 new Date(d.date).toDateString() === new Date().toDateString()
             ).length;
         }
 
         function updateDoctorStats() {
-            document.getElementById('totalPatients').textContent = patients.length;
-            document.getElementById('totalReports').textContent = diagnoses.length;
-            document.getElementById('criticalCases').textContent = diagnoses.filter(d => d.severity === 'high').length;
-            document.getElementById('todayPatients').textContent = diagnoses.filter(d => 
+            document.getElementById('doctorTotalPatients').textContent = patients.length;
+            document.getElementById('doctorTotalReports').textContent = diagnoses.length;
+            document.getElementById('doctorCriticalCases').textContent = diagnoses.filter(d => d.severity === 'high').length;
+            document.getElementById('doctorTodayPatients').textContent = diagnoses.filter(d => 
                 new Date(d.date).toDateString() === new Date().toDateString()
             ).length;
         }
@@ -1725,11 +2064,11 @@
             const container = document.getElementById('patientRecordsList');
             
             if (diagnoses.length === 0) {
-                container.innerHTML = '<p>' + getTranslation('noRecords') + '</p>';
+                container.innerHTML = '<p>No patient records yet. Patients need to run diagnosis first.</p>';
                 return;
             }
 
-            // Group diagnoses by patient
+            // Group by patient
             const patientGroups = {};
             diagnoses.forEach(d => {
                 if (!patientGroups[d.patientId]) {
@@ -1746,23 +2085,22 @@
 
             container.innerHTML = '';
             Object.values(patientGroups).forEach(group => {
-                const patientDiv = document.createElement('div');
-                patientDiv.className = 'patient-record';
-                patientDiv.innerHTML = `
+                const card = document.createElement('div');
+                card.className = 'patient-card';
+                card.innerHTML = `
                     <div class="patient-info">
                         <h4>${group.patientName}</h4>
                         <p><i class="fas fa-id-card"></i> ID: ${group.patientId}</p>
                         <p><i class="fas fa-envelope"></i> ${group.patientEmail}</p>
                         <p><i class="fas fa-phone"></i> ${group.patientPhone || 'N/A'}</p>
-                        <p><i class="fas fa-notes-medical"></i> ${group.records.length} ${getTranslation('visits')}</p>
+                        <p><i class="fas fa-notes-medical"></i> ${group.records.length} visits</p>
+                        <p><i class="fas fa-exclamation-triangle"></i> High Risk: ${group.records.filter(r => r.severity === 'high').length}</p>
                     </div>
-                    <div>
-                        <button class="login-btn" style="width: auto; padding: 10px 20px;" onclick="viewPatientDetails('${group.patientId}')">
-                            ${getTranslation('viewDetails')}
-                        </button>
-                    </div>
+                    <button class="view-btn" onclick="viewPatientDetails('${group.patientId}')">
+                        View History
+                    </button>
                 `;
-                container.appendChild(patientDiv);
+                container.appendChild(card);
             });
         }
 
@@ -1770,11 +2108,13 @@
             const patientRecords = diagnoses.filter(d => d.patientId === patientId);
             const patient = patients.find(p => p.id === patientId);
             
-            let details = `Patient: ${patient?.name || 'Unknown'} (ID: ${patientId})\n`;
+            let details = `PATIENT HISTORY\n`;
+            details += `================\n\n`;
+            details += `Name: ${patient?.name || 'Unknown'}\n`;
+            details += `ID: ${patientId}\n`;
             details += `Email: ${patient?.email || 'N/A'}\n`;
             details += `Phone: ${patient?.phone || 'N/A'}\n`;
-            details += `Total Visits: ${patientRecords.length}\n`;
-            details += `========================\n\n`;
+            details += `Total Visits: ${patientRecords.length}\n\n`;
             
             patientRecords.forEach((r, index) => {
                 details += `Visit #${index + 1}\n`;
@@ -1782,7 +2122,7 @@
                 details += `Diagnosis: ${r.diagnosis}\n`;
                 details += `Severity: ${r.severity.toUpperCase()}\n`;
                 details += `Symptoms: ${r.symptoms.join(', ')}\n`;
-                details += `Doctor Note: ${r.doctorNote || 'None'}\n`;
+                details += `Doctor Note: ${r.doctorNote || 'No notes yet'}\n`;
                 details += `------------------------\n`;
             });
             
@@ -1792,7 +2132,7 @@
         function saveClinicalNote() {
             const note = document.getElementById('clinicalNote').value;
             if (note) {
-                showToast(getTranslation('noteSaved'));
+                showToast('Note saved successfully');
                 document.getElementById('clinicalNote').value = '';
             } else {
                 showToast('Please write a note first', 'error');

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>RuralCare - Patient & Doctor Portal with Multi-language</title>
+    <title>RuralCare - Patient & Doctor Portal</title>
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Google Fonts -->
@@ -42,38 +42,6 @@
             padding: 20px;
         }
 
-        /* ========== LANGUAGE SWITCHER ========== */
-        .language-switcher {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            display: flex;
-            gap: 10px;
-            z-index: 1000;
-            background: white;
-            padding: 10px 15px;
-            border-radius: 50px;
-            box-shadow: var(--shadow-lg);
-        }
-
-        .lang-switch-btn {
-            padding: 5px 12px;
-            border: 2px solid var(--primary);
-            background: white;
-            color: var(--primary);
-            border-radius: 30px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        .lang-switch-btn.active {
-            background: var(--primary);
-            color: white;
-        }
-
-        /* ========== LOGIN CONTAINER ========== */
         .login-container {
             max-width: 1200px;
             width: 100%;
@@ -208,7 +176,6 @@
             color: var(--accent);
         }
 
-        /* ========== MAIN APP ========== */
         .main-app {
             display: none;
             width: 100%;
@@ -276,7 +243,6 @@
             transform: translateY(-2px);
         }
 
-        /* Stats Cards */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -313,7 +279,6 @@
             font-size: 0.9rem;
         }
 
-        /* Patient Form */
         .patient-form {
             background: var(--light);
             border-radius: 30px;
@@ -335,7 +300,6 @@
             gap: 15px;
         }
 
-        /* Symptoms Section */
         .symptoms-section {
             background: var(--light);
             border-radius: 30px;
@@ -416,7 +380,6 @@
             font-size: 1.2rem;
         }
 
-        /* Voice Section */
         .voice-section {
             background: linear-gradient(135deg, #667EEA, #764BA2);
             border-radius: 30px;
@@ -463,7 +426,6 @@
             border-radius: 50px;
         }
 
-        /* Analyze Button */
         .analyze-btn {
             width: 100%;
             padding: 20px;
@@ -483,7 +445,6 @@
             box-shadow: 0 20px 40px rgba(255, 138, 92, 0.3);
         }
 
-        /* Results */
         .results-card {
             background: white;
             border-radius: 30px;
@@ -505,7 +466,6 @@
         .severity-medium { background: #FFF3E0; color: #F57C00; }
         .severity-high { background: #FFEBEE; color: #C62828; }
 
-        /* Doctor Dashboard */
         .doctor-dashboard {
             background: var(--light);
             border-radius: 30px;
@@ -544,7 +504,6 @@
             resize: vertical;
         }
 
-        /* Toast */
         .toast {
             position: fixed;
             bottom: 30px;
@@ -567,7 +526,6 @@
             border-left-color: var(--danger);
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
             .login-container {
                 grid-template-columns: 1fr;
@@ -576,28 +534,11 @@
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
-            
-            .language-switcher {
-                top: 10px;
-                right: 10px;
-                flex-wrap: wrap;
-                max-width: 200px;
-            }
         }
     </style>
 </head>
 <body>
-    <!-- Language Switcher -->
-    <div class="language-switcher">
-        <button class="lang-switch-btn active" onclick="switchLanguage('en')">EN</button>
-        <button class="lang-switch-btn" onclick="switchLanguage('hi')">हिंदी</button>
-        <button class="lang-switch-btn" onclick="switchLanguage('ta')">தமிழ்</button>
-        <button class="lang-switch-btn" onclick="switchLanguage('te')">తెలుగు</button>
-        <button class="lang-switch-btn" onclick="switchLanguage('kn')">ಕನ್ನಡ</button>
-        <button class="lang-switch-btn" onclick="switchLanguage('ml')">മലയാളം</button>
-    </div>
-
-    <!-- LOGIN PAGE (Separate Patient & Doctor Login) -->
+    <!-- LOGIN PAGE -->
     <div class="login-container" id="loginPage">
         <!-- Patient Login -->
         <div class="login-box patient">
@@ -605,8 +546,8 @@
                 <div class="login-icon">
                     <i class="fas fa-user"></i>
                 </div>
-                <h2 data-i18n="patientLogin">Patient Login</h2>
-                <p data-i18n="patientSubtitle">Access your health records</p>
+                <h2>Patient Login</h2>
+                <p>Access your health records</p>
             </div>
 
             <div class="form-group">
@@ -616,14 +557,15 @@
                 <input type="password" id="patientPassword" placeholder="Password" value="patient123">
             </div>
             <button class="login-btn" onclick="patientLogin()">
-                <i class="fas fa-sign-in-alt"></i> <span data-i18n="loginBtn">Login as Patient</span>
+                <i class="fas fa-sign-in-alt"></i> Login as Patient
             </button>
 
             <div class="demo-credentials">
                 <i class="fas fa-info-circle"></i>
-                <strong data-i18n="demoPatient">Demo Patient:</strong><br>
-                <span data-i18n="patientCred">Email: patient@demo.com / Password: patient123</span><br>
-                <span data-i18n="patientCred2">Phone: 9876543210 / Password: patient123</span>
+                <strong>Demo Patients:</strong><br>
+                • Email: patient@demo.com / Password: patient123<br>
+                • Email: priya@example.com / Password: priya123<br>
+                • Phone: 9876543210 / Password: patient123
             </div>
         </div>
 
@@ -633,8 +575,8 @@
                 <div class="login-icon">
                     <i class="fas fa-user-md"></i>
                 </div>
-                <h2 data-i18n="doctorLogin">Doctor Login</h2>
-                <p data-i18n="doctorSubtitle">Access patient records</p>
+                <h2>Doctor Login</h2>
+                <p>Access patient records</p>
             </div>
 
             <div class="form-group">
@@ -644,15 +586,15 @@
                 <input type="password" id="doctorPassword" placeholder="Password" value="doctor123">
             </div>
             <button class="login-btn" onclick="doctorLogin()">
-                <i class="fas fa-stethoscope"></i> <span data-i18n="doctorBtn">Login as Doctor</span>
+                <i class="fas fa-stethoscope"></i> Login as Doctor
             </button>
 
             <div class="demo-credentials">
                 <i class="fas fa-info-circle"></i>
-                <strong data-i18n="demoDoctor">Demo Doctors:</strong><br>
-                <span data-i18n="doctorCred1">Email: doctor@demo.com / Password: doctor123 (Dr. Sharma)</span><br>
-                <span data-i18n="doctorCred2">Email: dr.gupta@demo.com / Password: doctor123 (Dr. Gupta)</span><br>
-                <span data-i18n="doctorCred3">Phone: 9988776655 / Password: doctor123 (Dr. Verma)</span>
+                <strong>Demo Doctors:</strong><br>
+                • Email: doctor@demo.com / Password: doctor123 (Dr. Sharma)<br>
+                • Email: dr.gupta@demo.com / Password: doctor123 (Dr. Gupta)<br>
+                • Phone: 9988776655 / Password: doctor123 (Dr. Verma)
             </div>
         </div>
     </div>
@@ -671,7 +613,7 @@
                 </div>
             </div>
             <button class="logout-btn" onclick="logout('patient')">
-                <i class="fas fa-sign-out-alt"></i> <span data-i18n="logout">Logout</span>
+                <i class="fas fa-sign-out-alt"></i> Logout
             </button>
         </div>
 
@@ -680,22 +622,22 @@
             <div class="stat-card">
                 <i class="fas fa-calendar-check"></i>
                 <div class="stat-number" id="totalVisits">0</div>
-                <div class="stat-label" data-i18n="totalVisits">Total Visits</div>
+                <div class="stat-label">Total Visits</div>
             </div>
             <div class="stat-card">
                 <i class="fas fa-notes-medical"></i>
                 <div class="stat-number" id="totalDiagnoses">0</div>
-                <div class="stat-label" data-i18n="diagnoses">Diagnoses</div>
+                <div class="stat-label">Diagnoses</div>
             </div>
             <div class="stat-card">
                 <i class="fas fa-exclamation-triangle"></i>
                 <div class="stat-number" id="highRiskCount">0</div>
-                <div class="stat-label" data-i18n="highRisk">High Risk</div>
+                <div class="stat-label">High Risk</div>
             </div>
             <div class="stat-card">
                 <i class="fas fa-calendar-day"></i>
                 <div class="stat-number" id="todayCount">0</div>
-                <div class="stat-label" data-i18n="today">Today</div>
+                <div class="stat-label">Today</div>
             </div>
         </div>
 
@@ -703,7 +645,7 @@
         <div class="patient-form">
             <h3 class="form-title">
                 <i class="fas fa-user-circle"></i>
-                <span data-i18n="patientInfo">Patient Information</span>
+                Patient Information
             </h3>
             <div class="form-grid">
                 <div class="form-group">
@@ -714,14 +656,14 @@
                 </div>
                 <div class="form-group">
                     <select id="gender">
-                        <option value="male" data-i18n="male">Male</option>
-                        <option value="female" data-i18n="female">Female</option>
-                        <option value="other" data-i18n="other">Other</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <select id="district">
-                        <option value="" data-i18n="selectDistrict">Select District</option>
+                        <option value="">Select District</option>
                     </select>
                 </div>
             </div>
@@ -731,19 +673,19 @@
         <div class="symptoms-section">
             <h3 class="form-title">
                 <i class="fas fa-stethoscope"></i>
-                <span data-i18n="symptomChecker">Symptom Checker</span>
+                Symptom Checker
             </h3>
 
             <div class="category-tabs" id="symptomCategories">
-                <button class="category-tab active" onclick="filterSymptoms('all')" data-i18n="all">All</button>
-                <button class="category-tab" onclick="filterSymptoms('respiratory')" data-i18n="respiratory">Respiratory</button>
-                <button class="category-tab" onclick="filterSymptoms('digestive')" data-i18n="digestive">Digestive</button>
-                <button class="category-tab" onclick="filterSymptoms('general')" data-i18n="general">General</button>
+                <button class="category-tab active" onclick="filterSymptoms('all')">All</button>
+                <button class="category-tab" onclick="filterSymptoms('respiratory')">Respiratory</button>
+                <button class="category-tab" onclick="filterSymptoms('digestive')">Digestive</button>
+                <button class="category-tab" onclick="filterSymptoms('general')">General</button>
             </div>
 
             <div class="symptoms-grid" id="symptomsGrid"></div>
 
-            <h4 style="margin-bottom: 10px;" data-i18n="selectedSymptoms">Selected Symptoms:</h4>
+            <h4 style="margin-bottom: 10px;">Selected Symptoms:</h4>
             <div class="selected-tags" id="symptomTags"></div>
         </div>
 
@@ -751,7 +693,7 @@
         <div class="voice-section">
             <h3 style="margin-bottom: 20px;">
                 <i class="fas fa-microphone-alt"></i>
-                <span data-i18n="voiceRecorder">Voice Symptom Recorder</span>
+                Voice Symptom Recorder
             </h3>
             
             <div class="voice-controls">
@@ -770,7 +712,7 @@
 
         <!-- Analyze Button -->
         <button class="analyze-btn" onclick="analyzeHealth()">
-            <i class="fas fa-microchip"></i> <span data-i18n="analyze">Analyze Symptoms</span>
+            <i class="fas fa-microchip"></i> Analyze Symptoms
         </button>
 
         <!-- Results -->
@@ -791,7 +733,7 @@
                 </div>
             </div>
             <button class="logout-btn" onclick="logout('doctor')">
-                <i class="fas fa-sign-out-alt"></i> <span data-i18n="logout">Logout</span>
+                <i class="fas fa-sign-out-alt"></i> Logout
             </button>
         </div>
 
@@ -799,39 +741,39 @@
             <div class="stat-card">
                 <i class="fas fa-users"></i>
                 <div class="stat-number" id="totalPatients">0</div>
-                <div class="stat-label" data-i18n="totalPatients">Total Patients</div>
+                <div class="stat-label">Total Patients</div>
             </div>
             <div class="stat-card">
                 <i class="fas fa-notes-medical"></i>
                 <div class="stat-number" id="totalReports">0</div>
-                <div class="stat-label" data-i18n="reports">Reports</div>
+                <div class="stat-label">Reports</div>
             </div>
             <div class="stat-card">
                 <i class="fas fa-exclamation-triangle"></i>
                 <div class="stat-number" id="criticalCases">0</div>
-                <div class="stat-label" data-i18n="critical">Critical</div>
+                <div class="stat-label">Critical</div>
             </div>
             <div class="stat-card">
                 <i class="fas fa-calendar-day"></i>
                 <div class="stat-number" id="todayPatients">0</div>
-                <div class="stat-label" data-i18n="today">Today</div>
+                <div class="stat-label">Today</div>
             </div>
         </div>
 
         <div class="doctor-dashboard">
             <h3 class="form-title">
                 <i class="fas fa-clipboard-list"></i>
-                <span data-i18n="patientRecords">Patient Records</span>
+                Patient Records
             </h3>
 
             <div id="patientRecordsList"></div>
 
             <h3 class="form-title" style="margin-top: 30px;">
                 <i class="fas fa-pen"></i>
-                <span data-i18n="addNote">Add Clinical Note</span>
+                Add Clinical Note
             </h3>
             <textarea class="doctor-note" id="clinicalNote" placeholder="Write your recommendations..." rows="4"></textarea>
-            <button class="login-btn" onclick="saveClinicalNote()"><span data-i18n="saveNote">Save Note</span></button>
+            <button class="login-btn" onclick="saveClinicalNote()">Save Note</button>
         </div>
     </div>
 
@@ -839,408 +781,40 @@
     <div class="toast" id="toast"></div>
 
     <script>
-        // ==================== MULTI-LANGUAGE SUPPORT ====================
-        let currentLanguage = 'en';
-        
-        const translations = {
-            en: {
-                patientLogin: 'Patient Login',
-                patientSubtitle: 'Access your health records',
-                doctorLogin: 'Doctor Login',
-                doctorSubtitle: 'Access patient records',
-                loginBtn: 'Login as Patient',
-                doctorBtn: 'Login as Doctor',
-                demoPatient: 'Demo Patients:',
-                patientCred: 'Email: patient@demo.com / Password: patient123',
-                patientCred2: 'Phone: 9876543210 / Password: patient123',
-                demoDoctor: 'Demo Doctors:',
-                doctorCred1: 'Email: doctor@demo.com / Password: doctor123 (Dr. Sharma)',
-                doctorCred2: 'Email: dr.gupta@demo.com / Password: doctor123 (Dr. Gupta)',
-                doctorCred3: 'Phone: 9988776655 / Password: doctor123 (Dr. Verma)',
-                logout: 'Logout',
-                totalVisits: 'Total Visits',
-                diagnoses: 'Diagnoses',
-                highRisk: 'High Risk',
-                today: 'Today',
-                patientInfo: 'Patient Information',
-                male: 'Male',
-                female: 'Female',
-                other: 'Other',
-                selectDistrict: 'Select District',
-                symptomChecker: 'Symptom Checker',
-                all: 'All',
-                respiratory: 'Respiratory',
-                digestive: 'Digestive',
-                general: 'General',
-                selectedSymptoms: 'Selected Symptoms:',
-                voiceRecorder: 'Voice Symptom Recorder',
-                analyze: 'Analyze Symptoms',
-                totalPatients: 'Total Patients',
-                reports: 'Reports',
-                critical: 'Critical',
-                patientRecords: 'Patient Records',
-                addNote: 'Add Clinical Note',
-                saveNote: 'Save Note',
-                noSymptoms: 'No symptoms selected',
-                loginFirst: 'Please login first',
-                selectSymptoms: 'Please select symptoms',
-                analysisComplete: 'Analysis complete!',
-                diagnosisReport: 'Diagnosis Report',
-                matchedSymptoms: 'Matched Symptoms',
-                advice: 'Advice',
-                homeRemedies: 'Home Remedies',
-                warningSigns: 'Warning Signs',
-                printReport: 'Print Report',
-                loginSuccess: 'Login successful!',
-                invalidCred: 'Invalid email/phone or password',
-                doctorLoginSuccess: 'Doctor login successful!',
-                invalidDoctorCred: 'Invalid doctor credentials',
-                logoutSuccess: 'Logged out successfully',
-                voiceCaptured: 'Voice captured!',
-                noRecords: 'No patient records yet',
-                visits: 'visits',
-                viewDetails: 'View Details',
-                noteSaved: 'Note saved successfully',
-                loginWithEmail: 'Login with your email or phone number'
-            },
-            hi: {
-                patientLogin: 'रोगी लॉगिन',
-                patientSubtitle: 'अपने स्वास्थ्य रिकॉर्ड देखें',
-                doctorLogin: 'डॉक्टर लॉगिन',
-                doctorSubtitle: 'रोगी रिकॉर्ड देखें',
-                loginBtn: 'रोगी के रूप में लॉगिन करें',
-                doctorBtn: 'डॉक्टर के रूप में लॉगिन करें',
-                demoPatient: 'डेमो रोगी:',
-                patientCred: 'ईमेल: patient@demo.com / पासवर्ड: patient123',
-                patientCred2: 'फोन: 9876543210 / पासवर्ड: patient123',
-                demoDoctor: 'डेमो डॉक्टर:',
-                doctorCred1: 'ईमेल: doctor@demo.com / पासवर्ड: doctor123 (डॉ. शर्मा)',
-                doctorCred2: 'ईमेल: dr.gupta@demo.com / पासवर्ड: doctor123 (डॉ. गुप्ता)',
-                doctorCred3: 'फोन: 9988776655 / पासवर्ड: doctor123 (डॉ. वर्मा)',
-                logout: 'लॉगआउट',
-                totalVisits: 'कुल विज़िट',
-                diagnoses: 'निदान',
-                highRisk: 'उच्च जोखिम',
-                today: 'आज',
-                patientInfo: 'रोगी जानकारी',
-                male: 'पुरुष',
-                female: 'महिला',
-                other: 'अन्य',
-                selectDistrict: 'जिला चुनें',
-                symptomChecker: 'लक्षण जांचकर्ता',
-                all: 'सभी',
-                respiratory: 'श्वसन',
-                digestive: 'पाचन',
-                general: 'सामान्य',
-                selectedSymptoms: 'चयनित लक्षण:',
-                voiceRecorder: 'आवाज लक्षण रिकॉर्डर',
-                analyze: 'लक्षण विश्लेषण करें',
-                totalPatients: 'कुल रोगी',
-                reports: 'रिपोर्ट',
-                critical: 'गंभीर',
-                patientRecords: 'रोगी रिकॉर्ड',
-                addNote: 'क्लिनिकल नोट जोड़ें',
-                saveNote: 'नोट सहेजें',
-                noSymptoms: 'कोई लक्षण चयनित नहीं',
-                loginFirst: 'कृपया पहले लॉगिन करें',
-                selectSymptoms: 'कृपया लक्षण चुनें',
-                analysisComplete: 'विश्लेषण पूरा हुआ!',
-                diagnosisReport: 'निदान रिपोर्ट',
-                matchedSymptoms: 'मिलान लक्षण',
-                advice: 'सलाह',
-                homeRemedies: 'घरेलू उपचार',
-                warningSigns: 'चेतावनी संकेत',
-                printReport: 'रिपोर्ट प्रिंट करें',
-                loginSuccess: 'लॉगिन सफल!',
-                invalidCred: 'गलत ईमेल/फोन या पासवर्ड',
-                doctorLoginSuccess: 'डॉक्टर लॉगिन सफल!',
-                invalidDoctorCred: 'गलत डॉक्टर क्रेडेंशियल्स',
-                logoutSuccess: 'सफलतापूर्वक लॉगआउट किया',
-                voiceCaptured: 'आवाज कैप्चर हुई!',
-                noRecords: 'अभी तक कोई रोगी रिकॉर्ड नहीं',
-                visits: 'विज़िट',
-                viewDetails: 'विवरण देखें',
-                noteSaved: 'नोट सफलतापूर्वक सहेजा गया',
-                loginWithEmail: 'अपने ईमेल या फोन नंबर से लॉगिन करें'
-            },
-            ta: {
-                patientLogin: 'நோயாளி உள்நுழைவு',
-                patientSubtitle: 'உங்கள் சுகாதார பதிவுகளை அணுகவும்',
-                doctorLogin: 'மருத்துவர் உள்நுழைவு',
-                doctorSubtitle: 'நோயாளி பதிவுகளை அணுகவும்',
-                loginBtn: 'நோயாளியாக உள்நுழைக',
-                doctorBtn: 'மருத்துவராக உள்நுழைக',
-                demoPatient: 'டெமோ நோயாளிகள்:',
-                patientCred: 'மின்னஞ்சல்: patient@demo.com / கடவுச்சொல்: patient123',
-                patientCred2: 'தொலைபேசி: 9876543210 / கடவுச்சொல்: patient123',
-                demoDoctor: 'டெமோ மருத்துவர்கள்:',
-                doctorCred1: 'மின்னஞ்சல்: doctor@demo.com / கடவுச்சொல்: doctor123 (டாக்டர் சர்மா)',
-                doctorCred2: 'மின்னஞ்சல்: dr.gupta@demo.com / கடவுச்சொல்: doctor123 (டாக்டர் குப்தா)',
-                doctorCred3: 'தொலைபேசி: 9988776655 / கடவுச்சொல்: doctor123 (டாக்டர் வர்மா)',
-                logout: 'வெளியேறு',
-                totalVisits: 'மொத்த வருகைகள்',
-                diagnoses: 'நோயறிதல்கள்',
-                highRisk: 'அதிக ஆபத்து',
-                today: 'இன்று',
-                patientInfo: 'நோயாளி தகவல்',
-                male: 'ஆண்',
-                female: 'பெண்',
-                other: 'மற்றவை',
-                selectDistrict: 'மாவட்டத்தைத் தேர்ந்தெடுக்கவும்',
-                symptomChecker: 'அறிகுறி சரிபார்ப்பான்',
-                all: 'அனைத்தும்',
-                respiratory: 'சுவாசம்',
-                digestive: 'செரிமானம்',
-                general: 'பொது',
-                selectedSymptoms: 'தேர்ந்தெடுக்கப்பட்ட அறிகுறிகள்:',
-                voiceRecorder: 'குரல் அறிகுறி பதிவி',
-                analyze: 'அறிகுறிகளை பகுப்பாய்வு செய்யுங்கள்',
-                totalPatients: 'மொத்த நோயாளிகள்',
-                reports: 'அறிக்கைகள்',
-                critical: 'முக்கியமான',
-                patientRecords: 'நோயாளி பதிவுகள்',
-                addNote: 'மருத்துவ குறிப்பு சேர்க்கவும்',
-                saveNote: 'குறிப்பை சேமிக்கவும்',
-                noSymptoms: 'அறிகுறிகள் எதுவும் தேர்ந்தெடுக்கப்படவில்லை',
-                loginFirst: 'முதலில் உள்நுழையவும்',
-                selectSymptoms: 'அறிகுறிகளைத் தேர்ந்தெடுக்கவும்',
-                analysisComplete: 'பகுப்பாய்வு முடிந்தது!',
-                diagnosisReport: 'நோயறிதல் அறிக்கை',
-                matchedSymptoms: 'பொருந்திய அறிகுறிகள்',
-                advice: 'ஆலோசனை',
-                homeRemedies: 'வீட்டு வைத்தியம்',
-                warningSigns: 'எச்சரிக்கை அறிகுறிகள்',
-                printReport: 'அறிக்கையை அச்சிடுக',
-                loginSuccess: 'உள்நுழைவு வெற்றிகரமானது!',
-                invalidCred: 'தவறான மின்னஞ்சல்/தொலைபேசி அல்லது கடவுச்சொல்',
-                doctorLoginSuccess: 'மருத்துவர் உள்நுழைவு வெற்றிகரமானது!',
-                invalidDoctorCred: 'தவறான மருத்துவர் சான்றுகள்',
-                logoutSuccess: 'வெளியேறியது',
-                voiceCaptured: 'குரல் பதிவு செய்யப்பட்டது!',
-                noRecords: 'இதுவரை நோயாளி பதிவுகள் இல்லை',
-                visits: 'வருகைகள்',
-                viewDetails: 'விவரங்களைக் காண்க',
-                noteSaved: 'குறிப்பு சேமிக்கப்பட்டது',
-                loginWithEmail: 'உங்கள் மின்னஞ்சல் அல்லது தொலைபேசி எண்ணுடன் உள்நுழைக'
-            },
-            te: {
-                patientLogin: 'రోగి లాగిన్',
-                patientSubtitle: 'మీ ఆరోగ్య రికార్డులను యాక్సెస్ చేయండి',
-                doctorLogin: 'డాక్టర్ లాగిన్',
-                doctorSubtitle: 'రోగి రికార్డులను యాక్సెస్ చేయండి',
-                loginBtn: 'రోగిగా లాగిన్ చేయండి',
-                doctorBtn: 'డాక్టర్గా లాగిన్ చేయండి',
-                demoPatient: 'డెమో రోగులు:',
-                patientCred: 'ఇమెయిల్: patient@demo.com / పాస్‌వర్డ్: patient123',
-                patientCred2: 'ఫోన్: 9876543210 / పాస్‌వర్డ్: patient123',
-                demoDoctor: 'డెమో డాక్టర్లు:',
-                doctorCred1: 'ఇమెయిల్: doctor@demo.com / పాస్‌వర్డ్: doctor123 (డా. శర్మ)',
-                doctorCred2: 'ఇమెయిల్: dr.gupta@demo.com / పాస్‌వర్డ్: doctor123 (డా. గుప్తా)',
-                doctorCred3: 'ఫోన్: 9988776655 / పాస్‌వర్డ్: doctor123 (డా. వర్మ)',
-                logout: 'లాగ్అవుట్',
-                totalVisits: 'మొత్తం సందర్శనలు',
-                diagnoses: 'రోగ నిర్ధారణలు',
-                highRisk: 'అధిక ప్రమాదం',
-                today: 'ఈరోజు',
-                patientInfo: 'రోగి సమాచారం',
-                male: 'పురుషుడు',
-                female: 'స్త్రీ',
-                other: 'ఇతర',
-                selectDistrict: 'జిల్లాను ఎంచుకోండి',
-                symptomChecker: 'లక్షణ పరిశీలకుడు',
-                all: 'అన్నీ',
-                respiratory: 'శ్వాసకోశ',
-                digestive: 'జీర్ణ',
-                general: 'సాధారణ',
-                selectedSymptoms: 'ఎంచుకున్న లక్షణాలు:',
-                voiceRecorder: 'వాయిస్ లక్షణ రికార్డర్',
-                analyze: 'లక్షణాలను విశ్లేషించండి',
-                totalPatients: 'మొత్తం రోగులు',
-                reports: 'నివేదికలు',
-                critical: 'క్రిటికల్',
-                patientRecords: 'రోగి రికార్డులు',
-                addNote: 'క్లినికల్ నోట్ జోడించండి',
-                saveNote: 'నోట్ సేవ్ చేయండి',
-                noSymptoms: 'లక్షణాలు ఏవీ ఎంచుకోలేదు',
-                loginFirst: 'దయచేసి ముందు లాగిన్ చేయండి',
-                selectSymptoms: 'దయచేసి లక్షణాలను ఎంచుకోండి',
-                analysisComplete: 'విశ్లేషణ పూర్తయింది!',
-                diagnosisReport: 'రోగ నిర్ధారణ నివేదిక',
-                matchedSymptoms: 'సరిపోలిన లక్షణాలు',
-                advice: 'సలహా',
-                homeRemedies: 'ఇంటి నివారణలు',
-                warningSigns: 'హెచ్చరిక సంకేతాలు',
-                printReport: 'నివేదికను ప్రింట్ చేయండి',
-                loginSuccess: 'లాగిన్ విజయవంతమైంది!',
-                invalidCred: 'చెల్లని ఇమెయిల్/ఫోన్ లేదా పాస్‌వర్డ్',
-                doctorLoginSuccess: 'డాక్టర్ లాగిన్ విజయవంతమైంది!',
-                invalidDoctorCred: 'చెల్లని డాక్టర్ ఆధారాలు',
-                logoutSuccess: 'లాగ్అవుట్ విజయవంతమైంది',
-                voiceCaptured: 'వాయిస్ క్యాప్చర్ చేయబడింది!',
-                noRecords: 'ఇంకా రోగి రికార్డులు లేవు',
-                visits: 'సందర్శనలు',
-                viewDetails: 'వివరాలు చూడండి',
-                noteSaved: 'నోట్ సేవ్ చేయబడింది',
-                loginWithEmail: 'మీ ఇమెయిల్ లేదా ఫోన్ నంబర్‌తో లాగిన్ చేయండి'
-            },
-            kn: {
-                patientLogin: 'ರೋಗಿಯ ಲಾಗಿನ್',
-                patientSubtitle: 'ನಿಮ್ಮ ಆರೋಗ್ಯ ದಾಖಲೆಗಳನ್ನು ಪ್ರವೇಶಿಸಿ',
-                doctorLogin: 'ವೈದ್ಯರ ಲಾಗಿನ್',
-                doctorSubtitle: 'ರೋಗಿಯ ದಾಖಲೆಗಳನ್ನು ಪ್ರವೇಶಿಸಿ',
-                loginBtn: 'ರೋಗಿಯಾಗಿ ಲಾಗಿನ್ ಮಾಡಿ',
-                doctorBtn: 'ವೈದ್ಯರಾಗಿ ಲಾಗಿನ್ ಮಾಡಿ',
-                demoPatient: 'ಡೆಮೊ ರೋಗಿಗಳು:',
-                patientCred: 'ಇಮೇಲ್: patient@demo.com / ಪಾಸ್‌ವರ್ಡ್: patient123',
-                patientCred2: 'ಫೋನ್: 9876543210 / ಪಾಸ್‌ವರ್ಡ್: patient123',
-                demoDoctor: 'ಡೆಮೊ ವೈದ್ಯರು:',
-                doctorCred1: 'ಇಮೇಲ್: doctor@demo.com / ಪಾಸ್‌ವರ್ಡ್: doctor123 (ಡಾ. ಶರ್ಮಾ)',
-                doctorCred2: 'ಇಮೇಲ್: dr.gupta@demo.com / ಪಾಸ್‌ವರ್ಡ್: doctor123 (ಡಾ. ಗುಪ್ತಾ)',
-                doctorCred3: 'ಫೋನ್: 9988776655 / ಪಾಸ್‌ವರ್ಡ್: doctor123 (ಡಾ. ವರ್ಮಾ)',
-                logout: 'ಲಾಗೌಟ್',
-                totalVisits: 'ಒಟ್ಟು ಭೇಟಿಗಳು',
-                diagnoses: 'ರೋಗನಿರ್ಣಯಗಳು',
-                highRisk: 'ಹೆಚ್ಚಿನ ಅಪಾಯ',
-                today: 'ಇಂದು',
-                patientInfo: 'ರೋಗಿಯ ಮಾಹಿತಿ',
-                male: 'ಪುರುಷ',
-                female: 'ಮಹಿಳೆ',
-                other: 'ಇತರೆ',
-                selectDistrict: 'ಜಿಲ್ಲೆ ಆಯ್ಕೆಮಾಡಿ',
-                symptomChecker: 'ರೋಗಲಕ್ಷಣ ಪರಿಶೀಲಕ',
-                all: 'ಎಲ್ಲಾ',
-                respiratory: 'ಉಸಿರಾಟದ',
-                digestive: 'ಜೀರ್ಣಕಾರಿ',
-                general: 'ಸಾಮಾನ್ಯ',
-                selectedSymptoms: 'ಆಯ್ದ ರೋಗಲಕ್ಷಣಗಳು:',
-                voiceRecorder: 'ಧ್ವನಿ ರೋಗಲಕ್ಷಣ ರೆಕಾರ್ಡರ್',
-                analyze: 'ರೋಗಲಕ್ಷಣಗಳನ್ನು ವಿಶ್ಲೇಷಿಸಿ',
-                totalPatients: 'ಒಟ್ಟು ರೋಗಿಗಳು',
-                reports: 'ವರದಿಗಳು',
-                critical: 'ಗಂಭೀರ',
-                patientRecords: 'ರೋಗಿಯ ದಾಖಲೆಗಳು',
-                addNote: 'ಕ್ಲಿನಿಕಲ್ ಟಿಪ್ಪಣಿ ಸೇರಿಸಿ',
-                saveNote: 'ಟಿಪ್ಪಣಿ ಉಳಿಸಿ',
-                noSymptoms: 'ಯಾವುದೇ ರೋಗಲಕ್ಷಣಗಳನ್ನು ಆಯ್ಕೆ ಮಾಡಿಲ್ಲ',
-                loginFirst: 'ದಯವಿಟ್ಟು ಮೊದಲು ಲಾಗಿನ್ ಮಾಡಿ',
-                selectSymptoms: 'ದಯವಿಟ್ಟು ರೋಗಲಕ್ಷಣಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿ',
-                analysisComplete: 'ವಿಶ್ಲೇಷಣೆ ಪೂರ್ಣಗೊಂಡಿದೆ!',
-                diagnosisReport: 'ರೋಗನಿರ್ಣಯ ವರದಿ',
-                matchedSymptoms: 'ಹೊಂದಾಣಿಕೆಯ ರೋಗಲಕ್ಷಣಗಳು',
-                advice: 'ಸಲಹೆ',
-                homeRemedies: 'ಮನೆಮದ್ದುಗಳು',
-                warningSigns: 'ಎಚ್ಚರಿಕೆ ಚಿಹ್ನೆಗಳು',
-                printReport: 'ವರದಿಯನ್ನು ಮುದ್ರಿಸಿ',
-                loginSuccess: 'ಲಾಗಿನ್ ಯಶಸ್ವಿ!',
-                invalidCred: 'ಅಮಾನ್ಯ ಇಮೇಲ್/ಫೋನ್ ಅಥವಾ ಪಾಸ್‌ವರ್ಡ್',
-                doctorLoginSuccess: 'ವೈದ್ಯರ ಲಾಗಿನ್ ಯಶಸ್ವಿ!',
-                invalidDoctorCred: 'ಅಮಾನ್ಯ ವೈದ್ಯರ ರುಜುವಾತುಗಳು',
-                logoutSuccess: 'ಯಶಸ್ವಿಯಾಗಿ ಲಾಗೌಟ್ ಮಾಡಲಾಗಿದೆ',
-                voiceCaptured: 'ಧ್ವನಿ ಸೆರೆಹಿಡಿಯಲಾಗಿದೆ!',
-                noRecords: 'ಇನ್ನೂ ರೋಗಿಯ ದಾಖಲೆಗಳಿಲ್ಲ',
-                visits: 'ಭೇಟಿಗಳು',
-                viewDetails: 'ವಿವರಗಳನ್ನು ನೋಡಿ',
-                noteSaved: 'ಟಿಪ್ಪಣಿ ಉಳಿಸಲಾಗಿದೆ',
-                loginWithEmail: 'ನಿಮ್ಮ ಇಮೇಲ್ ಅಥವಾ ಫೋನ್ ಸಂಖ್ಯೆಯೊಂದಿಗೆ ಲಾಗಿನ್ ಮಾಡಿ'
-            },
-            ml: {
-                patientLogin: 'രോഗി ലോഗിൻ',
-                patientSubtitle: 'നിങ്ങളുടെ ആരോഗ്യ രേഖകൾ ആക്സസ് ചെയ്യുക',
-                doctorLogin: 'ഡോക്ടർ ലോഗിൻ',
-                doctorSubtitle: 'രോഗിയുടെ രേഖകൾ ആക്സസ് ചെയ്യുക',
-                loginBtn: 'രോഗിയായി ലോഗിൻ ചെയ്യുക',
-                doctorBtn: 'ഡോക്ടറായി ലോഗിൻ ചെയ്യുക',
-                demoPatient: 'ഡെമോ രോഗികൾ:',
-                patientCred: 'ഇമെയിൽ: patient@demo.com / പാസ്‌വേഡ്: patient123',
-                patientCred2: 'ഫോൺ: 9876543210 / പാസ്‌വേഡ്: patient123',
-                demoDoctor: 'ഡെമോ ഡോക്ടർമാർ:',
-                doctorCred1: 'ഇമെയിൽ: doctor@demo.com / പാസ്‌വേഡ്: doctor123 (ഡോ. ശർമ്മ)',
-                doctorCred2: 'ഇമെയിൽ: dr.gupta@demo.com / പാസ്‌വേഡ്: doctor123 (ഡോ. ഗുപ്ത)',
-                doctorCred3: 'ഫോൺ: 9988776655 / പാസ്‌വേഡ്: doctor123 (ഡോ. വർമ)',
-                logout: 'ലോഗൗട്ട്',
-                totalVisits: 'ആകെ സന്ദർശനങ്ങൾ',
-                diagnoses: 'രോഗനിർണയങ്ങൾ',
-                highRisk: 'ഉയർന്ന അപകടസാധ്യത',
-                today: 'ഇന്ന്',
-                patientInfo: 'രോഗിയുടെ വിവരങ്ങൾ',
-                male: 'പുരുഷൻ',
-                female: 'സ്ത്രീ',
-                other: 'മറ്റുള്ളവ',
-                selectDistrict: 'ജില്ല തിരഞ്ഞെടുക്കുക',
-                symptomChecker: 'രോഗലക്ഷണ പരിശോധകൻ',
-                all: 'എല്ലാം',
-                respiratory: 'ശ്വസന',
-                digestive: 'ദഹന',
-                general: 'പൊതുവായ',
-                selectedSymptoms: 'തിരഞ്ഞെടുത്ത രോഗലക്ഷണങ്ങൾ:',
-                voiceRecorder: 'ശബ്ദ രോഗലക്ഷണ റെക്കോർഡർ',
-                analyze: 'രോഗലക്ഷണങ്ങൾ വിശകലനം ചെയ്യുക',
-                totalPatients: 'ആകെ രോഗികൾ',
-                reports: 'റിപ്പോർട്ടുകൾ',
-                critical: 'ഗുരുതരമായ',
-                patientRecords: 'രോഗിയുടെ രേഖകൾ',
-                addNote: 'ക്ലിനിക്കൽ കുറിപ്പ് ചേർക്കുക',
-                saveNote: 'കുറിപ്പ് സംരക്ഷിക്കുക',
-                noSymptoms: 'രോഗലക്ഷണങ്ങളൊന്നും തിരഞ്ഞെടുത്തിട്ടില്ല',
-                loginFirst: 'ദയവായി ആദ്യം ലോഗിൻ ചെയ്യുക',
-                selectSymptoms: 'ദയവായി രോഗലക്ഷണങ്ങൾ തിരഞ്ഞെടുക്കുക',
-                analysisComplete: 'വിശകലനം പൂർത്തിയായി!',
-                diagnosisReport: 'രോഗനിർണയ റിപ്പോർട്ട്',
-                matchedSymptoms: 'പൊരുത്തപ്പെടുന്ന രോഗലക്ഷണങ്ങൾ',
-                advice: 'ഉപദേശം',
-                homeRemedies: 'വീട്ടുവൈദ്യങ്ങൾ',
-                warningSigns: 'മുന്നറിയിപ്പ് അടയാളങ്ങൾ',
-                printReport: 'റിപ്പോർട്ട് പ്രിന്റ് ചെയ്യുക',
-                loginSuccess: 'ലോഗിൻ വിജയകരം!',
-                invalidCred: 'അസാധുവായ ഇമെയിൽ/ഫോൺ അല്ലെങ്കിൽ പാസ്‌വേഡ്',
-                doctorLoginSuccess: 'ഡോക്ടർ ലോഗിൻ വിജയകരം!',
-                invalidDoctorCred: 'അസാധുവായ ഡോക്ടർ ക്രെഡൻഷ്യലുകൾ',
-                logoutSuccess: 'വിജയകരമായി ലോഗൗട്ട് ചെയ്തു',
-                voiceCaptured: 'ശബ്ദം പകർത്തി!',
-                noRecords: 'ഇതുവരെ രോഗിയുടെ രേഖകളൊന്നുമില്ല',
-                visits: 'സന്ദർശനങ്ങൾ',
-                viewDetails: 'വിശദാംശങ്ങൾ കാണുക',
-                noteSaved: 'കുറിപ്പ് സംരക്ഷിച്ചു',
-                loginWithEmail: 'നിങ്ങളുടെ ഇമെയിൽ അല്ലെങ്കിൽ ഫോൺ നമ്പർ ഉപയോഗിച്ച് ലോഗിൻ ചെയ്യുക'
-            }
-        };
-
-        // ==================== DATABASES ====================
-        let patients = JSON.parse(localStorage.getItem('patients')) || [
+        // ==================== SIMPLIFIED DATABASES ====================
+        let patients = [
             { id: 'PAT001', name: 'Rahul Sharma', email: 'patient@demo.com', phone: '9876543210', password: 'patient123', age: 32, gender: 'male', district: 'Chennai' },
-            { id: 'PAT002', name: 'Priya Patel', email: 'priya@example.com', phone: '8765432109', password: 'priya123', age: 28, gender: 'female', district: 'Coimbatore' },
-            { id: 'PAT003', name: 'Amit Kumar', email: 'amit@example.com', phone: '7654321098', password: 'amit123', age: 45, gender: 'male', district: 'Madurai' }
+            { id: 'PAT002', name: 'Priya Patel', email: 'priya@example.com', phone: '8765432109', password: 'priya123', age: 28, gender: 'female', district: 'Coimbatore' }
         ];
 
-        let doctors = JSON.parse(localStorage.getItem('doctors')) || [
+        let doctors = [
             { id: 'DOC001', name: 'Dr. Sharma', email: 'doctor@demo.com', phone: '9988776655', password: 'doctor123', specialty: 'General Physician' },
-            { id: 'DOC002', name: 'Dr. Gupta', email: 'dr.gupta@demo.com', phone: '8877665544', password: 'doctor123', specialty: 'Cardiologist' },
-            { id: 'DOC003', name: 'Dr. Verma', email: 'dr.verma@demo.com', phone: '7766554433', password: 'doctor123', specialty: 'Pediatrician' }
+            { id: 'DOC002', name: 'Dr. Gupta', email: 'dr.gupta@demo.com', phone: '8877665544', password: 'doctor123', specialty: 'Cardiologist' }
         ];
 
-        let diagnoses = JSON.parse(localStorage.getItem('diagnoses')) || [];
+        let diagnoses = [];
         let currentPatient = null;
         let currentDoctor = null;
 
-        // Symptoms Database with translations
+        // Symptoms Database
         const symptomsDB = [
-            { id: 1, name: 'cough', category: 'respiratory' },
-            { id: 2, name: 'fever', category: 'general' },
-            { id: 3, name: 'headache', category: 'general' },
-            { id: 4, name: 'soreThroat', category: 'respiratory' },
-            { id: 5, name: 'runnyNose', category: 'respiratory' },
-            { id: 6, name: 'nausea', category: 'digestive' },
-            { id: 7, name: 'vomiting', category: 'digestive' },
-            { id: 8, name: 'diarrhea', category: 'digestive' },
-            { id: 9, name: 'fatigue', category: 'general' },
-            { id: 10, name: 'bodyAche', category: 'general' }
+            { id: 1, name: 'Cough', category: 'respiratory' },
+            { id: 2, name: 'Fever', category: 'general' },
+            { id: 3, name: 'Headache', category: 'general' },
+            { id: 4, name: 'Sore throat', category: 'respiratory' },
+            { id: 5, name: 'Runny nose', category: 'respiratory' },
+            { id: 6, name: 'Nausea', category: 'digestive' },
+            { id: 7, name: 'Vomiting', category: 'digestive' },
+            { id: 8, name: 'Diarrhea', category: 'digestive' },
+            { id: 9, name: 'Fatigue', category: 'general' },
+            { id: 10, name: 'Body ache', category: 'general' }
         ];
 
         // Diseases Database
         const diseasesDB = [
             {
                 id: 1,
-                name: 'commonCold',
+                name: 'Common Cold',
                 symptoms: [1, 4, 5, 2],
                 severity: 'low',
                 description: 'Mild viral infection of upper respiratory tract',
@@ -1250,7 +824,7 @@
             },
             {
                 id: 2,
-                name: 'viralFever',
+                name: 'Viral Fever',
                 symptoms: [2, 3, 9, 10],
                 severity: 'medium',
                 description: 'Common viral infection causing fever and body ache',
@@ -1260,7 +834,7 @@
             },
             {
                 id: 3,
-                name: 'foodPoisoning',
+                name: 'Food Poisoning',
                 symptoms: [6, 7, 8, 2],
                 severity: 'medium',
                 description: 'Infection from contaminated food or water',
@@ -1274,12 +848,7 @@
         const districts = [
             'Chennai', 'Coimbatore', 'Madurai', 'Tiruchirappalli', 'Salem',
             'Tirunelveli', 'Vellore', 'Erode', 'Kanyakumari', 'Thoothukkudi',
-            'Dharmapuri', 'Thanjavur', 'Nagapattinam', 'Kanchipuram', 'Viluppuram',
-            'Ariyalur', 'Chengalpattu', 'Cuddalore', 'Dindigul', 'Kallakurichi',
-            'Karur', 'Krishnagiri', 'Mayiladuthurai', 'Namakkal', 'Nilgiris',
-            'Perambalur', 'Pudukkottai', 'Ramanathapuram', 'Ranipet', 'Sivaganga',
-            'Tenkasi', 'Theni', 'Tirupathur', 'Tiruppur', 'Tiruvallur',
-            'Tiruvannamalai', 'Tiruvarur', 'Virudhunagar'
+            'Dharmapuri', 'Thanjavur', 'Nagapattinam', 'Kanchipuram', 'Viluppuram'
         ];
 
         let selectedSymptoms = [];
@@ -1293,12 +862,17 @@
             loadDistricts();
             displaySymptoms('all');
             updateAllStats();
-            applyLanguage('en');
+            
+            // Pre-fill the forms with demo data
+            document.getElementById('patientEmail').value = 'patient@demo.com';
+            document.getElementById('patientPassword').value = 'patient123';
+            document.getElementById('doctorEmail').value = 'doctor@demo.com';
+            document.getElementById('doctorPassword').value = 'doctor123';
         });
 
         function loadDistricts() {
             const select = document.getElementById('district');
-            select.innerHTML = '<option value="">' + getTranslation('selectDistrict') + '</option>';
+            select.innerHTML = '<option value="">Select District</option>';
             districts.forEach(d => {
                 const option = document.createElement('option');
                 option.value = d;
@@ -1307,52 +881,23 @@
             });
         }
 
-        // ==================== LANGUAGE FUNCTIONS ====================
-        function switchLanguage(lang) {
-            currentLanguage = lang;
-            document.querySelectorAll('.lang-switch-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            applyLanguage(lang);
-            showToast('Language switched to ' + lang.toUpperCase());
-        }
-
-        function applyLanguage(lang) {
-            const t = translations[lang] || translations.en;
-            
-            // Update all elements with data-i18n attribute
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (t[key]) {
-                    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-                        el.placeholder = t[key];
-                    } else if (el.tagName === 'OPTION') {
-                        el.textContent = t[key];
-                    } else {
-                        el.textContent = t[key];
-                    }
-                }
-            });
-
-            // Update symptoms grid
-            displaySymptoms(currentCategory);
-            
-            // Update selected symptoms tags
-            updateSymptomTags();
-        }
-
-        function getTranslation(key) {
-            return translations[currentLanguage]?.[key] || translations.en[key] || key;
-        }
-
-        // ==================== PATIENT LOGIN (Email/Phone) ====================
+        // ==================== SIMPLIFIED PATIENT LOGIN ====================
         function patientLogin() {
-            const emailOrPhone = document.getElementById('patientEmail').value.trim();
+            const input = document.getElementById('patientEmail').value.trim();
             const password = document.getElementById('patientPassword').value.trim();
             
-            // Find patient by email OR phone
-            const patient = patients.find(p => 
-                p.email === emailOrPhone || p.phone === emailOrPhone
-            );
+            // Try to find patient by email first, then by phone
+            let patient = patients.find(p => p.email === input);
+            
+            // If not found by email, try phone
+            if (!patient) {
+                patient = patients.find(p => p.phone === input);
+            }
+            
+            // Debug - show what we're comparing
+            console.log('Login input:', input);
+            console.log('Found patient:', patient);
+            console.log('Entered password:', password);
             
             if (patient && patient.password === password) {
                 currentPatient = patient;
@@ -1364,30 +909,34 @@
                 document.getElementById('patientEmail').textContent = patient.email;
                 document.getElementById('patientPhone').textContent = patient.phone;
                 document.getElementById('fullName').value = patient.name;
-                document.getElementById('age').value = patient.age || 32;
-                document.getElementById('gender').value = patient.gender || 'male';
-                
-                // Set district if available
-                if (patient.district) {
-                    document.getElementById('district').value = patient.district;
-                }
+                document.getElementById('age').value = patient.age;
+                document.getElementById('gender').value = patient.gender;
+                document.getElementById('district').value = patient.district;
                 
                 updatePatientStats();
-                showToast(getTranslation('loginSuccess'), 'success');
+                showToast('Login successful! Welcome ' + patient.name, 'success');
             } else {
-                showToast(getTranslation('invalidCred'), 'error');
+                showToast('Invalid email/phone or password. Please check your credentials.', 'error');
             }
         }
 
-        // ==================== DOCTOR LOGIN (Email/Phone) ====================
+        // ==================== SIMPLIFIED DOCTOR LOGIN ====================
         function doctorLogin() {
-            const emailOrPhone = document.getElementById('doctorEmail').value.trim();
+            const input = document.getElementById('doctorEmail').value.trim();
             const password = document.getElementById('doctorPassword').value.trim();
             
-            // Find doctor by email OR phone
-            const doctor = doctors.find(d => 
-                d.email === emailOrPhone || d.phone === emailOrPhone
-            );
+            // Try to find doctor by email first, then by phone
+            let doctor = doctors.find(d => d.email === input);
+            
+            // If not found by email, try phone
+            if (!doctor) {
+                doctor = doctors.find(d => d.phone === input);
+            }
+            
+            // Debug - show what we're comparing
+            console.log('Doctor login input:', input);
+            console.log('Found doctor:', doctor);
+            console.log('Entered password:', password);
             
             if (doctor && doctor.password === password) {
                 currentDoctor = doctor;
@@ -1401,9 +950,9 @@
                 
                 displayPatientRecords();
                 updateDoctorStats();
-                showToast(getTranslation('doctorLoginSuccess'), 'success');
+                showToast('Welcome Dr. ' + doctor.name.split(' ')[1], 'success');
             } else {
-                showToast(getTranslation('invalidDoctorCred'), 'error');
+                showToast('Invalid email/phone or password. Please check your credentials.', 'error');
             }
         }
 
@@ -1417,7 +966,7 @@
                 document.getElementById('doctorApp').classList.remove('visible');
             }
             document.getElementById('loginPage').style.display = 'grid';
-            showToast(getTranslation('logoutSuccess'));
+            showToast('Logged out successfully');
         }
 
         // ==================== SYMPTOMS ====================
@@ -1431,7 +980,7 @@
                 const item = document.createElement('div');
                 item.className = `symptom-item ${selectedSymptoms.includes(symptom.id) ? 'selected' : ''}`;
                 item.onclick = () => toggleSymptom(symptom.id);
-                item.innerHTML = `<span>${getTranslation(symptom.name)}</span>`;
+                item.innerHTML = `<span>${symptom.name}</span>`;
                 grid.appendChild(item);
             });
         }
@@ -1454,7 +1003,7 @@
         function updateSymptomTags() {
             const container = document.getElementById('symptomTags');
             if (selectedSymptoms.length === 0) {
-                container.innerHTML = '<p style="color: var(--gray);">' + getTranslation('noSymptoms') + '</p>';
+                container.innerHTML = '<p style="color: var(--gray);">No symptoms selected</p>';
                 return;
             }
             
@@ -1464,7 +1013,7 @@
                 if (symptom) {
                     const tag = document.createElement('span');
                     tag.className = 'symptom-tag';
-                    tag.innerHTML = `${getTranslation(symptom.name)} <button onclick="removeSymptom(${id})">×</button>`;
+                    tag.innerHTML = `${symptom.name} <button onclick="removeSymptom(${id})">×</button>`;
                     container.appendChild(tag);
                 }
             });
@@ -1495,12 +1044,11 @@
                         `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
                 }, 1000);
                 
-                // Simulate voice recognition after 3 seconds
                 setTimeout(() => {
                     if (isRecording) {
                         toggleRecording();
                         document.getElementById('typedSymptoms').value = 'fever, cough, headache';
-                        showToast(getTranslation('voiceCaptured'));
+                        showToast('Voice captured!');
                     }
                 }, 3000);
             } else {
@@ -1514,7 +1062,7 @@
         // ==================== AI DIAGNOSIS ====================
         function analyzeHealth() {
             if (!currentPatient) {
-                showToast(getTranslation('loginFirst'), 'error');
+                showToast('Please login first', 'error');
                 return;
             }
 
@@ -1522,24 +1070,19 @@
             if (typedText) {
                 const words = typedText.split(',').map(w => w.trim());
                 words.forEach(word => {
-                    // Check against symptom names in current language
-                    for (let symptom of symptomsDB) {
-                        const symptomName = getTranslation(symptom.name).toLowerCase();
-                        if (symptomName.includes(word) && !selectedSymptoms.includes(symptom.id)) {
-                            selectedSymptoms.push(symptom.id);
-                            break;
-                        }
+                    const match = symptomsDB.find(s => s.name.toLowerCase().includes(word));
+                    if (match && !selectedSymptoms.includes(match.id)) {
+                        selectedSymptoms.push(match.id);
                     }
                 });
                 updateSymptomTags();
             }
 
             if (selectedSymptoms.length === 0) {
-                showToast(getTranslation('selectSymptoms'), 'error');
+                showToast('Please select symptoms', 'error');
                 return;
             }
 
-            // Find best matching disease
             let bestMatch = diseasesDB[0];
             let bestScore = 0;
 
@@ -1554,57 +1097,51 @@
 
             displayResults(bestMatch, selectedSymptoms);
 
-            // Save diagnosis
             const diagnosis = {
                 id: Date.now(),
                 patientId: currentPatient.id,
                 patientName: currentPatient.name,
                 patientEmail: currentPatient.email,
                 patientPhone: currentPatient.phone,
-                diagnosis: getTranslation(bestMatch.name),
+                diagnosis: bestMatch.name,
                 severity: bestMatch.severity,
                 symptoms: selectedSymptoms.map(id => {
                     const s = symptomsDB.find(sym => sym.id === id);
-                    return s ? getTranslation(s.name) : '';
+                    return s ? s.name : '';
                 }),
                 date: new Date().toISOString(),
                 doctorNote: ''
             };
 
             diagnoses.push(diagnosis);
-            localStorage.setItem('diagnoses', JSON.stringify(diagnoses));
             updatePatientStats();
-            
-            showToast(getTranslation('analysisComplete'));
+            showToast('Analysis complete!');
         }
 
         function displayResults(disease, symptoms) {
             const resultsDiv = document.getElementById('results');
             const matched = disease.symptoms.filter(id => symptoms.includes(id))
-                .map(id => {
-                    const s = symptomsDB.find(sym => sym.id === id);
-                    return s ? getTranslation(s.name) : '';
-                });
+                .map(id => symptomsDB.find(s => s.id === id)?.name);
             
             let html = `
-                <h2 style="color: var(--primary); margin-bottom: 20px;">${getTranslation('diagnosisReport')}</h2>
+                <h2 style="color: var(--primary); margin-bottom: 20px;">Diagnosis Report</h2>
                 <div style="margin-bottom: 20px;">
-                    <h3>${getTranslation(disease.name)}</h3>
+                    <h3>${disease.name}</h3>
                     <span class="severity-badge severity-${disease.severity}">${disease.severity.toUpperCase()}</span>
                     <p style="margin-top: 10px;">${disease.description}</p>
                 </div>
                 <div style="margin: 20px 0;">
-                    <h4>✅ ${getTranslation('matchedSymptoms')}:</h4>
+                    <h4>✅ Matched Symptoms:</h4>
                     <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px;">
                         ${matched.map(s => `<span style="background: var(--success); color: white; padding: 5px 15px; border-radius: 20px;">${s}</span>`).join('')}
                     </div>
                 </div>
                 <div style="margin: 20px 0;">
-                    <h4>📋 ${getTranslation('advice')}:</h4>
+                    <h4>📋 Advice:</h4>
                     <ul>${disease.advice.map(a => `<li>${a}</li>`).join('')}</ul>
                 </div>
                 <div style="margin: 20px 0;">
-                    <h4>🏠 ${getTranslation('homeRemedies')}:</h4>
+                    <h4>🏠 Home Remedies:</h4>
                     <ul>${disease.homeRemedies.map(r => `<li>${r}</li>`).join('')}</ul>
                 </div>
             `;
@@ -1612,13 +1149,13 @@
             if (disease.severity === 'high') {
                 html += `
                     <div style="background: #FFEBEE; padding: 20px; border-radius: 20px; margin: 20px 0;">
-                        <h4 style="color: var(--danger);">⚠️ ${getTranslation('warningSigns')}</h4>
+                        <h4 style="color: var(--danger);">⚠️ Warning Signs</h4>
                         <ul>${disease.warningSigns.map(w => `<li>${w}</li>`).join('')}</ul>
                     </div>
                 `;
             }
             
-            html += `<button class="login-btn" onclick="window.print()" style="width: auto;">${getTranslation('printReport')}</button>`;
+            html += `<button class="login-btn" onclick="window.print()" style="width: auto;">Print Report</button>`;
             
             resultsDiv.innerHTML = html;
             resultsDiv.style.display = 'block';
@@ -1655,11 +1192,10 @@
             const container = document.getElementById('patientRecordsList');
             
             if (diagnoses.length === 0) {
-                container.innerHTML = '<p>' + getTranslation('noRecords') + '</p>';
+                container.innerHTML = '<p>No patient records yet</p>';
                 return;
             }
 
-            // Group by patient
             const patientGroups = {};
             diagnoses.forEach(d => {
                 if (!patientGroups[d.patientId]) {
@@ -1682,11 +1218,11 @@
                         <h4>${group.patientName}</h4>
                         <p><i class="fas fa-envelope"></i> ${group.patientEmail}</p>
                         <p><i class="fas fa-phone"></i> ${group.patientPhone || 'N/A'}</p>
-                        <p><i class="fas fa-notes-medical"></i> ${group.records.length} ${getTranslation('visits')}</p>
+                        <p><i class="fas fa-notes-medical"></i> ${group.records.length} visits</p>
                     </div>
                     <div>
                         <button class="login-btn" style="width: auto; padding: 10px 20px;" onclick="viewPatientDetails('${group.patientId}')">
-                            ${getTranslation('viewDetails')}
+                            View Details
                         </button>
                     </div>
                 `;
@@ -1699,14 +1235,13 @@
             const details = patientRecords.map(r => 
                 `Date: ${new Date(r.date).toLocaleString()}\nDiagnosis: ${r.diagnosis}\nSeverity: ${r.severity}\nSymptoms: ${r.symptoms.join(', ')}\nDoctor Note: ${r.doctorNote || 'None'}\n---`
             ).join('\n');
-            
             alert(details);
         }
 
         function saveClinicalNote() {
             const note = document.getElementById('clinicalNote').value;
             if (note) {
-                showToast(getTranslation('noteSaved'));
+                showToast('Note saved successfully');
                 document.getElementById('clinicalNote').value = '';
             }
         }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>RuralCare - Multi-language Healthcare Portal with 50+ Symptoms</title>
+    <title>RuralCare - Patient & Doctor Portal with Unique IDs</title>
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Google Fonts -->
@@ -200,6 +200,8 @@
             border-radius: 20px;
             font-size: 0.9rem;
             color: var(--gray);
+            max-height: 150px;
+            overflow-y: auto;
         }
 
         .demo-credentials i {
@@ -616,11 +618,11 @@
                     <i class="fas fa-user"></i>
                 </div>
                 <h2 data-i18n="patientLogin">Patient Login</h2>
-                <p data-i18n="patientSubtitle">Access your health records</p>
+                <p data-i18n="patientSubtitle">Login with your Patient ID</p>
             </div>
 
             <div class="form-group">
-                <input type="text" id="patientId" placeholder="Patient ID / Email / Phone" value="PAT001">
+                <input type="text" id="patientId" placeholder="Patient ID" value="PAT001">
             </div>
             <div class="form-group">
                 <input type="password" id="patientPassword" placeholder="Password" value="patient123">
@@ -631,10 +633,17 @@
 
             <div class="demo-credentials">
                 <i class="fas fa-info-circle"></i>
-                <strong data-i18n="demoPatients">Demo Patients:</strong><br>
-                <span data-i18n="patient1">ID: PAT001 / Password: patient123 (Rahul Sharma)</span><br>
-                <span data-i18n="patient2">ID: PAT002 / Password: priya123 (Priya Patel)</span><br>
-                <span data-i18n="patient3">Email: amit@example.com / Password: amit123 (Amit Kumar)</span>
+                <strong data-i18n="demoPatients">Available Patient IDs:</strong><br>
+                • <strong>PAT001</strong> - Rahul Sharma (pass: patient123)<br>
+                • <strong>PAT002</strong> - Priya Patel (pass: priya123)<br>
+                • <strong>PAT003</strong> - Amit Kumar (pass: amit123)<br>
+                • <strong>PAT004</strong> - Sunita Reddy (pass: sunita123)<br>
+                • <strong>PAT005</strong> - Vikram Singh (pass: vikram123)<br>
+                • <strong>PAT006</strong> - Lakshmi Nair (pass: lakshmi123)<br>
+                • <strong>PAT007</strong> - Rajesh Kumar (pass: rajesh123)<br>
+                • <strong>PAT008</strong> - Meera Sharma (pass: meera123)<br>
+                • <strong>PAT009</strong> - Arjun Reddy (pass: arjun123)<br>
+                • <strong>PAT010</strong> - Kavita Singh (pass: kavita123)
             </div>
         </div>
 
@@ -645,11 +654,11 @@
                     <i class="fas fa-user-md"></i>
                 </div>
                 <h2 data-i18n="doctorLogin">Doctor Login</h2>
-                <p data-i18n="doctorSubtitle">Access patient records</p>
+                <p data-i18n="doctorSubtitle">Login with your Doctor ID</p>
             </div>
 
             <div class="form-group">
-                <input type="text" id="doctorId" placeholder="Doctor ID / Email / Phone" value="DOC001">
+                <input type="text" id="doctorId" placeholder="Doctor ID" value="DOC001">
             </div>
             <div class="form-group">
                 <input type="password" id="doctorPassword" placeholder="Password" value="doctor123">
@@ -660,10 +669,17 @@
 
             <div class="demo-credentials">
                 <i class="fas fa-info-circle"></i>
-                <strong data-i18n="demoDoctors">Demo Doctors:</strong><br>
-                <span data-i18n="doctor1">ID: DOC001 / Password: doctor123 (Dr. Sharma)</span><br>
-                <span data-i18n="doctor2">ID: DOC002 / Password: doctor123 (Dr. Gupta)</span><br>
-                <span data-i18n="doctor3">Email: dr.verma@demo.com / Password: doctor123 (Dr. Verma)</span>
+                <strong data-i18n="demoDoctors">Available Doctor IDs:</strong><br>
+                • <strong>DOC001</strong> - Dr. Sharma (pass: doctor123)<br>
+                • <strong>DOC002</strong> - Dr. Gupta (pass: doctor123)<br>
+                • <strong>DOC003</strong> - Dr. Verma (pass: doctor123)<br>
+                • <strong>DOC004</strong> - Dr. Reddy (pass: doctor123)<br>
+                • <strong>DOC005</strong> - Dr. Nair (pass: doctor123)<br>
+                • <strong>DOC006</strong> - Dr. Kumar (pass: doctor123)<br>
+                • <strong>DOC007</strong> - Dr. Singh (pass: doctor123)<br>
+                • <strong>DOC008</strong> - Dr. Patel (pass: doctor123)<br>
+                • <strong>DOC009</strong> - Dr. Menon (pass: doctor123)<br>
+                • <strong>DOC010</strong> - Dr. Iyer (pass: doctor123)
             </div>
         </div>
     </div>
@@ -743,7 +759,7 @@
         <div class="symptoms-section">
             <h3 class="form-title">
                 <i class="fas fa-stethoscope"></i>
-                <span data-i18n="symptomChecker">Symptom Checker (50+ Symptoms)</span>
+                <span data-i18n="symptomChecker">Symptom Checker (60+ Symptoms)</span>
             </h3>
 
             <div class="category-tabs" id="symptomCategories">
@@ -816,7 +832,7 @@
         <div class="stats-grid">
             <div class="stat-card">
                 <i class="fas fa-users"></i>
-                <div class="stat-number" id="totalPatients">0</div>
+                <div class="stat-number" id="totalPatients">10</div>
                 <div class="stat-label" data-i18n="totalPatients">Total Patients</div>
             </div>
             <div class="stat-card">
@@ -863,19 +879,13 @@
         const translations = {
             en: {
                 patientLogin: 'Patient Login',
-                patientSubtitle: 'Access your health records',
+                patientSubtitle: 'Login with your Patient ID',
                 doctorLogin: 'Doctor Login',
-                doctorSubtitle: 'Access patient records',
+                doctorSubtitle: 'Login with your Doctor ID',
                 patientLoginBtn: 'Login as Patient',
                 doctorLoginBtn: 'Login as Doctor',
-                demoPatients: 'Demo Patients:',
-                patient1: 'ID: PAT001 / Password: patient123 (Rahul Sharma)',
-                patient2: 'ID: PAT002 / Password: priya123 (Priya Patel)',
-                patient3: 'Email: amit@example.com / Password: amit123 (Amit Kumar)',
-                demoDoctors: 'Demo Doctors:',
-                doctor1: 'ID: DOC001 / Password: doctor123 (Dr. Sharma)',
-                doctor2: 'ID: DOC002 / Password: doctor123 (Dr. Gupta)',
-                doctor3: 'Email: dr.verma@demo.com / Password: doctor123 (Dr. Verma)',
+                demoPatients: 'Available Patient IDs:',
+                demoDoctors: 'Available Doctor IDs:',
                 logout: 'Logout',
                 totalVisits: 'Total Visits',
                 diagnoses: 'Diagnoses',
@@ -886,7 +896,7 @@
                 female: 'Female',
                 other: 'Other',
                 selectDistrict: 'Select District',
-                symptomChecker: 'Symptom Checker (50+ Symptoms)',
+                symptomChecker: 'Symptom Checker (60+ Symptoms)',
                 all: 'All',
                 respiratory: 'Respiratory',
                 digestive: 'Digestive',
@@ -916,15 +926,16 @@
                 warningSigns: 'Warning Signs',
                 printReport: 'Print Report',
                 loginSuccess: 'Login successful!',
-                invalidCred: 'Invalid ID/Email/Phone or Password',
+                invalidCred: 'Invalid Patient ID or Password',
                 doctorLoginSuccess: 'Doctor login successful!',
+                invalidDoctorCred: 'Invalid Doctor ID or Password',
                 logoutSuccess: 'Logged out successfully',
                 voiceCaptured: 'Voice captured!',
                 noRecords: 'No patient records yet',
                 visits: 'visits',
                 viewDetails: 'View Details',
                 noteSaved: 'Note saved successfully',
-                loginWithId: 'Login with your Patient ID, Email or Phone',
+                loginWithId: 'Login with your Patient ID',
                 // Symptoms translations
                 cough: 'Cough',
                 shortnessOfBreath: 'Shortness of breath',
@@ -990,19 +1001,13 @@
             },
             hi: {
                 patientLogin: 'रोगी लॉगिन',
-                patientSubtitle: 'अपने स्वास्थ्य रिकॉर्ड देखें',
+                patientSubtitle: 'अपने रोगी आईडी से लॉगिन करें',
                 doctorLogin: 'डॉक्टर लॉगिन',
-                doctorSubtitle: 'रोगी रिकॉर्ड देखें',
+                doctorSubtitle: 'अपने डॉक्टर आईडी से लॉगिन करें',
                 patientLoginBtn: 'रोगी के रूप में लॉगिन करें',
                 doctorLoginBtn: 'डॉक्टर के रूप में लॉगिन करें',
-                demoPatients: 'डेमो रोगी:',
-                patient1: 'आईडी: PAT001 / पासवर्ड: patient123 (राहुल शर्मा)',
-                patient2: 'आईडी: PAT002 / पासवर्ड: priya123 (प्रिया पटेल)',
-                patient3: 'ईमेल: amit@example.com / पासवर्ड: amit123 (अमित कुमार)',
-                demoDoctors: 'डेमो डॉक्टर:',
-                doctor1: 'आईडी: DOC001 / पासवर्ड: doctor123 (डॉ. शर्मा)',
-                doctor2: 'आईडी: DOC002 / पासवर्ड: doctor123 (डॉ. गुप्ता)',
-                doctor3: 'ईमेल: dr.verma@demo.com / पासवर्ड: doctor123 (डॉ. वर्मा)',
+                demoPatients: 'उपलब्ध रोगी आईडी:',
+                demoDoctors: 'उपलब्ध डॉक्टर आईडी:',
                 logout: 'लॉगआउट',
                 totalVisits: 'कुल विज़िट',
                 diagnoses: 'निदान',
@@ -1013,7 +1018,7 @@
                 female: 'महिला',
                 other: 'अन्य',
                 selectDistrict: 'जिला चुनें',
-                symptomChecker: 'लक्षण जांचकर्ता (50+ लक्षण)',
+                symptomChecker: 'लक्षण जांचकर्ता (60+ लक्षण)',
                 all: 'सभी',
                 respiratory: 'श्वसन',
                 digestive: 'पाचन',
@@ -1043,93 +1048,30 @@
                 warningSigns: 'चेतावनी संकेत',
                 printReport: 'रिपोर्ट प्रिंट करें',
                 loginSuccess: 'लॉगिन सफल!',
-                invalidCred: 'गलत आईडी/ईमेल/फोन या पासवर्ड',
+                invalidCred: 'गलत रोगी आईडी या पासवर्ड',
                 doctorLoginSuccess: 'डॉक्टर लॉगिन सफल!',
+                invalidDoctorCred: 'गलत डॉक्टर आईडी या पासवर्ड',
                 logoutSuccess: 'सफलतापूर्वक लॉगआउट किया',
                 voiceCaptured: 'आवाज कैप्चर हुई!',
                 noRecords: 'अभी तक कोई रोगी रिकॉर्ड नहीं',
                 visits: 'विज़िट',
                 viewDetails: 'विवरण देखें',
                 noteSaved: 'नोट सफलतापूर्वक सहेजा गया',
-                loginWithId: 'अपने रोगी आईडी, ईमेल या फोन से लॉगिन करें',
-                // Symptoms translations
+                loginWithId: 'अपने रोगी आईडी से लॉगिन करें',
                 cough: 'खांसी',
-                shortnessOfBreath: 'सांस की तकलीफ',
-                wheezing: 'घरघराहट',
-                chestPain: 'सीने में दर्द',
-                soreThroat: 'गले में खराश',
-                runnyNose: 'बहती नाक',
-                sneezing: 'छींकना',
-                nasalCongestion: 'नाक बंद होना',
-                coughingBlood: 'खून वाली खांसी',
-                dryCough: 'सूखी खांसी',
-                nausea: 'मतली',
-                vomiting: 'उल्टी',
-                diarrhea: 'दस्त',
-                constipation: 'कब्ज',
-                abdominalPain: 'पेट दर्द',
-                bloating: 'पेट फूलना',
-                heartburn: 'सीने में जलन',
-                lossOfAppetite: 'भूख न लगना',
-                bloodInStool: 'मल में खून',
-                difficultySwallowing: 'निगलने में कठिनाई',
-                headache: 'सिरदर्द',
-                dizziness: 'चक्कर आना',
-                confusion: 'भ्रम',
-                seizures: 'दौरे',
-                tremors: 'कंपकंपी',
-                numbness: 'सुन्नता',
-                weakness: 'कमजोरी',
-                memoryLoss: 'स्मृति हानि',
-                balanceProblems: 'संतुलन की समस्या',
-                slurredSpeech: 'अस्पष्ट वाणी',
-                jointPain: 'जोड़ों का दर्द',
-                musclePain: 'मांसपेशियों में दर्द',
-                backPain: 'पीठ दर्द',
-                neckPain: 'गर्दन दर्द',
-                jointSwelling: 'जोड़ों में सूजन',
-                stiffness: 'अकड़न',
-                muscleCramps: 'मांसपेशियों में ऐंठन',
-                rash: 'चकत्ते',
-                itching: 'खुजली',
-                hives: 'पित्ती',
-                drySkin: 'शुष्क त्वचा',
-                skinRedness: 'त्वचा का लाल होना',
-                skinDiscoloration: 'त्वचा का रंग बदलना',
-                woundsNotHealing: 'घाव न भरना',
                 fever: 'बुखार',
-                fatigue: 'थकान',
-                chills: 'ठंड लगना',
-                nightSweats: 'रात को पसीना',
-                weightLoss: 'वजन घटना',
-                weightGain: 'वजन बढ़ना',
-                dehydration: 'निर्जलीकरण',
-                swollenLymphNodes: 'सूजी हुई लिम्फ नोड्स',
-                palpitations: 'धड़कन',
-                highBP: 'उच्च रक्तचाप',
-                lowBP: 'निम्न रक्तचाप',
-                swollenAnkles: 'टखनों में सूजन',
-                frequentUrination: 'बार-बार पेशाब',
-                painfulUrination: 'दर्दनाक पेशाब',
-                bloodInUrine: 'पेशाब में खून',
-                urgentUrination: 'तत्काल पेशाब',
+                headache: 'सिरदर्द',
                 bodyAche: 'शरीर दर्द'
             },
             ta: {
                 patientLogin: 'நோயாளி உள்நுழைவு',
-                patientSubtitle: 'உங்கள் சுகாதார பதிவுகளை அணுகவும்',
+                patientSubtitle: 'உங்கள் நோயாளி ஐடியுடன் உள்நுழைக',
                 doctorLogin: 'மருத்துவர் உள்நுழைவு',
-                doctorSubtitle: 'நோயாளி பதிவுகளை அணுகவும்',
+                doctorSubtitle: 'உங்கள் மருத்துவர் ஐடியுடன் உள்நுழைக',
                 patientLoginBtn: 'நோயாளியாக உள்நுழைக',
                 doctorLoginBtn: 'மருத்துவராக உள்நுழைக',
-                demoPatients: 'டெமோ நோயாளிகள்:',
-                patient1: 'ஐடி: PAT001 / கடவுச்சொல்: patient123 (ராகுல் ஷர்மா)',
-                patient2: 'ஐடி: PAT002 / கடவுச்சொல்: priya123 (பிரியா படேல்)',
-                patient3: 'மின்னஞ்சல்: amit@example.com / கடவுச்சொல்: amit123 (அமித் குமார்)',
-                demoDoctors: 'டெமோ மருத்துவர்கள்:',
-                doctor1: 'ஐடி: DOC001 / கடவுச்சொல்: doctor123 (டாக்டர் சர்மா)',
-                doctor2: 'ஐடி: DOC002 / கடவுச்சொல்: doctor123 (டாக்டர் குப்தா)',
-                doctor3: 'மின்னஞ்சல்: dr.verma@demo.com / கடவுச்சொல்: doctor123 (டாக்டர் வர்மா)',
+                demoPatients: 'கிடைக்கும் நோயாளி ஐடிகள்:',
+                demoDoctors: 'கிடைக்கும் மருத்துவர் ஐடிகள்:',
                 logout: 'வெளியேறு',
                 totalVisits: 'மொத்த வருகைகள்',
                 diagnoses: 'நோயறிதல்கள்',
@@ -1140,7 +1082,7 @@
                 female: 'பெண்',
                 other: 'மற்றவை',
                 selectDistrict: 'மாவட்டத்தைத் தேர்ந்தெடுக்கவும்',
-                symptomChecker: 'அறிகுறி சரிபார்ப்பான் (50+ அறிகுறிகள்)',
+                symptomChecker: 'அறிகுறி சரிபார்ப்பான் (60+ அறிகுறிகள்)',
                 all: 'அனைத்தும்',
                 respiratory: 'சுவாசம்',
                 digestive: 'செரிமானம்',
@@ -1170,483 +1112,56 @@
                 warningSigns: 'எச்சரிக்கை அறிகுறிகள்',
                 printReport: 'அறிக்கையை அச்சிடுக',
                 loginSuccess: 'உள்நுழைவு வெற்றிகரமானது!',
-                invalidCred: 'தவறான ஐடி/மின்னஞ்சல்/தொலைபேசி அல்லது கடவுச்சொல்',
+                invalidCred: 'தவறான நோயாளி ஐடி அல்லது கடவுச்சொல்',
                 doctorLoginSuccess: 'மருத்துவர் உள்நுழைவு வெற்றிகரமானது!',
+                invalidDoctorCred: 'தவறான மருத்துவர் ஐடி அல்லது கடவுச்சொல்',
                 logoutSuccess: 'வெளியேறியது',
                 voiceCaptured: 'குரல் பதிவு செய்யப்பட்டது!',
                 noRecords: 'இதுவரை நோயாளி பதிவுகள் இல்லை',
                 visits: 'வருகைகள்',
                 viewDetails: 'விவரங்களைக் காண்க',
                 noteSaved: 'குறிப்பு சேமிக்கப்பட்டது',
-                loginWithId: 'உங்கள் நோயாளி ஐடி, மின்னஞ்சல் அல்லது தொலைபேசியுடன் உள்நுழைக',
-                // Symptoms translations
+                loginWithId: 'உங்கள் நோயாளி ஐடியுடன் உள்நுழைக',
                 cough: 'இருமல்',
-                shortnessOfBreath: 'மூச்சுத் திணறல்',
-                wheezing: 'மூச்சு விடும் சத்தம்',
-                chestPain: 'மார்பு வலி',
-                soreThroat: 'தொண்டை வலி',
-                runnyNose: 'மூக்கு ஒழுகுதல்',
-                sneezing: 'தும்மல்',
-                nasalCongestion: 'மூக்கடைப்பு',
-                coughingBlood: 'இரத்த இருமல்',
-                dryCough: 'உலர் இருமல்',
-                nausea: 'குமட்டல்',
-                vomiting: 'வாந்தி',
-                diarrhea: 'வயிற்றுப்போக்கு',
-                constipation: 'மலச்சிக்கல்',
-                abdominalPain: 'வயிற்று வலி',
-                bloating: 'வயிறு உப்புசம்',
-                heartburn: 'நெஞ்செரிச்சல்',
-                lossOfAppetite: 'பசியின்மை',
-                bloodInStool: 'மலத்தில் இரத்தம்',
-                difficultySwallowing: 'விழுங்குவதில் சிரமம்',
-                headache: 'தலைவலி',
-                dizziness: 'தலைச்சுற்றல்',
-                confusion: 'குழப்பம்',
-                seizures: 'வலிப்பு',
-                tremors: 'நடுக்கம்',
-                numbness: 'உணர்வின்மை',
-                weakness: 'பலவீனம்',
-                memoryLoss: 'நினைவு இழப்பு',
-                balanceProblems: 'சமநிலை பிரச்சனைகள்',
-                slurredSpeech: 'தெளிவற்ற பேச்சு',
-                jointPain: 'மூட்டு வலி',
-                musclePain: 'தசை வலி',
-                backPain: 'முதுகு வலி',
-                neckPain: 'கழுத்து வலி',
-                jointSwelling: 'மூட்டு வீக்கம்',
-                stiffness: 'விறைப்பு',
-                muscleCramps: 'தசைப்பிடிப்பு',
-                rash: 'தடிப்பு',
-                itching: 'அரிப்பு',
-                hives: 'படை',
-                drySkin: 'வறண்ட சருமம்',
-                skinRedness: 'தோல் சிவத்தல்',
-                skinDiscoloration: 'தோல் நிறமாற்றம்',
-                woundsNotHealing: 'காயம் ஆறாமை',
                 fever: 'காய்ச்சல்',
-                fatigue: 'சோர்வு',
-                chills: 'குளிர்',
-                nightSweats: 'இரவு வியர்வை',
-                weightLoss: 'எடை இழப்பு',
-                weightGain: 'எடை அதிகரிப்பு',
-                dehydration: 'நீரிழப்பு',
-                swollenLymphNodes: 'வீங்கிய நிணநீர் முடிச்சுகள்',
-                palpitations: 'நெஞ்சுத்துடிப்பு',
-                highBP: 'உயர் இரத்த அழுத்தம்',
-                lowBP: 'தாழ் இரத்த அழுத்தம்',
-                swollenAnkles: 'கணுக்கால் வீக்கம்',
-                frequentUrination: 'அடிக்கடி சிறுநீர்',
-                painfulUrination: 'வலி நிறைந்த சிறுநீர்',
-                bloodInUrine: 'சிறுநீரில் இரத்தம்',
-                urgentUrination: 'அவசர சிறுநீர்',
+                headache: 'தலைவலி',
                 bodyAche: 'உடல் வலி'
-            },
-            // Add similar translations for te, kn, ml...
-            te: {
-                patientLogin: 'రోగి లాగిన్',
-                patientSubtitle: 'మీ ఆరోగ్య రికార్డులను యాక్సెస్ చేయండి',
-                doctorLogin: 'డాక్టర్ లాగిన్',
-                doctorSubtitle: 'రోగి రికార్డులను యాక్సెస్ చేయండి',
-                patientLoginBtn: 'రోగిగా లాగిన్ చేయండి',
-                doctorLoginBtn: 'డాక్టర్గా లాగిన్ చేయండి',
-                demoPatients: 'డెమో రోగులు:',
-                patient1: 'ID: PAT001 / పాస్‌వర్డ్: patient123 (రాహుల్ శర్మ)',
-                patient2: 'ID: PAT002 / పాస్‌వర్డ్: priya123 (ప్రియా పటేల్)',
-                patient3: 'ఇమెయిల్: amit@example.com / పాస్‌వర్డ్: amit123 (అమిత్ కుమార్)',
-                demoDoctors: 'డెమో డాక్టర్లు:',
-                doctor1: 'ID: DOC001 / పాస్‌వర్డ్: doctor123 (డా. శర్మ)',
-                doctor2: 'ID: DOC002 / పాస్‌వర్డ్: doctor123 (డా. గుప్తా)',
-                doctor3: 'ఇమెయిల్: dr.verma@demo.com / పాస్‌వర్డ్: doctor123 (డా. వర్మ)',
-                logout: 'లాగ్అవుట్',
-                totalVisits: 'మొత్తం సందర్శనలు',
-                diagnoses: 'రోగ నిర్ధారణలు',
-                highRisk: 'అధిక ప్రమాదం',
-                today: 'ఈరోజు',
-                patientInfo: 'రోగి సమాచారం',
-                male: 'పురుషుడు',
-                female: 'స్త్రీ',
-                other: 'ఇతర',
-                selectDistrict: 'జిల్లాను ఎంచుకోండి',
-                symptomChecker: 'లక్షణ పరిశీలకుడు (50+ లక్షణాలు)',
-                all: 'అన్నీ',
-                respiratory: 'శ్వాసకోశ',
-                digestive: 'జీర్ణ',
-                neurological: 'నాడీ',
-                muscular: 'కండరాల',
-                skin: 'చర్మం',
-                cardiovascular: 'గుండె',
-                general: 'సాధారణ',
-                urinary: 'మూత్ర',
-                selectedSymptoms: 'ఎంచుకున్న లక్షణాలు:',
-                voiceRecorder: 'వాయిస్ లక్షణ రికార్డర్',
-                analyze: 'లక్షణాలను విశ్లేషించండి',
-                totalPatients: 'మొత్తం రోగులు',
-                reports: 'నివేదికలు',
-                critical: 'క్రిటికల్',
-                patientRecords: 'రోగి రికార్డులు',
-                addNote: 'క్లినికల్ నోట్ జోడించండి',
-                saveNote: 'నోట్ సేవ్ చేయండి',
-                noSymptoms: 'లక్షణాలు ఏవీ ఎంచుకోలేదు',
-                loginFirst: 'దయచేసి ముందు లాగిన్ చేయండి',
-                selectSymptoms: 'దయచేసి లక్షణాలను ఎంచుకోండి',
-                analysisComplete: 'విశ్లేషణ పూర్తయింది!',
-                diagnosisReport: 'రోగ నిర్ధారణ నివేదిక',
-                matchedSymptoms: 'సరిపోలిన లక్షణాలు',
-                advice: 'సలహా',
-                homeRemedies: 'ఇంటి నివారణలు',
-                warningSigns: 'హెచ్చరిక సంకేతాలు',
-                printReport: 'నివేదికను ప్రింట్ చేయండి',
-                loginSuccess: 'లాగిన్ విజయవంతమైంది!',
-                invalidCred: 'చెల్లని ID/ఇమెయిల్/ఫోన్ లేదా పాస్‌వర్డ్',
-                doctorLoginSuccess: 'డాక్టర్ లాగిన్ విజయవంతమైంది!',
-                logoutSuccess: 'లాగ్అవుట్ విజయవంతమైంది',
-                voiceCaptured: 'వాయిస్ క్యాప్చర్ చేయబడింది!',
-                noRecords: 'ఇంకా రోగి రికార్డులు లేవు',
-                visits: 'సందర్శనలు',
-                viewDetails: 'వివరాలు చూడండి',
-                noteSaved: 'నోట్ సేవ్ చేయబడింది',
-                loginWithId: 'మీ రోగి ID, ఇమెయిల్ లేదా ఫోన్‌తో లాగిన్ చేయండి',
-                // Symptoms translations for Telugu
-                cough: 'దగ్గు',
-                shortnessOfBreath: 'ఊపిరి ఆడకపోవడం',
-                wheezing: 'గురక',
-                chestPain: 'ఛాతీ నొప్పి',
-                soreThroat: 'గొంతు నొప్పి',
-                runnyNose: 'ముక్కు కారడం',
-                sneezing: 'తుమ్ములు',
-                nasalCongestion: 'ముక్కు దిబ్బడ',
-                coughingBlood: 'రక్తం దగ్గు',
-                dryCough: 'పొడి దగ్గు',
-                nausea: 'వికారం',
-                vomiting: 'వాంతులు',
-                diarrhea: 'విరేచనాలు',
-                constipation: 'మలబద్ధకం',
-                abdominalPain: 'కడుపు నొప్పి',
-                bloating: 'ఉబ్బరం',
-                heartburn: 'గుండెల్లో మంట',
-                lossOfAppetite: 'ఆకలి లేకపోవడం',
-                bloodInStool: 'మలంలో రక్తం',
-                difficultySwallowing: 'మింగడంలో ఇబ్బంది',
-                headache: 'తలనొప్పి',
-                dizziness: 'తలతిరగడం',
-                confusion: 'గందరగోళం',
-                seizures: 'మూర్ఛలు',
-                tremors: 'వణుకు',
-                numbness: 'తిమ్మిరి',
-                weakness: 'బలహీనత',
-                memoryLoss: 'జ్ఞాపకశక్తి తగ్గడం',
-                balanceProblems: 'సమతుల్యత సమస్యలు',
-                slurredSpeech: 'మాట తడబడడం',
-                jointPain: 'కీళ్ల నొప్పి',
-                musclePain: 'కండరాల నొప్పి',
-                backPain: 'వెన్నునొప్పి',
-                neckPain: 'మెడ నొప్పి',
-                jointSwelling: 'కీళ్ల వాపు',
-                stiffness: 'బిగుతు',
-                muscleCramps: 'కండరాల తిమ్మిరి',
-                rash: 'దద్దుర్లు',
-                itching: 'దురద',
-                hives: 'ఉర్టికేరియా',
-                drySkin: 'పొడి చర్మం',
-                skinRedness: 'చర్మం ఎర్రబడడం',
-                skinDiscoloration: 'చర్మం రంగు మారడం',
-                woundsNotHealing: 'గాయాలు మానకపోవడం',
-                fever: 'జ్వరం',
-                fatigue: 'అలసట',
-                chills: 'చలి',
-                nightSweats: 'రాత్రి చెమటలు',
-                weightLoss: 'బరువు తగ్గడం',
-                weightGain: 'బరువు పెరగడం',
-                dehydration: 'నిర్జలీకరణం',
-                swollenLymphNodes: 'వాపు లింఫ్ నోడ్స్',
-                palpitations: 'గుండె దడ',
-                highBP: 'అధిక రక్తపోటు',
-                lowBP: 'తక్కువ రక్తపోటు',
-                swollenAnkles: 'చీలమండల వాపు',
-                frequentUrination: 'తరచూ మూత్రం',
-                painfulUrination: 'బాధాకరమైన మూత్రం',
-                bloodInUrine: 'మూత్రంలో రక్తం',
-                urgentUrination: 'అత్యవసర మూత్రం',
-                bodyAche: 'శరీర నొప్పి'
-            },
-            kn: {
-                patientLogin: 'ರೋಗಿಯ ಲಾಗಿನ್',
-                patientSubtitle: 'ನಿಮ್ಮ ಆರೋಗ್ಯ ದಾಖಲೆಗಳನ್ನು ಪ್ರವೇಶಿಸಿ',
-                doctorLogin: 'ವೈದ್ಯರ ಲಾಗಿನ್',
-                doctorSubtitle: 'ರೋಗಿಯ ದಾಖಲೆಗಳನ್ನು ಪ್ರವೇಶಿಸಿ',
-                patientLoginBtn: 'ರೋಗಿಯಾಗಿ ಲಾಗಿನ್ ಮಾಡಿ',
-                doctorLoginBtn: 'ವೈದ್ಯರಾಗಿ ಲಾಗಿನ್ ಮಾಡಿ',
-                demoPatients: 'ಡೆಮೊ ರೋಗಿಗಳು:',
-                patient1: 'ID: PAT001 / ಪಾಸ್‌ವರ್ಡ್: patient123 (ರಾಹುಲ್ ಶರ್ಮಾ)',
-                patient2: 'ID: PAT002 / ಪಾಸ್‌ವರ್ಡ್: priya123 (ಪ್ರಿಯಾ ಪಟೇಲ್)',
-                patient3: 'ಇಮೇಲ್: amit@example.com / ಪಾಸ್‌ವರ್ಡ್: amit123 (ಅಮಿತ್ ಕುಮಾರ್)',
-                demoDoctors: 'ಡೆಮೊ ವೈದ್ಯರು:',
-                doctor1: 'ID: DOC001 / ಪಾಸ್‌ವರ್ಡ್: doctor123 (ಡಾ. ಶರ್ಮಾ)',
-                doctor2: 'ID: DOC002 / ಪಾಸ್‌ವರ್ಡ್: doctor123 (ಡಾ. ಗುಪ್ತಾ)',
-                doctor3: 'ಇಮೇಲ್: dr.verma@demo.com / ಪಾಸ್‌ವರ್ಡ್: doctor123 (ಡಾ. ವರ್ಮಾ)',
-                logout: 'ಲಾಗೌಟ್',
-                totalVisits: 'ಒಟ್ಟು ಭೇಟಿಗಳು',
-                diagnoses: 'ರೋಗನಿರ್ಣಯಗಳು',
-                highRisk: 'ಹೆಚ್ಚಿನ ಅಪಾಯ',
-                today: 'ಇಂದು',
-                patientInfo: 'ರೋಗಿಯ ಮಾಹಿತಿ',
-                male: 'ಪುರುಷ',
-                female: 'ಮಹಿಳೆ',
-                other: 'ಇತರೆ',
-                selectDistrict: 'ಜಿಲ್ಲೆ ಆಯ್ಕೆಮಾಡಿ',
-                symptomChecker: 'ರೋಗಲಕ್ಷಣ ಪರಿಶೀಲಕ (50+ ರೋಗಲಕ್ಷಣಗಳು)',
-                all: 'ಎಲ್ಲಾ',
-                respiratory: 'ಉಸಿರಾಟದ',
-                digestive: 'ಜೀರ್ಣಕಾರಿ',
-                neurological: 'ನರವೈಜ್ಞಾನಿಕ',
-                muscular: 'ಸ್ನಾಯು',
-                skin: 'ಚರ್ಮ',
-                cardiovascular: 'ಹೃದಯ',
-                general: 'ಸಾಮಾನ್ಯ',
-                urinary: 'ಮೂತ್ರ',
-                selectedSymptoms: 'ಆಯ್ದ ರೋಗಲಕ್ಷಣಗಳು:',
-                voiceRecorder: 'ಧ್ವನಿ ರೋಗಲಕ್ಷಣ ರೆಕಾರ್ಡರ್',
-                analyze: 'ರೋಗಲಕ್ಷಣಗಳನ್ನು ವಿಶ್ಲೇಷಿಸಿ',
-                totalPatients: 'ಒಟ್ಟು ರೋಗಿಗಳು',
-                reports: 'ವರದಿಗಳು',
-                critical: 'ಗಂಭೀರ',
-                patientRecords: 'ರೋಗಿಯ ದಾಖಲೆಗಳು',
-                addNote: 'ಕ್ಲಿನಿಕಲ್ ಟಿಪ್ಪಣಿ ಸೇರಿಸಿ',
-                saveNote: 'ಟಿಪ್ಪಣಿ ಉಳಿಸಿ',
-                noSymptoms: 'ಯಾವುದೇ ರೋಗಲಕ್ಷಣಗಳನ್ನು ಆಯ್ಕೆ ಮಾಡಿಲ್ಲ',
-                loginFirst: 'ದಯವಿಟ್ಟು ಮೊದಲು ಲಾಗಿನ್ ಮಾಡಿ',
-                selectSymptoms: 'ದಯವಿಟ್ಟು ರೋಗಲಕ್ಷಣಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿ',
-                analysisComplete: 'ವಿಶ್ಲೇಷಣೆ ಪೂರ್ಣಗೊಂಡಿದೆ!',
-                diagnosisReport: 'ರೋಗನಿರ್ಣಯ ವರದಿ',
-                matchedSymptoms: 'ಹೊಂದಾಣಿಕೆಯ ರೋಗಲಕ್ಷಣಗಳು',
-                advice: 'ಸಲಹೆ',
-                homeRemedies: 'ಮನೆಮದ್ದುಗಳು',
-                warningSigns: 'ಎಚ್ಚರಿಕೆ ಚಿಹ್ನೆಗಳು',
-                printReport: 'ವರದಿಯನ್ನು ಮುದ್ರಿಸಿ',
-                loginSuccess: 'ಲಾಗಿನ್ ಯಶಸ್ವಿ!',
-                invalidCred: 'ಅಮಾನ್ಯ ID/ಇಮೇಲ್/ಫೋನ್ ಅಥವಾ ಪಾಸ್‌ವರ್ಡ್',
-                doctorLoginSuccess: 'ವೈದ್ಯರ ಲಾಗಿನ್ ಯಶಸ್ವಿ!',
-                logoutSuccess: 'ಯಶಸ್ವಿಯಾಗಿ ಲಾಗೌಟ್ ಮಾಡಲಾಗಿದೆ',
-                voiceCaptured: 'ಧ್ವನಿ ಸೆರೆಹಿಡಿಯಲಾಗಿದೆ!',
-                noRecords: 'ಇನ್ನೂ ರೋಗಿಯ ದಾಖಲೆಗಳಿಲ್ಲ',
-                visits: 'ಭೇಟಿಗಳು',
-                viewDetails: 'ವಿವರಗಳನ್ನು ನೋಡಿ',
-                noteSaved: 'ಟಿಪ್ಪಣಿ ಉಳಿಸಲಾಗಿದೆ',
-                loginWithId: 'ನಿಮ್ಮ ರೋಗಿಯ ID, ಇಮೇಲ್ ಅಥವಾ ಫೋನ್‌ನೊಂದಿಗೆ ಲಾಗಿನ್ ಮಾಡಿ',
-                // Symptoms translations for Kannada
-                cough: 'ಕೆಮ್ಮು',
-                shortnessOfBreath: 'ಉಸಿರಾಟದ ತೊಂದರೆ',
-                wheezing: 'ಉಬ್ಬಸ',
-                chestPain: 'ಎದೆ ನೋವು',
-                soreThroat: 'ಗಂಟಲು ನೋವು',
-                runnyNose: 'ಸ್ರವಿಸುವ ಮೂಗು',
-                sneezing: 'ಸೀನುವಿಕೆ',
-                nasalCongestion: 'ಮೂಗಿನ ದಟ್ಟಣೆ',
-                coughingBlood: 'ರಕ್ತದ ಕೆಮ್ಮು',
-                dryCough: 'ಒಣ ಕೆಮ್ಮು',
-                nausea: 'ವಾಕರಿಕೆ',
-                vomiting: 'ವಾಂತಿ',
-                diarrhea: 'ಅತಿಸಾರ',
-                constipation: 'ಮಲಬದ್ಧತೆ',
-                abdominalPain: 'ಹೊಟ್ಟೆ ನೋವು',
-                bloating: 'ಉಬ್ಬರ',
-                heartburn: 'ಎದೆಯುರಿ',
-                lossOfAppetite: 'ಹಸಿವಿನ ಕೊರತೆ',
-                bloodInStool: 'ಮಲದಲ್ಲಿ ರಕ್ತ',
-                difficultySwallowing: 'ನುಂಗಲು ಕಷ್ಟ',
-                headache: 'ತಲೆನೋವು',
-                dizziness: 'ತಲೆತಿರುಗುವಿಕೆ',
-                confusion: 'ಗೊಂದಲ',
-                seizures: 'ಸೆಳವು',
-                tremors: 'ನಡುಕ',
-                numbness: 'ಮರಗಟ್ಟುವಿಕೆ',
-                weakness: 'ದೌರ್ಬಲ್ಯ',
-                memoryLoss: 'ನೆನಪಿನ ಶಕ್ತಿ ಕಳೆದುಕೊಳ್ಳುವುದು',
-                balanceProblems: 'ಸಮತೋಲನ ಸಮಸ್ಯೆಗಳು',
-                slurredSpeech: 'ತೊದಲುನುಡಿ',
-                jointPain: 'ಕೀಲು ನೋವು',
-                musclePain: 'ಸ್ನಾಯು ನೋವು',
-                backPain: 'ಬೆನ್ನು ನೋವು',
-                neckPain: 'ಕುತ್ತಿಗೆ ನೋವು',
-                jointSwelling: 'ಕೀಲು ಊತ',
-                stiffness: 'ಬಿಗಿತ',
-                muscleCramps: 'ಸ್ನಾಯು ಸೆಳೆತ',
-                rash: 'ದದ್ದು',
-                itching: 'ತುರಿಕೆ',
-                hives: 'ಜೇನುಗೂಡುಗಳು',
-                drySkin: 'ಒಣ ಚರ್ಮ',
-                skinRedness: 'ಚರ್ಮದ ಕೆಂಪಾಗುವಿಕೆ',
-                skinDiscoloration: 'ಚರ್ಮದ ಬಣ್ಣ ಬದಲಾವಣೆ',
-                woundsNotHealing: 'ಗಾಯಗಳು ವಾಸಿಯಾಗದೆ',
-                fever: 'ಜ್ವರ',
-                fatigue: 'ಆಯಾಸ',
-                chills: 'ಶೀತ',
-                nightSweats: 'ರಾತ್ರಿ ಬೆವರುವಿಕೆ',
-                weightLoss: 'ತೂಕ ಇಳಿಕೆ',
-                weightGain: 'ತೂಕ ಹೆಚ್ಚಳ',
-                dehydration: 'ನಿರ್ಜಲೀಕರಣ',
-                swollenLymphNodes: 'ಊದಿದ ದುಗ್ಧರಸ ಗ್ರಂಥಿಗಳು',
-                palpitations: 'ಹೃದಯ ಬಡಿತ',
-                highBP: 'ಅಧಿಕ ರಕ್ತದೊತ್ತಡ',
-                lowBP: 'ಕಡಿಮೆ ರಕ್ತದೊತ್ತಡ',
-                swollenAnkles: 'ಕಣಕಾಲು ಊತ',
-                frequentUrination: 'ಆಗಾಗ ಮೂತ್ರ',
-                painfulUrination: 'ನೋವಿನ ಮೂತ್ರ',
-                bloodInUrine: 'ಮೂತ್ರದಲ್ಲಿ ರಕ್ತ',
-                urgentUrination: 'ತುರ್ತು ಮೂತ್ರ',
-                bodyAche: 'ದೇಹ ನೋವು'
-            },
-            ml: {
-                patientLogin: 'രോഗി ലോഗിൻ',
-                patientSubtitle: 'നിങ്ങളുടെ ആരോഗ്യ രേഖകൾ ആക്സസ് ചെയ്യുക',
-                doctorLogin: 'ഡോക്ടർ ലോഗിൻ',
-                doctorSubtitle: 'രോഗിയുടെ രേഖകൾ ആക്സസ് ചെയ്യുക',
-                patientLoginBtn: 'രോഗിയായി ലോഗിൻ ചെയ്യുക',
-                doctorLoginBtn: 'ഡോക്ടറായി ലോഗിൻ ചെയ്യുക',
-                demoPatients: 'ഡെമോ രോഗികൾ:',
-                patient1: 'ID: PAT001 / പാസ്‌വേഡ്: patient123 (രാഹുൽ ശർമ്മ)',
-                patient2: 'ID: PAT002 / പാസ്‌വേഡ്: priya123 (പ്രിയ പട്ടേൽ)',
-                patient3: 'ഇമെയിൽ: amit@example.com / പാസ്‌വേഡ്: amit123 (അമിത് കുമാർ)',
-                demoDoctors: 'ഡെമോ ഡോക്ടർമാർ:',
-                doctor1: 'ID: DOC001 / പാസ്‌വേഡ്: doctor123 (ഡോ. ശർമ്മ)',
-                doctor2: 'ID: DOC002 / പാസ്‌വേഡ്: doctor123 (ഡോ. ഗുപ്ത)',
-                doctor3: 'ഇമെയിൽ: dr.verma@demo.com / പാസ്‌വേഡ്: doctor123 (ഡോ. വർമ)',
-                logout: 'ലോഗൗട്ട്',
-                totalVisits: 'ആകെ സന്ദർശനങ്ങൾ',
-                diagnoses: 'രോഗനിർണയങ്ങൾ',
-                highRisk: 'ഉയർന്ന അപകടസാധ്യത',
-                today: 'ഇന്ന്',
-                patientInfo: 'രോഗിയുടെ വിവരങ്ങൾ',
-                male: 'പുരുഷൻ',
-                female: 'സ്ത്രീ',
-                other: 'മറ്റുള്ളവ',
-                selectDistrict: 'ജില്ല തിരഞ്ഞെടുക്കുക',
-                symptomChecker: 'രോഗലക്ഷണ പരിശോധകൻ (50+ രോഗലക്ഷണങ്ങൾ)',
-                all: 'എല്ലാം',
-                respiratory: 'ശ്വസന',
-                digestive: 'ദഹന',
-                neurological: 'ന്യൂറോളജിക്കൽ',
-                muscular: 'പേശീ',
-                skin: 'ചർമ്മം',
-                cardiovascular: 'ഹൃദയ',
-                general: 'പൊതുവായ',
-                urinary: 'മൂത്ര',
-                selectedSymptoms: 'തിരഞ്ഞെടുത്ത രോഗലക്ഷണങ്ങൾ:',
-                voiceRecorder: 'ശബ്ദ രോഗലക്ഷണ റെക്കോർഡർ',
-                analyze: 'രോഗലക്ഷണങ്ങൾ വിശകലനം ചെയ്യുക',
-                totalPatients: 'ആകെ രോഗികൾ',
-                reports: 'റിപ്പോർട്ടുകൾ',
-                critical: 'ഗുരുതരമായ',
-                patientRecords: 'രോഗിയുടെ രേഖകൾ',
-                addNote: 'ക്ലിനിക്കൽ കുറിപ്പ് ചേർക്കുക',
-                saveNote: 'കുറിപ്പ് സംരക്ഷിക്കുക',
-                noSymptoms: 'രോഗലക്ഷണങ്ങളൊന്നും തിരഞ്ഞെടുത്തിട്ടില്ല',
-                loginFirst: 'ദയവായി ആദ്യം ലോഗിൻ ചെയ്യുക',
-                selectSymptoms: 'ദയവായി രോഗലക്ഷണങ്ങൾ തിരഞ്ഞെടുക്കുക',
-                analysisComplete: 'വിശകലനം പൂർത്തിയായി!',
-                diagnosisReport: 'രോഗനിർണയ റിപ്പോർട്ട്',
-                matchedSymptoms: 'പൊരുത്തപ്പെടുന്ന രോഗലക്ഷണങ്ങൾ',
-                advice: 'ഉപദേശം',
-                homeRemedies: 'വീട്ടുവൈദ്യങ്ങൾ',
-                warningSigns: 'മുന്നറിയിപ്പ് അടയാളങ്ങൾ',
-                printReport: 'റിപ്പോർട്ട് പ്രിന്റ് ചെയ്യുക',
-                loginSuccess: 'ലോഗിൻ വിജയകരം!',
-                invalidCred: 'അസാധുവായ ID/ഇമെയിൽ/ഫോൺ അല്ലെങ്കിൽ പാസ്‌വേഡ്',
-                doctorLoginSuccess: 'ഡോക്ടർ ലോഗിൻ വിജയകരം!',
-                logoutSuccess: 'വിജയകരമായി ലോഗൗട്ട് ചെയ്തു',
-                voiceCaptured: 'ശബ്ദം പകർത്തി!',
-                noRecords: 'ഇതുവരെ രോഗിയുടെ രേഖകളൊന്നുമില്ല',
-                visits: 'സന്ദർശനങ്ങൾ',
-                viewDetails: 'വിശദാംശങ്ങൾ കാണുക',
-                noteSaved: 'കുറിപ്പ് സംരക്ഷിച്ചു',
-                loginWithId: 'നിങ്ങളുടെ രോഗി ID, ഇമെയിൽ അല്ലെങ്കിൽ ഫോൺ ഉപയോഗിച്ച് ലോഗിൻ ചെയ്യുക',
-                // Symptoms translations for Malayalam
-                cough: 'ചുമ',
-                shortnessOfBreath: 'ശ്വാസതടസ്സം',
-                wheezing: 'ശ്വാസംമുട്ടൽ',
-                chestPain: 'നെഞ്ചുവേദന',
-                soreThroat: 'തൊണ്ടവേദന',
-                runnyNose: 'മൂക്കൊലിപ്പ്',
-                sneezing: 'തുമ്മൽ',
-                nasalCongestion: 'മൂക്കടപ്പ്',
-                coughingBlood: 'രക്തം ചുമ',
-                dryCough: 'വരണ്ട ചുമ',
-                nausea: 'ഓക്കാനം',
-                vomiting: 'ഛർദ്ദി',
-                diarrhea: 'വയറിളക്കം',
-                constipation: 'മലബന്ധം',
-                abdominalPain: 'വയറുവേദന',
-                bloating: 'വയറുവീർക്കൽ',
-                heartburn: 'നെഞ്ചെരിച്ചിൽ',
-                lossOfAppetite: 'വിശപ്പില്ലായ്മ',
-                bloodInStool: 'മലത്തിൽ രക്തം',
-                difficultySwallowing: 'വിഴുങ്ങാൻ ബുദ്ധിമുട്ട്',
-                headache: 'തലവേദന',
-                dizziness: 'തലകറക്കം',
-                confusion: 'ആശയക്കുഴപ്പം',
-                seizures: 'അപസ്മാരം',
-                tremors: 'വിറയൽ',
-                numbness: 'മരവിപ്പ്',
-                weakness: 'ബലഹീനത',
-                memoryLoss: 'ഓർമ്മക്കുറവ്',
-                balanceProblems: 'ബാലൻസ് പ്രശ്നങ്ങൾ',
-                slurredSpeech: 'വ്യക്തമല്ലാത്ത സംസാരം',
-                jointPain: 'സന്ധി വേദന',
-                musclePain: 'പേശി വേദന',
-                backPain: 'നടുവേദന',
-                neckPain: 'കഴുത്ത് വേദന',
-                jointSwelling: 'സന്ധി വീക്കം',
-                stiffness: 'കാഠിന്യം',
-                muscleCramps: 'പേശീവലിവ്',
-                rash: 'തടിപ്പ്',
-                itching: 'ചൊറിച്ചിൽ',
-                hives: 'തേനീച്ചക്കൂടുകൾ',
-                drySkin: 'വരണ്ട ചർമ്മം',
-                skinRedness: 'ചർമ്മത്തിൽ ചുവപ്പ്',
-                skinDiscoloration: 'ചർമ്മത്തിന്റെ നിറവ്യത്യാസം',
-                woundsNotHealing: 'മുറിവുകൾ ഉണങ്ങാതിരിക്കുക',
-                fever: 'പനി',
-                fatigue: 'ക്ഷീണം',
-                chills: 'വിറയൽ',
-                nightSweats: 'രാത്രി വിയർപ്പ്',
-                weightLoss: 'ശരീരഭാരം കുറയൽ',
-                weightGain: 'ശരീരഭാരം വർദ്ധിക്കൽ',
-                dehydration: 'നിർജ്ജലീകരണം',
-                swollenLymphNodes: 'വീർത്ത ലിംഫ് നോഡുകൾ',
-                palpitations: 'ഹൃദയമിടിപ്പ്',
-                highBP: 'ഉയർന്ന രക്തസമ്മർദ്ദം',
-                lowBP: 'കുറഞ്ഞ രക്തസമ്മർദ്ദം',
-                swollenAnkles: 'കണങ്കാൽ വീക്കം',
-                frequentUrination: 'ഇടയ്ക്കിടെ മൂത്രം',
-                painfulUrination: 'വേദനാജനകമായ മൂത്രം',
-                bloodInUrine: 'മൂത്രത്തിൽ രക്തം',
-                urgentUrination: 'അടിയന്തര മൂത്രം',
-                bodyAche: 'ശരീരവേദന'
             }
         };
 
-        // ==================== DATABASES ====================
+        // ==================== PATIENTS DATABASE WITH UNIQUE IDs ====================
         let patients = [
-            { id: 'PAT001', name: 'Rahul Sharma', email: 'patient@demo.com', phone: '9876543210', password: 'patient123', age: 32, gender: 'male', district: 'Chennai' },
+            { id: 'PAT001', name: 'Rahul Sharma', email: 'rahul@example.com', phone: '9876543210', password: 'patient123', age: 32, gender: 'male', district: 'Chennai' },
             { id: 'PAT002', name: 'Priya Patel', email: 'priya@example.com', phone: '8765432109', password: 'priya123', age: 28, gender: 'female', district: 'Coimbatore' },
             { id: 'PAT003', name: 'Amit Kumar', email: 'amit@example.com', phone: '7654321098', password: 'amit123', age: 45, gender: 'male', district: 'Madurai' },
             { id: 'PAT004', name: 'Sunita Reddy', email: 'sunita@example.com', phone: '6543210987', password: 'sunita123', age: 35, gender: 'female', district: 'Salem' },
-            { id: 'PAT005', name: 'Vikram Singh', email: 'vikram@example.com', phone: '5432109876', password: 'vikram123', age: 52, gender: 'male', district: 'Tirunelveli' }
+            { id: 'PAT005', name: 'Vikram Singh', email: 'vikram@example.com', phone: '5432109876', password: 'vikram123', age: 52, gender: 'male', district: 'Tirunelveli' },
+            { id: 'PAT006', name: 'Lakshmi Nair', email: 'lakshmi@example.com', phone: '4321098765', password: 'lakshmi123', age: 29, gender: 'female', district: 'Kanyakumari' },
+            { id: 'PAT007', name: 'Rajesh Kumar', email: 'rajesh@example.com', phone: '3210987654', password: 'rajesh123', age: 41, gender: 'male', district: 'Vellore' },
+            { id: 'PAT008', name: 'Meera Sharma', email: 'meera@example.com', phone: '2109876543', password: 'meera123', age: 33, gender: 'female', district: 'Erode' },
+            { id: 'PAT009', name: 'Arjun Reddy', email: 'arjun@example.com', phone: '1098765432', password: 'arjun123', age: 38, gender: 'male', district: 'Thoothukkudi' },
+            { id: 'PAT010', name: 'Kavita Singh', email: 'kavita@example.com', phone: '9988776655', password: 'kavita123', age: 27, gender: 'female', district: 'Dharmapuri' }
         ];
 
+        // ==================== DOCTORS DATABASE WITH UNIQUE IDs ====================
         let doctors = [
-            { id: 'DOC001', name: 'Dr. Sharma', email: 'doctor@demo.com', phone: '9988776655', password: 'doctor123', specialty: 'General Physician' },
-            { id: 'DOC002', name: 'Dr. Gupta', email: 'dr.gupta@demo.com', phone: '8877665544', password: 'doctor123', specialty: 'Cardiologist' },
-            { id: 'DOC003', name: 'Dr. Verma', email: 'dr.verma@demo.com', phone: '7766554433', password: 'doctor123', specialty: 'Pediatrician' },
-            { id: 'DOC004', name: 'Dr. Reddy', email: 'dr.reddy@demo.com', phone: '6655443322', password: 'doctor123', specialty: 'Neurologist' }
+            { id: 'DOC001', name: 'Dr. Sharma', email: 'dr.sharma@hospital.com', phone: '9876543211', password: 'doctor123', specialty: 'General Physician' },
+            { id: 'DOC002', name: 'Dr. Gupta', email: 'dr.gupta@hospital.com', phone: '9876543212', password: 'doctor123', specialty: 'Cardiologist' },
+            { id: 'DOC003', name: 'Dr. Verma', email: 'dr.verma@hospital.com', phone: '9876543213', password: 'doctor123', specialty: 'Pediatrician' },
+            { id: 'DOC004', name: 'Dr. Reddy', email: 'dr.reddy@hospital.com', phone: '9876543214', password: 'doctor123', specialty: 'Neurologist' },
+            { id: 'DOC005', name: 'Dr. Nair', email: 'dr.nair@hospital.com', phone: '9876543215', password: 'doctor123', specialty: 'Dermatologist' },
+            { id: 'DOC006', name: 'Dr. Kumar', email: 'dr.kumar@hospital.com', phone: '9876543216', password: 'doctor123', specialty: 'Orthopedic' },
+            { id: 'DOC007', name: 'Dr. Singh', email: 'dr.singh@hospital.com', phone: '9876543217', password: 'doctor123', specialty: 'Psychiatrist' },
+            { id: 'DOC008', name: 'Dr. Patel', email: 'dr.patel@hospital.com', phone: '9876543218', password: 'doctor123', specialty: 'Gynecologist' },
+            { id: 'DOC009', name: 'Dr. Menon', email: 'dr.menon@hospital.com', phone: '9876543219', password: 'doctor123', specialty: 'ENT Specialist' },
+            { id: 'DOC010', name: 'Dr. Iyer', email: 'dr.iyer@hospital.com', phone: '9876543220', password: 'doctor123', specialty: 'Ophthalmologist' }
         ];
 
         let diagnoses = JSON.parse(localStorage.getItem('diagnoses')) || [];
         let currentPatient = null;
         let currentDoctor = null;
 
-        // ==================== 50+ SYMPTOMS DATABASE ====================
+        // ==================== 60+ SYMPTOMS DATABASE ====================
         const symptomsDB = [
             // Respiratory (1-10)
             { id: 1, name: 'cough', category: 'respiratory' },
@@ -1719,7 +1234,7 @@
             { id: 56, name: 'lowBP', category: 'cardiovascular' },
             { id: 57, name: 'swollenAnkles', category: 'cardiovascular' },
             
-            // Urinary (58-60)
+            // Urinary (58-61)
             { id: 58, name: 'frequentUrination', category: 'urinary' },
             { id: 59, name: 'painfulUrination', category: 'urinary' },
             { id: 60, name: 'bloodInUrine', category: 'urinary' },
@@ -1854,6 +1369,12 @@
             displaySymptoms('all');
             updateAllStats();
             applyLanguage('en');
+            
+            // Pre-fill with first demo IDs
+            document.getElementById('patientId').value = 'PAT001';
+            document.getElementById('patientPassword').value = 'patient123';
+            document.getElementById('doctorId').value = 'DOC001';
+            document.getElementById('doctorPassword').value = 'doctor123';
         });
 
         function loadDistricts() {
@@ -1900,12 +1421,13 @@
             return translations[currentLanguage]?.[key] || translations.en[key] || key;
         }
 
-        // ==================== PATIENT LOGIN (ID/Email/Phone) ====================
+        // ==================== PATIENT LOGIN (Using Patient ID only) ====================
         function patientLogin() {
-            const input = document.getElementById('patientId').value.trim();
+            const patientId = document.getElementById('patientId').value.trim();
             const password = document.getElementById('patientPassword').value.trim();
             
-            let patient = patients.find(p => p.id === input || p.email === input || p.phone === input);
+            // Find patient by ID only (as requested)
+            let patient = patients.find(p => p.id === patientId);
             
             if (patient && patient.password === password) {
                 currentPatient = patient;
@@ -1925,18 +1447,19 @@
                 }
                 
                 updatePatientStats();
-                showToast(getTranslation('loginSuccess'), 'success');
+                showToast(getTranslation('loginSuccess') + ' Welcome ' + patient.name, 'success');
             } else {
                 showToast(getTranslation('invalidCred'), 'error');
             }
         }
 
-        // ==================== DOCTOR LOGIN (ID/Email/Phone) ====================
+        // ==================== DOCTOR LOGIN (Using Doctor ID only) ====================
         function doctorLogin() {
-            const input = document.getElementById('doctorId').value.trim();
+            const doctorId = document.getElementById('doctorId').value.trim();
             const password = document.getElementById('doctorPassword').value.trim();
             
-            let doctor = doctors.find(d => d.id === input || d.email === input || d.phone === input);
+            // Find doctor by ID only (as requested)
+            let doctor = doctors.find(d => d.id === doctorId);
             
             if (doctor && doctor.password === password) {
                 currentDoctor = doctor;
@@ -1951,9 +1474,9 @@
                 
                 displayPatientRecords();
                 updateDoctorStats();
-                showToast(getTranslation('doctorLoginSuccess'), 'success');
+                showToast(getTranslation('doctorLoginSuccess') + ' Welcome ' + doctor.name, 'success');
             } else {
-                showToast(getTranslation('invalidCred'), 'error');
+                showToast(getTranslation('invalidDoctorCred'), 'error');
             }
         }
 
@@ -2120,6 +1643,7 @@
             diagnoses.push(diagnosis);
             localStorage.setItem('diagnoses', JSON.stringify(diagnoses));
             updatePatientStats();
+            updateDoctorStats(); // Update doctor stats when new diagnosis is added
             
             showToast(getTranslation('analysisComplete'));
         }
@@ -2205,10 +1729,12 @@
                 return;
             }
 
+            // Group diagnoses by patient
             const patientGroups = {};
             diagnoses.forEach(d => {
                 if (!patientGroups[d.patientId]) {
                     patientGroups[d.patientId] = {
+                        patientId: d.patientId,
                         patientName: d.patientName,
                         patientEmail: d.patientEmail,
                         patientPhone: d.patientPhone,
@@ -2225,6 +1751,7 @@
                 patientDiv.innerHTML = `
                     <div class="patient-info">
                         <h4>${group.patientName}</h4>
+                        <p><i class="fas fa-id-card"></i> ID: ${group.patientId}</p>
                         <p><i class="fas fa-envelope"></i> ${group.patientEmail}</p>
                         <p><i class="fas fa-phone"></i> ${group.patientPhone || 'N/A'}</p>
                         <p><i class="fas fa-notes-medical"></i> ${group.records.length} ${getTranslation('visits')}</p>
@@ -2241,9 +1768,24 @@
 
         function viewPatientDetails(patientId) {
             const patientRecords = diagnoses.filter(d => d.patientId === patientId);
-            const details = patientRecords.map(r => 
-                `Date: ${new Date(r.date).toLocaleString()}\nDiagnosis: ${r.diagnosis}\nSeverity: ${r.severity}\nSymptoms: ${r.symptoms.join(', ')}\nDoctor Note: ${r.doctorNote || 'None'}\n---`
-            ).join('\n');
+            const patient = patients.find(p => p.id === patientId);
+            
+            let details = `Patient: ${patient?.name || 'Unknown'} (ID: ${patientId})\n`;
+            details += `Email: ${patient?.email || 'N/A'}\n`;
+            details += `Phone: ${patient?.phone || 'N/A'}\n`;
+            details += `Total Visits: ${patientRecords.length}\n`;
+            details += `========================\n\n`;
+            
+            patientRecords.forEach((r, index) => {
+                details += `Visit #${index + 1}\n`;
+                details += `Date: ${new Date(r.date).toLocaleString()}\n`;
+                details += `Diagnosis: ${r.diagnosis}\n`;
+                details += `Severity: ${r.severity.toUpperCase()}\n`;
+                details += `Symptoms: ${r.symptoms.join(', ')}\n`;
+                details += `Doctor Note: ${r.doctorNote || 'None'}\n`;
+                details += `------------------------\n`;
+            });
+            
             alert(details);
         }
 
@@ -2252,6 +1794,8 @@
             if (note) {
                 showToast(getTranslation('noteSaved'));
                 document.getElementById('clinicalNote').value = '';
+            } else {
+                showToast('Please write a note first', 'error');
             }
         }
 

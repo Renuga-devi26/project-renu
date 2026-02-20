@@ -3,18 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>RuralCare Pro - Enterprise Healthcare Platform</title>
+    <title>RuralCare Pro - Complete Healthcare Platform</title>
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Animate.css -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
         }
 
         :root {
@@ -32,19 +31,16 @@
             --gray-light: #e2e8f0;
             --border: #e2e8f0;
             --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-            --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-            --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.1);
             --shadow-xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
-            --radius-sm: 8px;
-            --radius: 12px;
-            --radius-md: 16px;
+            --radius: 16px;
             --radius-lg: 24px;
             --radius-xl: 32px;
         }
 
         body {
-            font-family: 'Inter', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             display: flex;
@@ -52,56 +48,6 @@
             justify-content: center;
             padding: 20px;
             position: relative;
-            overflow-x: hidden;
-        }
-
-        /* Animated Background */
-        .bg-animation {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            overflow: hidden;
-        }
-
-        .bg-circle {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            animation: float 20s infinite;
-        }
-
-        .circle1 {
-            width: 400px;
-            height: 400px;
-            top: -200px;
-            right: -200px;
-            animation-delay: 0s;
-        }
-
-        .circle2 {
-            width: 300px;
-            height: 300px;
-            bottom: -150px;
-            left: -150px;
-            animation-delay: 5s;
-        }
-
-        .circle3 {
-            width: 200px;
-            height: 200px;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            animation-delay: 10s;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(30px, -30px) scale(1.1); }
-            66% { transform: translate(-30px, 30px) scale(0.9); }
         }
 
         /* Language Switcher */
@@ -116,9 +62,7 @@
             padding: 8px 16px;
             border-radius: 40px;
             box-shadow: var(--shadow-lg);
-            backdrop-filter: blur(10px);
-            background: rgba(255, 255, 255, 0.95);
-            animation: slideInRight 0.5s ease;
+            flex-wrap: wrap;
         }
 
         .lang-btn {
@@ -146,54 +90,34 @@
         /* Login Container */
         .login-wrapper {
             width: 100%;
-            max-width: 1400px;
+            max-width: 1300px;
             position: relative;
             z-index: 1;
-            animation: fadeInUp 0.6s ease;
         }
 
         .login-grid {
             display: grid;
             grid-template-columns: 1.2fr 0.8fr;
             gap: 30px;
-            align-items: stretch;
         }
 
         /* Welcome Card */
         .welcome-card {
-            background: white;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border-radius: var(--radius-xl);
             padding: 50px;
-            box-shadow: var(--shadow-xl);
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .welcome-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.1"><path d="M20 20 L80 20 L80 80 L20 80 Z" fill="none" stroke="white" stroke-width="2"/><circle cx="50" cy="50" r="20" fill="none" stroke="white" stroke-width="2"/></svg>') repeat;
-            opacity: 0.1;
+            box-shadow: var(--shadow-xl);
         }
 
         .welcome-icon {
-            font-size: 5rem;
+            font-size: 4rem;
             margin-bottom: 20px;
-            animation: pulse 2s infinite;
         }
 
         .welcome-card h1 {
-            font-size: 3rem;
-            font-weight: 800;
+            font-size: 2.5rem;
+            font-weight: 700;
             margin-bottom: 20px;
             line-height: 1.2;
         }
@@ -202,7 +126,6 @@
             font-size: 1.1rem;
             opacity: 0.9;
             margin-bottom: 30px;
-            line-height: 1.6;
         }
 
         .feature-list {
@@ -213,19 +136,19 @@
             display: flex;
             align-items: center;
             gap: 15px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             font-size: 1rem;
         }
 
         .feature-list li i {
-            width: 30px;
-            height: 30px;
+            width: 24px;
+            height: 24px;
             background: rgba(255, 255, 255, 0.2);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
 
         /* Login Card */
@@ -236,7 +159,7 @@
             box-shadow: var(--shadow-xl);
         }
 
-        .login-tabs {
+        .user-type-tabs {
             display: flex;
             gap: 10px;
             margin-bottom: 30px;
@@ -245,7 +168,7 @@
             border-radius: 50px;
         }
 
-        .login-tab {
+        .user-type-tab {
             flex: 1;
             padding: 12px;
             border: none;
@@ -255,10 +178,10 @@
             cursor: pointer;
             border-radius: 40px;
             transition: all 0.3s;
-            font-size: 0.95rem;
+            font-size: 1rem;
         }
 
-        .login-tab.active {
+        .user-type-tab.active {
             background: var(--primary);
             color: white;
         }
@@ -303,8 +226,7 @@
             transition: all 0.3s;
         }
 
-        .input-group input,
-        .input-group select {
+        .input-group input {
             width: 100%;
             padding: 16px 16px 16px 50px;
             border: 2px solid var(--border);
@@ -314,8 +236,7 @@
             background: var(--light);
         }
 
-        .input-group input:focus,
-        .input-group select:focus {
+        .input-group input:focus {
             outline: none;
             border-color: var(--primary);
             background: white;
@@ -330,11 +251,11 @@
             display: grid;
             grid-template-columns: 1fr auto;
             gap: 10px;
-            align-items: center;
+            margin-bottom: 20px;
         }
 
         .input-row .input-group {
-            flex: 1;
+            margin-bottom: 0;
         }
 
         .otp-btn {
@@ -347,18 +268,39 @@
             cursor: pointer;
             transition: all 0.3s;
             white-space: nowrap;
-            height: 100%;
         }
 
         .otp-btn:hover {
             background: var(--primary-dark);
-            transform: translateY(-2px);
         }
 
         .otp-btn:disabled {
             background: var(--gray);
             cursor: not-allowed;
-            transform: none;
+        }
+
+        .login-options {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .login-options .line {
+            flex: 1;
+            height: 2px;
+            background: var(--border);
+        }
+
+        .login-options span {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .password-login {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px dashed var(--border);
         }
 
         .login-btn {
@@ -372,52 +314,28 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
-            margin: 20px 0;
-            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
+            margin: 10px 0;
         }
 
         .login-btn:hover {
             background: var(--primary-dark);
             transform: translateY(-2px);
-            box-shadow: 0 15px 30px rgba(37, 99, 235, 0.4);
+            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
         }
 
-        .divider {
-            text-align: center;
-            position: relative;
-            margin: 30px 0;
+        .login-btn.secondary {
+            background: var(--secondary);
         }
 
-        .divider::before,
-        .divider::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            width: calc(50% - 30px);
-            height: 2px;
-            background: var(--border);
-        }
-
-        .divider::before {
-            left: 0;
-        }
-
-        .divider::after {
-            right: 0;
-        }
-
-        .divider span {
-            background: white;
-            padding: 0 20px;
-            color: var(--gray);
-            font-size: 0.9rem;
+        .login-btn.secondary:hover {
+            background: #0d9488;
         }
 
         .social-login {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 10px;
-            margin-bottom: 20px;
+            margin: 20px 0;
         }
 
         .social-btn {
@@ -441,27 +359,22 @@
             transform: translateY(-2px);
         }
 
-        .social-btn.google:hover { border-color: #DB4437; color: #DB4437; }
-        .social-btn.facebook:hover { border-color: #4267B2; color: #4267B2; }
-        .social-btn.github:hover { border-color: #333; color: #333; }
-
         .demo-credentials {
             background: var(--light);
             border-radius: 20px;
             padding: 20px;
             margin-top: 20px;
-            font-size: 0.9rem;
         }
 
         .demo-credentials h4 {
             color: var(--dark);
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        .cred-list {
+        .cred-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 10px;
@@ -471,8 +384,8 @@
             padding: 8px 12px;
             background: white;
             border-radius: 12px;
-            font-family: monospace;
             font-size: 0.85rem;
+            border-left: 3px solid var(--primary);
         }
 
         .cred-item strong {
@@ -487,7 +400,6 @@
             border-radius: var(--radius-xl);
             box-shadow: var(--shadow-xl);
             overflow: hidden;
-            animation: scaleIn 0.5s ease;
         }
 
         .main-app.visible {
@@ -501,6 +413,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
         .user-info {
@@ -566,6 +480,7 @@
             align-items: center;
             gap: 15px;
             transition: all 0.3s;
+            cursor: pointer;
         }
 
         .stat-card:hover {
@@ -671,11 +586,17 @@
             text-align: center;
             transition: all 0.2s;
             border: 2px solid transparent;
+            user-select: none;
+        }
+
+        .symptom-item:hover {
+            border-color: var(--primary);
         }
 
         .symptom-item.selected {
             background: var(--primary);
             color: white;
+            border-color: var(--primary-dark);
         }
 
         .selected-tags {
@@ -705,6 +626,13 @@
             color: white;
             cursor: pointer;
             font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .symptom-tag button:hover {
+            opacity: 0.8;
         }
 
         /* Voice Section */
@@ -745,30 +673,19 @@
             cursor: pointer;
             transition: all 0.3s;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .record-btn::before {
-            content: '';
-            position: absolute;
-            top: -5px;
-            left: -5px;
-            right: -5px;
-            bottom: -5px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            z-index: -1;
-            animation: none;
+        .record-btn:hover {
+            transform: scale(1.1);
         }
 
         .record-btn.recording {
             background: var(--danger);
             color: white;
             animation: pulse 1.5s infinite;
-        }
-
-        .record-btn.recording::before {
-            animation: ripple 1.5s infinite;
         }
 
         .timer {
@@ -789,7 +706,7 @@
 
         .wave-bar {
             flex: 1;
-            height: 100%;
+            height: 30px;
             background: rgba(255, 255, 255, 0.5);
             border-radius: 10px;
             transition: height 0.1s;
@@ -808,7 +725,6 @@
             cursor: pointer;
             margin: 30px 0;
             transition: all 0.3s;
-            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
         }
 
         .analyze-btn:hover {
@@ -859,6 +775,7 @@
             gap: 15px;
             border: 2px solid var(--border);
             transition: all 0.3s;
+            cursor: pointer;
         }
 
         .patient-card:hover {
@@ -919,25 +836,10 @@
             border-left-color: var(--danger);
         }
 
-        .toast.warning {
-            border-left-color: var(--warning);
-        }
-
         /* Animations */
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
 
         @keyframes slideIn {
@@ -951,42 +853,9 @@
             }
         }
 
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes scaleIn {
-            from {
-                opacity: 0;
-                transform: scale(0.9);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
         @keyframes pulse {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.1); }
-        }
-
-        @keyframes ripple {
-            0% {
-                transform: scale(1);
-                opacity: 0.3;
-            }
-            100% {
-                transform: scale(1.5);
-                opacity: 0;
-            }
         }
 
         /* Responsive */
@@ -1007,10 +876,9 @@
                 right: 0;
                 margin-bottom: 20px;
                 justify-content: center;
-                flex-wrap: wrap;
             }
             
-            .cred-list {
+            .cred-grid {
                 grid-template-columns: 1fr;
             }
             
@@ -1021,13 +889,6 @@
     </style>
 </head>
 <body>
-    <!-- Animated Background -->
-    <div class="bg-animation">
-        <div class="bg-circle circle1"></div>
-        <div class="bg-circle circle2"></div>
-        <div class="bg-circle circle3"></div>
-    </div>
-
     <!-- Language Switcher -->
     <div class="language-switcher">
         <button class="lang-btn active" onclick="switchLanguage('en')">EN</button>
@@ -1042,24 +903,24 @@
     <div class="login-wrapper" id="loginPage">
         <div class="login-grid">
             <!-- Welcome Card -->
-            <div class="welcome-card animate__animated animate__fadeInLeft">
+            <div class="welcome-card">
                 <div class="welcome-icon">🏥</div>
-                <h1>Welcome to<br>RuralCare Pro</h1>
-                <p>India's most trusted healthcare platform, connecting patients with top doctors across the nation.</p>
+                <h1>Welcome to RuralCare Pro</h1>
+                <p>India's most trusted healthcare platform connecting patients with expert doctors</p>
                 <ul class="feature-list">
                     <li><i class="fas fa-check-circle"></i> 50,000+ Happy Patients</li>
-                    <li><i class="fas fa-check-circle"></i> 1000+ Expert Doctors</li>
+                    <li><i class="fas fa-check-circle"></i> 1,000+ Expert Doctors</li>
                     <li><i class="fas fa-check-circle"></i> 24/7 Healthcare Support</li>
-                    <li><i class="fas fa-check-circle"></i> Multi-language Assistance</li>
                     <li><i class="fas fa-check-circle"></i> AI-Powered Diagnosis</li>
+                    <li><i class="fas fa-check-circle"></i> Multi-language Support</li>
                 </ul>
             </div>
 
             <!-- Login Card -->
-            <div class="login-card animate__animated animate__fadeInRight">
-                <div class="login-tabs">
-                    <button class="login-tab active" onclick="switchAuthTab('patient')">Patient</button>
-                    <button class="login-tab" onclick="switchAuthTab('doctor')">Doctor</button>
+            <div class="login-card">
+                <div class="user-type-tabs">
+                    <button class="user-type-tab active" onclick="switchUserType('patient')">👤 Patient Login</button>
+                    <button class="user-type-tab" onclick="switchUserType('doctor')">👨‍⚕️ Doctor Login</button>
                 </div>
 
                 <!-- Patient Login Panel -->
@@ -1069,40 +930,52 @@
                         <p>Access your health records securely</p>
                     </div>
 
-                    <!-- Email/Phone Login -->
+                    <!-- OTP Login Section -->
                     <div class="input-group">
                         <i class="fas fa-envelope"></i>
                         <input type="text" id="patientEmailPhone" placeholder="Email or Phone Number" value="patient@demo.com">
                     </div>
 
-                    <!-- OTP Section -->
                     <div class="input-row">
                         <div class="input-group">
                             <i class="fas fa-lock"></i>
                             <input type="text" id="patientOTP" placeholder="Enter OTP" maxlength="6">
                         </div>
-                        <button class="otp-btn" id="sendPatientOTP" onclick="sendOTP('patient')">
+                        <button class="otp-btn" onclick="sendOTP('patient')" id="patientOtpBtn">
                             <i class="fas fa-paper-plane"></i> Send OTP
                         </button>
                     </div>
 
-                    <button class="login-btn" onclick="patientLogin()">
+                    <button class="login-btn" onclick="loginWithOTP('patient')">
                         <i class="fas fa-sign-in-alt"></i> Login with OTP
                     </button>
 
-                    <div class="divider">
+                    <div class="login-options">
+                        <div class="line"></div>
                         <span>OR</span>
+                        <div class="line"></div>
+                    </div>
+
+                    <!-- Password Login Section -->
+                    <div class="password-login">
+                        <div class="input-group">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="patientPassword" placeholder="Password">
+                        </div>
+                        <button class="login-btn secondary" onclick="loginWithPassword('patient')">
+                            <i class="fas fa-key"></i> Login with Password
+                        </button>
                     </div>
 
                     <!-- Social Login -->
                     <div class="social-login">
-                        <button class="social-btn google" onclick="socialLogin('google', 'patient')">
+                        <button class="social-btn" onclick="socialLogin('google', 'patient')">
                             <i class="fab fa-google"></i> Google
                         </button>
-                        <button class="social-btn facebook" onclick="socialLogin('facebook', 'patient')">
+                        <button class="social-btn" onclick="socialLogin('facebook', 'patient')">
                             <i class="fab fa-facebook-f"></i> Facebook
                         </button>
-                        <button class="social-btn github" onclick="socialLogin('github', 'patient')">
+                        <button class="social-btn" onclick="socialLogin('github', 'patient')">
                             <i class="fab fa-github"></i> GitHub
                         </button>
                     </div>
@@ -1110,13 +983,11 @@
                     <!-- Demo Credentials -->
                     <div class="demo-credentials">
                         <h4><i class="fas fa-info-circle"></i> Demo Patient Accounts</h4>
-                        <div class="cred-list">
+                        <div class="cred-grid">
                             <div class="cred-item"><strong>PAT001:</strong> patient@demo.com / 123456</div>
-                            <div class="cred-item"><strong>PAT002:</strong> rahul@example.com / 123456</div>
-                            <div class="cred-item"><strong>PAT003:</strong> priya@example.com / 123456</div>
-                            <div class="cred-item"><strong>PAT004:</strong> 9876543210 / 123456</div>
-                            <div class="cred-item"><strong>PAT005:</strong> 8765432109 / 123456</div>
-                            <div class="cred-item"><strong>PAT006:</strong> amit@example.com / 123456</div>
+                            <div class="cred-item"><strong>PAT002:</strong> rahul@demo.com / 123456</div>
+                            <div class="cred-item"><strong>PAT003:</strong> priya@demo.com / 123456</div>
+                            <div class="cred-item"><strong>Phone:</strong> 9876543210 / 123456</div>
                         </div>
                     </div>
                 </div>
@@ -1128,40 +999,52 @@
                         <p>Access patient records securely</p>
                     </div>
 
-                    <!-- Email/Phone Login -->
+                    <!-- OTP Login Section -->
                     <div class="input-group">
                         <i class="fas fa-envelope"></i>
                         <input type="text" id="doctorEmailPhone" placeholder="Email or Phone Number" value="doctor@demo.com">
                     </div>
 
-                    <!-- OTP Section -->
                     <div class="input-row">
                         <div class="input-group">
                             <i class="fas fa-lock"></i>
                             <input type="text" id="doctorOTP" placeholder="Enter OTP" maxlength="6">
                         </div>
-                        <button class="otp-btn" id="sendDoctorOTP" onclick="sendOTP('doctor')">
+                        <button class="otp-btn" onclick="sendOTP('doctor')" id="doctorOtpBtn">
                             <i class="fas fa-paper-plane"></i> Send OTP
                         </button>
                     </div>
 
-                    <button class="login-btn" onclick="doctorLogin()">
+                    <button class="login-btn" onclick="loginWithOTP('doctor')">
                         <i class="fas fa-stethoscope"></i> Login with OTP
                     </button>
 
-                    <div class="divider">
+                    <div class="login-options">
+                        <div class="line"></div>
                         <span>OR</span>
+                        <div class="line"></div>
+                    </div>
+
+                    <!-- Password Login Section -->
+                    <div class="password-login">
+                        <div class="input-group">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="doctorPassword" placeholder="Password">
+                        </div>
+                        <button class="login-btn secondary" onclick="loginWithPassword('doctor')">
+                            <i class="fas fa-key"></i> Login with Password
+                        </button>
                     </div>
 
                     <!-- Social Login -->
                     <div class="social-login">
-                        <button class="social-btn google" onclick="socialLogin('google', 'doctor')">
+                        <button class="social-btn" onclick="socialLogin('google', 'doctor')">
                             <i class="fab fa-google"></i> Google
                         </button>
-                        <button class="social-btn facebook" onclick="socialLogin('facebook', 'doctor')">
+                        <button class="social-btn" onclick="socialLogin('facebook', 'doctor')">
                             <i class="fab fa-facebook-f"></i> Facebook
                         </button>
-                        <button class="social-btn github" onclick="socialLogin('github', 'doctor')">
+                        <button class="social-btn" onclick="socialLogin('github', 'doctor')">
                             <i class="fab fa-github"></i> GitHub
                         </button>
                     </div>
@@ -1169,13 +1052,11 @@
                     <!-- Demo Credentials -->
                     <div class="demo-credentials">
                         <h4><i class="fas fa-info-circle"></i> Demo Doctor Accounts</h4>
-                        <div class="cred-list">
+                        <div class="cred-grid">
                             <div class="cred-item"><strong>DOC001:</strong> doctor@demo.com / 123456</div>
-                            <div class="cred-item"><strong>DOC002:</strong> dr.sharma@hospital.com / 123456</div>
-                            <div class="cred-item"><strong>DOC003:</strong> dr.gupta@hospital.com / 123456</div>
-                            <div class="cred-item"><strong>DOC004:</strong> 9988776655 / 123456</div>
-                            <div class="cred-item"><strong>DOC005:</strong> 8877665544 / 123456</div>
-                            <div class="cred-item"><strong>DOC006:</strong> dr.verma@hospital.com / 123456</div>
+                            <div class="cred-item"><strong>DOC002:</strong> sharma@hospital.com / 123456</div>
+                            <div class="cred-item"><strong>DOC003:</strong> gupta@hospital.com / 123456</div>
+                            <div class="cred-item"><strong>Phone:</strong> 9988776655 / 123456</div>
                         </div>
                     </div>
                 </div>
@@ -1192,7 +1073,7 @@
                 </div>
                 <div class="user-details">
                     <h2 id="patientDisplayName">Patient Name</h2>
-                    <p><i class="fas fa-id-card"></i> ID: <span id="patientDisplayID">PAT001</span> | <i class="fas fa-envelope"></i> <span id="patientDisplayEmail">email@example.com</span></p>
+                    <p><i class="fas fa-id-card"></i> <span id="patientDisplayID">PAT001</span> | <i class="fas fa-envelope"></i> <span id="patientDisplayEmail">email@example.com</span></p>
                 </div>
             </div>
             <button class="logout-btn" onclick="logout('patient')">
@@ -1233,17 +1114,17 @@
                 </div>
             </div>
 
-            <!-- Patient Information Form -->
+            <!-- Patient Information -->
             <div class="patient-form">
                 <h3 class="form-title"><i class="fas fa-user-circle"></i> Patient Information</h3>
                 <div class="form-grid">
                     <div class="input-group">
                         <i class="fas fa-user"></i>
-                        <input type="text" id="patientFullName" placeholder="Full Name" value="Rahul Sharma">
+                        <input type="text" id="patientFullName" placeholder="Full Name">
                     </div>
                     <div class="input-group">
                         <i class="fas fa-calendar-alt"></i>
-                        <input type="number" id="patientAge" placeholder="Age" value="32">
+                        <input type="number" id="patientAge" placeholder="Age">
                     </div>
                     <div class="input-group">
                         <i class="fas fa-venus-mars"></i>
@@ -1325,8 +1206,8 @@
                     <i class="fas fa-user-md"></i>
                 </div>
                 <div class="user-details">
-                    <h2 id="doctorDisplayName">Dr. Sharma</h2>
-                    <p><i class="fas fa-id-card"></i> ID: <span id="doctorDisplayID">DOC001</span> | <i class="fas fa-envelope"></i> <span id="doctorDisplayEmail">doctor@demo.com</span></p>
+                    <h2 id="doctorDisplayName">Dr. Name</h2>
+                    <p><i class="fas fa-id-card"></i> <span id="doctorDisplayID">DOC001</span> | <i class="fas fa-envelope"></i> <span id="doctorDisplayEmail">doctor@demo.com</span></p>
                 </div>
             </div>
             <button class="logout-btn" onclick="logout('doctor')">
@@ -1340,7 +1221,7 @@
                 <div class="stat-card">
                     <div class="stat-icon"><i class="fas fa-users"></i></div>
                     <div class="stat-info">
-                        <h3 id="doctorTotalPatients">10</h3>
+                        <h3 id="doctorTotalPatients">6</h3>
                         <p>Total Patients</p>
                     </div>
                 </div>
@@ -1373,7 +1254,7 @@
                 <div id="patientRecordsList"></div>
 
                 <h3 class="form-title" style="margin-top: 30px;"><i class="fas fa-pen"></i> Add Clinical Note</h3>
-                <textarea class="input-group" id="clinicalNote" style="width: 100%; padding: 15px; border-radius: 20px; border: 2px solid var(--border); margin: 15px 0; min-height: 100px;" placeholder="Write your recommendations..."></textarea>
+                <textarea class="input-group" id="clinicalNote" style="width: 100%; padding: 15px; border-radius: 20px; border: 2px solid var(--border); margin: 15px 0; min-height: 100px; background: white;" placeholder="Write your recommendations..."></textarea>
                 <button class="login-btn" onclick="saveClinicalNote()" style="width: auto; padding: 12px 30px;">Save Note</button>
             </div>
         </div>
@@ -1383,23 +1264,23 @@
     <div class="toast" id="toast"></div>
 
     <script>
-        // ==================== ENTERPRISE DATABASES ====================
+        // ==================== DATABASES ====================
         let patients = [
             { id: 'PAT001', name: 'Rahul Sharma', email: 'patient@demo.com', phone: '9876543210', password: '123456', age: 32, gender: 'male', district: 'Chennai' },
-            { id: 'PAT002', name: 'Priya Patel', email: 'priya@example.com', phone: '8765432109', password: '123456', age: 28, gender: 'female', district: 'Coimbatore' },
-            { id: 'PAT003', name: 'Amit Kumar', email: 'amit@example.com', phone: '7654321098', password: '123456', age: 45, gender: 'male', district: 'Madurai' },
-            { id: 'PAT004', name: 'Sunita Reddy', email: 'sunita@example.com', phone: '6543210987', password: '123456', age: 35, gender: 'female', district: 'Salem' },
-            { id: 'PAT005', name: 'Vikram Singh', email: 'vikram@example.com', phone: '5432109876', password: '123456', age: 52, gender: 'male', district: 'Tirunelveli' },
-            { id: 'PAT006', name: 'Lakshmi Nair', email: 'lakshmi@example.com', phone: '4321098765', password: '123456', age: 29, gender: 'female', district: 'Kanyakumari' }
+            { id: 'PAT002', name: 'Priya Patel', email: 'priya@demo.com', phone: '8765432109', password: '123456', age: 28, gender: 'female', district: 'Coimbatore' },
+            { id: 'PAT003', name: 'Amit Kumar', email: 'amit@demo.com', phone: '7654321098', password: '123456', age: 45, gender: 'male', district: 'Madurai' },
+            { id: 'PAT004', name: 'Sunita Reddy', email: 'sunita@demo.com', phone: '6543210987', password: '123456', age: 35, gender: 'female', district: 'Salem' },
+            { id: 'PAT005', name: 'Vikram Singh', email: 'vikram@demo.com', phone: '5432109876', password: '123456', age: 52, gender: 'male', district: 'Tirunelveli' },
+            { id: 'PAT006', name: 'Lakshmi Nair', email: 'lakshmi@demo.com', phone: '4321098765', password: '123456', age: 29, gender: 'female', district: 'Kanyakumari' }
         ];
 
         let doctors = [
             { id: 'DOC001', name: 'Dr. Sharma', email: 'doctor@demo.com', phone: '9988776655', password: '123456', specialty: 'General Physician' },
-            { id: 'DOC002', name: 'Dr. Gupta', email: 'dr.gupta@hospital.com', phone: '8877665544', password: '123456', specialty: 'Cardiologist' },
-            { id: 'DOC003', name: 'Dr. Verma', email: 'dr.verma@hospital.com', phone: '7766554433', password: '123456', specialty: 'Pediatrician' },
-            { id: 'DOC004', name: 'Dr. Reddy', email: 'dr.reddy@hospital.com', phone: '6655443322', password: '123456', specialty: 'Neurologist' },
-            { id: 'DOC005', name: 'Dr. Nair', email: 'dr.nair@hospital.com', phone: '5544332211', password: '123456', specialty: 'Dermatologist' },
-            { id: 'DOC006', name: 'Dr. Kumar', email: 'dr.kumar@hospital.com', phone: '4433221100', password: '123456', specialty: 'Orthopedic' }
+            { id: 'DOC002', name: 'Dr. Gupta', email: 'sharma@hospital.com', phone: '8877665544', password: '123456', specialty: 'Cardiologist' },
+            { id: 'DOC003', name: 'Dr. Verma', email: 'gupta@hospital.com', phone: '7766554433', password: '123456', specialty: 'Pediatrician' },
+            { id: 'DOC004', name: 'Dr. Reddy', email: 'reddy@hospital.com', phone: '6655443322', password: '123456', specialty: 'Neurologist' },
+            { id: 'DOC005', name: 'Dr. Nair', email: 'nair@hospital.com', phone: '5544332211', password: '123456', specialty: 'Dermatologist' },
+            { id: 'DOC006', name: 'Dr. Kumar', email: 'kumar@hospital.com', phone: '4433221100', password: '123456', specialty: 'Orthopedic' }
         ];
 
         let diagnoses = JSON.parse(localStorage.getItem('diagnoses')) || [];
@@ -1539,56 +1420,6 @@
                 advice: ['Immediate medical attention', 'Complete bed rest', 'Take prescribed antibiotics'],
                 homeRemedies: ['Steam inhalation', 'Warm compress for chest', 'Honey for cough'],
                 warningSigns: ['Severe difficulty breathing', 'Blue lips or face', 'Chest pain', 'High fever']
-            },
-            {
-                id: 6,
-                name: 'Hypertension',
-                symptoms: [21, 22, 46, 54, 55],
-                severity: 'high',
-                description: 'High blood pressure',
-                advice: ['Reduce salt intake', 'Regular exercise', 'Stress management', 'Monitor BP daily'],
-                homeRemedies: ['Garlic', 'Hibiscus tea', 'Bananas for potassium', 'Deep breathing'],
-                warningSigns: ['Severe headache', 'Chest pain', 'Shortness of breath', 'Vision changes']
-            },
-            {
-                id: 7,
-                name: 'Arthritis',
-                symptoms: [31, 32, 35, 36, 37, 46],
-                severity: 'medium',
-                description: 'Inflammation of joints',
-                advice: ['Gentle exercise like walking', 'Apply hot/cold packs', 'Maintain healthy weight'],
-                homeRemedies: ['Epsom salt baths', 'Turmeric milk', 'Ginger compress', 'Warm oil massage'],
-                warningSigns: ['Severe joint pain', 'Joint deformity', 'Inability to move joint', 'Fever']
-            },
-            {
-                id: 8,
-                name: 'Urinary Tract Infection',
-                symptoms: [58, 59, 60, 61, 45, 46],
-                severity: 'medium',
-                description: 'Infection in urinary system',
-                advice: ['Drink plenty of water', 'Urinate frequently', 'Empty bladder completely'],
-                homeRemedies: ['Cranberry juice', 'Probiotic yogurt', 'Vitamin C rich foods', 'Warm compress'],
-                warningSigns: ['Blood in urine', 'High fever', 'Severe back pain', 'Nausea and vomiting']
-            },
-            {
-                id: 9,
-                name: 'Influenza',
-                symptoms: [1, 2, 45, 46, 47, 53, 21],
-                severity: 'medium',
-                description: 'Viral infection affecting respiratory system',
-                advice: ['Complete bed rest', 'Isolate to prevent spreading', 'Drink plenty of fluids'],
-                homeRemedies: ['Warm turmeric milk', 'Honey and ginger tea', 'Garlic soup', 'Steam inhalation'],
-                warningSigns: ['Difficulty breathing', 'Chest pain', 'Confusion', 'Severe vomiting']
-            },
-            {
-                id: 10,
-                name: 'Gastroenteritis',
-                symptoms: [11, 12, 13, 15, 18, 45, 46],
-                severity: 'medium',
-                description: 'Stomach and intestinal inflammation',
-                advice: ['Drink ORS solution frequently', 'Eat bland foods like bananas, rice', 'Avoid dairy and spicy foods'],
-                homeRemedies: ['Coconut water for hydration', 'Ginger tea for nausea', 'Mint leaves juice', 'Rice water'],
-                warningSigns: ['Severe dehydration', 'Blood in stool', 'High fever', 'Unable to keep fluids down']
             }
         ];
 
@@ -1618,9 +1449,11 @@
             initWaveform();
             updateAllStats();
             
-            // Pre-fill demo credentials
+            // Pre-fill demo values
             document.getElementById('patientEmailPhone').value = 'patient@demo.com';
             document.getElementById('doctorEmailPhone').value = 'doctor@demo.com';
+            document.getElementById('patientPassword').value = '123456';
+            document.getElementById('doctorPassword').value = '123456';
         });
 
         function loadDistricts() {
@@ -1655,22 +1488,25 @@
         }
 
         function stopWaveform() {
-            if (waveformInterval) clearInterval(waveformInterval);
+            if (waveformInterval) {
+                clearInterval(waveformInterval);
+                waveformInterval = null;
+            }
             document.querySelectorAll('.wave-bar').forEach(bar => {
                 bar.style.height = '30px';
             });
         }
 
         // ==================== AUTHENTICATION ====================
-        function switchAuthTab(tab) {
-            document.querySelectorAll('.login-tab').forEach(t => t.classList.remove('active'));
+        function switchUserType(type) {
+            document.querySelectorAll('.user-type-tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.login-panel').forEach(p => p.classList.remove('active'));
             
-            if (tab === 'patient') {
-                document.querySelectorAll('.login-tab')[0].classList.add('active');
+            if (type === 'patient') {
+                document.querySelectorAll('.user-type-tab')[0].classList.add('active');
                 document.getElementById('patientPanel').classList.add('active');
             } else {
-                document.querySelectorAll('.login-tab')[1].classList.add('active');
+                document.querySelectorAll('.user-type-tab')[1].classList.add('active');
                 document.getElementById('doctorPanel').classList.add('active');
             }
         }
@@ -1685,22 +1521,94 @@
                 return;
             }
 
-            // Generate 6-digit OTP
             const otp = Math.floor(100000 + Math.random() * 900000).toString();
             otpStore[input] = otp;
 
-            // Disable button for 60 seconds
-            const btn = document.getElementById(`send${type === 'patient' ? 'Patient' : 'Doctor'}OTP`);
+            const btn = document.getElementById(type === 'patient' ? 'patientOtpBtn' : 'doctorOtpBtn');
             btn.disabled = true;
             btn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Sending...';
 
-            // Simulate OTP sending
             setTimeout(() => {
-                btn.innerHTML = '<i class="fas fa-paper-plane"></i> Resend OTP';
                 btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send OTP';
                 showToast(`OTP ${otp} sent to ${input}`, 'success');
-                console.log(`OTP for ${input}: ${otp}`); // For demo purposes
-            }, 2000);
+                console.log(`OTP for ${input}: ${otp}`);
+                
+                // Auto-fill OTP for demo
+                if (type === 'patient') {
+                    document.getElementById('patientOTP').value = otp;
+                } else {
+                    document.getElementById('doctorOTP').value = otp;
+                }
+            }, 1500);
+        }
+
+        function loginWithOTP(type) {
+            const input = type === 'patient' 
+                ? document.getElementById('patientEmailPhone').value 
+                : document.getElementById('doctorEmailPhone').value;
+            
+            const otp = type === 'patient' 
+                ? document.getElementById('patientOTP').value 
+                : document.getElementById('doctorOTP').value;
+
+            if (!input || !otp) {
+                showToast('Please enter email/phone and OTP', 'error');
+                return;
+            }
+
+            if (otp.length !== 6) {
+                showToast('Please enter 6-digit OTP', 'error');
+                return;
+            }
+
+            // For demo, accept any OTP
+            if (type === 'patient') {
+                let patient = patients.find(p => p.email === input || p.phone === input);
+                if (!patient) patient = patients[0];
+                
+                currentPatient = patient;
+                showMainApp('patient');
+                showToast(`Welcome ${patient.name}!`, 'success');
+            } else {
+                let doctor = doctors.find(d => d.email === input || d.phone === input);
+                if (!doctor) doctor = doctors[0];
+                
+                currentDoctor = doctor;
+                showMainApp('doctor');
+                showToast(`Welcome ${doctor.name}!`, 'success');
+            }
+        }
+
+        function loginWithPassword(type) {
+            const input = type === 'patient' 
+                ? document.getElementById('patientEmailPhone').value 
+                : document.getElementById('doctorEmailPhone').value;
+            
+            const password = type === 'patient' 
+                ? document.getElementById('patientPassword').value 
+                : document.getElementById('doctorPassword').value;
+
+            if (!input || !password) {
+                showToast('Please enter email/phone and password', 'error');
+                return;
+            }
+
+            if (type === 'patient') {
+                let patient = patients.find(p => (p.email === input || p.phone === input) && p.password === password);
+                if (!patient) patient = patients[0];
+                
+                currentPatient = patient;
+                showMainApp('patient');
+                showToast(`Welcome ${patient.name}!`, 'success');
+            } else {
+                let doctor = doctors.find(d => (d.email === input || d.phone === input) && d.password === password);
+                if (!doctor) doctor = doctors[0];
+                
+                currentDoctor = doctor;
+                showMainApp('doctor');
+                showToast(`Welcome ${doctor.name}!`, 'success');
+            }
         }
 
         function socialLogin(provider, type) {
@@ -1708,70 +1616,13 @@
             
             setTimeout(() => {
                 if (type === 'patient') {
-                    const demoPatient = patients[0];
-                    currentPatient = demoPatient;
+                    currentPatient = patients[0];
                     showMainApp('patient');
-                    showToast(`Welcome ${demoPatient.name}!`, 'success');
                 } else {
-                    const demoDoctor = doctors[0];
-                    currentDoctor = demoDoctor;
+                    currentDoctor = doctors[0];
                     showMainApp('doctor');
-                    showToast(`Welcome ${demoDoctor.name}!`, 'success');
                 }
-            }, 1500);
-        }
-
-        function patientLogin() {
-            const input = document.getElementById('patientEmailPhone').value.trim();
-            const otp = document.getElementById('patientOTP').value.trim();
-
-            // For demo, accept any 6-digit OTP or use default
-            if (otp.length !== 6) {
-                showToast('Please enter 6-digit OTP', 'error');
-                return;
-            }
-
-            // Find patient by email or phone
-            let patient = patients.find(p => p.email === input || p.phone === input);
-            
-            // If not found, use first patient as demo
-            if (!patient) {
-                patient = patients[0];
-            }
-
-            if (patient) {
-                currentPatient = patient;
-                showMainApp('patient');
-                showToast(`Welcome ${patient.name}!`, 'success');
-                document.getElementById('patientOTP').value = '';
-            } else {
-                showToast('Patient not found', 'error');
-            }
-        }
-
-        function doctorLogin() {
-            const input = document.getElementById('doctorEmailPhone').value.trim();
-            const otp = document.getElementById('doctorOTP').value.trim();
-
-            if (otp.length !== 6) {
-                showToast('Please enter 6-digit OTP', 'error');
-                return;
-            }
-
-            let doctor = doctors.find(d => d.email === input || d.phone === input);
-            
-            if (!doctor) {
-                doctor = doctors[0];
-            }
-
-            if (doctor) {
-                currentDoctor = doctor;
-                showMainApp('doctor');
-                showToast(`Welcome ${doctor.name}!`, 'success');
-                document.getElementById('doctorOTP').value = '';
-            } else {
-                showToast('Doctor not found', 'error');
-            }
+            }, 1000);
         }
 
         function showMainApp(type) {
@@ -1850,8 +1701,11 @@
 
         function toggleSymptom(id) {
             const index = selectedSymptoms.indexOf(id);
-            if (index === -1) selectedSymptoms.push(id);
-            else selectedSymptoms.splice(index, 1);
+            if (index === -1) {
+                selectedSymptoms.push(id);
+            } else {
+                selectedSymptoms.splice(index, 1);
+            }
             updateSymptomTags();
             displaySymptoms(currentCategory);
         }
@@ -1925,7 +1779,6 @@
                 return;
             }
 
-            // Get typed symptoms
             const typedText = document.getElementById('typedSymptoms').value.toLowerCase();
             if (typedText) {
                 const words = typedText.split(',').map(w => w.trim());
@@ -1943,7 +1796,6 @@
                 return;
             }
 
-            // Find best matching disease
             let bestMatch = diseasesDB[0];
             let bestScore = 0;
 
@@ -1956,10 +1808,8 @@
                 }
             });
 
-            // Display results
             displayResults(bestMatch, selectedSymptoms);
 
-            // Save diagnosis
             const diagnosis = {
                 id: Date.now(),
                 patientId: currentPatient.id,
@@ -1980,7 +1830,7 @@
             localStorage.setItem('diagnoses', JSON.stringify(diagnoses));
             
             updatePatientStats();
-            updateDoctorStats();
+            if (currentDoctor) updateDoctorStats();
             
             showToast('Analysis complete!');
         }
@@ -2068,7 +1918,6 @@
                 return;
             }
 
-            // Group by patient
             const patientGroups = {};
             diagnoses.forEach(d => {
                 if (!patientGroups[d.patientId]) {
@@ -2087,6 +1936,7 @@
             Object.values(patientGroups).forEach(group => {
                 const card = document.createElement('div');
                 card.className = 'patient-card';
+                card.onclick = () => viewPatientDetails(group.patientId);
                 card.innerHTML = `
                     <div class="patient-info">
                         <h4>${group.patientName}</h4>
@@ -2094,9 +1944,8 @@
                         <p><i class="fas fa-envelope"></i> ${group.patientEmail}</p>
                         <p><i class="fas fa-phone"></i> ${group.patientPhone || 'N/A'}</p>
                         <p><i class="fas fa-notes-medical"></i> ${group.records.length} visits</p>
-                        <p><i class="fas fa-exclamation-triangle"></i> High Risk: ${group.records.filter(r => r.severity === 'high').length}</p>
                     </div>
-                    <button class="view-btn" onclick="viewPatientDetails('${group.patientId}')">
+                    <button class="view-btn" onclick="event.stopPropagation(); viewPatientDetails('${group.patientId}')">
                         View History
                     </button>
                 `;

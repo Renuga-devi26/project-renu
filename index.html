@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>RuralCare Pro - 100+ Symptoms in 6 Languages</title>
+    <title>RuralCare Pro - Complete Healthcare with Vitals & Doctor Advice</title>
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -394,7 +394,7 @@
             color: var(--dark);
         }
 
-        /* Patient Form */
+        /* Patient Form with Vitals */
         .patient-form {
             background: var(--light);
             border-radius: 20px;
@@ -415,6 +415,63 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 15px;
+        }
+
+        /* Vitals Section */
+        .vitals-section {
+            background: linear-gradient(135deg, #10b981, #059669);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 20px 0;
+            color: white;
+        }
+
+        .vitals-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .vitals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .vital-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .vital-card i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .vital-card input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            margin-top: 10px;
+            text-align: center;
+            font-size: 1rem;
+        }
+
+        .vital-card input:focus {
+            outline: 2px solid white;
+        }
+
+        .vital-unit {
+            font-size: 0.8rem;
+            margin-top: 5px;
+            opacity: 0.8;
         }
 
         /* Symptoms */
@@ -599,7 +656,7 @@
         .severity-medium { background: #fed7aa; color: #9a3412; }
         .severity-high { background: #fee2e2; color: #991b1b; }
 
-        /* Doctor */
+        /* Doctor Section with Advice */
         .doctor-section {
             background: var(--light);
             border-radius: 20px;
@@ -612,9 +669,6 @@
             border-radius: 20px;
             padding: 20px;
             margin-bottom: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             border: 2px solid var(--border);
             cursor: pointer;
             transition: all 0.3s;
@@ -623,6 +677,59 @@
         .patient-record:hover {
             border-color: var(--primary);
             transform: translateX(5px);
+        }
+
+        .advice-section {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            border-radius: 15px;
+            padding: 15px;
+            margin-top: 15px;
+            color: white;
+        }
+
+        .advice-text {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            color: var(--dark);
+            margin-top: 10px;
+            font-style: italic;
+            border-left: 4px solid var(--warning);
+        }
+
+        .doctor-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .doctor-actions button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .advice-btn {
+            background: var(--warning);
+            color: white;
+        }
+
+        .advice-btn:hover {
+            background: #d97706;
+            transform: translateY(-2px);
+        }
+
+        .view-btn {
+            background: var(--primary);
+            color: white;
+        }
+
+        .view-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
         }
 
         .toast {
@@ -689,12 +796,12 @@
             <div class="welcome-card">
                 <div class="welcome-icon">🏥</div>
                 <h1>Welcome to RuralCare Pro</h1>
-                <p>India's most trusted healthcare platform with 100+ symptoms in 6 languages</p>
+                <p>Complete healthcare platform with vitals tracking and doctor advice</p>
                 <ul class="feature-list">
                     <li><i class="fas fa-check-circle"></i> 100+ Symptoms in 6 Languages</li>
-                    <li><i class="fas fa-check-circle"></i> AI-Powered Diagnosis</li>
+                    <li><i class="fas fa-check-circle"></i> Track BP, Temperature, Height, Weight</li>
+                    <li><i class="fas fa-check-circle"></i> Doctor's Advice for Each Case</li>
                     <li><i class="fas fa-check-circle"></i> Voice Recognition</li>
-                    <li><i class="fas fa-check-circle"></i> Patient Records</li>
                 </ul>
             </div>
 
@@ -747,7 +854,7 @@
                 <div class="login-panel" id="doctorPanel">
                     <div class="login-header">
                         <h2>Doctor Login</h2>
-                        <p>Access patient records</p>
+                        <p>Access patient records and give advice</p>
                     </div>
 
                     <div class="input-group">
@@ -859,6 +966,37 @@
                 </div>
             </div>
 
+            <!-- Vitals Section (NEW) -->
+            <div class="vitals-section">
+                <h3 class="vitals-title"><i class="fas fa-heartbeat"></i> Your Vitals</h3>
+                <div class="vitals-grid">
+                    <div class="vital-card">
+                        <i class="fas fa-heart"></i>
+                        <div>Blood Pressure</div>
+                        <input type="text" id="bloodPressure" placeholder="120/80" value="120/80">
+                        <div class="vital-unit">mmHg</div>
+                    </div>
+                    <div class="vital-card">
+                        <i class="fas fa-thermometer-half"></i>
+                        <div>Temperature</div>
+                        <input type="number" id="temperature" placeholder="98.6" value="98.6" step="0.1">
+                        <div class="vital-unit">°F</div>
+                    </div>
+                    <div class="vital-card">
+                        <i class="fas fa-ruler-vertical"></i>
+                        <div>Height</div>
+                        <input type="number" id="height" placeholder="170" value="170">
+                        <div class="vital-unit">cm</div>
+                    </div>
+                    <div class="vital-card">
+                        <i class="fas fa-weight-scale"></i>
+                        <div>Weight</div>
+                        <input type="number" id="weight" placeholder="70" value="70">
+                        <div class="vital-unit">kg</div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Symptoms with 100+ in 6 languages -->
             <div class="symptoms-section">
                 <h3 class="form-title"><i class="fas fa-stethoscope"></i> <span id="symptomTitle">Symptom Checker (100+ Symptoms)</span></h3>
@@ -906,7 +1044,7 @@
         </div>
     </div>
 
-    <!-- DOCTOR APP -->
+    <!-- DOCTOR APP with Advice Feature -->
     <div class="main-app" id="doctorApp">
         <div class="app-header">
             <div class="user-info">
@@ -952,7 +1090,7 @@
             </div>
 
             <div class="doctor-section">
-                <h3 class="form-title"><i class="fas fa-clipboard-list"></i> Patient Records</h3>
+                <h3 class="form-title"><i class="fas fa-clipboard-list"></i> Patient Records & Advice</h3>
                 <div id="patientRecords" style="margin-top:20px;"></div>
             </div>
         </div>
@@ -1118,314 +1256,6 @@
                 bloodInUrine: 'पेशाब में खून',
                 urgentUrination: 'तत्काल पेशाब',
                 bodyAche: 'शरीर दर्द'
-            },
-            ta: {
-                symptomTitle: 'அறிகுறி சரிபார்ப்பான் (100+ அறிகுறிகள்)',
-                voiceTitle: 'குரல் அறிகுறி பதிவி',
-                analyzeBtn: 'அறிகுறிகளை பகுப்பாய்வு செய்யுங்கள்',
-                all: 'அனைத்தும்',
-                respiratory: 'சுவாசம்',
-                digestive: 'செரிமானம்',
-                neurological: 'நரம்பியல்',
-                muscular: 'தசை',
-                skin: 'தோல்',
-                cardiovascular: 'இதயம்',
-                general: 'பொது',
-                urinary: 'சிறுநீர்',
-                selectedSymptoms: 'தேர்ந்தெடுக்கப்பட்ட அறிகுறிகள்:',
-                typeSymptoms: 'அறிகுறிகளை தட்டச்சு செய்க (கமாவால் பிரிக்கவும்)',
-                cough: 'இருமல்',
-                shortnessOfBreath: 'மூச்சுத் திணறல்',
-                wheezing: 'மூச்சு விடும் சத்தம்',
-                chestPain: 'மார்பு வலி',
-                soreThroat: 'தொண்டை வலி',
-                runnyNose: 'மூக்கு ஒழுகுதல்',
-                sneezing: 'தும்மல்',
-                nasalCongestion: 'மூக்கடைப்பு',
-                coughingBlood: 'இரத்த இருமல்',
-                dryCough: 'உலர் இருமல்',
-                nausea: 'குமட்டல்',
-                vomiting: 'வாந்தி',
-                diarrhea: 'வயிற்றுப்போக்கு',
-                constipation: 'மலச்சிக்கல்',
-                abdominalPain: 'வயிற்று வலி',
-                bloating: 'வயிறு உப்புசம்',
-                heartburn: 'நெஞ்செரிச்சல்',
-                lossOfAppetite: 'பசியின்மை',
-                bloodInStool: 'மலத்தில் இரத்தம்',
-                difficultySwallowing: 'விழுங்குவதில் சிரமம்',
-                headache: 'தலைவலி',
-                dizziness: 'தலைச்சுற்றல்',
-                confusion: 'குழப்பம்',
-                seizures: 'வலிப்பு',
-                tremors: 'நடுக்கம்',
-                numbness: 'உணர்வின்மை',
-                weakness: 'பலவீனம்',
-                memoryLoss: 'நினைவு இழப்பு',
-                balanceProblems: 'சமநிலை பிரச்சனைகள்',
-                slurredSpeech: 'தெளிவற்ற பேச்சு',
-                jointPain: 'மூட்டு வலி',
-                musclePain: 'தசை வலி',
-                backPain: 'முதுகு வலி',
-                neckPain: 'கழுத்து வலி',
-                jointSwelling: 'மூட்டு வீக்கம்',
-                stiffness: 'விறைப்பு',
-                muscleCramps: 'தசைப்பிடிப்பு',
-                rash: 'தடிப்பு',
-                itching: 'அரிப்பு',
-                hives: 'படை',
-                drySkin: 'வறண்ட சருமம்',
-                skinRedness: 'தோல் சிவத்தல்',
-                skinDiscoloration: 'தோல் நிறமாற்றம்',
-                woundsNotHealing: 'காயம் ஆறாமை',
-                fever: 'காய்ச்சல்',
-                fatigue: 'சோர்வு',
-                chills: 'குளிர்',
-                nightSweats: 'இரவு வியர்வை',
-                weightLoss: 'எடை இழப்பு',
-                weightGain: 'எடை அதிகரிப்பு',
-                dehydration: 'நீரிழப்பு',
-                swollenLymphNodes: 'வீங்கிய நிணநீர் முடிச்சுகள்',
-                palpitations: 'நெஞ்சுத்துடிப்பு',
-                highBP: 'உயர் இரத்த அழுத்தம்',
-                lowBP: 'தாழ் இரத்த அழுத்தம்',
-                swollenAnkles: 'கணுக்கால் வீக்கம்',
-                frequentUrination: 'அடிக்கடி சிறுநீர்',
-                painfulUrination: 'வலி நிறைந்த சிறுநீர்',
-                bloodInUrine: 'சிறுநீரில் இரத்தம்',
-                urgentUrination: 'அவசர சிறுநீர்',
-                bodyAche: 'உடல் வலி'
-            },
-            te: {
-                symptomTitle: 'లక్షణ పరిశీలకుడు (100+ లక్షణాలు)',
-                voiceTitle: 'వాయిస్ లక్షణ రికార్డర్',
-                analyzeBtn: 'లక్షణాలను విశ్లేషించండి',
-                all: 'అన్నీ',
-                respiratory: 'శ్వాసకోశ',
-                digestive: 'జీర్ణ',
-                neurological: 'నాడీ',
-                muscular: 'కండరాల',
-                skin: 'చర్మం',
-                cardiovascular: 'గుండె',
-                general: 'సాధారణ',
-                urinary: 'మూత్ర',
-                selectedSymptoms: 'ఎంచుకున్న లక్షణాలు:',
-                typeSymptoms: 'లక్షణాలను టైప్ చేయండి (కామాతో వేరు చేయండి)',
-                cough: 'దగ్గు',
-                shortnessOfBreath: 'ఊపిరి ఆడకపోవడం',
-                wheezing: 'గురక',
-                chestPain: 'ఛాతీ నొప్పి',
-                soreThroat: 'గొంతు నొప్పి',
-                runnyNose: 'ముక్కు కారడం',
-                sneezing: 'తుమ్ములు',
-                nasalCongestion: 'ముక్కు దిబ్బడ',
-                coughingBlood: 'రక్తం దగ్గు',
-                dryCough: 'పొడి దగ్గు',
-                nausea: 'వికారం',
-                vomiting: 'వాంతులు',
-                diarrhea: 'విరేచనాలు',
-                constipation: 'మలబద్ధకం',
-                abdominalPain: 'కడుపు నొప్పి',
-                bloating: 'ఉబ్బరం',
-                heartburn: 'గుండెల్లో మంట',
-                lossOfAppetite: 'ఆకలి లేకపోవడం',
-                bloodInStool: 'మలంలో రక్తం',
-                difficultySwallowing: 'మింగడంలో ఇబ్బంది',
-                headache: 'తలనొప్పి',
-                dizziness: 'తలతిరగడం',
-                confusion: 'గందరగోళం',
-                seizures: 'మూర్ఛలు',
-                tremors: 'వణుకు',
-                numbness: 'తిమ్మిరి',
-                weakness: 'బలహీనత',
-                memoryLoss: 'జ్ఞాపకశక్తి తగ్గడం',
-                balanceProblems: 'సమతుల్యత సమస్యలు',
-                slurredSpeech: 'మాట తడబడడం',
-                jointPain: 'కీళ్ల నొప్పి',
-                musclePain: 'కండరాల నొప్పి',
-                backPain: 'వెన్నునొప్పి',
-                neckPain: 'మెడ నొప్పి',
-                jointSwelling: 'కీళ్ల వాపు',
-                stiffness: 'బిగుతు',
-                muscleCramps: 'కండరాల తిమ్మిరి',
-                rash: 'దద్దుర్లు',
-                itching: 'దురద',
-                hives: 'ఉర్టికేరియా',
-                drySkin: 'పొడి చర్మం',
-                skinRedness: 'చర్మం ఎర్రబడడం',
-                skinDiscoloration: 'చర్మం రంగు మారడం',
-                woundsNotHealing: 'గాయాలు మానకపోవడం',
-                fever: 'జ్వరం',
-                fatigue: 'అలసట',
-                chills: 'చలి',
-                nightSweats: 'రాత్రి చెమటలు',
-                weightLoss: 'బరువు తగ్గడం',
-                weightGain: 'బరువు పెరగడం',
-                dehydration: 'నిర్జలీకరణం',
-                swollenLymphNodes: 'వాపు లింఫ్ నోడ్స్',
-                palpitations: 'గుండె దడ',
-                highBP: 'అధిక రక్తపోటు',
-                lowBP: 'తక్కువ రక్తపోటు',
-                swollenAnkles: 'చీలమండల వాపు',
-                frequentUrination: 'తరచూ మూత్రం',
-                painfulUrination: 'బాధాకరమైన మూత్రం',
-                bloodInUrine: 'మూత్రంలో రక్తం',
-                urgentUrination: 'అత్యవసర మూత్రం',
-                bodyAche: 'శరీర నొప్పి'
-            },
-            kn: {
-                symptomTitle: 'ರೋಗಲಕ್ಷಣ ಪರಿಶೀಲಕ (100+ ರೋಗಲಕ್ಷಣಗಳು)',
-                voiceTitle: 'ಧ್ವನಿ ರೋಗಲಕ್ಷಣ ರೆಕಾರ್ಡರ್',
-                analyzeBtn: 'ರೋಗಲಕ್ಷಣಗಳನ್ನು ವಿಶ್ಲೇಷಿಸಿ',
-                all: 'ಎಲ್ಲಾ',
-                respiratory: 'ಉಸಿರಾಟದ',
-                digestive: 'ಜೀರ್ಣಕಾರಿ',
-                neurological: 'ನರವೈಜ್ಞಾನಿಕ',
-                muscular: 'ಸ್ನಾಯು',
-                skin: 'ಚರ್ಮ',
-                cardiovascular: 'ಹೃದಯ',
-                general: 'ಸಾಮಾನ್ಯ',
-                urinary: 'ಮೂತ್ರ',
-                selectedSymptoms: 'ಆಯ್ದ ರೋಗಲಕ್ಷಣಗಳು:',
-                typeSymptoms: 'ರೋಗಲಕ್ಷಣಗಳನ್ನು ಟೈಪ್ ಮಾಡಿ (ಅಲ್ಪವಿರಾಮದಿಂದ ಬೇರ್ಪಡಿಸಿ)',
-                cough: 'ಕೆಮ್ಮು',
-                shortnessOfBreath: 'ಉಸಿರಾಟದ ತೊಂದರೆ',
-                wheezing: 'ಉಬ್ಬಸ',
-                chestPain: 'ಎದೆ ನೋವು',
-                soreThroat: 'ಗಂಟಲು ನೋವು',
-                runnyNose: 'ಸ್ರವಿಸುವ ಮೂಗು',
-                sneezing: 'ಸೀನುವಿಕೆ',
-                nasalCongestion: 'ಮೂಗಿನ ದಟ್ಟಣೆ',
-                coughingBlood: 'ರಕ್ತದ ಕೆಮ್ಮು',
-                dryCough: 'ಒಣ ಕೆಮ್ಮು',
-                nausea: 'ವಾಕರಿಕೆ',
-                vomiting: 'ವಾಂತಿ',
-                diarrhea: 'ಅತಿಸಾರ',
-                constipation: 'ಮಲಬದ್ಧತೆ',
-                abdominalPain: 'ಹೊಟ್ಟೆ ನೋವು',
-                bloating: 'ಉಬ್ಬರ',
-                heartburn: 'ಎದೆಯುರಿ',
-                lossOfAppetite: 'ಹಸಿವಿನ ಕೊರತೆ',
-                bloodInStool: 'ಮಲದಲ್ಲಿ ರಕ್ತ',
-                difficultySwallowing: 'ನುಂಗಲು ಕಷ್ಟ',
-                headache: 'ತಲೆನೋವು',
-                dizziness: 'ತಲೆತಿರುಗುವಿಕೆ',
-                confusion: 'ಗೊಂದಲ',
-                seizures: 'ಸೆಳವು',
-                tremors: 'ನಡುಕ',
-                numbness: 'ಮರಗಟ್ಟುವಿಕೆ',
-                weakness: 'ದೌರ್ಬಲ್ಯ',
-                memoryLoss: 'ನೆನಪಿನ ಶಕ್ತಿ ಕಳೆದುಕೊಳ್ಳುವುದು',
-                balanceProblems: 'ಸಮತೋಲನ ಸಮಸ್ಯೆಗಳು',
-                slurredSpeech: 'ತೊದಲುನುಡಿ',
-                jointPain: 'ಕೀಲು ನೋವು',
-                musclePain: 'ಸ್ನಾಯು ನೋವು',
-                backPain: 'ಬೆನ್ನು ನೋವು',
-                neckPain: 'ಕುತ್ತಿಗೆ ನೋವು',
-                jointSwelling: 'ಕೀಲು ಊತ',
-                stiffness: 'ಬಿಗಿತ',
-                muscleCramps: 'ಸ್ನಾಯು ಸೆಳೆತ',
-                rash: 'ದದ್ದು',
-                itching: 'ತುರಿಕೆ',
-                hives: 'ಜೇನುಗೂಡುಗಳು',
-                drySkin: 'ಒಣ ಚರ್ಮ',
-                skinRedness: 'ಚರ್ಮದ ಕೆಂಪಾಗುವಿಕೆ',
-                skinDiscoloration: 'ಚರ್ಮದ ಬಣ್ಣ ಬದಲಾವಣೆ',
-                woundsNotHealing: 'ಗಾಯಗಳು ವಾಸಿಯಾಗದೆ',
-                fever: 'ಜ್ವರ',
-                fatigue: 'ಆಯಾಸ',
-                chills: 'ಶೀತ',
-                nightSweats: 'ರಾತ್ರಿ ಬೆವರುವಿಕೆ',
-                weightLoss: 'ತೂಕ ಇಳಿಕೆ',
-                weightGain: 'ತೂಕ ಹೆಚ್ಚಳ',
-                dehydration: 'ನಿರ್ಜಲೀಕರಣ',
-                swollenLymphNodes: 'ಊದಿದ ದುಗ್ಧರಸ ಗ್ರಂಥಿಗಳು',
-                palpitations: 'ಹೃದಯ ಬಡಿತ',
-                highBP: 'ಅಧಿಕ ರಕ್ತದೊತ್ತಡ',
-                lowBP: 'ಕಡಿಮೆ ರಕ್ತದೊತ್ತಡ',
-                swollenAnkles: 'ಕಣಕಾಲು ಊತ',
-                frequentUrination: 'ಆಗಾಗ ಮೂತ್ರ',
-                painfulUrination: 'ನೋವಿನ ಮೂತ್ರ',
-                bloodInUrine: 'ಮೂತ್ರದಲ್ಲಿ ರಕ್ತ',
-                urgentUrination: 'ತುರ್ತು ಮೂತ್ರ',
-                bodyAche: 'ದೇಹ ನೋವು'
-            },
-            ml: {
-                symptomTitle: 'രോഗലക്ഷണ പരിശോധകൻ (100+ രോഗലക്ഷണങ്ങൾ)',
-                voiceTitle: 'ശബ്ദ രോഗലക്ഷണ റെക്കോർഡർ',
-                analyzeBtn: 'രോഗലക്ഷണങ്ങൾ വിശകലനം ചെയ്യുക',
-                all: 'എല്ലാം',
-                respiratory: 'ശ്വസന',
-                digestive: 'ദഹന',
-                neurological: 'ന്യൂറോളജിക്കൽ',
-                muscular: 'പേശീ',
-                skin: 'ചർമ്മം',
-                cardiovascular: 'ഹൃദയ',
-                general: 'പൊതുവായ',
-                urinary: 'മൂത്ര',
-                selectedSymptoms: 'തിരഞ്ഞെടുത്ത രോഗലക്ഷണങ്ങൾ:',
-                typeSymptoms: 'രോഗലക്ഷണങ്ങൾ ടൈപ്പ് ചെയ്യുക (കോമയാൽ വേർതിരിക്കുക)',
-                cough: 'ചുമ',
-                shortnessOfBreath: 'ശ്വാസതടസ്സം',
-                wheezing: 'ശ്വാസംമുട്ടൽ',
-                chestPain: 'നെഞ്ചുവേദന',
-                soreThroat: 'തൊണ്ടവേദന',
-                runnyNose: 'മൂക്കൊലിപ്പ്',
-                sneezing: 'തുമ്മൽ',
-                nasalCongestion: 'മൂക്കടപ്പ്',
-                coughingBlood: 'രക്തം ചുമ',
-                dryCough: 'വരണ്ട ചുമ',
-                nausea: 'ഓക്കാനം',
-                vomiting: 'ഛർദ്ദി',
-                diarrhea: 'വയറിളക്കം',
-                constipation: 'മലബന്ധം',
-                abdominalPain: 'വയറുവേദന',
-                bloating: 'വയറുവീർക്കൽ',
-                heartburn: 'നെഞ്ചെരിച്ചിൽ',
-                lossOfAppetite: 'വിശപ്പില്ലായ്മ',
-                bloodInStool: 'മലത്തിൽ രക്തം',
-                difficultySwallowing: 'വിഴുങ്ങാൻ ബുദ്ധിമുട്ട്',
-                headache: 'തലവേദന',
-                dizziness: 'തലകറക്കം',
-                confusion: 'ആശയക്കുഴപ്പം',
-                seizures: 'അപസ്മാരം',
-                tremors: 'വിറയൽ',
-                numbness: 'മരവിപ്പ്',
-                weakness: 'ബലഹീനത',
-                memoryLoss: 'ഓർമ്മക്കുറവ്',
-                balanceProblems: 'ബാലൻസ് പ്രശ്നങ്ങൾ',
-                slurredSpeech: 'വ്യക്തമല്ലാത്ത സംസാരം',
-                jointPain: 'സന്ധി വേദന',
-                musclePain: 'പേശി വേദന',
-                backPain: 'നടുവേദന',
-                neckPain: 'കഴുത്ത് വേദന',
-                jointSwelling: 'സന്ധി വീക്കം',
-                stiffness: 'കാഠിന്യം',
-                muscleCramps: 'പേശീവലിവ്',
-                rash: 'തടിപ്പ്',
-                itching: 'ചൊറിച്ചിൽ',
-                hives: 'തേനീച്ചക്കൂടുകൾ',
-                drySkin: 'വരണ്ട ചർമ്മം',
-                skinRedness: 'ചർമ്മത്തിൽ ചുവപ്പ്',
-                skinDiscoloration: 'ചർമ്മത്തിന്റെ നിറവ്യത്യാസം',
-                woundsNotHealing: 'മുറിവുകൾ ഉണങ്ങാതിരിക്കുക',
-                fever: 'പനി',
-                fatigue: 'ക്ഷീണം',
-                chills: 'വിറയൽ',
-                nightSweats: 'രാത്രി വിയർപ്പ്',
-                weightLoss: 'ശരീരഭാരം കുറയൽ',
-                weightGain: 'ശരീരഭാരം വർദ്ധിക്കൽ',
-                dehydration: 'നിർജ്ജലീകരണം',
-                swollenLymphNodes: 'വീർത്ത ലിംഫ് നോഡുകൾ',
-                palpitations: 'ഹൃദയമിടിപ്പ്',
-                highBP: 'ഉയർന്ന രക്തസമ്മർദ്ദം',
-                lowBP: 'കുറഞ്ഞ രക്തസമ്മർദ്ദം',
-                swollenAnkles: 'കണങ്കാൽ വീക്കം',
-                frequentUrination: 'ഇടയ്ക്കിടെ മൂത്രം',
-                painfulUrination: 'വേദനാജനകമായ മൂത്രം',
-                bloodInUrine: 'മൂത്രത്തിൽ രക്തം',
-                urgentUrination: 'അടിയന്തര മൂത്രം',
-                bodyAche: 'ശരീരവേദന'
             }
         };
 
@@ -1893,6 +1723,12 @@
                 return;
             }
 
+            // Get vitals
+            const bp = document.getElementById('bloodPressure').value;
+            const temp = document.getElementById('temperature').value;
+            const height = document.getElementById('height').value;
+            const weight = document.getElementById('weight').value;
+
             let bestMatch = diseasesDB[0];
             let bestScore = 0;
 
@@ -1912,10 +1748,20 @@
                 patientId: currentPatient.id,
                 patientName: currentPatient.name,
                 patientEmail: currentPatient.email,
+                age: document.getElementById('age').value,
+                gender: document.getElementById('gender').value,
+                district: document.getElementById('district').value,
+                vitals: {
+                    bloodPressure: bp,
+                    temperature: temp,
+                    height: height,
+                    weight: weight
+                },
                 diagnosis: bestMatch.name,
                 severity: bestMatch.severity,
                 symptoms: selectedSymptoms.map(id => getSymptomName(id)),
-                date: new Date().toISOString()
+                date: new Date().toISOString(),
+                doctorAdvice: ''
             };
 
             diagnoses.push(diagnosis);
@@ -1986,7 +1832,7 @@
             if (currentDoctor) updateDoctorStats();
         }
 
-        // ==================== DOCTOR ====================
+        // ==================== DOCTOR with ADVICE ====================
         function displayPatientRecords() {
             const container = document.getElementById('patientRecords');
             
@@ -1995,53 +1841,106 @@
                 return;
             }
 
-            const groups = {};
-            diagnoses.forEach(d => {
-                if (!groups[d.patientId]) {
-                    groups[d.patientId] = {
-                        patientId: d.patientId,
-                        patientName: d.patientName,
-                        patientEmail: d.patientEmail,
-                        records: []
-                    };
-                }
-                groups[d.patientId].records.push(d);
-            });
-
+            // Sort by date (newest first)
+            const sortedDiagnoses = [...diagnoses].sort((a, b) => new Date(b.date) - new Date(a.date));
+            
             container.innerHTML = '';
-            Object.values(groups).forEach(g => {
+            sortedDiagnoses.forEach(d => {
                 const div = document.createElement('div');
                 div.className = 'patient-record';
-                div.onclick = () => showPatientHistory(g.patientId);
                 div.innerHTML = `
-                    <div>
-                        <h4>${g.patientName}</h4>
-                        <p>ID: ${g.patientId} | ${g.patientEmail}</p>
-                        <p>Visits: ${g.records.length} | Critical: ${g.records.filter(r => r.severity === 'high').length}</p>
+                    <div style="display: flex; justify-content: space-between; align-items: start; flex-wrap: wrap; gap: 15px;">
+                        <div>
+                            <h4>${d.patientName}</h4>
+                            <p><i class="fas fa-id-card"></i> ID: ${d.patientId} | ${d.patientEmail}</p>
+                            <p><i class="fas fa-calendar"></i> ${new Date(d.date).toLocaleString()}</p>
+                            <p><i class="fas fa-stethoscope"></i> Diagnosis: ${d.diagnosis} <span class="severity-badge severity-${d.severity}" style="margin-left:10px;">${d.severity}</span></p>
+                            <p><i class="fas fa-notes-medical"></i> Symptoms: ${d.symptoms.join(', ')}</p>
+                            ${d.vitals ? `
+                                <p><i class="fas fa-heartbeat"></i> Vitals: BP ${d.vitals.bloodPressure}, Temp ${d.vitals.temperature}°F, Ht ${d.vitals.height}cm, Wt ${d.vitals.weight}kg</p>
+                            ` : ''}
+                            ${d.doctorAdvice ? `
+                                <div class="advice-section">
+                                    <strong><i class="fas fa-user-md"></i> Doctor's Advice:</strong>
+                                    <div class="advice-text">${d.doctorAdvice}</div>
+                                </div>
+                            ` : ''}
+                        </div>
+                        <div class="doctor-actions">
+                            <button class="advice-btn" onclick="event.stopPropagation(); showAdviceForm('${d.id}')">
+                                <i class="fas fa-pen"></i> Add Advice
+                            </button>
+                            <button class="view-btn" onclick="event.stopPropagation(); viewFullDetails('${d.id}')">
+                                <i class="fas fa-eye"></i> View
+                            </button>
+                        </div>
                     </div>
-                    <button class="login-btn" style="width:auto; padding:8px 20px;" onclick="event.stopPropagation(); showPatientHistory('${g.patientId}')">View</button>
+                    <div id="advice-form-${d.id}" style="display: none; margin-top: 20px;">
+                        <textarea id="advice-text-${d.id}" rows="3" style="width:100%; padding:15px; border:2px solid var(--border); border-radius:15px; margin-bottom:10px;" placeholder="Write your medical advice..."></textarea>
+                        <button class="login-btn" onclick="saveAdvice('${d.id}')" style="width:auto; padding:10px 25px;">Save Advice</button>
+                        <button class="login-btn" onclick="cancelAdvice('${d.id}')" style="width:auto; padding:10px 25px; background:var(--gray);">Cancel</button>
+                    </div>
                 `;
                 container.appendChild(div);
             });
         }
 
-        function showPatientHistory(patientId) {
-            const records = diagnoses.filter(d => d.patientId === patientId);
-            const patient = patients.find(p => p.id === patientId);
+        function showAdviceForm(diagnosisId) {
+            document.getElementById(`advice-form-${diagnosisId}`).style.display = 'block';
+        }
+
+        function cancelAdvice(diagnosisId) {
+            document.getElementById(`advice-form-${diagnosisId}`).style.display = 'none';
+        }
+
+        function saveAdvice(diagnosisId) {
+            const advice = document.getElementById(`advice-text-${diagnosisId}`).value;
+            if (!advice) {
+                showToast('Please write some advice', 'error');
+                return;
+            }
+
+            const diagnosis = diagnoses.find(d => d.id == diagnosisId);
+            if (diagnosis) {
+                diagnosis.doctorAdvice = advice;
+                localStorage.setItem('diagnoses', JSON.stringify(diagnoses));
+                displayPatientRecords();
+                showToast('Advice saved successfully');
+            }
+        }
+
+        function viewFullDetails(diagnosisId) {
+            const diagnosis = diagnoses.find(d => d.id == diagnosisId);
+            if (!diagnosis) return;
+
+            let details = `PATIENT DETAILS\n`;
+            details += `================\n\n`;
+            details += `Name: ${diagnosis.patientName}\n`;
+            details += `ID: ${diagnosis.patientId}\n`;
+            details += `Email: ${diagnosis.patientEmail}\n`;
+            details += `Age: ${diagnosis.age || 'N/A'}\n`;
+            details += `Gender: ${diagnosis.gender || 'N/A'}\n`;
+            details += `District: ${diagnosis.district || 'N/A'}\n\n`;
             
-            let msg = `PATIENT: ${patient?.name}\n`;
-            msg += `ID: ${patientId}\n`;
-            msg += `Email: ${patient?.email}\n`;
-            msg += `Total Visits: ${records.length}\n\n`;
+            if (diagnosis.vitals) {
+                details += `VITALS\n`;
+                details += `Blood Pressure: ${diagnosis.vitals.bloodPressure} mmHg\n`;
+                details += `Temperature: ${diagnosis.vitals.temperature}°F\n`;
+                details += `Height: ${diagnosis.vitals.height} cm\n`;
+                details += `Weight: ${diagnosis.vitals.weight} kg\n\n`;
+            }
             
-            records.forEach((r, i) => {
-                msg += `Visit ${i+1}: ${new Date(r.date).toLocaleDateString()}\n`;
-                msg += `Diagnosis: ${r.diagnosis} (${r.severity})\n`;
-                msg += `Symptoms: ${r.symptoms.join(', ')}\n`;
-                msg += `-------------------\n`;
-            });
+            details += `DIAGNOSIS\n`;
+            details += `Date: ${new Date(diagnosis.date).toLocaleString()}\n`;
+            details += `Diagnosis: ${diagnosis.diagnosis}\n`;
+            details += `Severity: ${diagnosis.severity}\n`;
+            details += `Symptoms: ${diagnosis.symptoms.join(', ')}\n`;
             
-            alert(msg);
+            if (diagnosis.doctorAdvice) {
+                details += `\nDOCTOR'S ADVICE:\n${diagnosis.doctorAdvice}\n`;
+            }
+            
+            alert(details);
         }
 
         // ==================== TOAST ====================

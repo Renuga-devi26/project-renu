@@ -202,33 +202,6 @@
             border-color: var(--primary);
         }
 
-        .otp-row {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .otp-row .input-group {
-            flex: 1;
-            margin-bottom: 0;
-        }
-
-        .otp-btn {
-            padding: 0 25px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            font-weight: 600;
-            cursor: pointer;
-            white-space: nowrap;
-        }
-
-        .otp-btn:disabled {
-            background: var(--gray);
-            cursor: not-allowed;
-        }
-
         .login-btn {
             width: 100%;
             padding: 16px;
@@ -744,24 +717,14 @@
                         <input type="text" id="patientEmail" placeholder="Email or Phone" value="patient@demo.com">
                     </div>
 
-                    <div class="otp-row">
-                        <div class="input-group">
-                            <i class="fas fa-lock"></i>
-                            <input type="text" id="patientOtp" placeholder="OTP" maxlength="6">
-                        </div>
-                        <button class="otp-btn" onclick="sendOtp('patient')" id="patientOtpBtn">Send OTP</button>
-                    </div>
-
-                    <button class="login-btn" onclick="loginWithOtp('patient')">Login with OTP</button>
-
-                    <div class="divider"><span>OR</span></div>
-
                     <div class="input-group">
                         <i class="fas fa-lock"></i>
                         <input type="password" id="patientPassword" placeholder="Password" value="123456">
                     </div>
 
-                    <button class="login-btn secondary" onclick="loginWithPassword('patient')">Login with Password</button>
+                    <button class="login-btn" onclick="loginWithPassword('patient')">Login</button>
+
+                    <div class="divider"><span>OR</span></div>
 
                     <div class="social-login">
                         <button class="social-btn" onclick="socialLogin('google','patient')"><i class="fab fa-google"></i></button>
@@ -792,24 +755,14 @@
                         <input type="text" id="doctorEmail" placeholder="Email or Phone" value="doctor@demo.com">
                     </div>
 
-                    <div class="otp-row">
-                        <div class="input-group">
-                            <i class="fas fa-lock"></i>
-                            <input type="text" id="doctorOtp" placeholder="OTP" maxlength="6">
-                        </div>
-                        <button class="otp-btn" onclick="sendOtp('doctor')" id="doctorOtpBtn">Send OTP</button>
-                    </div>
-
-                    <button class="login-btn" onclick="loginWithOtp('doctor')">Login with OTP</button>
-
-                    <div class="divider"><span>OR</span></div>
-
                     <div class="input-group">
                         <i class="fas fa-lock"></i>
                         <input type="password" id="doctorPassword" placeholder="Password" value="123456">
                     </div>
 
-                    <button class="login-btn secondary" onclick="loginWithPassword('doctor')">Login with Password</button>
+                    <button class="login-btn" onclick="loginWithPassword('doctor')">Login</button>
+
+                    <div class="divider"><span>OR</span></div>
 
                     <div class="social-login">
                         <button class="social-btn" onclick="socialLogin('google','doctor')"><i class="fab fa-google"></i></button>
@@ -1104,7 +1057,6 @@
                 urinary: 'मूत्र',
                 selectedSymptoms: 'चयनित लक्षण:',
                 typeSymptoms: 'लक्षण टाइप करें (अल्पविराम से अलग)',
-                // Symptoms in Hindi
                 cough: 'खांसी',
                 shortnessOfBreath: 'सांस की तकलीफ',
                 wheezing: 'घरघराहट',
@@ -1182,7 +1134,6 @@
                 urinary: 'சிறுநீர்',
                 selectedSymptoms: 'தேர்ந்தெடுக்கப்பட்ட அறிகுறிகள்:',
                 typeSymptoms: 'அறிகுறிகளை தட்டச்சு செய்க (கமாவால் பிரிக்கவும்)',
-                // Symptoms in Tamil
                 cough: 'இருமல்',
                 shortnessOfBreath: 'மூச்சுத் திணறல்',
                 wheezing: 'மூச்சு விடும் சத்தம்',
@@ -1663,7 +1614,6 @@
         let isRecording = false;
         let timerInterval = null;
         let seconds = 0;
-        let otpStore = {};
 
         // ==================== INIT ====================
         document.addEventListener('DOMContentLoaded', () => {
@@ -1800,56 +1750,12 @@
             }
         }
 
-        function sendOtp(type) {
-            const input = document.getElementById(type + 'Email').value;
-            if (!input) {
-                showToast('Enter email/phone', 'error');
-                return;
-            }
-
-            const otp = Math.floor(100000 + Math.random() * 900000).toString();
-            otpStore[input] = otp;
-
-            const btn = document.getElementById(type + 'OtpBtn');
-            btn.disabled = true;
-            btn.textContent = 'Sending...';
-
-            setTimeout(() => {
-                btn.disabled = false;
-                btn.textContent = 'Send OTP';
-                showToast(`OTP: ${otp}`, 'success');
-                document.getElementById(type + 'Otp').value = otp;
-            }, 1500);
-        }
-
-        function loginWithOtp(type) {
-            const input = document.getElementById(type + 'Email').value;
-            const otp = document.getElementById(type + 'Otp').value;
-
-            if (!input || !otp) {
-                showToast('Enter email and OTP', 'error');
-                return;
-            }
-
-            if (type === 'patient') {
-                let patient = patients.find(p => p.email === input || p.phone === input);
-                if (!patient) patient = patients[0];
-                currentPatient = patient;
-                showPatientApp();
-            } else {
-                let doctor = doctors.find(d => d.email === input || d.phone === input);
-                if (!doctor) doctor = doctors[0];
-                currentDoctor = doctor;
-                showDoctorApp();
-            }
-        }
-
         function loginWithPassword(type) {
             const input = document.getElementById(type + 'Email').value;
             const password = document.getElementById(type + 'Password').value;
 
             if (!input || !password) {
-                showToast('Enter email and password', 'error');
+                showToast('Enter email/phone and password', 'error');
                 return;
             }
 

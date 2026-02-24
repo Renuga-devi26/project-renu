@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>RuralCare Pro - Complete Healthcare with Vitals & Doctor Advice</title>
+    <title>RuralCare Pro - Multi-Language Voice Recognition Healthcare</title>
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -564,13 +564,37 @@
             font-size: 1.2rem;
         }
 
-        /* Voice */
+        /* Voice Section - Enhanced for Multi-language */
         .voice-section {
             background: linear-gradient(135deg, #4f46e5, #7c3aed);
             border-radius: 20px;
             padding: 30px;
             color: white;
             margin: 30px 0;
+        }
+
+        .voice-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .voice-header h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .active-language-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-size: 1rem;
+            font-weight: 600;
+            border: 2px solid white;
         }
 
         .voice-controls {
@@ -582,16 +606,17 @@
         }
 
         .record-btn {
-            width: 80px;
-            height: 80px;
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
             background: white;
             color: var(--danger);
             border: none;
-            font-size: 2rem;
+            font-size: 2.5rem;
             cursor: pointer;
             transition: all 0.3s;
             box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            position: relative;
         }
 
         .record-btn:hover {
@@ -604,17 +629,102 @@
             animation: pulse 1.5s infinite;
         }
 
+        .record-btn.recording::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border-radius: 50%;
+            border: 3px solid white;
+            animation: ripple 1.5s infinite;
+        }
+
         @keyframes pulse {
             0%,100% { transform: scale(1); }
             50% { transform: scale(1.1); }
         }
 
+        @keyframes ripple {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.3);
+                opacity: 0;
+            }
+        }
+
         .timer {
-            font-size: 2rem;
+            font-size: 2.5rem;
             font-family: monospace;
             background: rgba(255,255,255,0.2);
             padding: 10px 20px;
             border-radius: 50px;
+            letter-spacing: 2px;
+        }
+
+        .voice-status {
+            background: rgba(255,255,255,0.1);
+            border-radius: 50px;
+            padding: 15px 25px;
+            margin: 20px 0;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .voice-status i {
+            font-size: 1.3rem;
+        }
+
+        .voice-transcript {
+            background: rgba(255,255,255,0.15);
+            border-radius: 20px;
+            padding: 25px;
+            margin-top: 25px;
+            border: 2px solid rgba(255,255,255,0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .transcript-label {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.9;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .transcript-text {
+            font-size: 1.4rem;
+            line-height: 1.6;
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 15px;
+            min-height: 100px;
+            word-break: break-word;
+        }
+
+        .detected-languages {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .lang-tag {
+            background: rgba(255,255,255,0.2);
+            padding: 5px 15px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255,255,255,0.3);
         }
 
         .analyze-btn {
@@ -775,6 +885,9 @@
             .demo-grid {
                 grid-template-columns: 1fr;
             }
+            .voice-controls {
+                justify-content: center;
+            }
         }
     </style>
 </head>
@@ -796,12 +909,12 @@
             <div class="welcome-card">
                 <div class="welcome-icon">🏥</div>
                 <h1>Welcome to RuralCare Pro</h1>
-                <p>Complete healthcare platform with vitals tracking and doctor advice</p>
+                <p>Multi-language voice recognition healthcare platform</p>
                 <ul class="feature-list">
                     <li><i class="fas fa-check-circle"></i> 100+ Symptoms in 6 Languages</li>
+                    <li><i class="fas fa-check-circle"></i> Voice Recognition in All Languages</li>
                     <li><i class="fas fa-check-circle"></i> Track BP, Temperature, Height, Weight</li>
                     <li><i class="fas fa-check-circle"></i> Doctor's Advice for Each Case</li>
-                    <li><i class="fas fa-check-circle"></i> Voice Recognition</li>
                 </ul>
             </div>
 
@@ -1019,19 +1132,42 @@
                 <div class="selected-tags" id="symptomTags"></div>
             </div>
 
-            <!-- Voice -->
+            <!-- Enhanced Voice Section with Multi-language Recognition -->
             <div class="voice-section">
-                <h3><i class="fas fa-microphone-alt"></i> <span id="voiceTitle">Voice Symptom Recorder</span></h3>
+                <div class="voice-header">
+                    <h3><i class="fas fa-microphone-alt"></i> <span id="voiceTitle">Voice Symptom Recorder</span></h3>
+                    <div class="active-language-badge" id="activeLanguageBadge">
+                        <i class="fas fa-language"></i> English
+                    </div>
+                </div>
+                
                 <div class="voice-controls">
                     <button class="record-btn" id="recordBtn" onclick="toggleRecording()">
                         <i class="fas fa-microphone"></i>
                     </button>
                     <div class="timer" id="timer">00:00</div>
                 </div>
+
+                <div class="voice-status" id="voiceStatus">
+                    <i class="fas fa-info-circle"></i> Click the microphone and speak in your language
+                </div>
+
+                <div class="voice-transcript" id="voiceTranscript">
+                    <div class="transcript-label">
+                        <i class="fas fa-file-audio"></i> Recognized Speech:
+                    </div>
+                    <div class="transcript-text" id="recognizedText">
+                        Click the microphone and start speaking...
+                    </div>
+                    <div class="detected-languages" id="detectedLanguages">
+                        <span class="lang-tag"><i class="fas fa-check-circle"></i> Auto-detects all 6 languages</span>
+                    </div>
+                </div>
+
                 <div style="margin-top:20px;">
                     <div class="input-group">
                         <i class="fas fa-pen"></i>
-                        <input type="text" id="typedSymptoms" placeholder="Type symptoms (comma separated)">
+                        <input type="text" id="typedSymptoms" placeholder="Or type symptoms manually (comma separated)">
                     </div>
                 </div>
             </div>
@@ -1117,67 +1253,27 @@
                 urinary: 'Urinary',
                 selectedSymptoms: 'Selected Symptoms:',
                 typeSymptoms: 'Type symptoms (comma separated)',
+                voiceStatus: 'Click the microphone and speak in your language',
+                recording: 'Recording... Speak now',
+                processing: 'Processing your speech...',
+                completed: 'Voice captured successfully!',
+                // Symptoms in English
                 cough: 'Cough',
-                shortnessOfBreath: 'Shortness of breath',
-                wheezing: 'Wheezing',
-                chestPain: 'Chest pain',
-                soreThroat: 'Sore throat',
-                runnyNose: 'Runny nose',
-                sneezing: 'Sneezing',
-                nasalCongestion: 'Nasal congestion',
-                coughingBlood: 'Coughing blood',
-                dryCough: 'Dry cough',
+                fever: 'Fever',
+                headache: 'Headache',
+                fatigue: 'Fatigue',
+                bodyAche: 'Body ache',
                 nausea: 'Nausea',
                 vomiting: 'Vomiting',
                 diarrhea: 'Diarrhea',
                 constipation: 'Constipation',
                 abdominalPain: 'Abdominal pain',
-                bloating: 'Bloating',
-                heartburn: 'Heartburn',
-                lossOfAppetite: 'Loss of appetite',
-                bloodInStool: 'Blood in stool',
-                difficultySwallowing: 'Difficulty swallowing',
-                headache: 'Headache',
-                dizziness: 'Dizziness',
-                confusion: 'Confusion',
-                seizures: 'Seizures',
-                tremors: 'Tremors',
-                numbness: 'Numbness',
-                weakness: 'Weakness',
-                memoryLoss: 'Memory loss',
-                balanceProblems: 'Balance problems',
-                slurredSpeech: 'Slurred speech',
-                jointPain: 'Joint pain',
-                musclePain: 'Muscle pain',
-                backPain: 'Back pain',
-                neckPain: 'Neck pain',
-                jointSwelling: 'Joint swelling',
-                stiffness: 'Stiffness',
-                muscleCramps: 'Muscle cramps',
-                rash: 'Rash',
-                itching: 'Itching',
-                hives: 'Hives',
-                drySkin: 'Dry skin',
-                skinRedness: 'Skin redness',
-                skinDiscoloration: 'Skin discoloration',
-                woundsNotHealing: 'Wounds not healing',
-                fever: 'Fever',
-                fatigue: 'Fatigue',
-                chills: 'Chills',
-                nightSweats: 'Night sweats',
-                weightLoss: 'Weight loss',
-                weightGain: 'Weight gain',
-                dehydration: 'Dehydration',
-                swollenLymphNodes: 'Swollen lymph nodes',
-                palpitations: 'Palpitations',
-                highBP: 'High blood pressure',
-                lowBP: 'Low blood pressure',
-                swollenAnkles: 'Swollen ankles',
-                frequentUrination: 'Frequent urination',
-                painfulUrination: 'Painful urination',
-                bloodInUrine: 'Blood in urine',
-                urgentUrination: 'Urgent urination',
-                bodyAche: 'Body ache'
+                shortnessOfBreath: 'Shortness of breath',
+                wheezing: 'Wheezing',
+                chestPain: 'Chest pain',
+                soreThroat: 'Sore throat',
+                runnyNose: 'Runny nose',
+                sneezing: 'Sneezing'
             },
             hi: {
                 symptomTitle: 'लक्षण जांचकर्ता (100+ लक्षण)',
@@ -1194,67 +1290,26 @@
                 urinary: 'मूत्र',
                 selectedSymptoms: 'चयनित लक्षण:',
                 typeSymptoms: 'लक्षण टाइप करें (अल्पविराम से अलग)',
+                voiceStatus: 'माइक्रोफोन पर क्लिक करें और अपनी भाषा में बोलें',
+                recording: 'रिकॉर्डिंग... अब बोलें',
+                processing: 'आपकी आवाज संसाधित हो रही है...',
+                completed: 'आवाज सफलतापूर्वक कैप्चर हुई!',
                 cough: 'खांसी',
-                shortnessOfBreath: 'सांस की तकलीफ',
-                wheezing: 'घरघराहट',
-                chestPain: 'सीने में दर्द',
-                soreThroat: 'गले में खराश',
-                runnyNose: 'बहती नाक',
-                sneezing: 'छींकना',
-                nasalCongestion: 'नाक बंद होना',
-                coughingBlood: 'खून वाली खांसी',
-                dryCough: 'सूखी खांसी',
+                fever: 'बुखार',
+                headache: 'सिरदर्द',
+                fatigue: 'थकान',
+                bodyAche: 'शरीर दर्द',
                 nausea: 'मतली',
                 vomiting: 'उल्टी',
                 diarrhea: 'दस्त',
                 constipation: 'कब्ज',
                 abdominalPain: 'पेट दर्द',
-                bloating: 'पेट फूलना',
-                heartburn: 'सीने में जलन',
-                lossOfAppetite: 'भूख न लगना',
-                bloodInStool: 'मल में खून',
-                difficultySwallowing: 'निगलने में कठिनाई',
-                headache: 'सिरदर्द',
-                dizziness: 'चक्कर आना',
-                confusion: 'भ्रम',
-                seizures: 'दौरे',
-                tremors: 'कंपकंपी',
-                numbness: 'सुन्नता',
-                weakness: 'कमजोरी',
-                memoryLoss: 'स्मृति हानि',
-                balanceProblems: 'संतुलन की समस्या',
-                slurredSpeech: 'अस्पष्ट वाणी',
-                jointPain: 'जोड़ों का दर्द',
-                musclePain: 'मांसपेशियों में दर्द',
-                backPain: 'पीठ दर्द',
-                neckPain: 'गर्दन दर्द',
-                jointSwelling: 'जोड़ों में सूजन',
-                stiffness: 'अकड़न',
-                muscleCramps: 'मांसपेशियों में ऐंठन',
-                rash: 'चकत्ते',
-                itching: 'खुजली',
-                hives: 'पित्ती',
-                drySkin: 'शुष्क त्वचा',
-                skinRedness: 'त्वचा का लाल होना',
-                skinDiscoloration: 'त्वचा का रंग बदलना',
-                woundsNotHealing: 'घाव न भरना',
-                fever: 'बुखार',
-                fatigue: 'थकान',
-                chills: 'ठंड लगना',
-                nightSweats: 'रात को पसीना',
-                weightLoss: 'वजन घटना',
-                weightGain: 'वजन बढ़ना',
-                dehydration: 'निर्जलीकरण',
-                swollenLymphNodes: 'सूजी हुई लिम्फ नोड्स',
-                palpitations: 'धड़कन',
-                highBP: 'उच्च रक्तचाप',
-                lowBP: 'निम्न रक्तचाप',
-                swollenAnkles: 'टखनों में सूजन',
-                frequentUrination: 'बार-बार पेशाब',
-                painfulUrination: 'दर्दनाक पेशाब',
-                bloodInUrine: 'पेशाब में खून',
-                urgentUrination: 'तत्काल पेशाब',
-                bodyAche: 'शरीर दर्द'
+                shortnessOfBreath: 'सांस की तकलीफ',
+                wheezing: 'घरघराहट',
+                chestPain: 'सीने में दर्द',
+                soreThroat: 'गले में खराश',
+                runnyNose: 'बहती नाक',
+                sneezing: 'छींकना'
             },
             ta: {
                 symptomTitle: 'அறிகுறி சரிபார்ப்பான் (100+ அறிகுறிகள்)',
@@ -1271,67 +1326,26 @@
                 urinary: 'சிறுநீர்',
                 selectedSymptoms: 'தேர்ந்தெடுக்கப்பட்ட அறிகுறிகள்:',
                 typeSymptoms: 'அறிகுறிகளை தட்டச்சு செய்க (கமாவால் பிரிக்கவும்)',
+                voiceStatus: 'மைக்ரோஃபோனை கிளிக் செய்து உங்கள் மொழியில் பேசுங்கள்',
+                recording: 'பதிவு செய்கிறது... இப்போது பேசுங்கள்',
+                processing: 'உங்கள் குரல் செயலாக்கப்படுகிறது...',
+                completed: 'குரல் வெற்றிகரமாக பதிவு செய்யப்பட்டது!',
                 cough: 'இருமல்',
-                shortnessOfBreath: 'மூச்சுத் திணறல்',
-                wheezing: 'மூச்சு விடும் சத்தம்',
-                chestPain: 'மார்பு வலி',
-                soreThroat: 'தொண்டை வலி',
-                runnyNose: 'மூக்கு ஒழுகுதல்',
-                sneezing: 'தும்மல்',
-                nasalCongestion: 'மூக்கடைப்பு',
-                coughingBlood: 'இரத்த இருமல்',
-                dryCough: 'உலர் இருமல்',
+                fever: 'காய்ச்சல்',
+                headache: 'தலைவலி',
+                fatigue: 'சோர்வு',
+                bodyAche: 'உடல் வலி',
                 nausea: 'குமட்டல்',
                 vomiting: 'வாந்தி',
                 diarrhea: 'வயிற்றுப்போக்கு',
                 constipation: 'மலச்சிக்கல்',
                 abdominalPain: 'வயிற்று வலி',
-                bloating: 'வயிறு உப்புசம்',
-                heartburn: 'நெஞ்செரிச்சல்',
-                lossOfAppetite: 'பசியின்மை',
-                bloodInStool: 'மலத்தில் இரத்தம்',
-                difficultySwallowing: 'விழுங்குவதில் சிரமம்',
-                headache: 'தலைவலி',
-                dizziness: 'தலைச்சுற்றல்',
-                confusion: 'குழப்பம்',
-                seizures: 'வலிப்பு',
-                tremors: 'நடுக்கம்',
-                numbness: 'உணர்வின்மை',
-                weakness: 'பலவீனம்',
-                memoryLoss: 'நினைவு இழப்பு',
-                balanceProblems: 'சமநிலை பிரச்சனைகள்',
-                slurredSpeech: 'தெளிவற்ற பேச்சு',
-                jointPain: 'மூட்டு வலி',
-                musclePain: 'தசை வலி',
-                backPain: 'முதுகு வலி',
-                neckPain: 'கழுத்து வலி',
-                jointSwelling: 'மூட்டு வீக்கம்',
-                stiffness: 'விறைப்பு',
-                muscleCramps: 'தசைப்பிடிப்பு',
-                rash: 'தடிப்பு',
-                itching: 'அரிப்பு',
-                hives: 'படை',
-                drySkin: 'வறண்ட சருமம்',
-                skinRedness: 'தோல் சிவத்தல்',
-                skinDiscoloration: 'தோல் நிறமாற்றம்',
-                woundsNotHealing: 'காயம் ஆறாமை',
-                fever: 'காய்ச்சல்',
-                fatigue: 'சோர்வு',
-                chills: 'குளிர்',
-                nightSweats: 'இரவு வியர்வை',
-                weightLoss: 'எடை இழப்பு',
-                weightGain: 'எடை அதிகரிப்பு',
-                dehydration: 'நீரிழப்பு',
-                swollenLymphNodes: 'வீங்கிய நிணநீர் முடிச்சுகள்',
-                palpitations: 'நெஞ்சுத்துடிப்பு',
-                highBP: 'உயர் இரத்த அழுத்தம்',
-                lowBP: 'தாழ் இரத்த அழுத்தம்',
-                swollenAnkles: 'கணுக்கால் வீக்கம்',
-                frequentUrination: 'அடிக்கடி சிறுநீர்',
-                painfulUrination: 'வலி நிறைந்த சிறுநீர்',
-                bloodInUrine: 'சிறுநீரில் இரத்தம்',
-                urgentUrination: 'அவசர சிறுநீர்',
-                bodyAche: 'உடல் வலி'
+                shortnessOfBreath: 'மூச்சுத் திணறல்',
+                wheezing: 'மூச்சு விடும் சத்தம்',
+                chestPain: 'மார்பு வலி',
+                soreThroat: 'தொண்டை வலி',
+                runnyNose: 'மூக்கு ஒழுகுதல்',
+                sneezing: 'தும்மல்'
             },
             te: {
                 symptomTitle: 'లక్షణ పరిశీలకుడు (100+ లక్షణాలు)',
@@ -1348,67 +1362,26 @@
                 urinary: 'మూత్ర',
                 selectedSymptoms: 'ఎంచుకున్న లక్షణాలు:',
                 typeSymptoms: 'లక్షణాలను టైప్ చేయండి (కామాతో వేరు చేయండి)',
+                voiceStatus: 'మైక్రోఫోన్ పై క్లిక్ చేసి మీ భాషలో మాట్లాడండి',
+                recording: 'రికార్డింగ్... ఇప్పుడు మాట్లాడండి',
+                processing: 'మీ వాయిస్ ప్రాసెస్ అవుతోంది...',
+                completed: 'వాయిస్ విజయవంతంగా క్యాప్చర్ చేయబడింది!',
                 cough: 'దగ్గు',
-                shortnessOfBreath: 'ఊపిరి ఆడకపోవడం',
-                wheezing: 'గురక',
-                chestPain: 'ఛాతీ నొప్పి',
-                soreThroat: 'గొంతు నొప్పి',
-                runnyNose: 'ముక్కు కారడం',
-                sneezing: 'తుమ్ములు',
-                nasalCongestion: 'ముక్కు దిబ్బడ',
-                coughingBlood: 'రక్తం దగ్గు',
-                dryCough: 'పొడి దగ్గు',
+                fever: 'జ్వరం',
+                headache: 'తలనొప్పి',
+                fatigue: 'అలసట',
+                bodyAche: 'శరీర నొప్పి',
                 nausea: 'వికారం',
                 vomiting: 'వాంతులు',
                 diarrhea: 'విరేచనాలు',
                 constipation: 'మలబద్ధకం',
                 abdominalPain: 'కడుపు నొప్పి',
-                bloating: 'ఉబ్బరం',
-                heartburn: 'గుండెల్లో మంట',
-                lossOfAppetite: 'ఆకలి లేకపోవడం',
-                bloodInStool: 'మలంలో రక్తం',
-                difficultySwallowing: 'మింగడంలో ఇబ్బంది',
-                headache: 'తలనొప్పి',
-                dizziness: 'తలతిరగడం',
-                confusion: 'గందరగోళం',
-                seizures: 'మూర్ఛలు',
-                tremors: 'వణుకు',
-                numbness: 'తిమ్మిరి',
-                weakness: 'బలహీనత',
-                memoryLoss: 'జ్ఞాపకశక్తి తగ్గడం',
-                balanceProblems: 'సమతుల్యత సమస్యలు',
-                slurredSpeech: 'మాట తడబడడం',
-                jointPain: 'కీళ్ల నొప్పి',
-                musclePain: 'కండరాల నొప్పి',
-                backPain: 'వెన్నునొప్పి',
-                neckPain: 'మెడ నొప్పి',
-                jointSwelling: 'కీళ్ల వాపు',
-                stiffness: 'బిగుతు',
-                muscleCramps: 'కండరాల తిమ్మిరి',
-                rash: 'దద్దుర్లు',
-                itching: 'దురద',
-                hives: 'ఉర్టికేరియా',
-                drySkin: 'పొడి చర్మం',
-                skinRedness: 'చర్మం ఎర్రబడడం',
-                skinDiscoloration: 'చర్మం రంగు మారడం',
-                woundsNotHealing: 'గాయాలు మానకపోవడం',
-                fever: 'జ్వరం',
-                fatigue: 'అలసట',
-                chills: 'చలి',
-                nightSweats: 'రాత్రి చెమటలు',
-                weightLoss: 'బరువు తగ్గడం',
-                weightGain: 'బరువు పెరగడం',
-                dehydration: 'నిర్జలీకరణం',
-                swollenLymphNodes: 'వాపు లింఫ్ నోడ్స్',
-                palpitations: 'గుండె దడ',
-                highBP: 'అధిక రక్తపోటు',
-                lowBP: 'తక్కువ రక్తపోటు',
-                swollenAnkles: 'చీలమండల వాపు',
-                frequentUrination: 'తరచూ మూత్రం',
-                painfulUrination: 'బాధాకరమైన మూత్రం',
-                bloodInUrine: 'మూత్రంలో రక్తం',
-                urgentUrination: 'అత్యవసర మూత్రం',
-                bodyAche: 'శరీర నొప్పి'
+                shortnessOfBreath: 'ఊపిరి ఆడకపోవడం',
+                wheezing: 'గురక',
+                chestPain: 'ఛాతీ నొప్పి',
+                soreThroat: 'గొంతు నొప్పి',
+                runnyNose: 'ముక్కు కారడం',
+                sneezing: 'తుమ్ములు'
             },
             kn: {
                 symptomTitle: 'ರೋಗಲಕ್ಷಣ ಪರಿಶೀಲಕ (100+ ರೋಗಲಕ್ಷಣಗಳು)',
@@ -1425,67 +1398,26 @@
                 urinary: 'ಮೂತ್ರ',
                 selectedSymptoms: 'ಆಯ್ದ ರೋಗಲಕ್ಷಣಗಳು:',
                 typeSymptoms: 'ರೋಗಲಕ್ಷಣಗಳನ್ನು ಟೈಪ್ ಮಾಡಿ (ಅಲ್ಪವಿರಾಮದಿಂದ ಬೇರ್ಪಡಿಸಿ)',
+                voiceStatus: 'ಮೈಕ್ರೊಫೋನ್ ಕ್ಲಿಕ್ ಮಾಡಿ ಮತ್ತು ನಿಮ್ಮ ಭಾಷೆಯಲ್ಲಿ ಮಾತನಾಡಿ',
+                recording: 'ರೆಕಾರ್ಡಿಂಗ್... ಈಗ ಮಾತನಾಡಿ',
+                processing: 'ನಿಮ್ಮ ಧ್ವನಿಯನ್ನು ಸಂಸ್ಕರಿಸಲಾಗುತ್ತಿದೆ...',
+                completed: 'ಧ್ವನಿ ಯಶಸ್ವಿಯಾಗಿ ಸೆರೆಹಿಡಿಯಲಾಗಿದೆ!',
                 cough: 'ಕೆಮ್ಮು',
-                shortnessOfBreath: 'ಉಸಿರಾಟದ ತೊಂದರೆ',
-                wheezing: 'ಉಬ್ಬಸ',
-                chestPain: 'ಎದೆ ನೋವು',
-                soreThroat: 'ಗಂಟಲು ನೋವು',
-                runnyNose: 'ಸ್ರವಿಸುವ ಮೂಗು',
-                sneezing: 'ಸೀನುವಿಕೆ',
-                nasalCongestion: 'ಮೂಗಿನ ದಟ್ಟಣೆ',
-                coughingBlood: 'ರಕ್ತದ ಕೆಮ್ಮು',
-                dryCough: 'ಒಣ ಕೆಮ್ಮು',
+                fever: 'ಜ್ವರ',
+                headache: 'ತಲೆನೋವು',
+                fatigue: 'ಆಯಾಸ',
+                bodyAche: 'ದೇಹ ನೋವು',
                 nausea: 'ವಾಕರಿಕೆ',
                 vomiting: 'ವಾಂತಿ',
                 diarrhea: 'ಅತಿಸಾರ',
                 constipation: 'ಮಲಬದ್ಧತೆ',
                 abdominalPain: 'ಹೊಟ್ಟೆ ನೋವು',
-                bloating: 'ಉಬ್ಬರ',
-                heartburn: 'ಎದೆಯುರಿ',
-                lossOfAppetite: 'ಹಸಿವಿನ ಕೊರತೆ',
-                bloodInStool: 'ಮಲದಲ್ಲಿ ರಕ್ತ',
-                difficultySwallowing: 'ನುಂಗಲು ಕಷ್ಟ',
-                headache: 'ತಲೆನೋವು',
-                dizziness: 'ತಲೆತಿರುಗುವಿಕೆ',
-                confusion: 'ಗೊಂದಲ',
-                seizures: 'ಸೆಳವು',
-                tremors: 'ನಡುಕ',
-                numbness: 'ಮರಗಟ್ಟುವಿಕೆ',
-                weakness: 'ದೌರ್ಬಲ್ಯ',
-                memoryLoss: 'ನೆನಪಿನ ಶಕ್ತಿ ಕಳೆದುಕೊಳ್ಳುವುದು',
-                balanceProblems: 'ಸಮತೋಲನ ಸಮಸ್ಯೆಗಳು',
-                slurredSpeech: 'ತೊದಲುನುಡಿ',
-                jointPain: 'ಕೀಲು ನೋವು',
-                musclePain: 'ಸ್ನಾಯು ನೋವು',
-                backPain: 'ಬೆನ್ನು ನೋವು',
-                neckPain: 'ಕುತ್ತಿಗೆ ನೋವು',
-                jointSwelling: 'ಕೀಲು ಊತ',
-                stiffness: 'ಬಿಗಿತ',
-                muscleCramps: 'ಸ್ನಾಯು ಸೆಳೆತ',
-                rash: 'ದದ್ದು',
-                itching: 'ತುರಿಕೆ',
-                hives: 'ಜೇನುಗೂಡುಗಳು',
-                drySkin: 'ಒಣ ಚರ್ಮ',
-                skinRedness: 'ಚರ್ಮದ ಕೆಂಪಾಗುವಿಕೆ',
-                skinDiscoloration: 'ಚರ್ಮದ ಬಣ್ಣ ಬದಲಾವಣೆ',
-                woundsNotHealing: 'ಗಾಯಗಳು ವಾಸಿಯಾಗದೆ',
-                fever: 'ಜ್ವರ',
-                fatigue: 'ಆಯಾಸ',
-                chills: 'ಶೀತ',
-                nightSweats: 'ರಾತ್ರಿ ಬೆವರುವಿಕೆ',
-                weightLoss: 'ತೂಕ ಇಳಿಕೆ',
-                weightGain: 'ತೂಕ ಹೆಚ್ಚಳ',
-                dehydration: 'ನಿರ್ಜಲೀಕರಣ',
-                swollenLymphNodes: 'ಊದಿದ ದುಗ್ಧರಸ ಗ್ರಂಥಿಗಳು',
-                palpitations: 'ಹೃದಯ ಬಡಿತ',
-                highBP: 'ಅಧಿಕ ರಕ್ತದೊತ್ತಡ',
-                lowBP: 'ಕಡಿಮೆ ರಕ್ತದೊತ್ತಡ',
-                swollenAnkles: 'ಕಣಕಾಲು ಊತ',
-                frequentUrination: 'ಆಗಾಗ ಮೂತ್ರ',
-                painfulUrination: 'ನೋವಿನ ಮೂತ್ರ',
-                bloodInUrine: 'ಮೂತ್ರದಲ್ಲಿ ರಕ್ತ',
-                urgentUrination: 'ತುರ್ತು ಮೂತ್ರ',
-                bodyAche: 'ದೇಹ ನೋವು'
+                shortnessOfBreath: 'ಉಸಿರಾಟದ ತೊಂದರೆ',
+                wheezing: 'ಉಬ್ಬಸ',
+                chestPain: 'ಎದೆ ನೋವು',
+                soreThroat: 'ಗಂಟಲು ನೋವು',
+                runnyNose: 'ಸ್ರವಿಸುವ ಮೂಗು',
+                sneezing: 'ಸೀನುವಿಕೆ'
             },
             ml: {
                 symptomTitle: 'രോഗലക്ഷണ പരിശോധകൻ (100+ രോഗലക്ഷണങ്ങൾ)',
@@ -1502,73 +1434,31 @@
                 urinary: 'മൂത്ര',
                 selectedSymptoms: 'തിരഞ്ഞെടുത്ത രോഗലക്ഷണങ്ങൾ:',
                 typeSymptoms: 'രോഗലക്ഷണങ്ങൾ ടൈപ്പ് ചെയ്യുക (കോമയാൽ വേർതിരിക്കുക)',
+                voiceStatus: 'മൈക്രോഫോണിൽ ക്ലിക്ക് ചെയ്ത് നിങ്ങളുടെ ഭാഷയിൽ സംസാരിക്കുക',
+                recording: 'റെക്കോർഡിംഗ്... ഇപ്പോൾ സംസാരിക്കുക',
+                processing: 'നിങ്ങളുടെ ശബ്ദം പ്രോസസ്സ് ചെയ്യുന്നു...',
+                completed: 'ശബ്ദം വിജയകരമായി പകർത്തി!',
                 cough: 'ചുമ',
-                shortnessOfBreath: 'ശ്വാസതടസ്സം',
-                wheezing: 'ശ്വാസംമുട്ടൽ',
-                chestPain: 'നെഞ്ചുവേദന',
-                soreThroat: 'തൊണ്ടവേദന',
-                runnyNose: 'മൂക്കൊലിപ്പ്',
-                sneezing: 'തുമ്മൽ',
-                nasalCongestion: 'മൂക്കടപ്പ്',
-                coughingBlood: 'രക്തം ചുമ',
-                dryCough: 'വരണ്ട ചുമ',
+                fever: 'പനി',
+                headache: 'തലവേദന',
+                fatigue: 'ക്ഷീണം',
+                bodyAche: 'ശരീരവേദന',
                 nausea: 'ഓക്കാനം',
                 vomiting: 'ഛർദ്ദി',
                 diarrhea: 'വയറിളക്കം',
                 constipation: 'മലബന്ധം',
                 abdominalPain: 'വയറുവേദന',
-                bloating: 'വയറുവീർക്കൽ',
-                heartburn: 'നെഞ്ചെരിച്ചിൽ',
-                lossOfAppetite: 'വിശപ്പില്ലായ്മ',
-                bloodInStool: 'മലത്തിൽ രക്തം',
-                difficultySwallowing: 'വിഴുങ്ങാൻ ബുദ്ധിമുട്ട്',
-                headache: 'തലവേദന',
-                dizziness: 'തലകറക്കം',
-                confusion: 'ആശയക്കുഴപ്പം',
-                seizures: 'അപസ്മാരം',
-                tremors: 'വിറയൽ',
-                numbness: 'മരവിപ്പ്',
-                weakness: 'ബലഹീനത',
-                memoryLoss: 'ഓർമ്മക്കുറവ്',
-                balanceProblems: 'ബാലൻസ് പ്രശ്നങ്ങൾ',
-                slurredSpeech: 'വ്യക്തമല്ലാത്ത സംസാരം',
-                jointPain: 'സന്ധി വേദന',
-                musclePain: 'പേശി വേദന',
-                backPain: 'നടുവേദന',
-                neckPain: 'കഴുത്ത് വേദന',
-                jointSwelling: 'സന്ധി വീക്കം',
-                stiffness: 'കാഠിന്യം',
-                muscleCramps: 'പേശീവലിവ്',
-                rash: 'തടിപ്പ്',
-                itching: 'ചൊറിച്ചിൽ',
-                hives: 'തേനീച്ചക്കൂടുകൾ',
-                drySkin: 'വരണ്ട ചർമ്മം',
-                skinRedness: 'ചർമ്മത്തിൽ ചുവപ്പ്',
-                skinDiscoloration: 'ചർമ്മത്തിന്റെ നിറവ്യത്യാസം',
-                woundsNotHealing: 'മുറിവുകൾ ഉണങ്ങാതിരിക്കുക',
-                fever: 'പനി',
-                fatigue: 'ക്ഷീണം',
-                chills: 'വിറയൽ',
-                nightSweats: 'രാത്രി വിയർപ്പ്',
-                weightLoss: 'ശരീരഭാരം കുറയൽ',
-                weightGain: 'ശരീരഭാരം വർദ്ധിക്കൽ',
-                dehydration: 'നിർജ്ജലീകരണം',
-                swollenLymphNodes: 'വീർത്ത ലിംഫ് നോഡുകൾ',
-                palpitations: 'ഹൃദയമിടിപ്പ്',
-                highBP: 'ഉയർന്ന രക്തസമ്മർദ്ദം',
-                lowBP: 'കുറഞ്ഞ രക്തസമ്മർദ്ദം',
-                swollenAnkles: 'കണങ്കാൽ വീക്കം',
-                frequentUrination: 'ഇടയ്ക്കിടെ മൂത്രം',
-                painfulUrination: 'വേദനാജനകമായ മൂത്രം',
-                bloodInUrine: 'മൂത്രത്തിൽ രക്തം',
-                urgentUrination: 'അടിയന്തര മൂത്രം',
-                bodyAche: 'ശരീരവേദന'
+                shortnessOfBreath: 'ശ്വാസതടസ്സം',
+                wheezing: 'ശ്വാസംമുട്ടൽ',
+                chestPain: 'നെഞ്ചുവേദന',
+                soreThroat: 'തൊണ്ടവേദന',
+                runnyNose: 'മൂക്കൊലിപ്പ്',
+                sneezing: 'തുമ്മൽ'
             }
         };
 
         // ==================== 100+ SYMPTOMS DATABASE ====================
         const symptomsDB = [
-            // Respiratory (1-15)
             { id: 1, name: 'cough', category: 'respiratory' },
             { id: 2, name: 'shortnessOfBreath', category: 'respiratory' },
             { id: 3, name: 'wheezing', category: 'respiratory' },
@@ -1579,8 +1469,6 @@
             { id: 8, name: 'nasalCongestion', category: 'respiratory' },
             { id: 9, name: 'coughingBlood', category: 'respiratory' },
             { id: 10, name: 'dryCough', category: 'respiratory' },
-            
-            // Digestive (11-25)
             { id: 11, name: 'nausea', category: 'digestive' },
             { id: 12, name: 'vomiting', category: 'digestive' },
             { id: 13, name: 'diarrhea', category: 'digestive' },
@@ -1591,8 +1479,6 @@
             { id: 18, name: 'lossOfAppetite', category: 'digestive' },
             { id: 19, name: 'bloodInStool', category: 'digestive' },
             { id: 20, name: 'difficultySwallowing', category: 'digestive' },
-            
-            // Neurological (21-35)
             { id: 21, name: 'headache', category: 'neurological' },
             { id: 22, name: 'dizziness', category: 'neurological' },
             { id: 23, name: 'confusion', category: 'neurological' },
@@ -1603,8 +1489,6 @@
             { id: 28, name: 'memoryLoss', category: 'neurological' },
             { id: 29, name: 'balanceProblems', category: 'neurological' },
             { id: 30, name: 'slurredSpeech', category: 'neurological' },
-            
-            // Muscular (31-40)
             { id: 31, name: 'jointPain', category: 'muscular' },
             { id: 32, name: 'musclePain', category: 'muscular' },
             { id: 33, name: 'backPain', category: 'muscular' },
@@ -1612,8 +1496,6 @@
             { id: 35, name: 'jointSwelling', category: 'muscular' },
             { id: 36, name: 'stiffness', category: 'muscular' },
             { id: 37, name: 'muscleCramps', category: 'muscular' },
-            
-            // Skin (41-50)
             { id: 38, name: 'rash', category: 'skin' },
             { id: 39, name: 'itching', category: 'skin' },
             { id: 40, name: 'hives', category: 'skin' },
@@ -1621,8 +1503,6 @@
             { id: 42, name: 'skinRedness', category: 'skin' },
             { id: 43, name: 'skinDiscoloration', category: 'skin' },
             { id: 44, name: 'woundsNotHealing', category: 'skin' },
-            
-            // General (45-60)
             { id: 45, name: 'fever', category: 'general' },
             { id: 46, name: 'fatigue', category: 'general' },
             { id: 47, name: 'chills', category: 'general' },
@@ -1632,14 +1512,10 @@
             { id: 51, name: 'dehydration', category: 'general' },
             { id: 52, name: 'swollenLymphNodes', category: 'general' },
             { id: 53, name: 'bodyAche', category: 'general' },
-            
-            // Cardiovascular (54-60)
             { id: 54, name: 'palpitations', category: 'cardiovascular' },
             { id: 55, name: 'highBP', category: 'cardiovascular' },
             { id: 56, name: 'lowBP', category: 'cardiovascular' },
             { id: 57, name: 'swollenAnkles', category: 'cardiovascular' },
-            
-            // Urinary (61-65)
             { id: 58, name: 'frequentUrination', category: 'urinary' },
             { id: 59, name: 'painfulUrination', category: 'urinary' },
             { id: 60, name: 'bloodInUrine', category: 'urinary' },
@@ -1752,6 +1628,74 @@
         let timerInterval = null;
         let seconds = 0;
 
+        // Language names for display
+        const languageNames = {
+            en: 'English',
+            hi: 'हिन्दी',
+            ta: 'தமிழ்',
+            te: 'తెలుగు',
+            kn: 'ಕನ್ನಡ',
+            ml: 'മലയാളം'
+        };
+
+        // Multi-language voice recognition database
+        const voicePatterns = {
+            en: {
+                cough: ['cough', 'coughing', 'khasi'],
+                fever: ['fever', 'temperature', 'bukhar'],
+                headache: ['headache', 'head pain', 'sir dard'],
+                fatigue: ['fatigue', 'tired', 'thakan'],
+                bodyAche: ['body ache', 'body pain', 'dard'],
+                nausea: ['nausea', 'feeling sick', 'mati'],
+                vomiting: ['vomiting', 'throw up', 'ulti'],
+                diarrhea: ['diarrhea', 'loose motion', 'dast'],
+                constipation: ['constipation', 'kabz'],
+                abdominalPain: ['abdominal pain', 'stomach ache', 'pet dard'],
+                shortnessOfBreath: ['shortness of breath', 'breathing difficulty', 'sans'],
+                wheezing: ['wheezing', 'wheez', 'gharghari'],
+                chestPain: ['chest pain', 'seene dard'],
+                soreThroat: ['sore throat', 'throat pain', 'gala dard'],
+                runnyNose: ['runny nose', 'cold', 'nuk'],
+                sneezing: ['sneezing', 'chhik', 'cheek']
+            },
+            hi: {
+                cough: ['खांसी', 'खाँसी', 'khasi'],
+                fever: ['बुखार', 'bukhar'],
+                headache: ['सिरदर्द', 'sir dard'],
+                fatigue: ['थकान', 'thakan'],
+                bodyAche: ['शरीर दर्द', 'badan dard'],
+                nausea: ['मतली', 'mati'],
+                vomiting: ['उल्टी', 'ulti'],
+                diarrhea: ['दस्त', 'dast'],
+                constipation: ['कब्ज', 'kabz'],
+                abdominalPain: ['पेट दर्द', 'pet dard'],
+                shortnessOfBreath: ['सांस की तकलीफ', 'sans'],
+                wheezing: ['घरघराहट', 'gharghari'],
+                chestPain: ['सीने में दर्द', 'seene dard'],
+                soreThroat: ['गले में खराश', 'gala dard'],
+                runnyNose: ['बहती नाक', 'nuk'],
+                sneezing: ['छींक', 'chhik']
+            },
+            ta: {
+                cough: ['இருமல்', 'irumal'],
+                fever: ['காய்ச்சல்', 'kaychal'],
+                headache: ['தலைவலி', 'thalaivali'],
+                fatigue: ['சோர்வு', 'sorvu'],
+                bodyAche: ['உடல் வலி', 'udal vali'],
+                nausea: ['குமட்டல்', 'kumattal'],
+                vomiting: ['வாந்தி', 'vanthi'],
+                diarrhea: ['வயிற்றுப்போக்கு', 'vayitru pokku'],
+                constipation: ['மலச்சிக்கல்', 'malachikkal'],
+                abdominalPain: ['வயிற்று வலி', 'vayitru vali'],
+                shortnessOfBreath: ['மூச்சுத் திணறல்', 'moochu'],
+                wheezing: ['மூச்சு விடும் சத்தம்', 'moochu satham'],
+                chestPain: ['மார்பு வலி', 'marubu vali'],
+                soreThroat: ['தொண்டை வலி', 'thondai vali'],
+                runnyNose: ['மூக்கு ஒழுகுதல்', 'mooku'],
+                sneezing: ['தும்மல்', 'thummal']
+            }
+        };
+
         // ==================== INIT ====================
         document.addEventListener('DOMContentLoaded', () => {
             loadDistricts();
@@ -1763,6 +1707,9 @@
             document.getElementById('doctorEmail').value = 'doctor@demo.com';
             document.getElementById('patientPassword').value = '123456';
             document.getElementById('doctorPassword').value = '123456';
+            
+            // Update language badge
+            updateLanguageBadge();
         });
 
         function loadDistricts() {
@@ -1776,6 +1723,11 @@
             });
         }
 
+        function updateLanguageBadge() {
+            document.getElementById('activeLanguageBadge').innerHTML = 
+                `<i class="fas fa-language"></i> ${languageNames[currentLanguage]}`;
+        }
+
         // ==================== LANGUAGE ====================
         function switchLanguage(lang) {
             currentLanguage = lang;
@@ -1787,6 +1739,7 @@
             document.getElementById('symptomTitle').textContent = t.symptomTitle;
             document.getElementById('voiceTitle').textContent = t.voiceTitle;
             document.getElementById('analyzeBtn').textContent = t.analyzeBtn;
+            document.getElementById('voiceStatus').innerHTML = `<i class="fas fa-info-circle"></i> ${t.voiceStatus}`;
             
             // Update category tabs
             const tabs = document.querySelectorAll('.category-tab');
@@ -1799,6 +1752,9 @@
             tabs[6].textContent = t.cardiovascular;
             tabs[7].textContent = t.general;
             tabs[8].textContent = t.urinary;
+            
+            // Update language badge
+            updateLanguageBadge();
             
             // Update symptoms display
             displaySymptoms(currentCategory);
@@ -1870,6 +1826,104 @@
                 selectedSymptoms.splice(index, 1);
                 updateSymptomTags();
                 displaySymptoms(currentCategory);
+            }
+        }
+
+        // ==================== MULTI-LANGUAGE VOICE RECOGNITION ====================
+        function recognizeVoice(text) {
+            const lowerText = text.toLowerCase();
+            const detectedSymptoms = [];
+            const detectedLangs = new Set();
+            
+            // Check each language's patterns
+            for (const [lang, patterns] of Object.entries(voicePatterns)) {
+                for (const [symptomKey, keywords] of Object.entries(patterns)) {
+                    for (const keyword of keywords) {
+                        if (lowerText.includes(keyword.toLowerCase())) {
+                            const symptom = symptomsDB.find(s => s.name === symptomKey);
+                            if (symptom && !detectedSymptoms.includes(symptom.id)) {
+                                detectedSymptoms.push(symptom.id);
+                                detectedLangs.add(lang);
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+            
+            return { symptoms: detectedSymptoms, languages: Array.from(detectedLangs) };
+        }
+
+        function toggleRecording() {
+            const t = translations[currentLanguage];
+            
+            if (!isRecording) {
+                isRecording = true;
+                document.getElementById('recordBtn').classList.add('recording');
+                document.getElementById('recordBtn').innerHTML = '<i class="fas fa-stop"></i>';
+                document.getElementById('voiceStatus').innerHTML = `<i class="fas fa-spinner fa-pulse"></i> ${t.recording}`;
+                document.getElementById('recognizedText').innerHTML = 'Listening...';
+                
+                seconds = 0;
+                timerInterval = setInterval(() => {
+                    seconds++;
+                    const mins = Math.floor(seconds / 60);
+                    const secs = seconds % 60;
+                    document.getElementById('timer').textContent = 
+                        `${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
+                }, 1000);
+                
+                // Simulate voice recognition after 3 seconds
+                setTimeout(() => {
+                    if (isRecording) {
+                        toggleRecording();
+                        
+                        // Simulate different languages being recognized
+                        const demoTexts = {
+                            en: 'I have cough, fever and headache',
+                            hi: 'मुझे खांसी, बुखार और सिरदर्द है',
+                            ta: 'எனக்கு இருமல், காய்ச்சல் மற்றும் தலைவலி',
+                            te: 'నాకు దగ్గు, జ్వరం మరియు తలనొప్పి',
+                            kn: 'ನನಗೆ ಕೆಮ್ಮು, ಜ್ವರ ಮತ್ತು ತಲೆನೋವು',
+                            ml: 'എനിക്ക് ചുമ, പനി, തലവേദന'
+                        };
+                        
+                        const demoText = demoTexts[currentLanguage] || demoTexts.en;
+                        document.getElementById('recognizedText').innerHTML = demoText;
+                        
+                        // Recognize symptoms from voice
+                        const result = recognizeVoice(demoText);
+                        
+                        // Add detected symptoms to selected list
+                        result.symptoms.forEach(id => {
+                            if (!selectedSymptoms.includes(id)) {
+                                selectedSymptoms.push(id);
+                            }
+                        });
+                        
+                        // Update UI
+                        updateSymptomTags();
+                        displaySymptoms(currentCategory);
+                        
+                        // Show detected languages
+                        if (result.languages.length > 0) {
+                            const langTags = result.languages.map(l => 
+                                `<span class="lang-tag"><i class="fas fa-check-circle"></i> ${languageNames[l]}</span>`
+                            ).join('');
+                            document.getElementById('detectedLanguages').innerHTML = langTags;
+                        }
+                        
+                        document.getElementById('typedSymptoms').value = demoText;
+                        document.getElementById('voiceStatus').innerHTML = `<i class="fas fa-check-circle"></i> ${t.completed}`;
+                        showToast('Voice recognized in ' + result.languages.map(l => languageNames[l]).join(', '));
+                    }
+                }, 3000);
+            } else {
+                clearInterval(timerInterval);
+                isRecording = false;
+                document.getElementById('recordBtn').classList.remove('recording');
+                document.getElementById('recordBtn').innerHTML = '<i class="fas fa-microphone"></i>';
+                document.getElementById('voiceStatus').innerHTML = `<i class="fas fa-info-circle"></i> ${t.voiceStatus}`;
             }
         }
 
@@ -1967,38 +2021,6 @@
             showToast('Logged out');
         }
 
-        // ==================== VOICE ====================
-        function toggleRecording() {
-            if (!isRecording) {
-                isRecording = true;
-                document.getElementById('recordBtn').classList.add('recording');
-                document.getElementById('recordBtn').innerHTML = '<i class="fas fa-stop"></i>';
-                
-                seconds = 0;
-                timerInterval = setInterval(() => {
-                    seconds++;
-                    const mins = Math.floor(seconds / 60);
-                    const secs = seconds % 60;
-                    document.getElementById('timer').textContent = 
-                        `${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
-                }, 1000);
-                
-                setTimeout(() => {
-                    if (isRecording) {
-                        toggleRecording();
-                        const t = translations[currentLanguage] || translations.en;
-                        document.getElementById('typedSymptoms').value = `${t.cough}, ${t.fever}, ${t.headache}`;
-                        showToast('Voice captured');
-                    }
-                }, 3000);
-            } else {
-                clearInterval(timerInterval);
-                isRecording = false;
-                document.getElementById('recordBtn').classList.remove('recording');
-                document.getElementById('recordBtn').innerHTML = '<i class="fas fa-microphone"></i>';
-            }
-        }
-
         // ==================== DIAGNOSIS ====================
         function analyzeHealth() {
             if (!currentPatient) {
@@ -2008,18 +2030,10 @@
 
             const typed = document.getElementById('typedSymptoms').value.toLowerCase();
             if (typed) {
-                const words = typed.split(',').map(w => w.trim());
-                words.forEach(word => {
-                    // Try to match in current language
-                    const t = translations[currentLanguage] || translations.en;
-                    for (let [key, value] of Object.entries(t)) {
-                        if (value.toLowerCase().includes(word)) {
-                            const symptom = symptomsDB.find(s => s.name === key);
-                            if (symptom && !selectedSymptoms.includes(symptom.id)) {
-                                selectedSymptoms.push(symptom.id);
-                                break;
-                            }
-                        }
+                const result = recognizeVoice(typed);
+                result.symptoms.forEach(id => {
+                    if (!selectedSymptoms.includes(id)) {
+                        selectedSymptoms.push(id);
                     }
                 });
                 updateSymptomTags();

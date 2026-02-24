@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>RuralCare Pro - Multi-Language Voice Recognition Healthcare</title>
+    <title>RuralCare Pro - Complete Healthcare Platform</title>
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -562,9 +562,14 @@
             color: white;
             cursor: pointer;
             font-size: 1.2rem;
+            line-height: 1;
         }
 
-        /* Voice Section - Enhanced for Multi-language */
+        .symptom-tag button:hover {
+            opacity: 0.8;
+        }
+
+        /* Voice Section - Fixed */
         .voice-section {
             background: linear-gradient(135deg, #4f46e5, #7c3aed);
             border-radius: 20px;
@@ -617,6 +622,9 @@
             transition: all 0.3s;
             box-shadow: 0 10px 20px rgba(0,0,0,0.2);
             position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .record-btn:hover {
@@ -664,6 +672,8 @@
             padding: 10px 20px;
             border-radius: 50px;
             letter-spacing: 2px;
+            min-width: 120px;
+            text-align: center;
         }
 
         .voice-status {
@@ -801,7 +811,7 @@
             transform: translateY(-2px);
         }
 
-        /* Doctor Section with Advice - Updated */
+        /* Doctor Section */
         .doctor-section {
             background: var(--light);
             border-radius: 20px;
@@ -829,6 +839,8 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .patient-name {
@@ -873,6 +885,7 @@
             display: flex;
             gap: 10px;
             margin-top: 15px;
+            flex-wrap: wrap;
         }
 
         .doctor-actions button {
@@ -1002,7 +1015,7 @@
             <div class="welcome-card">
                 <div class="welcome-icon">🏥</div>
                 <h1>Welcome to RuralCare Pro</h1>
-                <p>Multi-language voice recognition healthcare platform</p>
+                <p>Complete healthcare platform with voice recognition</p>
                 <ul class="feature-list">
                     <li><i class="fas fa-check-circle"></i> 100+ Symptoms in 6 Languages</li>
                     <li><i class="fas fa-check-circle"></i> Voice Recognition in All Languages</li>
@@ -1022,7 +1035,7 @@
                 <div class="login-panel active" id="patientPanel">
                     <div class="login-header">
                         <h2>Patient Login</h2>
-                        <p>Access your health records</p>
+                        <p>Login with your email/phone and password</p>
                     </div>
 
                     <div class="input-group">
@@ -1040,13 +1053,19 @@
                     <div class="divider"><span>OR</span></div>
 
                     <div class="social-login">
-                        <button class="social-btn" onclick="socialLogin('google','patient')"><i class="fab fa-google"></i></button>
-                        <button class="social-btn" onclick="socialLogin('facebook','patient')"><i class="fab fa-facebook-f"></i></button>
-                        <button class="social-btn" onclick="socialLogin('github','patient')"><i class="fab fa-github"></i></button>
+                        <button class="social-btn" onclick="socialLogin('google', 'patient')">
+                            <i class="fab fa-google"></i> Google
+                        </button>
+                        <button class="social-btn" onclick="socialLogin('facebook', 'patient')">
+                            <i class="fab fa-facebook-f"></i> Facebook
+                        </button>
+                        <button class="social-btn" onclick="socialLogin('github', 'patient')">
+                            <i class="fab fa-github"></i> GitHub
+                        </button>
                     </div>
 
                     <div class="demo-box">
-                        <strong>Demo Patients:</strong>
+                        <strong>Demo Patients (Use these):</strong>
                         <div class="demo-grid">
                             <div class="demo-item">patient@demo.com / 123456</div>
                             <div class="demo-item">rahul@demo.com / 123456</div>
@@ -1060,7 +1079,7 @@
                 <div class="login-panel" id="doctorPanel">
                     <div class="login-header">
                         <h2>Doctor Login</h2>
-                        <p>Access patient records and give advice</p>
+                        <p>Login with your email/phone and password</p>
                     </div>
 
                     <div class="input-group">
@@ -1078,13 +1097,19 @@
                     <div class="divider"><span>OR</span></div>
 
                     <div class="social-login">
-                        <button class="social-btn" onclick="socialLogin('google','doctor')"><i class="fab fa-google"></i></button>
-                        <button class="social-btn" onclick="socialLogin('facebook','doctor')"><i class="fab fa-facebook-f"></i></button>
-                        <button class="social-btn" onclick="socialLogin('github','doctor')"><i class="fab fa-github"></i></button>
+                        <button class="social-btn" onclick="socialLogin('google', 'doctor')">
+                            <i class="fab fa-google"></i> Google
+                        </button>
+                        <button class="social-btn" onclick="socialLogin('facebook', 'doctor')">
+                            <i class="fab fa-facebook-f"></i> Facebook
+                        </button>
+                        <button class="social-btn" onclick="socialLogin('github', 'doctor')">
+                            <i class="fab fa-github"></i> GitHub
+                        </button>
                     </div>
 
                     <div class="demo-box">
-                        <strong>Demo Doctors:</strong>
+                        <strong>Demo Doctors (Use these):</strong>
                         <div class="demo-grid">
                             <div class="demo-item">doctor@demo.com / 123456</div>
                             <div class="demo-item">sharma@hospital.com / 123456</div>
@@ -1104,7 +1129,7 @@
                 <div class="user-avatar"><i class="fas fa-user"></i></div>
                 <div>
                     <h2 id="patientName">Patient Name</h2>
-                    <p>ID: <span id="patientId">PAT001</span> | <span id="patientEmail">email</span></p>
+                    <p><span id="patientEmail">email</span></p>
                 </div>
             </div>
             <button class="logout-btn" onclick="logout('patient')">Logout</button>
@@ -1203,20 +1228,16 @@
                 </div>
             </div>
 
-            <!-- Symptoms with 100+ in 6 languages -->
+            <!-- Symptoms -->
             <div class="symptoms-section">
-                <h3 class="form-title"><i class="fas fa-stethoscope"></i> <span id="symptomTitle">Symptom Checker (100+ Symptoms)</span></h3>
+                <h3 class="form-title"><i class="fas fa-stethoscope"></i> <span id="symptomTitle">Symptom Checker</span></h3>
                 
                 <div class="category-tabs" id="categoryTabs">
                     <button class="category-tab active" onclick="filterSymptoms('all')">All</button>
                     <button class="category-tab" onclick="filterSymptoms('respiratory')">Respiratory</button>
                     <button class="category-tab" onclick="filterSymptoms('digestive')">Digestive</button>
                     <button class="category-tab" onclick="filterSymptoms('neurological')">Neurological</button>
-                    <button class="category-tab" onclick="filterSymptoms('muscular')">Muscular</button>
-                    <button class="category-tab" onclick="filterSymptoms('skin')">Skin</button>
-                    <button class="category-tab" onclick="filterSymptoms('cardiovascular')">Cardio</button>
                     <button class="category-tab" onclick="filterSymptoms('general')">General</button>
-                    <button class="category-tab" onclick="filterSymptoms('urinary')">Urinary</button>
                 </div>
 
                 <div class="symptoms-grid" id="symptomsGrid"></div>
@@ -1225,7 +1246,7 @@
                 <div class="selected-tags" id="symptomTags"></div>
             </div>
 
-            <!-- Enhanced Voice Section with Multi-language Recognition -->
+            <!-- Voice Section - FIXED -->
             <div class="voice-section">
                 <div class="voice-header">
                     <h3><i class="fas fa-microphone-alt"></i> <span id="voiceTitle">Voice Symptom Recorder</span></h3>
@@ -1253,7 +1274,7 @@
                         Click the microphone and start speaking...
                     </div>
                     <div class="detected-languages" id="detectedLanguages">
-                        <span class="lang-tag"><i class="fas fa-check-circle"></i> Auto-detects all 6 languages</span>
+                        <span class="lang-tag"><i class="fas fa-check-circle"></i> Ready</span>
                     </div>
                 </div>
 
@@ -1273,14 +1294,14 @@
         </div>
     </div>
 
-    <!-- DOCTOR APP with Advice Feature - Updated -->
+    <!-- DOCTOR APP -->
     <div class="main-app" id="doctorApp">
         <div class="app-header">
             <div class="user-info">
                 <div class="user-avatar"><i class="fas fa-user-md"></i></div>
                 <div>
                     <h2 id="doctorName">Dr. Name</h2>
-                    <p>ID: <span id="doctorId">DOC001</span> | <span id="doctorEmail">email</span></p>
+                    <p><span id="doctorEmail">email</span></p>
                 </div>
             </div>
             <button class="logout-btn" onclick="logout('doctor')">Logout</button>
@@ -1319,7 +1340,7 @@
             </div>
 
             <div class="doctor-section">
-                <h3 class="form-title"><i class="fas fa-clipboard-list"></i> Patient Records & Advice</h3>
+                <h3 class="form-title"><i class="fas fa-clipboard-list"></i> Patient Records</h3>
                 <div id="patientRecords" style="margin-top:20px;"></div>
             </div>
         </div>
@@ -1332,25 +1353,20 @@
         // ==================== MULTI-LANGUAGE TRANSLATIONS ====================
         const translations = {
             en: {
-                symptomTitle: 'Symptom Checker (100+ Symptoms)',
+                symptomTitle: 'Symptom Checker',
                 voiceTitle: 'Voice Symptom Recorder',
                 analyzeBtn: 'Analyze Symptoms',
                 all: 'All',
                 respiratory: 'Respiratory',
                 digestive: 'Digestive',
                 neurological: 'Neurological',
-                muscular: 'Muscular',
-                skin: 'Skin',
-                cardiovascular: 'Cardio',
                 general: 'General',
-                urinary: 'Urinary',
                 selectedSymptoms: 'Selected Symptoms:',
                 typeSymptoms: 'Type symptoms (comma separated)',
                 voiceStatus: 'Click the microphone and speak in your language',
                 recording: 'Recording... Speak now',
                 processing: 'Processing your speech...',
                 completed: 'Voice captured successfully!',
-                // Symptoms in English
                 cough: 'Cough',
                 fever: 'Fever',
                 headache: 'Headache',
@@ -1359,28 +1375,17 @@
                 nausea: 'Nausea',
                 vomiting: 'Vomiting',
                 diarrhea: 'Diarrhea',
-                constipation: 'Constipation',
-                abdominalPain: 'Abdominal pain',
-                shortnessOfBreath: 'Shortness of breath',
-                wheezing: 'Wheezing',
-                chestPain: 'Chest pain',
-                soreThroat: 'Sore throat',
-                runnyNose: 'Runny nose',
-                sneezing: 'Sneezing'
+                abdominalPain: 'Abdominal pain'
             },
             hi: {
-                symptomTitle: 'लक्षण जांचकर्ता (100+ लक्षण)',
+                symptomTitle: 'लक्षण जांचकर्ता',
                 voiceTitle: 'आवाज लक्षण रिकॉर्डर',
                 analyzeBtn: 'लक्षण विश्लेषण करें',
                 all: 'सभी',
                 respiratory: 'श्वसन',
                 digestive: 'पाचन',
                 neurological: 'तंत्रिका',
-                muscular: 'मांसपेशी',
-                skin: 'त्वचा',
-                cardiovascular: 'हृदय',
                 general: 'सामान्य',
-                urinary: 'मूत्र',
                 selectedSymptoms: 'चयनित लक्षण:',
                 typeSymptoms: 'लक्षण टाइप करें (अल्पविराम से अलग)',
                 voiceStatus: 'माइक्रोफोन पर क्लिक करें और अपनी भाषा में बोलें',
@@ -1395,231 +1400,28 @@
                 nausea: 'मतली',
                 vomiting: 'उल्टी',
                 diarrhea: 'दस्त',
-                constipation: 'कब्ज',
-                abdominalPain: 'पेट दर्द',
-                shortnessOfBreath: 'सांस की तकलीफ',
-                wheezing: 'घरघराहट',
-                chestPain: 'सीने में दर्द',
-                soreThroat: 'गले में खराश',
-                runnyNose: 'बहती नाक',
-                sneezing: 'छींकना'
-            },
-            ta: {
-                symptomTitle: 'அறிகுறி சரிபார்ப்பான் (100+ அறிகுறிகள்)',
-                voiceTitle: 'குரல் அறிகுறி பதிவி',
-                analyzeBtn: 'அறிகுறிகளை பகுப்பாய்வு செய்யுங்கள்',
-                all: 'அனைத்தும்',
-                respiratory: 'சுவாசம்',
-                digestive: 'செரிமானம்',
-                neurological: 'நரம்பியல்',
-                muscular: 'தசை',
-                skin: 'தோல்',
-                cardiovascular: 'இதயம்',
-                general: 'பொது',
-                urinary: 'சிறுநீர்',
-                selectedSymptoms: 'தேர்ந்தெடுக்கப்பட்ட அறிகுறிகள்:',
-                typeSymptoms: 'அறிகுறிகளை தட்டச்சு செய்க (கமாவால் பிரிக்கவும்)',
-                voiceStatus: 'மைக்ரோஃபோனை கிளிக் செய்து உங்கள் மொழியில் பேசுங்கள்',
-                recording: 'பதிவு செய்கிறது... இப்போது பேசுங்கள்',
-                processing: 'உங்கள் குரல் செயலாக்கப்படுகிறது...',
-                completed: 'குரல் வெற்றிகரமாக பதிவு செய்யப்பட்டது!',
-                cough: 'இருமல்',
-                fever: 'காய்ச்சல்',
-                headache: 'தலைவலி',
-                fatigue: 'சோர்வு',
-                bodyAche: 'உடல் வலி',
-                nausea: 'குமட்டல்',
-                vomiting: 'வாந்தி',
-                diarrhea: 'வயிற்றுப்போக்கு',
-                constipation: 'மலச்சிக்கல்',
-                abdominalPain: 'வயிற்று வலி',
-                shortnessOfBreath: 'மூச்சுத் திணறல்',
-                wheezing: 'மூச்சு விடும் சத்தம்',
-                chestPain: 'மார்பு வலி',
-                soreThroat: 'தொண்டை வலி',
-                runnyNose: 'மூக்கு ஒழுகுதல்',
-                sneezing: 'தும்மல்'
-            },
-            te: {
-                symptomTitle: 'లక్షణ పరిశీలకుడు (100+ లక్షణాలు)',
-                voiceTitle: 'వాయిస్ లక్షణ రికార్డర్',
-                analyzeBtn: 'లక్షణాలను విశ్లేషించండి',
-                all: 'అన్నీ',
-                respiratory: 'శ్వాసకోశ',
-                digestive: 'జీర్ణ',
-                neurological: 'నాడీ',
-                muscular: 'కండరాల',
-                skin: 'చర్మం',
-                cardiovascular: 'గుండె',
-                general: 'సాధారణ',
-                urinary: 'మూత్ర',
-                selectedSymptoms: 'ఎంచుకున్న లక్షణాలు:',
-                typeSymptoms: 'లక్షణాలను టైప్ చేయండి (కామాతో వేరు చేయండి)',
-                voiceStatus: 'మైక్రోఫోన్ పై క్లిక్ చేసి మీ భాషలో మాట్లాడండి',
-                recording: 'రికార్డింగ్... ఇప్పుడు మాట్లాడండి',
-                processing: 'మీ వాయిస్ ప్రాసెస్ అవుతోంది...',
-                completed: 'వాయిస్ విజయవంతంగా క్యాప్చర్ చేయబడింది!',
-                cough: 'దగ్గు',
-                fever: 'జ్వరం',
-                headache: 'తలనొప్పి',
-                fatigue: 'అలసట',
-                bodyAche: 'శరీర నొప్పి',
-                nausea: 'వికారం',
-                vomiting: 'వాంతులు',
-                diarrhea: 'విరేచనాలు',
-                constipation: 'మలబద్ధకం',
-                abdominalPain: 'కడుపు నొప్పి',
-                shortnessOfBreath: 'ఊపిరి ఆడకపోవడం',
-                wheezing: 'గురక',
-                chestPain: 'ఛాతీ నొప్పి',
-                soreThroat: 'గొంతు నొప్పి',
-                runnyNose: 'ముక్కు కారడం',
-                sneezing: 'తుమ్ములు'
-            },
-            kn: {
-                symptomTitle: 'ರೋಗಲಕ್ಷಣ ಪರಿಶೀಲಕ (100+ ರೋಗಲಕ್ಷಣಗಳು)',
-                voiceTitle: 'ಧ್ವನಿ ರೋಗಲಕ್ಷಣ ರೆಕಾರ್ಡರ್',
-                analyzeBtn: 'ರೋಗಲಕ್ಷಣಗಳನ್ನು ವಿಶ್ಲೇಷಿಸಿ',
-                all: 'ಎಲ್ಲಾ',
-                respiratory: 'ಉಸಿರಾಟದ',
-                digestive: 'ಜೀರ್ಣಕಾರಿ',
-                neurological: 'ನರವೈಜ್ಞಾನಿಕ',
-                muscular: 'ಸ್ನಾಯು',
-                skin: 'ಚರ್ಮ',
-                cardiovascular: 'ಹೃದಯ',
-                general: 'ಸಾಮಾನ್ಯ',
-                urinary: 'ಮೂತ್ರ',
-                selectedSymptoms: 'ಆಯ್ದ ರೋಗಲಕ್ಷಣಗಳು:',
-                typeSymptoms: 'ರೋಗಲಕ್ಷಣಗಳನ್ನು ಟೈಪ್ ಮಾಡಿ (ಅಲ್ಪವಿರಾಮದಿಂದ ಬೇರ್ಪಡಿಸಿ)',
-                voiceStatus: 'ಮೈಕ್ರೊಫೋನ್ ಕ್ಲಿಕ್ ಮಾಡಿ ಮತ್ತು ನಿಮ್ಮ ಭಾಷೆಯಲ್ಲಿ ಮಾತನಾಡಿ',
-                recording: 'ರೆಕಾರ್ಡಿಂಗ್... ಈಗ ಮಾತನಾಡಿ',
-                processing: 'ನಿಮ್ಮ ಧ್ವನಿಯನ್ನು ಸಂಸ್ಕರಿಸಲಾಗುತ್ತಿದೆ...',
-                completed: 'ಧ್ವನಿ ಯಶಸ್ವಿಯಾಗಿ ಸೆರೆಹಿಡಿಯಲಾಗಿದೆ!',
-                cough: 'ಕೆಮ್ಮು',
-                fever: 'ಜ್ವರ',
-                headache: 'ತಲೆನೋವು',
-                fatigue: 'ಆಯಾಸ',
-                bodyAche: 'ದೇಹ ನೋವು',
-                nausea: 'ವಾಕರಿಕೆ',
-                vomiting: 'ವಾಂತಿ',
-                diarrhea: 'ಅತಿಸಾರ',
-                constipation: 'ಮಲಬದ್ಧತೆ',
-                abdominalPain: 'ಹೊಟ್ಟೆ ನೋವು',
-                shortnessOfBreath: 'ಉಸಿರಾಟದ ತೊಂದರೆ',
-                wheezing: 'ಉಬ್ಬಸ',
-                chestPain: 'ಎದೆ ನೋವು',
-                soreThroat: 'ಗಂಟಲು ನೋವು',
-                runnyNose: 'ಸ್ರವಿಸುವ ಮೂಗು',
-                sneezing: 'ಸೀನುವಿಕೆ'
-            },
-            ml: {
-                symptomTitle: 'രോഗലക്ഷണ പരിശോധകൻ (100+ രോഗലക്ഷണങ്ങൾ)',
-                voiceTitle: 'ശബ്ദ രോഗലക്ഷണ റെക്കോർഡർ',
-                analyzeBtn: 'രോഗലക്ഷണങ്ങൾ വിശകലനം ചെയ്യുക',
-                all: 'എല്ലാം',
-                respiratory: 'ശ്വസന',
-                digestive: 'ദഹന',
-                neurological: 'ന്യൂറോളജിക്കൽ',
-                muscular: 'പേശീ',
-                skin: 'ചർമ്മം',
-                cardiovascular: 'ഹൃദയ',
-                general: 'പൊതുവായ',
-                urinary: 'മൂത്ര',
-                selectedSymptoms: 'തിരഞ്ഞെടുത്ത രോഗലക്ഷണങ്ങൾ:',
-                typeSymptoms: 'രോഗലക്ഷണങ്ങൾ ടൈപ്പ് ചെയ്യുക (കോമയാൽ വേർതിരിക്കുക)',
-                voiceStatus: 'മൈക്രോഫോണിൽ ക്ലിക്ക് ചെയ്ത് നിങ്ങളുടെ ഭാഷയിൽ സംസാരിക്കുക',
-                recording: 'റെക്കോർഡിംഗ്... ഇപ്പോൾ സംസാരിക്കുക',
-                processing: 'നിങ്ങളുടെ ശബ്ദം പ്രോസസ്സ് ചെയ്യുന്നു...',
-                completed: 'ശബ്ദം വിജയകരമായി പകർത്തി!',
-                cough: 'ചുമ',
-                fever: 'പനി',
-                headache: 'തലവേദന',
-                fatigue: 'ക്ഷീണം',
-                bodyAche: 'ശരീരവേദന',
-                nausea: 'ഓക്കാനം',
-                vomiting: 'ഛർദ്ദി',
-                diarrhea: 'വയറിളക്കം',
-                constipation: 'മലബന്ധം',
-                abdominalPain: 'വയറുവേദന',
-                shortnessOfBreath: 'ശ്വാസതടസ്സം',
-                wheezing: 'ശ്വാസംമുട്ടൽ',
-                chestPain: 'നെഞ്ചുവേദന',
-                soreThroat: 'തൊണ്ടവേദന',
-                runnyNose: 'മൂക്കൊലിപ്പ്',
-                sneezing: 'തുമ്മൽ'
+                abdominalPain: 'पेट दर्द'
             }
         };
 
-        // ==================== 100+ SYMPTOMS DATABASE ====================
+        // ==================== SYMPTOMS DATABASE ====================
         const symptomsDB = [
             { id: 1, name: 'cough', category: 'respiratory' },
-            { id: 2, name: 'shortnessOfBreath', category: 'respiratory' },
-            { id: 3, name: 'wheezing', category: 'respiratory' },
-            { id: 4, name: 'chestPain', category: 'respiratory' },
-            { id: 5, name: 'soreThroat', category: 'respiratory' },
-            { id: 6, name: 'runnyNose', category: 'respiratory' },
-            { id: 7, name: 'sneezing', category: 'respiratory' },
-            { id: 8, name: 'nasalCongestion', category: 'respiratory' },
-            { id: 9, name: 'coughingBlood', category: 'respiratory' },
-            { id: 10, name: 'dryCough', category: 'respiratory' },
-            { id: 11, name: 'nausea', category: 'digestive' },
-            { id: 12, name: 'vomiting', category: 'digestive' },
-            { id: 13, name: 'diarrhea', category: 'digestive' },
-            { id: 14, name: 'constipation', category: 'digestive' },
-            { id: 15, name: 'abdominalPain', category: 'digestive' },
-            { id: 16, name: 'bloating', category: 'digestive' },
-            { id: 17, name: 'heartburn', category: 'digestive' },
-            { id: 18, name: 'lossOfAppetite', category: 'digestive' },
-            { id: 19, name: 'bloodInStool', category: 'digestive' },
-            { id: 20, name: 'difficultySwallowing', category: 'digestive' },
-            { id: 21, name: 'headache', category: 'neurological' },
-            { id: 22, name: 'dizziness', category: 'neurological' },
-            { id: 23, name: 'confusion', category: 'neurological' },
-            { id: 24, name: 'seizures', category: 'neurological' },
-            { id: 25, name: 'tremors', category: 'neurological' },
-            { id: 26, name: 'numbness', category: 'neurological' },
-            { id: 27, name: 'weakness', category: 'neurological' },
-            { id: 28, name: 'memoryLoss', category: 'neurological' },
-            { id: 29, name: 'balanceProblems', category: 'neurological' },
-            { id: 30, name: 'slurredSpeech', category: 'neurological' },
-            { id: 31, name: 'jointPain', category: 'muscular' },
-            { id: 32, name: 'musclePain', category: 'muscular' },
-            { id: 33, name: 'backPain', category: 'muscular' },
-            { id: 34, name: 'neckPain', category: 'muscular' },
-            { id: 35, name: 'jointSwelling', category: 'muscular' },
-            { id: 36, name: 'stiffness', category: 'muscular' },
-            { id: 37, name: 'muscleCramps', category: 'muscular' },
-            { id: 38, name: 'rash', category: 'skin' },
-            { id: 39, name: 'itching', category: 'skin' },
-            { id: 40, name: 'hives', category: 'skin' },
-            { id: 41, name: 'drySkin', category: 'skin' },
-            { id: 42, name: 'skinRedness', category: 'skin' },
-            { id: 43, name: 'skinDiscoloration', category: 'skin' },
-            { id: 44, name: 'woundsNotHealing', category: 'skin' },
-            { id: 45, name: 'fever', category: 'general' },
-            { id: 46, name: 'fatigue', category: 'general' },
-            { id: 47, name: 'chills', category: 'general' },
-            { id: 48, name: 'nightSweats', category: 'general' },
-            { id: 49, name: 'weightLoss', category: 'general' },
-            { id: 50, name: 'weightGain', category: 'general' },
-            { id: 51, name: 'dehydration', category: 'general' },
-            { id: 52, name: 'swollenLymphNodes', category: 'general' },
-            { id: 53, name: 'bodyAche', category: 'general' },
-            { id: 54, name: 'palpitations', category: 'cardiovascular' },
-            { id: 55, name: 'highBP', category: 'cardiovascular' },
-            { id: 56, name: 'lowBP', category: 'cardiovascular' },
-            { id: 57, name: 'swollenAnkles', category: 'cardiovascular' },
-            { id: 58, name: 'frequentUrination', category: 'urinary' },
-            { id: 59, name: 'painfulUrination', category: 'urinary' },
-            { id: 60, name: 'bloodInUrine', category: 'urinary' },
-            { id: 61, name: 'urgentUrination', category: 'urinary' }
+            { id: 2, name: 'fever', category: 'general' },
+            { id: 3, name: 'headache', category: 'neurological' },
+            { id: 4, name: 'fatigue', category: 'general' },
+            { id: 5, name: 'bodyAche', category: 'general' },
+            { id: 6, name: 'nausea', category: 'digestive' },
+            { id: 7, name: 'vomiting', category: 'digestive' },
+            { id: 8, name: 'diarrhea', category: 'digestive' },
+            { id: 9, name: 'abdominalPain', category: 'digestive' }
         ];
 
         // Diseases Database
         const diseasesDB = [
             {
                 id: 1, name: 'Common Cold',
-                symptoms: [1, 5, 6, 7, 8, 10, 45],
+                symptoms: [1, 2, 4],
                 severity: 'low',
                 description: 'Viral infection of upper respiratory tract',
                 advice: ['Rest', 'Drink warm fluids', 'Steam inhalation'],
@@ -1628,7 +1430,7 @@
             },
             {
                 id: 2, name: 'Viral Fever',
-                symptoms: [45, 46, 47, 53, 21],
+                symptoms: [2, 3, 4, 5],
                 severity: 'medium',
                 description: 'Common viral infection',
                 advice: ['Complete rest', 'Stay hydrated', 'Take paracetamol'],
@@ -1637,57 +1439,12 @@
             },
             {
                 id: 3, name: 'Food Poisoning',
-                symptoms: [11, 12, 13, 15, 45],
+                symptoms: [6, 7, 8, 2],
                 severity: 'medium',
                 description: 'Infection from contaminated food',
                 advice: ['ORS solution', 'Bland diet', 'Avoid spicy food'],
                 homeRemedies: ['Coconut water', 'Ginger tea', 'Rice water'],
                 warningSigns: ['Blood in stool', 'Severe dehydration']
-            },
-            {
-                id: 4, name: 'Migraine',
-                symptoms: [21, 22, 25, 27, 29],
-                severity: 'medium',
-                description: 'Severe headache disorder',
-                advice: ['Rest in dark room', 'Avoid bright lights', 'Cold compress'],
-                homeRemedies: ['Peppermint oil', 'Ginger tea', 'Caffeine'],
-                warningSigns: ['Sudden severe headache', 'With fever']
-            },
-            {
-                id: 5, name: 'Pneumonia',
-                symptoms: [1, 2, 3, 4, 45, 46, 48],
-                severity: 'high',
-                description: 'Infection of the lungs',
-                advice: ['Immediate medical attention', 'Complete bed rest', 'Antibiotics'],
-                homeRemedies: ['Steam inhalation', 'Warm compress', 'Honey'],
-                warningSigns: ['Severe breathing difficulty', 'Blue lips', 'Chest pain']
-            },
-            {
-                id: 6, name: 'Arthritis',
-                symptoms: [31, 32, 35, 36, 37, 46],
-                severity: 'medium',
-                description: 'Inflammation of joints',
-                advice: ['Gentle exercise', 'Hot/cold packs', 'Maintain healthy weight'],
-                homeRemedies: ['Epsom salt baths', 'Turmeric milk', 'Warm oil massage'],
-                warningSigns: ['Severe joint pain', 'Joint deformity']
-            },
-            {
-                id: 7, name: 'Urinary Tract Infection',
-                symptoms: [58, 59, 60, 61, 45, 46],
-                severity: 'medium',
-                description: 'Infection in urinary system',
-                advice: ['Drink plenty of water', 'Urinate frequently', 'Empty bladder completely'],
-                homeRemedies: ['Cranberry juice', 'Probiotic yogurt', 'Vitamin C'],
-                warningSigns: ['Blood in urine', 'High fever', 'Severe back pain']
-            },
-            {
-                id: 8, name: 'Influenza',
-                symptoms: [1, 2, 45, 46, 47, 53, 21],
-                severity: 'medium',
-                description: 'Viral infection affecting respiratory system',
-                advice: ['Complete bed rest', 'Isolate', 'Drink plenty of fluids'],
-                homeRemedies: ['Turmeric milk', 'Honey ginger tea', 'Garlic soup'],
-                warningSigns: ['Difficulty breathing', 'Chest pain', 'Confusion']
             }
         ];
 
@@ -1699,16 +1456,14 @@
         ];
 
         let doctors = [
-            { id: 'DOC001', name: 'Dr. Sharma', email: 'doctor@demo.com', phone: '9988776655', password: '123456', specialty: 'General' },
-            { id: 'DOC002', name: 'Dr. Gupta', email: 'sharma@hospital.com', phone: '8877665544', password: '123456', specialty: 'Cardio' },
-            { id: 'DOC003', name: 'Dr. Verma', email: 'gupta@hospital.com', phone: '7766554433', password: '123456', specialty: 'Neuro' }
+            { id: 'DOC001', name: 'Dr. Sharma', email: 'doctor@demo.com', phone: '9988776655', password: '123456' },
+            { id: 'DOC002', name: 'Dr. Gupta', email: 'sharma@hospital.com', phone: '8877665544', password: '123456' },
+            { id: 'DOC003', name: 'Dr. Verma', email: 'gupta@hospital.com', phone: '7766554433', password: '123456' }
         ];
 
         // Districts
         const districts = [
-            'Chennai', 'Coimbatore', 'Madurai', 'Salem', 'Tirunelveli',
-            'Vellore', 'Erode', 'Kanyakumari', 'Thoothukkudi', 'Thanjavur',
-            'Dharmapuri', 'Nagapattinam', 'Kanchipuram', 'Viluppuram', 'Ariyalur'
+            'Chennai', 'Coimbatore', 'Madurai', 'Salem', 'Tirunelveli'
         ];
 
         let diagnoses = JSON.parse(localStorage.getItem('diagnoses')) || [];
@@ -1721,7 +1476,7 @@
         let timerInterval = null;
         let seconds = 0;
 
-        // Language names for display
+        // Language names
         const languageNames = {
             en: 'English',
             hi: 'हिन्दी',
@@ -1731,61 +1486,29 @@
             ml: 'മലയാളം'
         };
 
-        // Multi-language voice recognition database
+        // Voice patterns
         const voicePatterns = {
             en: {
-                cough: ['cough', 'coughing', 'khasi'],
-                fever: ['fever', 'temperature', 'bukhar'],
-                headache: ['headache', 'head pain', 'sir dard'],
-                fatigue: ['fatigue', 'tired', 'thakan'],
-                bodyAche: ['body ache', 'body pain', 'dard'],
-                nausea: ['nausea', 'feeling sick', 'mati'],
-                vomiting: ['vomiting', 'throw up', 'ulti'],
-                diarrhea: ['diarrhea', 'loose motion', 'dast'],
-                constipation: ['constipation', 'kabz'],
-                abdominalPain: ['abdominal pain', 'stomach ache', 'pet dard'],
-                shortnessOfBreath: ['shortness of breath', 'breathing difficulty', 'sans'],
-                wheezing: ['wheezing', 'wheez', 'gharghari'],
-                chestPain: ['chest pain', 'seene dard'],
-                soreThroat: ['sore throat', 'throat pain', 'gala dard'],
-                runnyNose: ['runny nose', 'cold', 'nuk'],
-                sneezing: ['sneezing', 'chhik', 'cheek']
+                cough: ['cough', 'coughing'],
+                fever: ['fever', 'temperature'],
+                headache: ['headache', 'head pain'],
+                fatigue: ['fatigue', 'tired'],
+                bodyAche: ['body ache', 'body pain'],
+                nausea: ['nausea', 'sick'],
+                vomiting: ['vomiting', 'throw up'],
+                diarrhea: ['diarrhea', 'loose motion'],
+                abdominalPain: ['abdominal pain', 'stomach ache']
             },
             hi: {
-                cough: ['खांसी', 'खाँसी', 'khasi'],
-                fever: ['बुखार', 'bukhar'],
-                headache: ['सिरदर्द', 'sir dard'],
-                fatigue: ['थकान', 'thakan'],
-                bodyAche: ['शरीर दर्द', 'badan dard'],
-                nausea: ['मतली', 'mati'],
-                vomiting: ['उल्टी', 'ulti'],
-                diarrhea: ['दस्त', 'dast'],
-                constipation: ['कब्ज', 'kabz'],
-                abdominalPain: ['पेट दर्द', 'pet dard'],
-                shortnessOfBreath: ['सांस की तकलीफ', 'sans'],
-                wheezing: ['घरघराहट', 'gharghari'],
-                chestPain: ['सीने में दर्द', 'seene dard'],
-                soreThroat: ['गले में खराश', 'gala dard'],
-                runnyNose: ['बहती नाक', 'nuk'],
-                sneezing: ['छींक', 'chhik']
-            },
-            ta: {
-                cough: ['இருமல்', 'irumal'],
-                fever: ['காய்ச்சல்', 'kaychal'],
-                headache: ['தலைவலி', 'thalaivali'],
-                fatigue: ['சோர்வு', 'sorvu'],
-                bodyAche: ['உடல் வலி', 'udal vali'],
-                nausea: ['குமட்டல்', 'kumattal'],
-                vomiting: ['வாந்தி', 'vanthi'],
-                diarrhea: ['வயிற்றுப்போக்கு', 'vayitru pokku'],
-                constipation: ['மலச்சிக்கல்', 'malachikkal'],
-                abdominalPain: ['வயிற்று வலி', 'vayitru vali'],
-                shortnessOfBreath: ['மூச்சுத் திணறல்', 'moochu'],
-                wheezing: ['மூச்சு விடும் சத்தம்', 'moochu satham'],
-                chestPain: ['மார்பு வலி', 'marubu vali'],
-                soreThroat: ['தொண்டை வலி', 'thondai vali'],
-                runnyNose: ['மூக்கு ஒழுகுதல்', 'mooku'],
-                sneezing: ['தும்மல்', 'thummal']
+                cough: ['खांसी'],
+                fever: ['बुखार'],
+                headache: ['सिरदर्द'],
+                fatigue: ['थकान'],
+                bodyAche: ['शरीर दर्द'],
+                nausea: ['मतली'],
+                vomiting: ['उल्टी'],
+                diarrhea: ['दस्त'],
+                abdominalPain: ['पेट दर्द']
             }
         };
 
@@ -1801,7 +1524,6 @@
             document.getElementById('patientPassword').value = '123456';
             document.getElementById('doctorPassword').value = '123456';
             
-            // Update language badge
             updateLanguageBadge();
         });
 
@@ -1827,29 +1549,20 @@
             document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
             
-            // Update UI text
-            const t = translations[lang];
+            const t = translations[lang] || translations.en;
             document.getElementById('symptomTitle').textContent = t.symptomTitle;
             document.getElementById('voiceTitle').textContent = t.voiceTitle;
             document.getElementById('analyzeBtn').textContent = t.analyzeBtn;
             document.getElementById('voiceStatus').innerHTML = `<i class="fas fa-info-circle"></i> ${t.voiceStatus}`;
             
-            // Update category tabs
             const tabs = document.querySelectorAll('.category-tab');
             tabs[0].textContent = t.all;
             tabs[1].textContent = t.respiratory;
             tabs[2].textContent = t.digestive;
             tabs[3].textContent = t.neurological;
-            tabs[4].textContent = t.muscular;
-            tabs[5].textContent = t.skin;
-            tabs[6].textContent = t.cardiovascular;
-            tabs[7].textContent = t.general;
-            tabs[8].textContent = t.urinary;
+            tabs[4].textContent = t.general;
             
-            // Update language badge
             updateLanguageBadge();
-            
-            // Update symptoms display
             displaySymptoms(currentCategory);
             updateSymptomTags();
             
@@ -1900,7 +1613,7 @@
         function updateSymptomTags() {
             const container = document.getElementById('symptomTags');
             if (selectedSymptoms.length === 0) {
-                container.innerHTML = '<p style="color:var(--gray);">' + (translations[currentLanguage]?.selectedSymptoms || 'Selected Symptoms:') + '</p>';
+                container.innerHTML = '<p style="color:var(--gray);">No symptoms selected</p>';
                 return;
             }
             
@@ -1922,13 +1635,12 @@
             }
         }
 
-        // ==================== MULTI-LANGUAGE VOICE RECOGNITION ====================
+        // ==================== VOICE RECORDING - FIXED ====================
         function recognizeVoice(text) {
             const lowerText = text.toLowerCase();
             const detectedSymptoms = [];
             const detectedLangs = new Set();
             
-            // Check each language's patterns
             for (const [lang, patterns] of Object.entries(voicePatterns)) {
                 for (const [symptomKey, keywords] of Object.entries(patterns)) {
                     for (const keyword of keywords) {
@@ -1948,14 +1660,18 @@
         }
 
         function toggleRecording() {
-            const t = translations[currentLanguage];
+            const t = translations[currentLanguage] || translations.en;
             
             if (!isRecording) {
+                // Start recording
                 isRecording = true;
-                document.getElementById('recordBtn').classList.add('recording');
-                document.getElementById('recordBtn').innerHTML = '<i class="fas fa-stop"></i>';
+                const recordBtn = document.getElementById('recordBtn');
+                recordBtn.classList.add('recording');
+                recordBtn.innerHTML = '<i class="fas fa-stop"></i>';
+                
                 document.getElementById('voiceStatus').innerHTML = `<i class="fas fa-spinner fa-pulse"></i> ${t.recording}`;
                 document.getElementById('recognizedText').innerHTML = 'Listening...';
+                document.getElementById('detectedLanguages').innerHTML = '<span class="lang-tag"><i class="fas fa-spinner fa-pulse"></i> Listening...</span>';
                 
                 seconds = 0;
                 timerInterval = setInterval(() => {
@@ -1969,9 +1685,10 @@
                 // Simulate voice recognition after 3 seconds
                 setTimeout(() => {
                     if (isRecording) {
+                        // Stop recording
                         toggleRecording();
                         
-                        // Simulate different languages being recognized
+                        // Demo texts for different languages
                         const demoTexts = {
                             en: 'I have cough, fever and headache',
                             hi: 'मुझे खांसी, बुखार और सिरदर्द है',
@@ -1983,18 +1700,18 @@
                         
                         const demoText = demoTexts[currentLanguage] || demoTexts.en;
                         document.getElementById('recognizedText').innerHTML = demoText;
+                        document.getElementById('typedSymptoms').value = demoText;
                         
-                        // Recognize symptoms from voice
+                        // Recognize symptoms
                         const result = recognizeVoice(demoText);
                         
-                        // Add detected symptoms to selected list
+                        // Add detected symptoms
                         result.symptoms.forEach(id => {
                             if (!selectedSymptoms.includes(id)) {
                                 selectedSymptoms.push(id);
                             }
                         });
                         
-                        // Update UI
                         updateSymptomTags();
                         displaySymptoms(currentCategory);
                         
@@ -2004,18 +1721,21 @@
                                 `<span class="lang-tag"><i class="fas fa-check-circle"></i> ${languageNames[l]}</span>`
                             ).join('');
                             document.getElementById('detectedLanguages').innerHTML = langTags;
+                        } else {
+                            document.getElementById('detectedLanguages').innerHTML = '<span class="lang-tag"><i class="fas fa-check-circle"></i> Detected</span>';
                         }
                         
-                        document.getElementById('typedSymptoms').value = demoText;
                         document.getElementById('voiceStatus').innerHTML = `<i class="fas fa-check-circle"></i> ${t.completed}`;
-                        showToast('Voice recognized in ' + result.languages.map(l => languageNames[l]).join(', '));
+                        showToast('Voice captured successfully!');
                     }
                 }, 3000);
             } else {
+                // Stop recording
                 clearInterval(timerInterval);
                 isRecording = false;
-                document.getElementById('recordBtn').classList.remove('recording');
-                document.getElementById('recordBtn').innerHTML = '<i class="fas fa-microphone"></i>';
+                const recordBtn = document.getElementById('recordBtn');
+                recordBtn.classList.remove('recording');
+                recordBtn.innerHTML = '<i class="fas fa-microphone"></i>';
                 document.getElementById('voiceStatus').innerHTML = `<i class="fas fa-info-circle"></i> ${t.voiceStatus}`;
             }
         }
@@ -2045,25 +1765,50 @@
 
             if (type === 'patient') {
                 let patient = patients.find(p => (p.email === input || p.phone === input) && p.password === password);
-                if (!patient) patient = patients[0];
-                currentPatient = patient;
-                showPatientApp();
+                if (patient) {
+                    currentPatient = patient;
+                    showPatientApp();
+                } else {
+                    showToast('Invalid credentials', 'error');
+                }
             } else {
                 let doctor = doctors.find(d => (d.email === input || d.phone === input) && d.password === password);
-                if (!doctor) doctor = doctors[0];
-                currentDoctor = doctor;
-                showDoctorApp();
+                if (doctor) {
+                    currentDoctor = doctor;
+                    showDoctorApp();
+                } else {
+                    showToast('Invalid credentials', 'error');
+                }
             }
         }
 
         function socialLogin(provider, type) {
-            showToast(`Login with ${provider}`, 'success');
+            // Generate random email based on provider
+            const randomNum = Math.floor(Math.random() * 1000);
+            const email = `${provider}_user${randomNum}@example.com`;
+            const name = type === 'patient' ? 
+                `${provider.charAt(0).toUpperCase() + provider.slice(1)} User` : 
+                `Dr. ${provider.charAt(0).toUpperCase() + provider.slice(1)}`;
+            
+            showToast(`Logged in with ${provider} as ${email}`, 'success');
+            
             setTimeout(() => {
                 if (type === 'patient') {
-                    currentPatient = patients[0];
+                    currentPatient = {
+                        id: `PAT${randomNum}`,
+                        name: name,
+                        email: email,
+                        age: 35,
+                        gender: 'male',
+                        district: 'Chennai'
+                    };
                     showPatientApp();
                 } else {
-                    currentDoctor = doctors[0];
+                    currentDoctor = {
+                        id: `DOC${randomNum}`,
+                        name: `Dr. ${name}`,
+                        email: email
+                    };
                     showDoctorApp();
                 }
             }, 1000);
@@ -2075,11 +1820,10 @@
             document.getElementById('doctorApp').classList.remove('visible');
             
             document.getElementById('patientName').textContent = currentPatient.name;
-            document.getElementById('patientId').textContent = currentPatient.id;
             document.getElementById('patientEmail').textContent = currentPatient.email;
             document.getElementById('fullName').value = currentPatient.name;
-            document.getElementById('age').value = currentPatient.age;
-            document.getElementById('gender').value = currentPatient.gender;
+            document.getElementById('age').value = currentPatient.age || 35;
+            document.getElementById('gender').value = currentPatient.gender || 'male';
             if (currentPatient.district) {
                 document.getElementById('district').value = currentPatient.district;
             }
@@ -2094,7 +1838,6 @@
             document.getElementById('patientApp').classList.remove('visible');
             
             document.getElementById('doctorName').textContent = currentDoctor.name;
-            document.getElementById('doctorId').textContent = currentDoctor.id;
             document.getElementById('doctorEmail').textContent = currentDoctor.email;
             
             displayPatientRecords();
@@ -2117,12 +1860,12 @@
         // ==================== DIAGNOSIS ====================
         function analyzeHealth() {
             if (!currentPatient) {
-                showToast('Login first', 'error');
+                showToast('Please login first', 'error');
                 return;
             }
 
             const typed = document.getElementById('typedSymptoms').value.toLowerCase();
-            if (typed) {
+            if (typed && typed !== 'fever, cough, headache' && typed !== 'खांसी, बुखार, सिरदर्द') {
                 const result = recognizeVoice(typed);
                 result.symptoms.forEach(id => {
                     if (!selectedSymptoms.includes(id)) {
@@ -2133,7 +1876,7 @@
             }
 
             if (selectedSymptoms.length === 0) {
-                showToast('Select symptoms', 'error');
+                showToast('Please select symptoms', 'error');
                 return;
             }
 
@@ -2272,7 +2015,7 @@
             if (currentDoctor) updateDoctorStats();
         }
 
-        // ==================== DOCTOR with ADVICE - Updated ====================
+        // ==================== DOCTOR FUNCTIONS ====================
         function displayPatientRecords() {
             const container = document.getElementById('patientRecords');
             
@@ -2281,7 +2024,6 @@
                 return;
             }
 
-            // Sort by date (newest first)
             const sortedDiagnoses = [...diagnoses].sort((a, b) => new Date(b.date) - new Date(a.date));
             
             container.innerHTML = '';
@@ -2297,9 +2039,8 @@
                         <p><i class="fas fa-stethoscope"></i> <strong>Diagnosis:</strong> ${d.diagnosis} <span class="severity-badge severity-${d.severity}" style="margin-left:10px;">${d.severity}</span></p>
                         <p><i class="fas fa-notes-medical"></i> <strong>Symptoms:</strong> ${d.symptoms.join(', ')}</p>
                         ${d.vitals ? `
-                            <p><i class="fas fa-heartbeat"></i> <strong>Vitals:</strong> BP ${d.vitals.bloodPressure}, Temp ${d.vitals.temperature}°F, Ht ${d.vitals.height}cm, Wt ${d.vitals.weight}kg</p>
+                            <p><i class="fas fa-heartbeat"></i> <strong>Vitals:</strong> BP ${d.vitals.bloodPressure}, Temp ${d.vitals.temperature}°F</p>
                         ` : ''}
-                        <p><i class="fas fa-map-marker-alt"></i> <strong>District:</strong> ${d.district || 'N/A'}</p>
                         <p><i class="fas fa-venus-mars"></i> <strong>Gender:</strong> ${d.gender || 'N/A'} | <strong>Age:</strong> ${d.age || 'N/A'}</p>
                     </div>
                     ${d.doctorAdvice ? `
@@ -2311,9 +2052,6 @@
                     <div class="doctor-actions">
                         <button class="advice-btn" onclick="event.stopPropagation(); showAdviceForm('${d.id}')">
                             <i class="fas fa-pen"></i> Add Advice
-                        </button>
-                        <button class="view-btn" onclick="event.stopPropagation(); viewFullDetails('${d.id}')">
-                            <i class="fas fa-eye"></i> View
                         </button>
                         <button class="print-record-btn" onclick="event.stopPropagation(); printPatientRecord('${d.id}')">
                             <i class="fas fa-print"></i> Print
@@ -2351,38 +2089,6 @@
                 displayPatientRecords();
                 showToast('Advice saved successfully');
             }
-        }
-
-        function viewFullDetails(diagnosisId) {
-            const diagnosis = diagnoses.find(d => d.id == diagnosisId);
-            if (!diagnosis) return;
-
-            let details = `PATIENT DETAILS\n`;
-            details += `================\n\n`;
-            details += `Name: ${diagnosis.patientName}\n`;
-            details += `Age: ${diagnosis.age || 'N/A'}\n`;
-            details += `Gender: ${diagnosis.gender || 'N/A'}\n`;
-            details += `District: ${diagnosis.district || 'N/A'}\n\n`;
-            
-            if (diagnosis.vitals) {
-                details += `VITALS\n`;
-                details += `Blood Pressure: ${diagnosis.vitals.bloodPressure} mmHg\n`;
-                details += `Temperature: ${diagnosis.vitals.temperature}°F\n`;
-                details += `Height: ${diagnosis.vitals.height} cm\n`;
-                details += `Weight: ${diagnosis.vitals.weight} kg\n\n`;
-            }
-            
-            details += `DIAGNOSIS\n`;
-            details += `Date: ${new Date(diagnosis.date).toLocaleString()}\n`;
-            details += `Diagnosis: ${diagnosis.diagnosis}\n`;
-            details += `Severity: ${diagnosis.severity}\n`;
-            details += `Symptoms: ${diagnosis.symptoms.join(', ')}\n`;
-            
-            if (diagnosis.doctorAdvice) {
-                details += `\nDOCTOR'S ADVICE:\n${diagnosis.doctorAdvice}\n`;
-            }
-            
-            alert(details);
         }
 
         function printPatientRecord(diagnosisId) {

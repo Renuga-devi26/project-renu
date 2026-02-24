@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>RuralCare Pro - Complete Healthcare Platform</title>
+    <title>RuralCare Pro - Complete Multi-Language Healthcare Platform</title>
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Chart.js for Health Charts -->
@@ -1067,7 +1067,7 @@
         .member-avatar {
             width: 50px;
             height: 50px;
-            background: var(--primary-light);
+            background: var(--light);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -1518,6 +1518,10 @@
             border-left-color: var(--danger);
         }
 
+        .toast.warning {
+            border-left-color: var(--warning);
+        }
+
         /* Print Styles */
         @media print {
             body * {
@@ -1580,7 +1584,7 @@
     <!-- Offline Indicator -->
     <div class="offline-indicator" id="offlineIndicator">
         <i class="fas fa-wifi"></i>
-        <span id="offlineText">Online</span>
+        <span id="offlineText" data-i18n="online">Online</span>
     </div>
 
     <!-- Language Switcher -->
@@ -1599,24 +1603,24 @@
             <!-- Welcome Card -->
             <div class="welcome-card">
                 <div class="welcome-icon">🏥</div>
-                <h1>Welcome to RuralCare Pro</h1>
-                <p>Complete healthcare platform with 100+ symptoms in 6 languages</p>
+                <h1 data-i18n="welcomeTitle">Welcome to RuralCare Pro</h1>
+                <p data-i18n="welcomeSubtitle">Complete healthcare platform with 100+ symptoms in 6 languages</p>
                 <ul class="feature-list">
-                    <li><i class="fas fa-check-circle"></i> 100+ Symptoms in 6 Languages</li>
-                    <li><i class="fas fa-check-circle"></i> Voice Recognition in All Languages</li>
-                    <li><i class="fas fa-check-circle"></i> Offline Mode - Works without internet</li>
-                    <li><i class="fas fa-check-circle"></i> Medicine Reminders & Health Charts</li>
-                    <li><i class="fas fa-check-circle"></i> Family Accounts & Emergency SOS</li>
-                    <li><i class="fas fa-check-circle"></i> Find Nearby Hospitals on Map</li>
+                    <li><i class="fas fa-check-circle"></i> <span data-i18n="feature1">100+ Symptoms in 6 Languages</span></li>
+                    <li><i class="fas fa-check-circle"></i> <span data-i18n="feature2">Voice Recognition in All Languages</span></li>
+                    <li><i class="fas fa-check-circle"></i> <span data-i18n="feature3">Offline Mode - Works without internet</span></li>
+                    <li><i class="fas fa-check-circle"></i> <span data-i18n="feature4">Medicine Reminders & Health Charts</span></li>
+                    <li><i class="fas fa-check-circle"></i> <span data-i18n="feature5">Family Accounts & Emergency SOS</span></li>
+                    <li><i class="fas fa-check-circle"></i> <span data-i18n="feature6">Find Nearby Hospitals on Map</span></li>
                 </ul>
             </div>
 
             <!-- Login Card -->
             <div class="login-card">
                 <div class="user-tabs">
-                    <button class="user-tab active" onclick="switchUserType('patient')">👤 Patient</button>
-                    <button class="user-tab" onclick="switchUserType('doctor')">👨‍⚕️ Doctor</button>
-                    <button class="user-tab" onclick="switchUserType('admin')">👑 Admin</button>
+                    <button class="user-tab active" onclick="switchUserType('patient')">👤 <span data-i18n="patientTab">Patient</span></button>
+                    <button class="user-tab" onclick="switchUserType('doctor')">👨‍⚕️ <span data-i18n="doctorTab">Doctor</span></button>
+                    <button class="user-tab" onclick="switchUserType('admin')">👑 <span data-i18n="adminTab">Admin</span></button>
                 </div>
 
                 <!-- Patient Panel -->
@@ -1636,9 +1640,9 @@
                         <input type="password" id="patientPassword" placeholder="Password" value="123456">
                     </div>
 
-                    <button class="login-btn" onclick="loginWithPassword('patient')"><span data-i18n="patientLoginBtn">Login</span></button>
+                    <button class="login-btn" onclick="loginWithPassword('patient')"><span data-i18n="loginBtn">Login</span></button>
 
-                    <div class="divider"><span>OR</span></div>
+                    <div class="divider"><span data-i18n="or">OR</span></div>
 
                     <div class="social-login">
                         <button class="social-btn" onclick="socialLogin('google', 'patient')">
@@ -1680,9 +1684,9 @@
                         <input type="password" id="doctorPassword" placeholder="Password" value="123456">
                     </div>
 
-                    <button class="login-btn" onclick="loginWithPassword('doctor')"><span data-i18n="doctorLoginBtn">Login</span></button>
+                    <button class="login-btn" onclick="loginWithPassword('doctor')"><span data-i18n="loginBtn">Login</span></button>
 
-                    <div class="divider"><span>OR</span></div>
+                    <div class="divider"><span data-i18n="or">OR</span></div>
 
                     <div class="social-login">
                         <button class="social-btn" onclick="socialLogin('google', 'doctor')">
@@ -1710,8 +1714,8 @@
                 <!-- Admin Panel -->
                 <div class="login-panel" id="adminPanel">
                     <div class="login-header">
-                        <h2>Admin Login</h2>
-                        <p>Login to access platform analytics</p>
+                        <h2 data-i18n="adminLogin">Admin Login</h2>
+                        <p data-i18n="adminSubtitle">Login to access platform analytics</p>
                     </div>
 
                     <div class="input-group">
@@ -1724,10 +1728,10 @@
                         <input type="password" id="adminPassword" placeholder="Password" value="admin123">
                     </div>
 
-                    <button class="login-btn" onclick="loginWithPassword('admin')">Login as Admin</button>
+                    <button class="login-btn" onclick="loginWithPassword('admin')"><span data-i18n="loginBtn">Login</span></button>
 
                     <div class="demo-box">
-                        <strong>Demo Admin:</strong>
+                        <strong data-i18n="demoAdmin">Demo Admin:</strong>
                         <div class="demo-grid">
                             <div class="demo-item">admin@ruralcare.com / admin123</div>
                         </div>
@@ -1754,25 +1758,25 @@
             <!-- Tab Navigation -->
             <div class="app-tabs">
                 <button class="app-tab active" onclick="switchPatientTab('dashboard')">
-                    <i class="fas fa-home"></i> Dashboard
+                    <i class="fas fa-home"></i> <span data-i18n="dashboardTab">Dashboard</span>
                 </button>
                 <button class="app-tab" onclick="switchPatientTab('symptoms')">
-                    <i class="fas fa-stethoscope"></i> Symptoms
+                    <i class="fas fa-stethoscope"></i> <span data-i18n="symptomsTab">Symptoms</span>
                 </button>
                 <button class="app-tab" onclick="switchPatientTab('reminders')">
-                    <i class="fas fa-clock"></i> Reminders
+                    <i class="fas fa-clock"></i> <span data-i18n="remindersTab">Reminders</span>
                 </button>
                 <button class="app-tab" onclick="switchPatientTab('charts')">
-                    <i class="fas fa-chart-line"></i> Health Charts
+                    <i class="fas fa-chart-line"></i> <span data-i18n="chartsTab">Health Charts</span>
                 </button>
                 <button class="app-tab" onclick="switchPatientTab('family')">
-                    <i class="fas fa-users"></i> Family
+                    <i class="fas fa-users"></i> <span data-i18n="familyTab">Family</span>
                 </button>
                 <button class="app-tab" onclick="switchPatientTab('maps')">
-                    <i class="fas fa-map-marker-alt"></i> Hospitals
+                    <i class="fas fa-map-marker-alt"></i> <span data-i18n="mapsTab">Hospitals</span>
                 </button>
                 <button class="app-tab" onclick="switchPatientTab('emergency')">
-                    <i class="fas fa-exclamation-triangle"></i> SOS
+                    <i class="fas fa-exclamation-triangle"></i> <span data-i18n="sosTab">SOS</span>
                 </button>
             </div>
 
@@ -1872,7 +1876,7 @@
 
                 <!-- Recent Diagnoses -->
                 <div class="symptoms-section">
-                    <h3 class="form-title"><i class="fas fa-history"></i> Recent Diagnoses</h3>
+                    <h3 class="form-title"><i class="fas fa-history"></i> <span data-i18n="recentDiagnoses">Recent Diagnoses</span></h3>
                     <div id="recentDiagnoses"></div>
                 </div>
             </div>
@@ -1950,17 +1954,17 @@
             <!-- Reminders Tab -->
             <div class="tab-panel" id="remindersTab">
                 <div class="reminders-section">
-                    <h3 class="form-title"><i class="fas fa-clock"></i> Medicine Reminders</h3>
+                    <h3 class="form-title"><i class="fas fa-clock"></i> <span data-i18n="medicineReminders">Medicine Reminders</span></h3>
                     <div id="remindersList"></div>
                     <button class="add-reminder-btn" onclick="showAddReminderForm()">
-                        <i class="fas fa-plus"></i> Add New Reminder
+                        <i class="fas fa-plus"></i> <span data-i18n="addReminder">Add New Reminder</span>
                     </button>
                 </div>
 
-                <!-- Add Reminder Form (Hidden by default) -->
+                <!-- Add Reminder Form -->
                 <div id="addReminderForm" style="display: none; margin-top: 20px;">
                     <div class="patient-form">
-                        <h3 class="form-title"><i class="fas fa-pill"></i> New Medicine Reminder</h3>
+                        <h3 class="form-title"><i class="fas fa-pill"></i> <span data-i18n="newReminder">New Medicine Reminder</span></h3>
                         <div class="form-grid">
                             <div class="input-group">
                                 <i class="fas fa-pill"></i>
@@ -1977,16 +1981,16 @@
                             <div class="input-group">
                                 <i class="fas fa-redo"></i>
                                 <select id="reminderFrequency">
-                                    <option value="daily">Daily</option>
-                                    <option value="twice">Twice Daily</option>
-                                    <option value="weekly">Weekly</option>
-                                    <option value="custom">Custom</option>
+                                    <option value="daily" data-i18n="daily">Daily</option>
+                                    <option value="twice" data-i18n="twiceDaily">Twice Daily</option>
+                                    <option value="weekly" data-i18n="weekly">Weekly</option>
+                                    <option value="custom" data-i18n="custom">Custom</option>
                                 </select>
                             </div>
                         </div>
                         <div style="display: flex; gap: 10px; margin-top: 20px;">
-                            <button class="login-btn" onclick="saveReminder()" style="width: auto; padding: 12px 30px;">Save Reminder</button>
-                            <button class="login-btn" onclick="cancelAddReminder()" style="width: auto; padding: 12px 30px; background: var(--gray);">Cancel</button>
+                            <button class="login-btn" onclick="saveReminder()" style="width: auto; padding: 12px 30px;"><span data-i18n="save">Save</span></button>
+                            <button class="login-btn" onclick="cancelAddReminder()" style="width: auto; padding: 12px 30px; background: var(--gray);"><span data-i18n="cancel">Cancel</span></button>
                         </div>
                     </div>
                 </div>
@@ -1995,12 +1999,12 @@
             <!-- Health Charts Tab -->
             <div class="tab-panel" id="chartsTab">
                 <div class="charts-section">
-                    <h3 class="form-title"><i class="fas fa-chart-line"></i> Health Trends</h3>
+                    <h3 class="form-title"><i class="fas fa-chart-line"></i> <span data-i18n="healthTrends">Health Trends</span></h3>
                     
                     <div class="chart-controls">
-                        <button class="chart-btn active" onclick="changeChart('bp')">Blood Pressure</button>
-                        <button class="chart-btn" onclick="changeChart('temp')">Temperature</button>
-                        <button class="chart-btn" onclick="changeChart('weight')">Weight</button>
+                        <button class="chart-btn active" onclick="changeChart('bp')" data-i18n="bpChart">Blood Pressure</button>
+                        <button class="chart-btn" onclick="changeChart('temp')" data-i18n="tempChart">Temperature</button>
+                        <button class="chart-btn" onclick="changeChart('weight')" data-i18n="weightChart">Weight</button>
                     </div>
 
                     <div class="chart-container">
@@ -2016,17 +2020,17 @@
             <!-- Family Accounts Tab -->
             <div class="tab-panel" id="familyTab">
                 <div class="family-section">
-                    <h3 class="form-title"><i class="fas fa-users"></i> Family Members</h3>
+                    <h3 class="form-title"><i class="fas fa-users"></i> <span data-i18n="familyMembers">Family Members</span></h3>
                     <div id="familyMembersList"></div>
                     <button class="add-member-btn" onclick="showAddFamilyForm()">
-                        <i class="fas fa-user-plus"></i> Add Family Member
+                        <i class="fas fa-user-plus"></i> <span data-i18n="addFamily">Add Family Member</span>
                     </button>
                 </div>
 
-                <!-- Add Family Form (Hidden by default) -->
+                <!-- Add Family Form -->
                 <div id="addFamilyForm" style="display: none; margin-top: 20px;">
                     <div class="patient-form">
-                        <h3 class="form-title"><i class="fas fa-user-plus"></i> Add Family Member</h3>
+                        <h3 class="form-title"><i class="fas fa-user-plus"></i> <span data-i18n="addFamilyMember">Add Family Member</span></h3>
                         <div class="form-grid">
                             <div class="input-group">
                                 <i class="fas fa-user"></i>
@@ -2039,25 +2043,25 @@
                             <div class="input-group">
                                 <i class="fas fa-venus-mars"></i>
                                 <select id="familyGender">
-                                    <option value="male">Male</option>
-                                    <option value="female">Female</option>
-                                    <option value="other">Other</option>
+                                    <option value="male" data-i18n="male">Male</option>
+                                    <option value="female" data-i18n="female">Female</option>
+                                    <option value="other" data-i18n="other">Other</option>
                                 </select>
                             </div>
                             <div class="input-group">
                                 <i class="fas fa-heartbeat"></i>
                                 <select id="familyRelation">
-                                    <option value="spouse">Spouse</option>
-                                    <option value="child">Child</option>
-                                    <option value="parent">Parent</option>
-                                    <option value="sibling">Sibling</option>
-                                    <option value="other">Other</option>
+                                    <option value="spouse" data-i18n="spouse">Spouse</option>
+                                    <option value="child" data-i18n="child">Child</option>
+                                    <option value="parent" data-i18n="parent">Parent</option>
+                                    <option value="sibling" data-i18n="sibling">Sibling</option>
+                                    <option value="other" data-i18n="other">Other</option>
                                 </select>
                             </div>
                         </div>
                         <div style="display: flex; gap: 10px; margin-top: 20px;">
-                            <button class="login-btn" onclick="saveFamilyMember()" style="width: auto; padding: 12px 30px;">Add Member</button>
-                            <button class="login-btn" onclick="cancelAddFamily()" style="width: auto; padding: 12px 30px; background: var(--gray);">Cancel</button>
+                            <button class="login-btn" onclick="saveFamilyMember()" style="width: auto; padding: 12px 30px;"><span data-i18n="add">Add</span></button>
+                            <button class="login-btn" onclick="cancelAddFamily()" style="width: auto; padding: 12px 30px; background: var(--gray);"><span data-i18n="cancel">Cancel</span></button>
                         </div>
                     </div>
                 </div>
@@ -2066,7 +2070,7 @@
             <!-- Maps Tab -->
             <div class="tab-panel" id="mapsTab">
                 <div class="maps-section">
-                    <h3 class="form-title"><i class="fas fa-map-marker-alt"></i> Nearby Hospitals</h3>
+                    <h3 class="form-title"><i class="fas fa-map-marker-alt"></i> <span data-i18n="nearbyHospitals">Nearby Hospitals</span></h3>
                     <div id="map"></div>
                     <div class="hospital-list" id="hospitalList"></div>
                 </div>
@@ -2075,8 +2079,8 @@
             <!-- Emergency SOS Tab -->
             <div class="tab-panel" id="emergencyTab">
                 <div class="emergency-section">
-                    <h2 style="margin-bottom: 20px;"><i class="fas fa-exclamation-triangle"></i> Emergency SOS</h2>
-                    <p style="font-size: 1.2rem; margin-bottom: 20px;">Press the SOS button in case of emergency</p>
+                    <h2 style="margin-bottom: 20px;"><i class="fas fa-exclamation-triangle"></i> <span data-i18n="emergencySOS">Emergency SOS</span></h2>
+                    <p style="font-size: 1.2rem; margin-bottom: 20px;" data-i18n="sosInstruction">Press the SOS button in case of emergency</p>
                     
                     <button class="sos-btn" id="sosBtn" onclick="triggerSOS()">
                         SOS
@@ -2085,33 +2089,33 @@
                     <div class="emergency-contacts">
                         <div class="contact-card">
                             <i class="fas fa-ambulance"></i>
-                            <h4>Ambulance</h4>
+                            <h4 data-i18n="ambulance">Ambulance</h4>
                             <p>108</p>
-                            <button onclick="callNumber('108')">Call Now</button>
+                            <button onclick="callNumber('108')" data-i18n="callNow">Call Now</button>
                         </div>
                         <div class="contact-card">
                             <i class="fas fa-fire-extinguisher"></i>
-                            <h4>Fire</h4>
+                            <h4 data-i18n="fire">Fire</h4>
                             <p>101</p>
-                            <button onclick="callNumber('101')">Call Now</button>
+                            <button onclick="callNumber('101')" data-i18n="callNow">Call Now</button>
                         </div>
                         <div class="contact-card">
                             <i class="fas fa-shield-alt"></i>
-                            <h4>Police</h4>
+                            <h4 data-i18n="police">Police</h4>
                             <p>100</p>
-                            <button onclick="callNumber('100')">Call Now</button>
+                            <button onclick="callNumber('100')" data-i18n="callNow">Call Now</button>
                         </div>
                         <div class="contact-card">
                             <i class="fas fa-user-md"></i>
-                            <h4>My Doctor</h4>
+                            <h4 data-i18n="myDoctor">My Doctor</h4>
                             <p>+91 98765 43210</p>
-                            <button onclick="callNumber('9876543210')">Call Now</button>
+                            <button onclick="callNumber('9876543210')" data-i18n="callNow">Call Now</button>
                         </div>
                     </div>
 
                     <div style="margin-top: 30px; padding: 20px; background: rgba(255,255,255,0.1); border-radius: 15px;">
-                        <h4><i class="fas fa-location-dot"></i> Your Location Will Be Shared</h4>
-                        <p id="sosLocation">Fetching location...</p>
+                        <h4><i class="fas fa-location-dot"></i> <span data-i18n="yourLocation">Your Location Will Be Shared</span></h4>
+                        <p id="sosLocation" data-i18n="fetchingLocation">Fetching location...</p>
                     </div>
                 </div>
             </div>
@@ -2177,11 +2181,11 @@
             <div class="user-info">
                 <div class="user-avatar"><i class="fas fa-crown"></i></div>
                 <div>
-                    <h2>Admin Dashboard</h2>
-                    <p>Platform Analytics</p>
+                    <h2 data-i18n="adminDashboard">Admin Dashboard</h2>
+                    <p data-i18n="platformAnalytics">Platform Analytics</p>
                 </div>
             </div>
-            <button class="logout-btn" onclick="logout('admin')">Logout</button>
+            <button class="logout-btn" onclick="logout('admin')"><span data-i18n="logout">Logout</span></button>
         </div>
 
         <div class="app-content">
@@ -2190,28 +2194,28 @@
                 <div class="analytics-card">
                     <i class="fas fa-users"></i>
                     <div class="analytics-number" id="totalUsers">156</div>
-                    <div class="analytics-label">Total Users</div>
+                    <div class="analytics-label" data-i18n="totalUsers">Total Users</div>
                 </div>
                 <div class="analytics-card">
                     <i class="fas fa-user-md"></i>
                     <div class="analytics-number" id="totalDoctors">23</div>
-                    <div class="analytics-label">Active Doctors</div>
+                    <div class="analytics-label" data-i18n="totalDoctors">Active Doctors</div>
                 </div>
                 <div class="analytics-card">
                     <i class="fas fa-notes-medical"></i>
                     <div class="analytics-number" id="totalDiagnoses">342</div>
-                    <div class="analytics-label">Total Diagnoses</div>
+                    <div class="analytics-label" data-i18n="totalDiagnoses">Total Diagnoses</div>
                 </div>
                 <div class="analytics-card">
                     <i class="fas fa-calendar-day"></i>
                     <div class="analytics-number" id="todayDiagnoses">12</div>
-                    <div class="analytics-label">Today's Diagnoses</div>
+                    <div class="analytics-label" data-i18n="todayDiagnoses">Today's Diagnoses</div>
                 </div>
             </div>
 
             <!-- Charts -->
             <div class="charts-section">
-                <h3 class="form-title"><i class="fas fa-chart-bar"></i> Platform Analytics</h3>
+                <h3 class="form-title"><i class="fas fa-chart-bar"></i> <span data-i18n="platformAnalytics">Platform Analytics</span></h3>
                 <div class="chart-container">
                     <canvas id="adminChart"></canvas>
                 </div>
@@ -2219,22 +2223,20 @@
 
             <!-- User Management -->
             <div class="doctor-section">
-                <h3 class="form-title"><i class="fas fa-user-cog"></i> User Management</h3>
+                <h3 class="form-title"><i class="fas fa-user-cog"></i> <span data-i18n="userManagement">User Management</span></h3>
                 <div class="user-table">
                     <table>
                         <thead>
                             <tr>
-                                <th>User ID</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Type</th>
-                                <th>Status</th>
-                                <th>Actions</th>
+                                <th data-i18n="userId">User ID</th>
+                                <th data-i18n="name">Name</th>
+                                <th data-i18n="email">Email</th>
+                                <th data-i18n="type">Type</th>
+                                <th data-i18n="status">Status</th>
+                                <th data-i18n="actions">Actions</th>
                             </tr>
                         </thead>
-                        <tbody id="userTableBody">
-                            <!-- Filled by JavaScript -->
-                        </tbody>
+                        <tbody id="userTableBody"></tbody>
                     </table>
                 </div>
             </div>
@@ -2245,74 +2247,82 @@
     <div class="toast" id="toast"></div>
 
     <script>
-        // ==================== DATA STORAGE ====================
-        // Offline Mode - Store data locally
-        let offlineData = JSON.parse(localStorage.getItem('ruralcare_data')) || {
-            patients: [],
-            doctors: [],
-            diagnoses: [],
-            reminders: [],
-            family: [],
-            settings: {}
-        };
-
-        // Online/Offline Detection
-        window.addEventListener('online', updateOnlineStatus);
-        window.addEventListener('offline', updateOnlineStatus);
-
-        function updateOnlineStatus() {
-            const indicator = document.getElementById('offlineIndicator');
-            const text = document.getElementById('offlineText');
-            
-            if (navigator.onLine) {
-                indicator.className = 'offline-indicator online';
-                text.innerHTML = '<i class="fas fa-wifi"></i> Online - Synced';
-                syncOfflineData();
-            } else {
-                indicator.className = 'offline-indicator offline';
-                text.innerHTML = '<i class="fas fa-wifi-slash"></i> Offline Mode';
-            }
-        }
-
-        function syncOfflineData() {
-            if (navigator.onLine && offlineData.diagnoses.length > 0) {
-                // Sync with server (simulated)
-                console.log('Syncing offline data...', offlineData);
-                showToast('Syncing offline data...');
-                setTimeout(() => {
-                    offlineData = { patients: [], doctors: [], diagnoses: [], reminders: [], family: [], settings: {} };
-                    localStorage.setItem('ruralcare_data', JSON.stringify(offlineData));
-                    showToast('Sync complete!');
-                }, 2000);
-            }
-        }
-
-        // ==================== MULTI-LANGUAGE TRANSLATIONS ====================
+        // ==================== MULTI-LANGUAGE TRANSLATIONS - 6 LANGUAGES ====================
         const translations = {
             en: {
+                // Welcome
+                welcomeTitle: 'Welcome to RuralCare Pro',
+                welcomeSubtitle: 'Complete healthcare platform with 100+ symptoms in 6 languages',
+                feature1: '100+ Symptoms in 6 Languages',
+                feature2: 'Voice Recognition in All Languages',
+                feature3: 'Offline Mode - Works without internet',
+                feature4: 'Medicine Reminders & Health Charts',
+                feature5: 'Family Accounts & Emergency SOS',
+                feature6: 'Find Nearby Hospitals on Map',
+                
+                // Login
+                patientTab: 'Patient',
+                doctorTab: 'Doctor',
+                adminTab: 'Admin',
                 patientLogin: 'Patient Login',
                 patientSubtitle: 'Login with your email/phone and password',
                 doctorLogin: 'Doctor Login',
                 doctorSubtitle: 'Login with your email/phone and password',
-                patientLoginBtn: 'Login',
-                doctorLoginBtn: 'Login',
+                adminLogin: 'Admin Login',
+                adminSubtitle: 'Login to access platform analytics',
+                loginBtn: 'Login',
+                or: 'OR',
                 demoPatients: 'Demo Patients (Use these):',
                 demoDoctors: 'Demo Doctors (Use these):',
+                demoAdmin: 'Demo Admin:',
+                
+                // Common
                 logout: 'Logout',
+                save: 'Save',
+                cancel: 'Cancel',
+                add: 'Add',
+                delete: 'Delete',
+                edit: 'Edit',
+                close: 'Close',
+                print: 'Print',
+                
+                // Tabs
+                dashboardTab: 'Dashboard',
+                symptomsTab: 'Symptoms',
+                remindersTab: 'Reminders',
+                chartsTab: 'Health Charts',
+                familyTab: 'Family',
+                mapsTab: 'Hospitals',
+                sosTab: 'SOS',
+                
+                // Stats
                 totalVisits: 'Total Visits',
                 diagnoses: 'Diagnoses',
                 highRisk: 'High Risk',
                 today: 'Today',
+                totalPatients: 'Total Patients',
+                reports: 'Reports',
+                critical: 'Critical',
+                
+                // Patient Info
                 patientInfo: 'Patient Information',
                 male: 'Male',
                 female: 'Female',
                 other: 'Other',
                 selectDistrict: 'Select District',
+                fullName: 'Full Name',
+                age: 'Age',
+                gender: 'Gender',
+                district: 'District',
+                
+                // Vitals
                 vitals: 'Your Vitals',
                 bp: 'Blood Pressure',
                 temperature: 'Temperature',
                 height: 'Height',
                 weight: 'Weight',
+                
+                // Symptoms
                 symptomChecker: 'Symptom Checker (100+ Symptoms)',
                 all: 'All',
                 respiratory: 'Respiratory',
@@ -2324,16 +2334,415 @@
                 general: 'General',
                 urinary: 'Urinary',
                 selectedSymptoms: 'Selected Symptoms:',
+                
+                // Voice
                 voiceTitle: 'Voice Symptom Recorder',
                 voiceStatus: 'Click the microphone and speak in your language',
                 recognizedSpeech: 'Recognized Speech:',
                 clickMicrophone: 'Click the microphone and start speaking...',
                 ready: 'Ready',
                 analyze: 'Analyze Symptoms',
-                totalPatients: 'Total Patients',
-                reports: 'Reports',
-                critical: 'Critical',
-                patientRecords: 'Patient Records'
+                
+                // Reminders
+                medicineReminders: 'Medicine Reminders',
+                addReminder: 'Add New Reminder',
+                newReminder: 'New Medicine Reminder',
+                medicine: 'Medicine',
+                time: 'Time',
+                dosage: 'Dosage',
+                frequency: 'Frequency',
+                daily: 'Daily',
+                twiceDaily: 'Twice Daily',
+                weekly: 'Weekly',
+                custom: 'Custom',
+                take: 'Take',
+                snooze: 'Snooze',
+                
+                // Charts
+                healthTrends: 'Health Trends',
+                bpChart: 'Blood Pressure',
+                tempChart: 'Temperature',
+                weightChart: 'Weight',
+                
+                // Family
+                familyMembers: 'Family Members',
+                addFamily: 'Add Family Member',
+                addFamilyMember: 'Add Family Member',
+                spouse: 'Spouse',
+                child: 'Child',
+                parent: 'Parent',
+                sibling: 'Sibling',
+                switch: 'Switch',
+                remove: 'Remove',
+                
+                // Maps
+                nearbyHospitals: 'Nearby Hospitals',
+                address: 'Address',
+                phone: 'Phone',
+                getDirections: 'Get Directions',
+                
+                // Emergency
+                emergencySOS: 'Emergency SOS',
+                sosInstruction: 'Press the SOS button in case of emergency',
+                ambulance: 'Ambulance',
+                fire: 'Fire',
+                police: 'Police',
+                myDoctor: 'My Doctor',
+                callNow: 'Call Now',
+                yourLocation: 'Your Location Will Be Shared',
+                fetchingLocation: 'Fetching location...',
+                
+                // Admin
+                adminDashboard: 'Admin Dashboard',
+                platformAnalytics: 'Platform Analytics',
+                totalUsers: 'Total Users',
+                totalDoctors: 'Active Doctors',
+                totalDiagnoses: 'Total Diagnoses',
+                todayDiagnoses: 'Today\'s Diagnoses',
+                userManagement: 'User Management',
+                userId: 'User ID',
+                name: 'Name',
+                email: 'Email',
+                type: 'Type',
+                status: 'Status',
+                actions: 'Actions',
+                
+                // Doctor
+                patientRecords: 'Patient Records',
+                addAdvice: 'Add Advice',
+                viewDetails: 'View Details',
+                
+                // Online/Offline
+                online: 'Online - Synced',
+                offline: 'Offline Mode',
+                
+                // Symptoms names
+                cough: 'Cough',
+                fever: 'Fever',
+                headache: 'Headache',
+                fatigue: 'Fatigue',
+                bodyAche: 'Body ache',
+                nausea: 'Nausea',
+                vomiting: 'Vomiting',
+                diarrhea: 'Diarrhea',
+                abdominalPain: 'Abdominal pain',
+                shortnessOfBreath: 'Shortness of breath',
+                wheezing: 'Wheezing',
+                chestPain: 'Chest pain',
+                soreThroat: 'Sore throat',
+                runnyNose: 'Runny nose',
+                sneezing: 'Sneezing',
+                nasalCongestion: 'Nasal congestion',
+                coughingBlood: 'Coughing blood',
+                dryCough: 'Dry cough',
+                constipation: 'Constipation',
+                bloating: 'Bloating',
+                heartburn: 'Heartburn',
+                lossOfAppetite: 'Loss of appetite',
+                bloodInStool: 'Blood in stool',
+                difficultySwallowing: 'Difficulty swallowing',
+                dizziness: 'Dizziness',
+                confusion: 'Confusion',
+                seizures: 'Seizures',
+                tremors: 'Tremors',
+                numbness: 'Numbness',
+                weakness: 'Weakness',
+                memoryLoss: 'Memory loss',
+                balanceProblems: 'Balance problems',
+                slurredSpeech: 'Slurred speech',
+                jointPain: 'Joint pain',
+                musclePain: 'Muscle pain',
+                backPain: 'Back pain',
+                neckPain: 'Neck pain',
+                jointSwelling: 'Joint swelling',
+                stiffness: 'Stiffness',
+                muscleCramps: 'Muscle cramps',
+                rash: 'Rash',
+                itching: 'Itching',
+                hives: 'Hives',
+                drySkin: 'Dry skin',
+                skinRedness: 'Skin redness',
+                skinDiscoloration: 'Skin discoloration',
+                woundsNotHealing: 'Wounds not healing',
+                chills: 'Chills',
+                nightSweats: 'Night sweats',
+                weightLoss: 'Weight loss',
+                weightGain: 'Weight gain',
+                dehydration: 'Dehydration',
+                swollenLymphNodes: 'Swollen lymph nodes',
+                palpitations: 'Palpitations',
+                highBP: 'High blood pressure',
+                lowBP: 'Low blood pressure',
+                swollenAnkles: 'Swollen ankles',
+                frequentUrination: 'Frequent urination',
+                painfulUrination: 'Painful urination',
+                bloodInUrine: 'Blood in urine',
+                urgentUrination: 'Urgent urination'
+            },
+            hi: {
+                // Hindi translations
+                welcomeTitle: 'रूरलकेयर प्रो में आपका स्वागत है',
+                welcomeSubtitle: '6 भाषाओं में 100+ लक्षणों के साथ संपूर्ण स्वास्थ्य मंच',
+                feature1: '6 भाषाओं में 100+ लक्षण',
+                feature2: 'सभी भाषाओं में आवाज पहचान',
+                feature3: 'ऑफलाइन मोड - बिना इंटरनेट काम करता है',
+                feature4: 'दवा अनुस्मारक और स्वास्थ्य चार्ट',
+                feature5: 'परिवार खाते और आपातकालीन SOS',
+                feature6: 'मानचित्र पर नजदीकी अस्पताल खोजें',
+                
+                patientTab: 'रोगी',
+                doctorTab: 'डॉक्टर',
+                adminTab: 'व्यवस्थापक',
+                patientLogin: 'रोगी लॉगिन',
+                patientSubtitle: 'अपने ईमेल/फोन और पासवर्ड से लॉगिन करें',
+                doctorLogin: 'डॉक्टर लॉगिन',
+                doctorSubtitle: 'अपने ईमेल/फोन और पासवर्ड से लॉगिन करें',
+                adminLogin: 'व्यवस्थापक लॉगिन',
+                adminSubtitle: 'प्लेटफॉर्म एनालिटिक्स तक पहुंचें',
+                loginBtn: 'लॉगिन',
+                or: 'या',
+                demoPatients: 'डेमो रोगी (इनका उपयोग करें):',
+                demoDoctors: 'डेमो डॉक्टर (इनका उपयोग करें):',
+                demoAdmin: 'डेमो व्यवस्थापक:',
+                
+                logout: 'लॉगआउट',
+                save: 'सहेजें',
+                cancel: 'रद्द करें',
+                add: 'जोड़ें',
+                delete: 'हटाएं',
+                edit: 'संपादित करें',
+                close: 'बंद करें',
+                print: 'प्रिंट करें',
+                
+                dashboardTab: 'डैशबोर्ड',
+                symptomsTab: 'लक्षण',
+                remindersTab: 'अनुस्मारक',
+                chartsTab: 'स्वास्थ्य चार्ट',
+                familyTab: 'परिवार',
+                mapsTab: 'अस्पताल',
+                sosTab: 'आपातकाल',
+                
+                totalVisits: 'कुल विज़िट',
+                diagnoses: 'निदान',
+                highRisk: 'उच्च जोखिम',
+                today: 'आज',
+                totalPatients: 'कुल रोगी',
+                reports: 'रिपोर्ट',
+                critical: 'गंभीर',
+                
+                patientInfo: 'रोगी जानकारी',
+                male: 'पुरुष',
+                female: 'महिला',
+                other: 'अन्य',
+                selectDistrict: 'जिला चुनें',
+                fullName: 'पूरा नाम',
+                age: 'आयु',
+                gender: 'लिंग',
+                district: 'जिला',
+                
+                vitals: 'आपके महत्वपूर्ण अंग',
+                bp: 'रक्तचाप',
+                temperature: 'तापमान',
+                height: 'ऊंचाई',
+                weight: 'वजन',
+                
+                symptomChecker: 'लक्षण जांचकर्ता (100+ लक्षण)',
+                all: 'सभी',
+                respiratory: 'श्वसन',
+                digestive: 'पाचन',
+                neurological: 'तंत्रिका',
+                muscular: 'मांसपेशी',
+                skin: 'त्वचा',
+                cardiovascular: 'हृदय',
+                general: 'सामान्य',
+                urinary: 'मूत्र',
+                selectedSymptoms: 'चयनित लक्षण:',
+                
+                voiceTitle: 'आवाज लक्षण रिकॉर्डर',
+                voiceStatus: 'माइक्रोफोन पर क्लिक करें और अपनी भाषा में बोलें',
+                recognizedSpeech: 'पहचानी गई आवाज:',
+                clickMicrophone: 'माइक्रोफोन पर क्लिक करें और बोलना शुरू करें...',
+                ready: 'तैयार',
+                analyze: 'लक्षण विश्लेषण करें',
+                
+                medicineReminders: 'दवा अनुस्मारक',
+                addReminder: 'नया अनुस्मारक जोड़ें',
+                newReminder: 'नया दवा अनुस्मारक',
+                medicine: 'दवा',
+                time: 'समय',
+                dosage: 'खुराक',
+                frequency: 'आवृत्ति',
+                daily: 'दैनिक',
+                twiceDaily: 'दिन में दो बार',
+                weekly: 'साप्ताहिक',
+                custom: 'कस्टम',
+                take: 'लें',
+                snooze: 'स्नूज़',
+                
+                healthTrends: 'स्वास्थ्य रुझान',
+                bpChart: 'रक्तचाप',
+                tempChart: 'तापमान',
+                weightChart: 'वजन',
+                
+                familyMembers: 'परिवार के सदस्य',
+                addFamily: 'परिवार सदस्य जोड़ें',
+                addFamilyMember: 'परिवार सदस्य जोड़ें',
+                spouse: 'पति/पत्नी',
+                child: 'बच्चा',
+                parent: 'माता-पिता',
+                sibling: 'भाई-बहन',
+                switch: 'बदलें',
+                remove: 'हटाएं',
+                
+                nearbyHospitals: 'नजदीकी अस्पताल',
+                address: 'पता',
+                phone: 'फोन',
+                getDirections: 'दिशा-निर्देश लें',
+                
+                emergencySOS: 'आपातकालीन SOS',
+                sosInstruction: 'आपातकालीन स्थिति में SOS बटन दबाएं',
+                ambulance: 'एम्बुलेंस',
+                fire: 'अग्निशमन',
+                police: 'पुलिस',
+                myDoctor: 'मेरे डॉक्टर',
+                callNow: 'अभी कॉल करें',
+                yourLocation: 'आपका स्थान साझा किया जाएगा',
+                fetchingLocation: 'स्थान प्राप्त किया जा रहा है...',
+                
+                adminDashboard: 'व्यवस्थापक डैशबोर्ड',
+                platformAnalytics: 'प्लेटफॉर्म एनालिटिक्स',
+                totalUsers: 'कुल उपयोगकर्ता',
+                totalDoctors: 'सक्रिय डॉक्टर',
+                totalDiagnoses: 'कुल निदान',
+                todayDiagnoses: 'आज के निदान',
+                userManagement: 'उपयोगकर्ता प्रबंधन',
+                userId: 'उपयोगकर्ता आईडी',
+                name: 'नाम',
+                email: 'ईमेल',
+                type: 'प्रकार',
+                status: 'स्थिति',
+                actions: 'क्रियाएँ',
+                
+                patientRecords: 'रोगी रिकॉर्ड',
+                addAdvice: 'सलाह जोड़ें',
+                viewDetails: 'विवरण देखें',
+                
+                online: 'ऑनलाइन - सिंक किया गया',
+                offline: 'ऑफलाइन मोड',
+                
+                cough: 'खांसी',
+                fever: 'बुखार',
+                headache: 'सिरदर्द',
+                fatigue: 'थकान',
+                bodyAche: 'शरीर दर्द',
+                nausea: 'मतली',
+                vomiting: 'उल्टी',
+                diarrhea: 'दस्त',
+                abdominalPain: 'पेट दर्द'
+            },
+            ta: {
+                // Tamil translations
+                welcomeTitle: 'ரூரல்கேர் புரோவுக்கு வரவேற்கிறோம்',
+                feature1: '6 மொழிகளில் 100+ அறிகுறிகள்',
+                feature2: 'அனைத்து மொழிகளிலும் குரல் அங்கீகாரம்',
+                feature3: 'ஆஃப்லைன் பயன்முறை - இணையம் இல்லாமல் வேலை செய்கிறது',
+                feature4: 'மருந்து நினைவூட்டல்கள் & சுகாதார விளக்கப்படங்கள்',
+                feature5: 'குடும்ப கணக்குகள் & அவசர SOS',
+                feature6: 'வரைபடத்தில் அருகிலுள்ள மருத்துவமனைகளைக் கண்டறியவும்',
+                
+                patientLogin: 'நோயாளி உள்நுழைவு',
+                doctorLogin: 'மருத்துவர் உள்நுழைவு',
+                adminLogin: 'நிர்வாகி உள்நுழைவு',
+                loginBtn: 'உள்நுழைக',
+                logout: 'வெளியேறு',
+                
+                cough: 'இருமல்',
+                fever: 'காய்ச்சல்',
+                headache: 'தலைவலி',
+                fatigue: 'சோர்வு',
+                bodyAche: 'உடல் வலி',
+                nausea: 'குமட்டல்',
+                vomiting: 'வாந்தி',
+                diarrhea: 'வயிற்றுப்போக்கு',
+                abdominalPain: 'வயிற்று வலி'
+            },
+            te: {
+                // Telugu translations
+                welcomeTitle: 'రూరల్కేర్ ప్రోకు స్వాగతం',
+                feature1: '6 భాషలలో 100+ లక్షణాలు',
+                feature2: 'అన్ని భాషలలో వాయిస్ గుర్తింపు',
+                feature3: 'ఆఫ్‌లైన్ మోడ్ - ఇంటర్నెట్ లేకుండా పనిచేస్తుంది',
+                feature4: 'మందుల రిమైండర్లు & ఆరోగ్య చార్ట్లు',
+                feature5: 'కుటుంబ ఖాతాలు & అత్యవసర SOS',
+                feature6: 'మ్యాప్‌లో సమీప ఆసుపత్రులను కనుగొనండి',
+                
+                patientLogin: 'రోగి లాగిన్',
+                doctorLogin: 'డాక్టర్ లాగిన్',
+                adminLogin: 'నిర్వాహక లాగిన్',
+                loginBtn: 'లాగిన్',
+                logout: 'లాగ్అవుట్',
+                
+                cough: 'దగ్గు',
+                fever: 'జ్వరం',
+                headache: 'తలనొప్పి',
+                fatigue: 'అలసట',
+                bodyAche: 'శరీర నొప్పి',
+                nausea: 'వికారం',
+                vomiting: 'వాంతులు',
+                diarrhea: 'విరేచనాలు',
+                abdominalPain: 'కడుపు నొప్పి'
+            },
+            kn: {
+                // Kannada translations
+                welcomeTitle: 'ರೂರಲ್ಕೇರ್ ಪ್ರೋಗೆ ಸುಸ್ವಾಗತ',
+                feature1: '6 ಭಾಷೆಗಳಲ್ಲಿ 100+ ರೋಗಲಕ್ಷಣಗಳು',
+                feature2: 'ಎಲ್ಲಾ ಭಾಷೆಗಳಲ್ಲಿ ಧ್ವನಿ ಗುರುತಿಸುವಿಕೆ',
+                feature3: 'ಆಫ್‌ಲೈನ್ ಮೋಡ್ - ಇಂಟರ್ನೆಟ್ ಇಲ್ಲದೆ ಕಾರ್ಯನಿರ್ವಹಿಸುತ್ತದೆ',
+                feature4: 'ಔಷಧಿ ಜ್ಞಾಪನೆಗಳು & ಆರೋಗ್ಯ ಚಾರ್ಟ್‌ಗಳು',
+                feature5: 'ಕುಟುಂಬ ಖಾತೆಗಳು & ತುರ್ತು SOS',
+                feature6: 'ನಕ್ಷೆಯಲ್ಲಿ ಹತ್ತಿರದ ಆಸ್ಪತ್ರೆಗಳನ್ನು ಹುಡುಕಿ',
+                
+                patientLogin: 'ರೋಗಿಯ ಲಾಗಿನ್',
+                doctorLogin: 'ವೈದ್ಯರ ಲಾಗಿನ್',
+                adminLogin: 'ನಿರ್ವಾಹಕ ಲಾಗಿನ್',
+                loginBtn: 'ಲಾಗಿನ್',
+                logout: 'ಲಾಗೌಟ್',
+                
+                cough: 'ಕೆಮ್ಮು',
+                fever: 'ಜ್ವರ',
+                headache: 'ತಲೆನೋವು',
+                fatigue: 'ಆಯಾಸ',
+                bodyAche: 'ದೇಹ ನೋವು',
+                nausea: 'ವಾಕರಿಕೆ',
+                vomiting: 'ವಾಂತಿ',
+                diarrhea: 'ಅತಿಸಾರ',
+                abdominalPain: 'ಹೊಟ್ಟೆ ನೋವು'
+            },
+            ml: {
+                // Malayalam translations
+                welcomeTitle: 'റൂറൽകെയർ പ്രോയിലേക്ക് സ്വാഗതം',
+                feature1: '6 ഭാഷകളിൽ 100+ രോഗലക്ഷണങ്ങൾ',
+                feature2: 'എല്ലാ ഭാഷകളിലും വോയ്സ് തിരിച്ചറിയൽ',
+                feature3: 'ഓഫ്‌ലൈൻ മോഡ് - ഇന്റർനെറ്റ് ഇല്ലാതെ പ്രവർത്തിക്കുന്നു',
+                feature4: 'മരുന്ന് ഓർമ്മപ്പെടുത്തലുകൾ & ആരോഗ്യ ചാർട്ടുകൾ',
+                feature5: 'കുടുംബ അക്കൗണ്ടുകൾ & എമർജൻസി SOS',
+                feature6: 'മാപ്പിൽ സമീപത്തുള്ള ആശുപത്രികൾ കണ്ടെത്തുക',
+                
+                patientLogin: 'രോഗി ലോഗിൻ',
+                doctorLogin: 'ഡോക്ടർ ലോഗിൻ',
+                adminLogin: 'അഡ്മിൻ ലോഗിൻ',
+                loginBtn: 'ലോഗിൻ',
+                logout: 'ലോഗൗട്ട്',
+                
+                cough: 'ചുമ',
+                fever: 'പനി',
+                headache: 'തലവേദന',
+                fatigue: 'ക്ഷീണം',
+                bodyAche: 'ശരീരവേദന',
+                nausea: 'ഓക്കാനം',
+                vomiting: 'ഛർദ്ദി',
+                diarrhea: 'വയറിളക്കം',
+                abdominalPain: 'വയറുവേദന'
             }
         };
 
@@ -2558,6 +2967,13 @@
         let adminChart = null;
         let currentChartType = 'bp';
 
+        // Offline data storage
+        let offlineData = JSON.parse(localStorage.getItem('ruralcare_offline')) || {
+            diagnoses: [],
+            reminders: [],
+            family: []
+        };
+
         // Language names
         const languageNames = {
             en: 'English',
@@ -2568,7 +2984,7 @@
             ml: 'മലയാളം'
         };
 
-        // Voice patterns
+        // Voice patterns for 6 languages
         const voicePatterns = {
             en: {
                 cough: ['cough', 'coughing'],
@@ -2580,6 +2996,61 @@
                 vomiting: ['vomiting', 'throw up'],
                 diarrhea: ['diarrhea', 'loose motion'],
                 abdominalPain: ['abdominal pain', 'stomach ache']
+            },
+            hi: {
+                cough: ['खांसी'],
+                fever: ['बुखार'],
+                headache: ['सिरदर्द'],
+                fatigue: ['थकान'],
+                bodyAche: ['शरीर दर्द'],
+                nausea: ['मतली'],
+                vomiting: ['उल्टी'],
+                diarrhea: ['दस्त'],
+                abdominalPain: ['पेट दर्द']
+            },
+            ta: {
+                cough: ['இருமல்'],
+                fever: ['காய்ச்சல்'],
+                headache: ['தலைவலி'],
+                fatigue: ['சோர்வு'],
+                bodyAche: ['உடல் வலி'],
+                nausea: ['குமட்டல்'],
+                vomiting: ['வாந்தி'],
+                diarrhea: ['வயிற்றுப்போக்கு'],
+                abdominalPain: ['வயிற்று வலி']
+            },
+            te: {
+                cough: ['దగ్గు'],
+                fever: ['జ్వరం'],
+                headache: ['తలనొప్పి'],
+                fatigue: ['అలసట'],
+                bodyAche: ['శరీర నొప్పి'],
+                nausea: ['వికారం'],
+                vomiting: ['వాంతులు'],
+                diarrhea: ['విరేచనాలు'],
+                abdominalPain: ['కడుపు నొప్పి']
+            },
+            kn: {
+                cough: ['ಕೆಮ್ಮು'],
+                fever: ['ಜ್ವರ'],
+                headache: ['ತಲೆನೋವು'],
+                fatigue: ['ಆಯಾಸ'],
+                bodyAche: ['ದೇಹ ನೋವು'],
+                nausea: ['ವಾಕರಿಕೆ'],
+                vomiting: ['ವಾಂತಿ'],
+                diarrhea: ['ಅತಿಸಾರ'],
+                abdominalPain: ['ಹೊಟ್ಟೆ ನೋವು']
+            },
+            ml: {
+                cough: ['ചുമ'],
+                fever: ['പനി'],
+                headache: ['തലവേദന'],
+                fatigue: ['ക്ഷീണം'],
+                bodyAche: ['ശരീരവേദന'],
+                nausea: ['ഓക്കാനം'],
+                vomiting: ['ഛർദ്ദി'],
+                diarrhea: ['വയറിളക്കം'],
+                abdominalPain: ['വയറുവേദന']
             }
         };
 
@@ -2590,6 +3061,38 @@
             { name: 'Apollo Hospital', lat: 13.0700, lng: 80.2600, address: 'Greams Road, Chennai', phone: '044-98765432' },
             { name: 'Kauvery Hospital', lat: 13.0900, lng: 80.2900, address: 'Anna Nagar, Chennai', phone: '044-23456789' }
         ];
+
+        // ==================== OFFLINE MODE ====================
+        window.addEventListener('online', updateOnlineStatus);
+        window.addEventListener('offline', updateOnlineStatus);
+
+        function updateOnlineStatus() {
+            const indicator = document.getElementById('offlineIndicator');
+            const text = document.getElementById('offlineText');
+            
+            if (navigator.onLine) {
+                indicator.className = 'offline-indicator online';
+                text.innerHTML = getTranslation('online');
+                syncOfflineData();
+            } else {
+                indicator.className = 'offline-indicator offline';
+                text.innerHTML = getTranslation('offline');
+            }
+        }
+
+        function syncOfflineData() {
+            if (navigator.onLine && offlineData.diagnoses.length > 0) {
+                showToast('Syncing offline data...');
+                // Simulate sync
+                setTimeout(() => {
+                    diagnoses = [...diagnoses, ...offlineData.diagnoses];
+                    localStorage.setItem('diagnoses', JSON.stringify(diagnoses));
+                    offlineData = { diagnoses: [], reminders: [], family: [] };
+                    localStorage.setItem('ruralcare_offline', JSON.stringify(offlineData));
+                    showToast('Sync complete!');
+                }, 2000);
+            }
+        }
 
         // ==================== INIT ====================
         document.addEventListener('DOMContentLoaded', () => {
@@ -2652,10 +3155,13 @@
                 }
             });
 
+            // Update specific elements
             document.getElementById('symptomTitle').textContent = t.symptomChecker;
             document.getElementById('voiceTitle').textContent = t.voiceTitle;
             document.getElementById('analyzeBtn').textContent = t.analyze;
+            document.getElementById('voiceStatus').innerHTML = `<i class="fas fa-info-circle"></i> ${t.voiceStatus}`;
             
+            // Update category tabs
             const tabs = document.querySelectorAll('.category-tab');
             if (tabs.length >= 9) {
                 tabs[0].textContent = t.all;
@@ -2671,6 +3177,8 @@
             
             displaySymptoms(currentCategory);
             updateSymptomTags();
+            loadReminders();
+            loadFamilyMembers();
         }
 
         function getTranslation(key) {
@@ -2680,7 +3188,7 @@
         function getSymptomName(symptomId) {
             const symptom = symptomsDB.find(s => s.id === symptomId);
             if (!symptom) return '';
-            return translations[currentLanguage]?.[symptom.name] || translations.en[symptom.name] || symptom.name;
+            return getTranslation(symptom.name);
         }
 
         // ==================== TAB NAVIGATION ====================
@@ -2692,7 +3200,7 @@
             document.getElementById(tabName + 'Tab').classList.add('active');
             
             if (tabName === 'maps') {
-                initMap();
+                setTimeout(() => initMap(), 100);
             } else if (tabName === 'charts') {
                 initCharts();
             }
@@ -2786,15 +3294,13 @@
         }
 
         function toggleRecording() {
-            const t = translations[currentLanguage] || translations.en;
-            
             if (!isRecording) {
                 isRecording = true;
                 const recordBtn = document.getElementById('recordBtn');
                 recordBtn.classList.add('recording');
                 recordBtn.innerHTML = '<i class="fas fa-stop"></i>';
                 
-                document.getElementById('voiceStatus').innerHTML = `<i class="fas fa-spinner fa-pulse"></i> Recording...`;
+                document.getElementById('voiceStatus').innerHTML = `<i class="fas fa-spinner fa-pulse"></i> ${getTranslation('recording') || 'Recording...'}`;
                 document.getElementById('recognizedText').innerHTML = 'Listening...';
                 
                 seconds = 0;
@@ -2834,8 +3340,8 @@
                         updateSymptomTags();
                         displaySymptoms(currentCategory);
                         
-                        document.getElementById('voiceStatus').innerHTML = `<i class="fas fa-check-circle"></i> Voice captured successfully!`;
-                        showToast('Voice captured successfully!');
+                        document.getElementById('voiceStatus').innerHTML = `<i class="fas fa-check-circle"></i> ${getTranslation('completed') || 'Voice captured!'}`;
+                        showToast(getTranslation('voiceCaptured') || 'Voice captured!');
                     }
                 }, 3000);
             } else {
@@ -2844,7 +3350,7 @@
                 const recordBtn = document.getElementById('recordBtn');
                 recordBtn.classList.remove('recording');
                 recordBtn.innerHTML = '<i class="fas fa-microphone"></i>';
-                document.getElementById('voiceStatus').innerHTML = `<i class="fas fa-info-circle"></i> Click the microphone and speak`;
+                document.getElementById('voiceStatus').innerHTML = `<i class="fas fa-info-circle"></i> ${getTranslation('voiceStatus')}`;
             }
         }
 
@@ -3091,7 +3597,7 @@
             // Store in offline data if offline
             if (!navigator.onLine) {
                 offlineData.diagnoses.push(diagnosis);
-                localStorage.setItem('ruralcare_data', JSON.stringify(offlineData));
+                localStorage.setItem('ruralcare_offline', JSON.stringify(offlineData));
             }
             
             updatePatientStats();
@@ -3103,38 +3609,38 @@
             const results = document.getElementById('results');
             results.innerHTML = `
                 <div class="print-section">
-                    <h2 style="color: var(--primary); margin-bottom: 20px; text-align: center;">Symptom Analysis</h2>
+                    <h2 style="color: var(--primary); margin-bottom: 20px; text-align: center;">${getTranslation('diagnosisReport') || 'Symptom Analysis'}</h2>
                     
                     <div style="margin-bottom: 30px; padding: 20px; background: var(--light); border-radius: 15px;">
-                        <h3 style="color: var(--primary); margin-bottom: 15px;">Patient Information</h3>
-                        <p><strong>Name:</strong> ${document.getElementById('fullName').value}</p>
-                        <p><strong>Age:</strong> ${document.getElementById('age').value}</p>
-                        <p><strong>Gender:</strong> ${document.getElementById('gender').value}</p>
-                        <p><strong>District:</strong> ${document.getElementById('district').value}</p>
-                        <p><strong>Date:</strong> ${new Date().toLocaleString()}</p>
+                        <h3 style="color: var(--primary); margin-bottom: 15px;">${getTranslation('patientInfo')}</h3>
+                        <p><strong>${getTranslation('name')}:</strong> ${document.getElementById('fullName').value}</p>
+                        <p><strong>${getTranslation('age')}:</strong> ${document.getElementById('age').value}</p>
+                        <p><strong>${getTranslation('gender')}:</strong> ${document.getElementById('gender').value}</p>
+                        <p><strong>${getTranslation('district')}:</strong> ${document.getElementById('district').value}</p>
+                        <p><strong>${getTranslation('date')}:</strong> ${new Date().toLocaleString()}</p>
                     </div>
 
                     <div style="margin-bottom: 30px; padding: 20px; background: var(--light); border-radius: 15px;">
-                        <h3 style="color: var(--primary); margin-bottom: 15px;">Your Reported Symptoms</h3>
+                        <h3 style="color: var(--primary); margin-bottom: 15px;">${getTranslation('yourSymptoms') || 'Your Reported Symptoms'}</h3>
                         <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;">
                             ${typedSymptoms.map(s => `<span style="background: var(--primary); color: white; padding: 5px 15px; border-radius: 20px;">${s}</span>`).join('')}
                         </div>
-                        <p style="margin: 15px 0;">Based on the symptoms you've described, please consult with a healthcare provider for an accurate diagnosis.</p>
+                        <p style="margin: 15px 0;">${getTranslation('genericMessage') || 'Based on the symptoms you\'ve described, please consult with a healthcare provider for an accurate diagnosis.'}</p>
                     </div>
 
                     <div style="margin-bottom: 30px; padding: 20px; background: var(--light); border-radius: 15px;">
-                        <h3 style="color: var(--primary); margin-bottom: 15px;">General Recommendations</h3>
+                        <h3 style="color: var(--primary); margin-bottom: 15px;">${getTranslation('recommendations') || 'General Recommendations'}</h3>
                         <ul>
-                            <li>Rest and stay hydrated</li>
-                            <li>Monitor your symptoms</li>
-                            <li>Consult a doctor if symptoms persist</li>
-                            <li>Keep track of any new symptoms</li>
+                            <li>${getTranslation('restAdvice') || 'Rest and stay hydrated'}</li>
+                            <li>${getTranslation('monitorAdvice') || 'Monitor your symptoms'}</li>
+                            <li>${getTranslation('doctorAdvice') || 'Consult a doctor if symptoms persist'}</li>
+                            <li>${getTranslation('trackAdvice') || 'Keep track of any new symptoms'}</li>
                         </ul>
                     </div>
                 </div>
                 <div style="display: flex; gap: 15px; margin-top: 30px;" class="no-print">
-                    <button class="print-btn" onclick="window.print()">Print Report</button>
-                    <button class="close-btn" onclick="document.getElementById('results').style.display='none'">Close</button>
+                    <button class="print-btn" onclick="window.print()">${getTranslation('print')}</button>
+                    <button class="close-btn" onclick="document.getElementById('results').style.display='none'">${getTranslation('close')}</button>
                 </div>
             `;
             results.style.display = 'block';
@@ -3149,52 +3655,52 @@
             const results = document.getElementById('results');
             results.innerHTML = `
                 <div class="print-section">
-                    <h2 style="color: var(--primary); margin-bottom: 20px; text-align: center;">Medical Diagnosis Report</h2>
+                    <h2 style="color: var(--primary); margin-bottom: 20px; text-align: center;">${getTranslation('diagnosisReport') || 'Medical Diagnosis Report'}</h2>
                     
                     <div style="margin-bottom: 30px; padding: 20px; background: var(--light); border-radius: 15px;">
-                        <h3 style="color: var(--primary); margin-bottom: 15px;">Patient Information</h3>
-                        <p><strong>Name:</strong> ${document.getElementById('fullName').value}</p>
-                        <p><strong>Age:</strong> ${document.getElementById('age').value}</p>
-                        <p><strong>Gender:</strong> ${document.getElementById('gender').value}</p>
-                        <p><strong>District:</strong> ${document.getElementById('district').value}</p>
-                        <p><strong>Date:</strong> ${new Date().toLocaleString()}</p>
+                        <h3 style="color: var(--primary); margin-bottom: 15px;">${getTranslation('patientInfo')}</h3>
+                        <p><strong>${getTranslation('name')}:</strong> ${document.getElementById('fullName').value}</p>
+                        <p><strong>${getTranslation('age')}:</strong> ${document.getElementById('age').value}</p>
+                        <p><strong>${getTranslation('gender')}:</strong> ${document.getElementById('gender').value}</p>
+                        <p><strong>${getTranslation('district')}:</strong> ${document.getElementById('district').value}</p>
+                        <p><strong>${getTranslation('date')}:</strong> ${new Date().toLocaleString()}</p>
                     </div>
 
                     <div style="margin-bottom: 30px; padding: 20px; background: var(--light); border-radius: 15px;">
-                        <h3 style="color: var(--primary); margin-bottom: 15px;">Vitals</h3>
-                        <p><strong>Blood Pressure:</strong> ${document.getElementById('bloodPressure').value} mmHg</p>
-                        <p><strong>Temperature:</strong> ${document.getElementById('temperature').value}°F</p>
-                        <p><strong>Height:</strong> ${document.getElementById('height').value} cm</p>
-                        <p><strong>Weight:</strong> ${document.getElementById('weight').value} kg</p>
+                        <h3 style="color: var(--primary); margin-bottom: 15px;">${getTranslation('vitals')}</h3>
+                        <p><strong>${getTranslation('bp')}:</strong> ${document.getElementById('bloodPressure').value} mmHg</p>
+                        <p><strong>${getTranslation('temperature')}:</strong> ${document.getElementById('temperature').value}°F</p>
+                        <p><strong>${getTranslation('height')}:</strong> ${document.getElementById('height').value} cm</p>
+                        <p><strong>${getTranslation('weight')}:</strong> ${document.getElementById('weight').value} kg</p>
                     </div>
 
                     <div style="margin-bottom: 30px; padding: 20px; background: var(--light); border-radius: 15px;">
-                        <h3 style="color: var(--primary); margin-bottom: 15px;">All Reported Symptoms</h3>
+                        <h3 style="color: var(--primary); margin-bottom: 15px;">${getTranslation('allSymptoms') || 'All Reported Symptoms'}</h3>
                         <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;">
                             ${allSymptomNames.map(s => `<span style="background: var(--primary); color: white; padding: 5px 15px; border-radius: 20px;">${s}</span>`).join('')}
                         </div>
                     </div>
 
                     <div style="margin-bottom: 30px; padding: 20px; background: var(--light); border-radius: 15px;">
-                        <h3 style="color: var(--primary); margin-bottom: 15px;">Primary Diagnosis</h3>
+                        <h3 style="color: var(--primary); margin-bottom: 15px;">${getTranslation('primaryDiagnosis') || 'Primary Diagnosis'}</h3>
                         <h4 style="color: var(--dark); margin-bottom: 10px;">${disease.name}</h4>
                         <span class="severity-badge severity-${disease.severity}" style="margin-bottom: 15px;">${disease.severity.toUpperCase()}</span>
                         <p style="margin: 15px 0;">${disease.description}</p>
                         
-                        <h4 style="color: var(--primary); margin: 15px 0 10px;">Matching Symptoms:</h4>
+                        <h4 style="color: var(--primary); margin: 15px 0 10px;">${getTranslation('matchingSymptoms')}:</h4>
                         <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;">
                             ${matched.map(s => `<span style="background: var(--success); color: white; padding: 5px 15px; border-radius: 20px;">${s}</span>`).join('')}
                         </div>
                         
-                        <h4 style="color: var(--primary); margin: 15px 0 10px;">Medical Advice:</h4>
+                        <h4 style="color: var(--primary); margin: 15px 0 10px;">${getTranslation('advice')}:</h4>
                         <ul>${disease.advice.map(a => `<li>${a}</li>`).join('')}</ul>
                         
-                        <h4 style="color: var(--primary); margin: 15px 0 10px;">Home Remedies:</h4>
+                        <h4 style="color: var(--primary); margin: 15px 0 10px;">${getTranslation('homeRemedies')}:</h4>
                         <ul>${disease.homeRemedies.map(r => `<li>${r}</li>`).join('')}</ul>
                         
                         ${disease.severity === 'high' ? `
                             <div style="background: #fee2e2; padding: 20px; border-radius: 15px; margin: 20px 0;">
-                                <h4 style="color: var(--danger);">⚠️ Warning Signs - Consult Doctor Immediately</h4>
+                                <h4 style="color: var(--danger);">⚠️ ${getTranslation('warningSigns')} - ${getTranslation('consultDoctor')}</h4>
                                 <ul style="color: var(--danger);">${disease.warningSigns.map(w => `<li>${w}</li>`).join('')}</ul>
                             </div>
                         ` : ''}
@@ -3202,18 +3708,18 @@
 
                     ${topMatches.length > 1 ? `
                         <div style="margin-bottom: 30px; padding: 20px; background: var(--light); border-radius: 15px;">
-                            <h3 style="color: var(--primary); margin-bottom: 15px;">Other Possible Conditions</h3>
+                            <h3 style="color: var(--primary); margin-bottom: 15px;">${getTranslation('otherPossibilities') || 'Other Possible Conditions'}</h3>
                             ${topMatches.slice(1).map(m => `
                                 <div style="margin: 10px 0; padding: 10px; background: white; border-radius: 10px;">
-                                    <strong>${m.name}</strong> - ${m.score}% match (${m.matches} of ${m.total} symptoms)
+                                    <strong>${m.name}</strong> - ${m.score}% ${getTranslation('match') || 'match'} (${m.matches} ${getTranslation('of') || 'of'} ${m.total} ${getTranslation('symptoms')})
                                 </div>
                             `).join('')}
                         </div>
                     ` : ''}
                 </div>
                 <div style="display: flex; gap: 15px; margin-top: 30px;" class="no-print">
-                    <button class="print-btn" onclick="window.print()">Print Report</button>
-                    <button class="close-btn" onclick="document.getElementById('results').style.display='none'">Close</button>
+                    <button class="print-btn" onclick="window.print()">${getTranslation('print')}</button>
+                    <button class="close-btn" onclick="document.getElementById('results').style.display='none'">${getTranslation('close')}</button>
                 </div>
             `;
             results.style.display = 'block';
@@ -3261,7 +3767,7 @@
             const patientDiag = diagnoses.filter(d => d.patientId === currentPatient?.id).slice(0, 5);
             
             if (patientDiag.length === 0) {
-                container.innerHTML = '<p>No diagnoses yet</p>';
+                container.innerHTML = '<p>' + getTranslation('noDiagnoses') + '</p>';
                 return;
             }
             
@@ -3271,8 +3777,8 @@
                         <span class="patient-name">${d.diagnosis}</span>
                         <span class="patient-date">${new Date(d.date).toLocaleDateString()}</span>
                     </div>
-                    <p><strong>Severity:</strong> <span class="severity-badge severity-${d.severity}">${d.severity}</span></p>
-                    <p><strong>Symptoms:</strong> ${d.symptoms.join(', ')}</p>
+                    <p><strong>${getTranslation('severity')}:</strong> <span class="severity-badge severity-${d.severity}">${d.severity}</span></p>
+                    <p><strong>${getTranslation('symptoms')}:</strong> ${d.symptoms.join(', ')}</p>
                 </div>
             `).join('');
         }
@@ -3283,7 +3789,7 @@
             if (!container) return;
             
             if (reminders.length === 0) {
-                container.innerHTML = '<p>No reminders set</p>';
+                container.innerHTML = '<p>' + getTranslation('noReminders') + '</p>';
                 return;
             }
             
@@ -3291,15 +3797,15 @@
                 <div class="reminder-card">
                     <div class="reminder-info">
                         <h4>${r.medicine}</h4>
-                        <p>${r.dosage} | ${r.frequency}</p>
+                        <p>${r.dosage} | ${getTranslation(r.frequency)}</p>
                         <p class="reminder-time">${r.time}</p>
                     </div>
                     <div class="reminder-actions">
                         <button class="take-btn" onclick="markReminderTaken(${r.id})">
-                            <i class="fas fa-check"></i> Take
+                            <i class="fas fa-check"></i> ${getTranslation('take')}
                         </button>
                         <button class="snooze-btn" onclick="snoozeReminder(${r.id})">
-                            <i class="fas fa-clock"></i> Snooze
+                            <i class="fas fa-clock"></i> ${getTranslation('snooze')}
                         </button>
                         <button class="delete-btn" onclick="deleteReminder(${r.id})">
                             <i class="fas fa-trash"></i>
@@ -3340,17 +3846,15 @@
             reminders.push(newReminder);
             localStorage.setItem('reminders', JSON.stringify(reminders));
             
-            // Store in offline data if offline
             if (!navigator.onLine) {
                 offlineData.reminders.push(newReminder);
-                localStorage.setItem('ruralcare_data', JSON.stringify(offlineData));
+                localStorage.setItem('ruralcare_offline', JSON.stringify(offlineData));
             }
             
             loadReminders();
             cancelAddReminder();
-            showToast('Reminder added successfully');
+            showToast(getTranslation('reminderAdded') || 'Reminder added');
             
-            // Clear form
             document.getElementById('reminderMedicine').value = '';
             document.getElementById('reminderDosage').value = '';
         }
@@ -3360,27 +3864,17 @@
             if (reminder) {
                 reminder.taken = true;
                 localStorage.setItem('reminders', JSON.stringify(reminders));
-                showToast(`Taken: ${reminder.medicine}`);
+                showToast(`${getTranslation('taken')}: ${reminder.medicine}`);
                 loadReminders();
-                
-                // Schedule next dose if daily
-                if (reminder.frequency === 'daily') {
-                    setTimeout(() => {
-                        reminder.taken = false;
-                        localStorage.setItem('reminders', JSON.stringify(reminders));
-                        loadReminders();
-                        showToast(`Time for ${reminder.medicine}`, 'warning');
-                    }, 24 * 60 * 60 * 1000);
-                }
             }
         }
 
         function snoozeReminder(id) {
             const reminder = reminders.find(r => r.id === id);
             if (reminder) {
-                showToast(`Snoozed ${reminder.medicine} for 10 minutes`);
+                showToast(`${getTranslation('snoozed')} ${reminder.medicine} 10 ${getTranslation('minutes')}`);
                 setTimeout(() => {
-                    showToast(`Time for ${reminder.medicine} (snoozed)`, 'warning');
+                    showToast(`${getTranslation('timeFor')} ${reminder.medicine}`, 'warning');
                 }, 10 * 60 * 1000);
             }
         }
@@ -3389,7 +3883,7 @@
             reminders = reminders.filter(r => r.id !== id);
             localStorage.setItem('reminders', JSON.stringify(reminders));
             loadReminders();
-            showToast('Reminder deleted');
+            showToast(getTranslation('reminderDeleted') || 'Reminder deleted');
         }
 
         // ==================== FAMILY ACCOUNTS ====================
@@ -3398,7 +3892,7 @@
             if (!container) return;
             
             if (familyMembers.length === 0) {
-                container.innerHTML = '<p>No family members added</p>';
+                container.innerHTML = '<p>' + getTranslation('noFamily') + '</p>';
                 return;
             }
             
@@ -3410,15 +3904,15 @@
                         </div>
                         <div class="member-details">
                             <h4>${m.name}</h4>
-                            <p>${m.relation} | ${m.age} yrs | ${m.gender}</p>
+                            <p>${getTranslation(m.relation)} | ${m.age} ${getTranslation('years')} | ${getTranslation(m.gender)}</p>
                         </div>
                     </div>
                     <div class="member-actions">
                         <button class="switch-btn" onclick="switchToFamilyMember(${m.id})">
-                            <i class="fas fa-exchange-alt"></i> Switch
+                            <i class="fas fa-exchange-alt"></i> ${getTranslation('switch')}
                         </button>
                         <button class="remove-btn" onclick="removeFamilyMember(${m.id})">
-                            <i class="fas fa-times"></i>
+                            <i class="fas fa-times"></i> ${getTranslation('remove')}
                         </button>
                     </div>
                 </div>
@@ -3457,9 +3951,8 @@
             
             loadFamilyMembers();
             cancelAddFamily();
-            showToast('Family member added');
+            showToast(getTranslation('memberAdded') || 'Family member added');
             
-            // Clear form
             document.getElementById('familyName').value = '';
             document.getElementById('familyAge').value = '';
         }
@@ -3467,7 +3960,6 @@
         function switchToFamilyMember(id) {
             const member = familyMembers.find(m => m.id === id);
             if (member) {
-                // Save current patient as main
                 const tempPatient = { ...currentPatient };
                 currentPatient = {
                     ...tempPatient,
@@ -3483,16 +3975,16 @@
                 document.getElementById('age').value = member.age;
                 document.getElementById('gender').value = member.gender;
                 
-                showToast(`Switched to ${member.name}`);
+                showToast(`${getTranslation('switchedTo')} ${member.name}`);
             }
         }
 
         function removeFamilyMember(id) {
-            if (confirm('Are you sure you want to remove this family member?')) {
+            if (confirm(getTranslation('confirmRemove') || 'Are you sure?')) {
                 familyMembers = familyMembers.filter(m => m.id !== id);
                 localStorage.setItem('family', JSON.stringify(familyMembers));
                 loadFamilyMembers();
-                showToast('Family member removed');
+                showToast(getTranslation('memberRemoved') || 'Family member removed');
             }
         }
 
@@ -3500,14 +3992,12 @@
         function initMap() {
             if (map) return;
             
-            // Default to Chennai
             map = L.map('map').setView([13.0827, 80.2707], 12);
             
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '© OpenStreetMap contributors'
             }).addTo(map);
             
-            // Add hospital markers
             hospitals.forEach(hospital => {
                 const marker = L.marker([hospital.lat, hospital.lng]).addTo(map);
                 marker.bindPopup(`
@@ -3517,7 +4007,6 @@
                 `);
             });
             
-            // Add user location if available
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(pos => {
                     const userLat = pos.coords.latitude;
@@ -3525,13 +4014,12 @@
                     
                     L.marker([userLat, userLng], {
                         icon: L.divIcon({ className: 'user-location', html: '📍', iconSize: [20, 20] })
-                    }).addTo(map).bindPopup('You are here');
+                    }).addTo(map).bindPopup(getTranslation('youAreHere') || 'You are here');
                     
                     map.setView([userLat, userLng], 12);
                 });
             }
             
-            // Load hospital list
             const hospitalList = document.getElementById('hospitalList');
             hospitalList.innerHTML = hospitals.map(h => `
                 <div class="hospital-card">
@@ -3539,7 +4027,7 @@
                     <p><i class="fas fa-map-marker-alt"></i> ${h.address}</p>
                     <p><i class="fas fa-phone"></i> ${h.phone}</p>
                     <button class="direction-btn" onclick="getDirections(${h.lat}, ${h.lng})">
-                        <i class="fas fa-directions"></i> Get Directions
+                        <i class="fas fa-directions"></i> ${getTranslation('getDirections')}
                     </button>
                 </div>
             `).join('');
@@ -3564,7 +4052,6 @@
             const tempValues = patientDiag.map(d => parseFloat(d.vitals?.temperature || '98.6'));
             const weightValues = patientDiag.map(d => parseInt(d.vitals?.weight || '70'));
             
-            // Symptoms frequency chart
             const symptomCounts = {};
             patientDiag.forEach(d => {
                 d.symptoms.forEach(s => {
@@ -3583,8 +4070,8 @@
                 data: {
                     labels: dates,
                     datasets: [{
-                        label: 'Blood Pressure (Systolic)',
-                        data: bpValues,
+                        label: getTranslation('bpChart'),
+                        data: currentChartType === 'bp' ? bpValues : currentChartType === 'temp' ? tempValues : weightValues,
                         borderColor: 'rgb(37, 99, 235)',
                         tension: 0.1
                     }]
@@ -3600,7 +4087,7 @@
                 data: {
                     labels: symptomLabels,
                     datasets: [{
-                        label: 'Frequency',
+                        label: getTranslation('frequency'),
                         data: symptomData,
                         backgroundColor: 'rgba(16, 185, 129, 0.5)',
                         borderColor: 'rgb(16, 185, 129)',
@@ -3631,15 +4118,15 @@
                         const bp = d.vitals?.bloodPressure || '120/80';
                         return parseInt(bp.split('/')[0]);
                     });
-                    label = 'Blood Pressure (Systolic)';
+                    label = getTranslation('bpChart');
                     break;
                 case 'temp':
                     data = patientDiag.map(d => parseFloat(d.vitals?.temperature || '98.6'));
-                    label = 'Temperature (°F)';
+                    label = getTranslation('tempChart');
                     break;
                 case 'weight':
                     data = patientDiag.map(d => parseInt(d.vitals?.weight || '70'));
-                    label = 'Weight (kg)';
+                    label = getTranslation('weightChart');
                     break;
             }
             
@@ -3653,7 +4140,6 @@
         function initAdminChart() {
             const ctx = document.getElementById('adminChart').getContext('2d');
             
-            // Last 7 days diagnoses
             const last7Days = [];
             const counts = [];
             
@@ -3673,7 +4159,7 @@
                 data: {
                     labels: last7Days,
                     datasets: [{
-                        label: 'Diagnoses',
+                        label: getTranslation('diagnoses'),
                         data: counts,
                         borderColor: 'rgb(37, 99, 235)',
                         tension: 0.1,
@@ -3701,10 +4187,10 @@
                     <td>${u.id}</td>
                     <td>${u.name}</td>
                     <td>${u.email}</td>
-                    <td>${u.type}</td>
-                    <td><span class="status-badge status-active">Active</span></td>
+                    <td>${getTranslation(u.type.toLowerCase())}</td>
+                    <td><span class="status-badge status-active">${getTranslation('active')}</span></td>
                     <td>
-                        <button class="view-btn" onclick="viewUser('${u.id}')" style="padding: 5px 10px;">View</button>
+                        <button class="view-btn" onclick="viewUser('${u.id}')" style="padding: 5px 10px;">${getTranslation('view')}</button>
                     </td>
                 </tr>
             `).join('');
@@ -3713,7 +4199,7 @@
         function viewUser(userId) {
             const user = [...patients, ...doctors].find(u => u.id === userId);
             if (user) {
-                alert(`User Details:\nName: ${user.name}\nEmail: ${user.email}\nID: ${user.id}`);
+                alert(`${getTranslation('userDetails')}:\n${getTranslation('name')}: ${user.name}\n${getTranslation('email')}: ${user.email}\n${getTranslation('id')}: ${user.id}`);
             }
         }
 
@@ -3722,7 +4208,7 @@
             const container = document.getElementById('patientRecords');
             
             if (diagnoses.length === 0) {
-                container.innerHTML = '<p>No records yet</p>';
+                container.innerHTML = '<p>' + getTranslation('noRecords') + '</p>';
                 return;
             }
 
@@ -3738,30 +4224,30 @@
                         <span class="patient-date"><i class="fas fa-calendar"></i> ${new Date(d.date).toLocaleString()}</span>
                     </div>
                     <div class="patient-details">
-                        <p><i class="fas fa-stethoscope"></i> <strong>Diagnosis:</strong> ${d.diagnosis} <span class="severity-badge severity-${d.severity}" style="margin-left:10px;">${d.severity}</span></p>
-                        <p><i class="fas fa-notes-medical"></i> <strong>Symptoms:</strong> ${d.symptoms.join(', ')}</p>
+                        <p><i class="fas fa-stethoscope"></i> <strong>${getTranslation('diagnosis')}:</strong> ${d.diagnosis} <span class="severity-badge severity-${d.severity}" style="margin-left:10px;">${d.severity}</span></p>
+                        <p><i class="fas fa-notes-medical"></i> <strong>${getTranslation('symptoms')}:</strong> ${d.symptoms.join(', ')}</p>
                         ${d.vitals ? `
-                            <p><i class="fas fa-heartbeat"></i> <strong>Vitals:</strong> BP ${d.vitals.bloodPressure}, Temp ${d.vitals.temperature}°F</p>
+                            <p><i class="fas fa-heartbeat"></i> <strong>${getTranslation('vitals')}:</strong> BP ${d.vitals.bloodPressure}, ${getTranslation('temp')} ${d.vitals.temperature}°F</p>
                         ` : ''}
                     </div>
                     ${d.doctorAdvice ? `
                         <div class="advice-section">
-                            <strong><i class="fas fa-user-md"></i> Doctor's Advice:</strong>
+                            <strong><i class="fas fa-user-md"></i> ${getTranslation('doctorsAdvice')}:</strong>
                             <div class="advice-text">${d.doctorAdvice}</div>
                         </div>
                     ` : ''}
                     <div class="doctor-actions">
                         <button class="advice-btn" onclick="event.stopPropagation(); showAdviceForm('${d.id}')">
-                            <i class="fas fa-pen"></i> Add Advice
+                            <i class="fas fa-pen"></i> ${getTranslation('addAdvice')}
                         </button>
                         <button class="print-record-btn" onclick="event.stopPropagation(); printPatientRecord('${d.id}')">
-                            <i class="fas fa-print"></i> Print
+                            <i class="fas fa-print"></i> ${getTranslation('print')}
                         </button>
                     </div>
                     <div id="advice-form-${d.id}" style="display: none; margin-top: 20px;">
-                        <textarea id="advice-text-${d.id}" rows="3" style="width:100%; padding:15px; border:2px solid var(--border); border-radius:15px; margin-bottom:10px;" placeholder="Write your medical advice..."></textarea>
-                        <button class="login-btn" onclick="saveAdvice('${d.id}')" style="width:auto; padding:10px 25px;">Save Advice</button>
-                        <button class="login-btn" onclick="cancelAdvice('${d.id}')" style="width:auto; padding:10px 25px; background:var(--gray);">Cancel</button>
+                        <textarea id="advice-text-${d.id}" rows="3" style="width:100%; padding:15px; border:2px solid var(--border); border-radius:15px; margin-bottom:10px;" placeholder="${getTranslation('writeAdvice')}"></textarea>
+                        <button class="login-btn" onclick="saveAdvice('${d.id}')" style="width:auto; padding:10px 25px;">${getTranslation('saveAdvice')}</button>
+                        <button class="login-btn" onclick="cancelAdvice('${d.id}')" style="width:auto; padding:10px 25px; background:var(--gray);">${getTranslation('cancel')}</button>
                     </div>
                 `;
                 container.appendChild(div);
@@ -3788,7 +4274,7 @@
                 diagnosis.doctorAdvice = advice;
                 localStorage.setItem('diagnoses', JSON.stringify(diagnoses));
                 displayPatientRecords();
-                showToast('Advice saved successfully');
+                showToast(getTranslation('adviceSaved') || 'Advice saved');
             }
         }
 
@@ -3800,7 +4286,7 @@
             printWindow.document.write(`
                 <html>
                 <head>
-                    <title>Patient Record - ${diagnosis.patientName}</title>
+                    <title>${getTranslation('patientRecord')} - ${diagnosis.patientName}</title>
                     <style>
                         body { font-family: Arial, sans-serif; padding: 40px; }
                         h1 { color: #2563eb; text-align: center; margin-bottom: 30px; }
@@ -3814,41 +4300,41 @@
                     </style>
                 </head>
                 <body>
-                    <h1>Medical Record - ${diagnosis.patientName}</h1>
+                    <h1>${getTranslation('medicalRecord')} - ${diagnosis.patientName}</h1>
                     
                     <div class="section">
-                        <h2>Patient Information</h2>
-                        <p><strong>Name:</strong> ${diagnosis.patientName}</p>
-                        <p><strong>Age:</strong> ${diagnosis.age || 'N/A'}</p>
-                        <p><strong>Gender:</strong> ${diagnosis.gender || 'N/A'}</p>
-                        <p><strong>District:</strong> ${diagnosis.district || 'N/A'}</p>
-                        <p><strong>Date:</strong> ${new Date(diagnosis.date).toLocaleString()}</p>
+                        <h2>${getTranslation('patientInfo')}</h2>
+                        <p><strong>${getTranslation('name')}:</strong> ${diagnosis.patientName}</p>
+                        <p><strong>${getTranslation('age')}:</strong> ${diagnosis.age || 'N/A'}</p>
+                        <p><strong>${getTranslation('gender')}:</strong> ${diagnosis.gender || 'N/A'}</p>
+                        <p><strong>${getTranslation('district')}:</strong> ${diagnosis.district || 'N/A'}</p>
+                        <p><strong>${getTranslation('date')}:</strong> ${new Date(diagnosis.date).toLocaleString()}</p>
                     </div>
 
                     <div class="section">
-                        <h2>Vitals</h2>
-                        <p><strong>Blood Pressure:</strong> ${diagnosis.vitals?.bloodPressure || 'N/A'} mmHg</p>
-                        <p><strong>Temperature:</strong> ${diagnosis.vitals?.temperature || 'N/A'}°F</p>
-                        <p><strong>Height:</strong> ${diagnosis.vitals?.height || 'N/A'} cm</p>
-                        <p><strong>Weight:</strong> ${diagnosis.vitals?.weight || 'N/A'} kg</p>
+                        <h2>${getTranslation('vitals')}</h2>
+                        <p><strong>${getTranslation('bp')}:</strong> ${diagnosis.vitals?.bloodPressure || 'N/A'} mmHg</p>
+                        <p><strong>${getTranslation('temperature')}:</strong> ${diagnosis.vitals?.temperature || 'N/A'}°F</p>
+                        <p><strong>${getTranslation('height')}:</strong> ${diagnosis.vitals?.height || 'N/A'} cm</p>
+                        <p><strong>${getTranslation('weight')}:</strong> ${diagnosis.vitals?.weight || 'N/A'} kg</p>
                     </div>
 
                     <div class="section">
-                        <h2>Diagnosis</h2>
-                        <p><strong>Condition:</strong> ${diagnosis.diagnosis}</p>
-                        <p><strong>Severity:</strong> <span class="severity-${diagnosis.severity}">${diagnosis.severity.toUpperCase()}</span></p>
-                        <p><strong>Symptoms:</strong> ${diagnosis.symptoms.join(', ')}</p>
+                        <h2>${getTranslation('diagnosis')}</h2>
+                        <p><strong>${getTranslation('condition')}:</strong> ${diagnosis.diagnosis}</p>
+                        <p><strong>${getTranslation('severity')}:</strong> <span class="severity-${diagnosis.severity}">${diagnosis.severity.toUpperCase()}</span></p>
+                        <p><strong>${getTranslation('symptoms')}:</strong> ${diagnosis.symptoms.join(', ')}</p>
                     </div>
 
                     ${diagnosis.doctorAdvice ? `
                         <div class="section advice">
-                            <h2 style="color: white;">Doctor's Advice</h2>
+                            <h2 style="color: white;">${getTranslation('doctorsAdvice')}</h2>
                             <p>${diagnosis.doctorAdvice}</p>
                         </div>
                     ` : ''}
 
                     <div class="footer">
-                        <p>Generated by RuralCare Pro on ${new Date().toLocaleString()}</p>
+                        <p>${getTranslation('generatedBy')} RuralCare Pro ${getTranslation('on')} ${new Date().toLocaleString()}</p>
                     </div>
                 </body>
                 </html>
@@ -3861,22 +4347,19 @@
         function triggerSOS() {
             const sosBtn = document.getElementById('sosBtn');
             sosBtn.classList.add('active');
-            sosBtn.innerHTML = 'SOS ACTIVE';
+            sosBtn.innerHTML = getTranslation('sosActive') || 'SOS ACTIVE';
             
-            // Get location
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(pos => {
                     const lat = pos.coords.latitude;
                     const lng = pos.coords.longitude;
                     
                     document.getElementById('sosLocation').innerHTML = 
-                        `📍 Your location: ${lat.toFixed(4)}, ${lng.toFixed(4)}<br>
-                         <a href="https://www.google.com/maps?q=${lat},${lng}" target="_blank">View on Map</a>`;
+                        `📍 ${getTranslation('yourLocation')}: ${lat.toFixed(4)}, ${lng.toFixed(4)}<br>
+                         <a href="https://www.google.com/maps?q=${lat},${lng}" target="_blank">${getTranslation('viewOnMap')}</a>`;
                     
-                    // Simulate sending SOS to emergency contacts
-                    showToast('🚨 SOS sent to emergency contacts!', 'warning');
+                    showToast('🚨 ' + (getTranslation('sosSent') || 'SOS sent!'), 'warning');
                     
-                    // Flash effect
                     let count = 0;
                     const interval = setInterval(() => {
                         sosBtn.style.background = count % 2 ? 'white' : '#dc2626';
@@ -3890,10 +4373,10 @@
                     }, 300);
                     
                 }, () => {
-                    document.getElementById('sosLocation').innerHTML = 'Unable to get location. Please enable location services.';
+                    document.getElementById('sosLocation').innerHTML = getTranslation('locationError') || 'Unable to get location';
                 });
             } else {
-                document.getElementById('sosLocation').innerHTML = 'Geolocation not supported';
+                document.getElementById('sosLocation').innerHTML = getTranslation('geolocationNotSupported');
             }
         }
 
@@ -3907,15 +4390,6 @@
             toast.textContent = msg;
             toast.className = `toast show ${type}`;
             setTimeout(() => toast.classList.remove('show'), 3000);
-        }
-
-        // React Native Wrapper - For Mobile App
-        // This simulates React Native integration
-        if (window.ReactNativeWebView) {
-            window.ReactNativeWebView.postMessage(JSON.stringify({
-                type: 'INIT',
-                data: { user: currentPatient }
-            }));
         }
     </script>
 </body>

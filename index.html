@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>RuralCare Pro - 100+ Symptoms & AI Diagnosis</title>
+    <title>RuralCare Pro - 100+ Symptoms in 6 Languages</title>
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -1021,7 +1021,7 @@
             <div class="welcome-card">
                 <div class="welcome-icon">🏥</div>
                 <h1>Welcome to RuralCare Pro</h1>
-                <p>Complete healthcare platform with 100+ symptoms & AI diagnosis</p>
+                <p>Complete healthcare platform with 100+ symptoms in 6 languages</p>
                 <ul class="feature-list">
                     <li><i class="fas fa-check-circle"></i> 100+ Symptoms in 6 Languages</li>
                     <li><i class="fas fa-check-circle"></i> Voice Recognition in All Languages</li>
@@ -1040,8 +1040,8 @@
                 <!-- Patient Panel -->
                 <div class="login-panel active" id="patientPanel">
                     <div class="login-header">
-                        <h2>Patient Login</h2>
-                        <p>Login with your email/phone and password</p>
+                        <h2 data-i18n="patientLogin">Patient Login</h2>
+                        <p data-i18n="patientSubtitle">Login with your email/phone and password</p>
                     </div>
 
                     <div class="input-group">
@@ -1054,7 +1054,7 @@
                         <input type="password" id="patientPassword" placeholder="Password" value="123456">
                     </div>
 
-                    <button class="login-btn" onclick="loginWithPassword('patient')">Login</button>
+                    <button class="login-btn" onclick="loginWithPassword('patient')"><span data-i18n="patientLoginBtn">Login</span></button>
 
                     <div class="divider"><span>OR</span></div>
 
@@ -1071,7 +1071,7 @@
                     </div>
 
                     <div class="demo-box">
-                        <strong>Demo Patients (Use these):</strong>
+                        <strong data-i18n="demoPatients">Demo Patients (Use these):</strong>
                         <div class="demo-grid">
                             <div class="demo-item">patient@demo.com / 123456</div>
                             <div class="demo-item">rahul@demo.com / 123456</div>
@@ -1084,8 +1084,8 @@
                 <!-- Doctor Panel -->
                 <div class="login-panel" id="doctorPanel">
                     <div class="login-header">
-                        <h2>Doctor Login</h2>
-                        <p>Login with your email/phone and password</p>
+                        <h2 data-i18n="doctorLogin">Doctor Login</h2>
+                        <p data-i18n="doctorSubtitle">Login with your email/phone and password</p>
                     </div>
 
                     <div class="input-group">
@@ -1098,7 +1098,7 @@
                         <input type="password" id="doctorPassword" placeholder="Password" value="123456">
                     </div>
 
-                    <button class="login-btn" onclick="loginWithPassword('doctor')">Login</button>
+                    <button class="login-btn" onclick="loginWithPassword('doctor')"><span data-i18n="doctorLoginBtn">Login</span></button>
 
                     <div class="divider"><span>OR</span></div>
 
@@ -1115,7 +1115,7 @@
                     </div>
 
                     <div class="demo-box">
-                        <strong>Demo Doctors (Use these):</strong>
+                        <strong data-i18n="demoDoctors">Demo Doctors (Use these):</strong>
                         <div class="demo-grid">
                             <div class="demo-item">doctor@demo.com / 123456</div>
                             <div class="demo-item">sharma@hospital.com / 123456</div>
@@ -1138,7 +1138,7 @@
                     <p><span id="patientEmail">email</span></p>
                 </div>
             </div>
-            <button class="logout-btn" onclick="logout('patient')">Logout</button>
+            <button class="logout-btn" onclick="logout('patient')"><span data-i18n="logout">Logout</span></button>
         </div>
 
         <div class="app-content">
@@ -1148,35 +1148,35 @@
                     <div class="stat-icon"><i class="fas fa-calendar-check"></i></div>
                     <div>
                         <div class="stat-number" id="patientVisits">0</div>
-                        <div>Total Visits</div>
+                        <div data-i18n="totalVisits">Total Visits</div>
                     </div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon"><i class="fas fa-notes-medical"></i></div>
                     <div>
                         <div class="stat-number" id="patientDiagnoses">0</div>
-                        <div>Diagnoses</div>
+                        <div data-i18n="diagnoses">Diagnoses</div>
                     </div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon"><i class="fas fa-exclamation-triangle"></i></div>
                     <div>
                         <div class="stat-number" id="patientHighRisk">0</div>
-                        <div>High Risk</div>
+                        <div data-i18n="highRisk">High Risk</div>
                     </div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon"><i class="fas fa-calendar-day"></i></div>
                     <div>
                         <div class="stat-number" id="patientToday">0</div>
-                        <div>Today</div>
+                        <div data-i18n="today">Today</div>
                     </div>
                 </div>
             </div>
 
             <!-- Patient Info -->
             <div class="patient-form">
-                <h3 class="form-title"><i class="fas fa-user-circle"></i> Patient Information</h3>
+                <h3 class="form-title"><i class="fas fa-user-circle"></i> <span data-i18n="patientInfo">Patient Information</span></h3>
                 <div class="form-grid">
                     <div class="input-group">
                         <i class="fas fa-user"></i>
@@ -1189,15 +1189,15 @@
                     <div class="input-group">
                         <i class="fas fa-venus-mars"></i>
                         <select id="gender">
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                            <option value="other">Other</option>
+                            <option value="male" data-i18n="male">Male</option>
+                            <option value="female" data-i18n="female">Female</option>
+                            <option value="other" data-i18n="other">Other</option>
                         </select>
                     </div>
                     <div class="input-group">
                         <i class="fas fa-map-marker-alt"></i>
                         <select id="district">
-                            <option value="">Select District</option>
+                            <option value="" data-i18n="selectDistrict">Select District</option>
                         </select>
                     </div>
                 </div>
@@ -1205,29 +1205,29 @@
 
             <!-- Vitals Section -->
             <div class="vitals-section">
-                <h3 class="vitals-title"><i class="fas fa-heartbeat"></i> Your Vitals</h3>
+                <h3 class="vitals-title"><i class="fas fa-heartbeat"></i> <span data-i18n="vitals">Your Vitals</span></h3>
                 <div class="vitals-grid">
                     <div class="vital-card">
                         <i class="fas fa-heart"></i>
-                        <div>Blood Pressure</div>
+                        <div data-i18n="bp">Blood Pressure</div>
                         <input type="text" id="bloodPressure" placeholder="120/80" value="120/80">
                         <div class="vital-unit">mmHg</div>
                     </div>
                     <div class="vital-card">
                         <i class="fas fa-thermometer-half"></i>
-                        <div>Temperature</div>
+                        <div data-i18n="temperature">Temperature</div>
                         <input type="number" id="temperature" placeholder="98.6" value="98.6" step="0.1">
                         <div class="vital-unit">°F</div>
                     </div>
                     <div class="vital-card">
                         <i class="fas fa-ruler-vertical"></i>
-                        <div>Height</div>
+                        <div data-i18n="height">Height</div>
                         <input type="number" id="height" placeholder="170" value="170">
                         <div class="vital-unit">cm</div>
                     </div>
                     <div class="vital-card">
                         <i class="fas fa-weight-scale"></i>
-                        <div>Weight</div>
+                        <div data-i18n="weight">Weight</div>
                         <input type="number" id="weight" placeholder="70" value="70">
                         <div class="vital-unit">kg</div>
                     </div>
@@ -1236,30 +1236,30 @@
 
             <!-- Symptoms with 100+ Symptoms -->
             <div class="symptoms-section">
-                <h3 class="form-title"><i class="fas fa-stethoscope"></i> <span id="symptomTitle">Symptom Checker (100+ Symptoms)</span></h3>
+                <h3 class="form-title"><i class="fas fa-stethoscope"></i> <span id="symptomTitle" data-i18n="symptomChecker">Symptom Checker (100+ Symptoms)</span></h3>
                 
                 <div class="category-tabs" id="categoryTabs">
-                    <button class="category-tab active" onclick="filterSymptoms('all')">All</button>
-                    <button class="category-tab" onclick="filterSymptoms('respiratory')">Respiratory</button>
-                    <button class="category-tab" onclick="filterSymptoms('digestive')">Digestive</button>
-                    <button class="category-tab" onclick="filterSymptoms('neurological')">Neurological</button>
-                    <button class="category-tab" onclick="filterSymptoms('muscular')">Muscular</button>
-                    <button class="category-tab" onclick="filterSymptoms('skin')">Skin</button>
-                    <button class="category-tab" onclick="filterSymptoms('cardiovascular')">Cardio</button>
-                    <button class="category-tab" onclick="filterSymptoms('general')">General</button>
-                    <button class="category-tab" onclick="filterSymptoms('urinary')">Urinary</button>
+                    <button class="category-tab active" onclick="filterSymptoms('all')" data-i18n="all">All</button>
+                    <button class="category-tab" onclick="filterSymptoms('respiratory')" data-i18n="respiratory">Respiratory</button>
+                    <button class="category-tab" onclick="filterSymptoms('digestive')" data-i18n="digestive">Digestive</button>
+                    <button class="category-tab" onclick="filterSymptoms('neurological')" data-i18n="neurological">Neurological</button>
+                    <button class="category-tab" onclick="filterSymptoms('muscular')" data-i18n="muscular">Muscular</button>
+                    <button class="category-tab" onclick="filterSymptoms('skin')" data-i18n="skin">Skin</button>
+                    <button class="category-tab" onclick="filterSymptoms('cardiovascular')" data-i18n="cardiovascular">Cardio</button>
+                    <button class="category-tab" onclick="filterSymptoms('general')" data-i18n="general">General</button>
+                    <button class="category-tab" onclick="filterSymptoms('urinary')" data-i18n="urinary">Urinary</button>
                 </div>
 
                 <div class="symptoms-grid" id="symptomsGrid"></div>
 
-                <h4 style="margin:15px 0 10px">Selected Symptoms:</h4>
+                <h4 style="margin:15px 0 10px" data-i18n="selectedSymptoms">Selected Symptoms:</h4>
                 <div class="selected-tags" id="symptomTags"></div>
             </div>
 
             <!-- Voice Section -->
             <div class="voice-section">
                 <div class="voice-header">
-                    <h3><i class="fas fa-microphone-alt"></i> <span id="voiceTitle">Voice Symptom Recorder</span></h3>
+                    <h3><i class="fas fa-microphone-alt"></i> <span id="voiceTitle" data-i18n="voiceTitle">Voice Symptom Recorder</span></h3>
                     <div class="active-language-badge" id="activeLanguageBadge">
                         <i class="fas fa-language"></i> English
                     </div>
@@ -1273,18 +1273,18 @@
                 </div>
 
                 <div class="voice-status" id="voiceStatus">
-                    <i class="fas fa-info-circle"></i> Click the microphone and speak in your language
+                    <i class="fas fa-info-circle"></i> <span data-i18n="voiceStatus">Click the microphone and speak in your language</span>
                 </div>
 
                 <div class="voice-transcript" id="voiceTranscript">
                     <div class="transcript-label">
-                        <i class="fas fa-file-audio"></i> Recognized Speech:
+                        <i class="fas fa-file-audio"></i> <span data-i18n="recognizedSpeech">Recognized Speech:</span>
                     </div>
                     <div class="transcript-text" id="recognizedText">
-                        Click the microphone and start speaking...
+                        <span data-i18n="clickMicrophone">Click the microphone and start speaking...</span>
                     </div>
                     <div class="detected-languages" id="detectedLanguages">
-                        <span class="lang-tag"><i class="fas fa-check-circle"></i> Ready</span>
+                        <span class="lang-tag"><i class="fas fa-check-circle"></i> <span data-i18n="ready">Ready</span></span>
                     </div>
                 </div>
 
@@ -1297,7 +1297,7 @@
             </div>
 
             <!-- Analyze -->
-            <button class="analyze-btn" onclick="analyzeHealth()"><span id="analyzeBtn">Analyze Symptoms</span></button>
+            <button class="analyze-btn" onclick="analyzeHealth()"><span id="analyzeBtn" data-i18n="analyze">Analyze Symptoms</span></button>
 
             <!-- Results -->
             <div class="results-card" id="results"></div>
@@ -1314,7 +1314,7 @@
                     <p><span id="doctorEmail">email</span></p>
                 </div>
             </div>
-            <button class="logout-btn" onclick="logout('doctor')">Logout</button>
+            <button class="logout-btn" onclick="logout('doctor')"><span data-i18n="logout">Logout</span></button>
         </div>
 
         <div class="app-content">
@@ -1323,34 +1323,34 @@
                     <div class="stat-icon"><i class="fas fa-users"></i></div>
                     <div>
                         <div class="stat-number" id="totalPatients">6</div>
-                        <div>Total Patients</div>
+                        <div data-i18n="totalPatients">Total Patients</div>
                     </div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon"><i class="fas fa-notes-medical"></i></div>
                     <div>
                         <div class="stat-number" id="totalReports">0</div>
-                        <div>Reports</div>
+                        <div data-i18n="reports">Reports</div>
                     </div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon"><i class="fas fa-exclamation-triangle"></i></div>
                     <div>
                         <div class="stat-number" id="criticalCases">0</div>
-                        <div>Critical</div>
+                        <div data-i18n="critical">Critical</div>
                     </div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon"><i class="fas fa-calendar-day"></i></div>
                     <div>
                         <div class="stat-number" id="todayPatients">0</div>
-                        <div>Today</div>
+                        <div data-i18n="today">Today</div>
                     </div>
                 </div>
             </div>
 
             <div class="doctor-section">
-                <h3 class="form-title"><i class="fas fa-clipboard-list"></i> Patient Records</h3>
+                <h3 class="form-title"><i class="fas fa-clipboard-list"></i> <span data-i18n="patientRecords">Patient Records</span></h3>
                 <div id="patientRecords" style="margin-top:20px;"></div>
             </div>
         </div>
@@ -1360,12 +1360,33 @@
     <div class="toast" id="toast"></div>
 
     <script>
-        // ==================== MULTI-LANGUAGE TRANSLATIONS ====================
+        // ==================== MULTI-LANGUAGE TRANSLATIONS - 6 LANGUAGES ====================
         const translations = {
             en: {
-                symptomTitle: 'Symptom Checker (100+ Symptoms)',
-                voiceTitle: 'Voice Symptom Recorder',
-                analyzeBtn: 'Analyze Symptoms',
+                patientLogin: 'Patient Login',
+                patientSubtitle: 'Login with your email/phone and password',
+                doctorLogin: 'Doctor Login',
+                doctorSubtitle: 'Login with your email/phone and password',
+                patientLoginBtn: 'Login',
+                doctorLoginBtn: 'Login',
+                demoPatients: 'Demo Patients (Use these):',
+                demoDoctors: 'Demo Doctors (Use these):',
+                logout: 'Logout',
+                totalVisits: 'Total Visits',
+                diagnoses: 'Diagnoses',
+                highRisk: 'High Risk',
+                today: 'Today',
+                patientInfo: 'Patient Information',
+                male: 'Male',
+                female: 'Female',
+                other: 'Other',
+                selectDistrict: 'Select District',
+                vitals: 'Your Vitals',
+                bp: 'Blood Pressure',
+                temperature: 'Temperature',
+                height: 'Height',
+                weight: 'Weight',
+                symptomChecker: 'Symptom Checker (100+ Symptoms)',
                 all: 'All',
                 respiratory: 'Respiratory',
                 digestive: 'Digestive',
@@ -1376,12 +1397,25 @@
                 general: 'General',
                 urinary: 'Urinary',
                 selectedSymptoms: 'Selected Symptoms:',
-                typeSymptoms: 'Type any symptoms manually (comma separated) - ALL will be diagnosed',
+                voiceTitle: 'Voice Symptom Recorder',
                 voiceStatus: 'Click the microphone and speak in your language',
-                recording: 'Recording... Speak now',
-                processing: 'Processing your speech...',
-                completed: 'Voice captured successfully!',
+                recognizedSpeech: 'Recognized Speech:',
+                clickMicrophone: 'Click the microphone and start speaking...',
+                ready: 'Ready',
+                analyze: 'Analyze Symptoms',
+                totalPatients: 'Total Patients',
+                reports: 'Reports',
+                critical: 'Critical',
+                patientRecords: 'Patient Records',
                 cough: 'Cough',
+                fever: 'Fever',
+                headache: 'Headache',
+                fatigue: 'Fatigue',
+                bodyAche: 'Body ache',
+                nausea: 'Nausea',
+                vomiting: 'Vomiting',
+                diarrhea: 'Diarrhea',
+                abdominalPain: 'Abdominal pain',
                 shortnessOfBreath: 'Shortness of breath',
                 wheezing: 'Wheezing',
                 chestPain: 'Chest pain',
@@ -1391,17 +1425,12 @@
                 nasalCongestion: 'Nasal congestion',
                 coughingBlood: 'Coughing blood',
                 dryCough: 'Dry cough',
-                nausea: 'Nausea',
-                vomiting: 'Vomiting',
-                diarrhea: 'Diarrhea',
                 constipation: 'Constipation',
-                abdominalPain: 'Abdominal pain',
                 bloating: 'Bloating',
                 heartburn: 'Heartburn',
                 lossOfAppetite: 'Loss of appetite',
                 bloodInStool: 'Blood in stool',
                 difficultySwallowing: 'Difficulty swallowing',
-                headache: 'Headache',
                 dizziness: 'Dizziness',
                 confusion: 'Confusion',
                 seizures: 'Seizures',
@@ -1425,8 +1454,6 @@
                 skinRedness: 'Skin redness',
                 skinDiscoloration: 'Skin discoloration',
                 woundsNotHealing: 'Wounds not healing',
-                fever: 'Fever',
-                fatigue: 'Fatigue',
                 chills: 'Chills',
                 nightSweats: 'Night sweats',
                 weightLoss: 'Weight loss',
@@ -1440,8 +1467,542 @@
                 frequentUrination: 'Frequent urination',
                 painfulUrination: 'Painful urination',
                 bloodInUrine: 'Blood in urine',
-                urgentUrination: 'Urgent urination',
-                bodyAche: 'Body ache'
+                urgentUrination: 'Urgent urination'
+            },
+            hi: {
+                patientLogin: 'रोगी लॉगिन',
+                patientSubtitle: 'अपने ईमेल/फोन और पासवर्ड से लॉगिन करें',
+                doctorLogin: 'डॉक्टर लॉगिन',
+                doctorSubtitle: 'अपने ईमेल/फोन और पासवर्ड से लॉगिन करें',
+                patientLoginBtn: 'लॉगिन',
+                doctorLoginBtn: 'लॉगिन',
+                demoPatients: 'डेमो रोगी (इनका उपयोग करें):',
+                demoDoctors: 'डेमो डॉक्टर (इनका उपयोग करें):',
+                logout: 'लॉगआउट',
+                totalVisits: 'कुल विज़िट',
+                diagnoses: 'निदान',
+                highRisk: 'उच्च जोखिम',
+                today: 'आज',
+                patientInfo: 'रोगी जानकारी',
+                male: 'पुरुष',
+                female: 'महिला',
+                other: 'अन्य',
+                selectDistrict: 'जिला चुनें',
+                vitals: 'आपके महत्वपूर्ण अंग',
+                bp: 'रक्तचाप',
+                temperature: 'तापमान',
+                height: 'ऊंचाई',
+                weight: 'वजन',
+                symptomChecker: 'लक्षण जांचकर्ता (100+ लक्षण)',
+                all: 'सभी',
+                respiratory: 'श्वसन',
+                digestive: 'पाचन',
+                neurological: 'तंत्रिका',
+                muscular: 'मांसपेशी',
+                skin: 'त्वचा',
+                cardiovascular: 'हृदय',
+                general: 'सामान्य',
+                urinary: 'मूत्र',
+                selectedSymptoms: 'चयनित लक्षण:',
+                voiceTitle: 'आवाज लक्षण रिकॉर्डर',
+                voiceStatus: 'माइक्रोफोन पर क्लिक करें और अपनी भाषा में बोलें',
+                recognizedSpeech: 'पहचानी गई आवाज:',
+                clickMicrophone: 'माइक्रोफोन पर क्लिक करें और बोलना शुरू करें...',
+                ready: 'तैयार',
+                analyze: 'लक्षण विश्लेषण करें',
+                totalPatients: 'कुल रोगी',
+                reports: 'रिपोर्ट',
+                critical: 'गंभीर',
+                patientRecords: 'रोगी रिकॉर्ड',
+                cough: 'खांसी',
+                fever: 'बुखार',
+                headache: 'सिरदर्द',
+                fatigue: 'थकान',
+                bodyAche: 'शरीर दर्द',
+                nausea: 'मतली',
+                vomiting: 'उल्टी',
+                diarrhea: 'दस्त',
+                abdominalPain: 'पेट दर्द',
+                shortnessOfBreath: 'सांस की तकलीफ',
+                wheezing: 'घरघराहट',
+                chestPain: 'सीने में दर्द',
+                soreThroat: 'गले में खराश',
+                runnyNose: 'बहती नाक',
+                sneezing: 'छींकना',
+                nasalCongestion: 'नाक बंद होना',
+                coughingBlood: 'खून वाली खांसी',
+                dryCough: 'सूखी खांसी',
+                constipation: 'कब्ज',
+                bloating: 'पेट फूलना',
+                heartburn: 'सीने में जलन',
+                lossOfAppetite: 'भूख न लगना',
+                bloodInStool: 'मल में खून',
+                difficultySwallowing: 'निगलने में कठिनाई',
+                dizziness: 'चक्कर आना',
+                confusion: 'भ्रम',
+                seizures: 'दौरे',
+                tremors: 'कंपकंपी',
+                numbness: 'सुन्नता',
+                weakness: 'कमजोरी',
+                memoryLoss: 'स्मृति हानि',
+                balanceProblems: 'संतुलन की समस्या',
+                slurredSpeech: 'अस्पष्ट वाणी',
+                jointPain: 'जोड़ों का दर्द',
+                musclePain: 'मांसपेशियों में दर्द',
+                backPain: 'पीठ दर्द',
+                neckPain: 'गर्दन दर्द',
+                jointSwelling: 'जोड़ों में सूजन',
+                stiffness: 'अकड़न',
+                muscleCramps: 'मांसपेशियों में ऐंठन',
+                rash: 'चकत्ते',
+                itching: 'खुजली',
+                hives: 'पित्ती',
+                drySkin: 'शुष्क त्वचा',
+                skinRedness: 'त्वचा का लाल होना',
+                skinDiscoloration: 'त्वचा का रंग बदलना',
+                woundsNotHealing: 'घाव न भरना',
+                chills: 'ठंड लगना',
+                nightSweats: 'रात को पसीना',
+                weightLoss: 'वजन घटना',
+                weightGain: 'वजन बढ़ना',
+                dehydration: 'निर्जलीकरण',
+                swollenLymphNodes: 'सूजी हुई लिम्फ नोड्स',
+                palpitations: 'धड़कन',
+                highBP: 'उच्च रक्तचाप',
+                lowBP: 'निम्न रक्तचाप',
+                swollenAnkles: 'टखनों में सूजन',
+                frequentUrination: 'बार-बार पेशाब',
+                painfulUrination: 'दर्दनाक पेशाब',
+                bloodInUrine: 'पेशाब में खून',
+                urgentUrination: 'तत्काल पेशाब'
+            },
+            ta: {
+                patientLogin: 'நோயாளி உள்நுழைவு',
+                patientSubtitle: 'உங்கள் மின்னஞ்சல்/தொலைபேசி மற்றும் கடவுச்சொல் மூலம் உள்நுழைக',
+                doctorLogin: 'மருத்துவர் உள்நுழைவு',
+                doctorSubtitle: 'உங்கள் மின்னஞ்சல்/தொலைபேசி மற்றும் கடவுச்சொல் மூலம் உள்நுழைக',
+                patientLoginBtn: 'உள்நுழைக',
+                doctorLoginBtn: 'உள்நுழைக',
+                demoPatients: 'டெமோ நோயாளிகள் (இவற்றைப் பயன்படுத்தவும்):',
+                demoDoctors: 'டெமோ மருத்துவர்கள் (இவற்றைப் பயன்படுத்தவும்):',
+                logout: 'வெளியேறு',
+                totalVisits: 'மொத்த வருகைகள்',
+                diagnoses: 'நோயறிதல்கள்',
+                highRisk: 'அதிக ஆபத்து',
+                today: 'இன்று',
+                patientInfo: 'நோயாளி தகவல்',
+                male: 'ஆண்',
+                female: 'பெண்',
+                other: 'மற்றவை',
+                selectDistrict: 'மாவட்டத்தைத் தேர்ந்தெடுக்கவும்',
+                vitals: 'உங்கள் முக்கிய அறிகுறிகள்',
+                bp: 'இரத்த அழுத்தம்',
+                temperature: 'வெப்பநிலை',
+                height: 'உயரம்',
+                weight: 'எடை',
+                symptomChecker: 'அறிகுறி சரிபார்ப்பான் (100+ அறிகுறிகள்)',
+                all: 'அனைத்தும்',
+                respiratory: 'சுவாசம்',
+                digestive: 'செரிமானம்',
+                neurological: 'நரம்பியல்',
+                muscular: 'தசை',
+                skin: 'தோல்',
+                cardiovascular: 'இதயம்',
+                general: 'பொது',
+                urinary: 'சிறுநீர்',
+                selectedSymptoms: 'தேர்ந்தெடுக்கப்பட்ட அறிகுறிகள்:',
+                voiceTitle: 'குரல் அறிகுறி பதிவி',
+                voiceStatus: 'மைக்ரோஃபோனை கிளிக் செய்து உங்கள் மொழியில் பேசுங்கள்',
+                recognizedSpeech: 'அங்கீகரிக்கப்பட்ட பேச்சு:',
+                clickMicrophone: 'மைக்ரோஃபோனை கிளிக் செய்து பேசத் தொடங்குங்கள்...',
+                ready: 'தயார்',
+                analyze: 'அறிகுறிகளை பகுப்பாய்வு செய்யுங்கள்',
+                totalPatients: 'மொத்த நோயாளிகள்',
+                reports: 'அறிக்கைகள்',
+                critical: 'முக்கியமான',
+                patientRecords: 'நோயாளி பதிவுகள்',
+                cough: 'இருமல்',
+                fever: 'காய்ச்சல்',
+                headache: 'தலைவலி',
+                fatigue: 'சோர்வு',
+                bodyAche: 'உடல் வலி',
+                nausea: 'குமட்டல்',
+                vomiting: 'வாந்தி',
+                diarrhea: 'வயிற்றுப்போக்கு',
+                abdominalPain: 'வயிற்று வலி',
+                shortnessOfBreath: 'மூச்சுத் திணறல்',
+                wheezing: 'மூச்சு விடும் சத்தம்',
+                chestPain: 'மார்பு வலி',
+                soreThroat: 'தொண்டை வலி',
+                runnyNose: 'மூக்கு ஒழுகுதல்',
+                sneezing: 'தும்மல்',
+                nasalCongestion: 'மூக்கடைப்பு',
+                coughingBlood: 'இரத்த இருமல்',
+                dryCough: 'உலர் இருமல்',
+                constipation: 'மலச்சிக்கல்',
+                bloating: 'வயிறு உப்புசம்',
+                heartburn: 'நெஞ்செரிச்சல்',
+                lossOfAppetite: 'பசியின்மை',
+                bloodInStool: 'மலத்தில் இரத்தம்',
+                difficultySwallowing: 'விழுங்குவதில் சிரமம்',
+                dizziness: 'தலைச்சுற்றல்',
+                confusion: 'குழப்பம்',
+                seizures: 'வலிப்பு',
+                tremors: 'நடுக்கம்',
+                numbness: 'உணர்வின்மை',
+                weakness: 'பலவீனம்',
+                memoryLoss: 'நினைவு இழப்பு',
+                balanceProblems: 'சமநிலை பிரச்சனைகள்',
+                slurredSpeech: 'தெளிவற்ற பேச்சு',
+                jointPain: 'மூட்டு வலி',
+                musclePain: 'தசை வலி',
+                backPain: 'முதுகு வலி',
+                neckPain: 'கழுத்து வலி',
+                jointSwelling: 'மூட்டு வீக்கம்',
+                stiffness: 'விறைப்பு',
+                muscleCramps: 'தசைப்பிடிப்பு',
+                rash: 'தடிப்பு',
+                itching: 'அரிப்பு',
+                hives: 'படை',
+                drySkin: 'வறண்ட சருமம்',
+                skinRedness: 'தோல் சிவத்தல்',
+                skinDiscoloration: 'தோல் நிறமாற்றம்',
+                woundsNotHealing: 'காயம் ஆறாமை',
+                chills: 'குளிர்',
+                nightSweats: 'இரவு வியர்வை',
+                weightLoss: 'எடை இழப்பு',
+                weightGain: 'எடை அதிகரிப்பு',
+                dehydration: 'நீரிழப்பு',
+                swollenLymphNodes: 'வீங்கிய நிணநீர் முடிச்சுகள்',
+                palpitations: 'நெஞ்சுத்துடிப்பு',
+                highBP: 'உயர் இரத்த அழுத்தம்',
+                lowBP: 'தாழ் இரத்த அழுத்தம்',
+                swollenAnkles: 'கணுக்கால் வீக்கம்',
+                frequentUrination: 'அடிக்கடி சிறுநீர்',
+                painfulUrination: 'வலி நிறைந்த சிறுநீர்',
+                bloodInUrine: 'சிறுநீரில் இரத்தம்',
+                urgentUrination: 'அவசர சிறுநீர்'
+            },
+            te: {
+                patientLogin: 'రోగి లాగిన్',
+                patientSubtitle: 'మీ ఇమెయిల్/ఫోన్ మరియు పాస్‌వర్డ్‌తో లాగిన్ చేయండి',
+                doctorLogin: 'డాక్టర్ లాగిన్',
+                doctorSubtitle: 'మీ ఇమెయిల్/ఫోన్ మరియు పాస్‌వర్డ్‌తో లాగిన్ చేయండి',
+                patientLoginBtn: 'లాగిన్',
+                doctorLoginBtn: 'లాగిన్',
+                demoPatients: 'డెమో రోగులు (వీటిని ఉపయోగించండి):',
+                demoDoctors: 'డెమో డాక్టర్లు (వీటిని ఉపయోగించండి):',
+                logout: 'లాగ్అవుట్',
+                totalVisits: 'మొత్తం సందర్శనలు',
+                diagnoses: 'రోగ నిర్ధారణలు',
+                highRisk: 'అధిక ప్రమాదం',
+                today: 'ఈరోజు',
+                patientInfo: 'రోగి సమాచారం',
+                male: 'పురుషుడు',
+                female: 'స్త్రీ',
+                other: 'ఇతర',
+                selectDistrict: 'జిల్లాను ఎంచుకోండి',
+                vitals: 'మీ ముఖ్య అంశాలు',
+                bp: 'రక్తపోటు',
+                temperature: 'ఉష్ణోగ్రత',
+                height: 'ఎత్తు',
+                weight: 'బరువు',
+                symptomChecker: 'లక్షణ పరిశీలకుడు (100+ లక్షణాలు)',
+                all: 'అన్నీ',
+                respiratory: 'శ్వాసకోశ',
+                digestive: 'జీర్ణ',
+                neurological: 'నాడీ',
+                muscular: 'కండరాల',
+                skin: 'చర్మం',
+                cardiovascular: 'గుండె',
+                general: 'సాధారణ',
+                urinary: 'మూత్ర',
+                selectedSymptoms: 'ఎంచుకున్న లక్షణాలు:',
+                voiceTitle: 'వాయిస్ లక్షణ రికార్డర్',
+                voiceStatus: 'మైక్రోఫోన్ పై క్లిక్ చేసి మీ భాషలో మాట్లాడండి',
+                recognizedSpeech: 'గుర్తించబడిన ప్రసంగం:',
+                clickMicrophone: 'మైక్రోఫోన్ పై క్లిక్ చేసి మాట్లాడటం ప్రారంభించండి...',
+                ready: 'సిద్ధంగా ఉంది',
+                analyze: 'లక్షణాలను విశ్లేషించండి',
+                totalPatients: 'మొత్తం రోగులు',
+                reports: 'నివేదికలు',
+                critical: 'క్రిటికల్',
+                patientRecords: 'రోగి రికార్డులు',
+                cough: 'దగ్గు',
+                fever: 'జ్వరం',
+                headache: 'తలనొప్పి',
+                fatigue: 'అలసట',
+                bodyAche: 'శరీర నొప్పి',
+                nausea: 'వికారం',
+                vomiting: 'వాంతులు',
+                diarrhea: 'విరేచనాలు',
+                abdominalPain: 'కడుపు నొప్పి',
+                shortnessOfBreath: 'ఊపిరి ఆడకపోవడం',
+                wheezing: 'గురక',
+                chestPain: 'ఛాతీ నొప్పి',
+                soreThroat: 'గొంతు నొప్పి',
+                runnyNose: 'ముక్కు కారడం',
+                sneezing: 'తుమ్ములు',
+                nasalCongestion: 'ముక్కు దిబ్బడ',
+                coughingBlood: 'రక్తం దగ్గు',
+                dryCough: 'పొడి దగ్గు',
+                constipation: 'మలబద్ధకం',
+                bloating: 'ఉబ్బరం',
+                heartburn: 'గుండెల్లో మంట',
+                lossOfAppetite: 'ఆకలి లేకపోవడం',
+                bloodInStool: 'మలంలో రక్తం',
+                difficultySwallowing: 'మింగడంలో ఇబ్బంది',
+                dizziness: 'తలతిరగడం',
+                confusion: 'గందరగోళం',
+                seizures: 'మూర్ఛలు',
+                tremors: 'వణుకు',
+                numbness: 'తిమ్మిరి',
+                weakness: 'బలహీనత',
+                memoryLoss: 'జ్ఞాపకశక్తి తగ్గడం',
+                balanceProblems: 'సమతుల్యత సమస్యలు',
+                slurredSpeech: 'మాట తడబడడం',
+                jointPain: 'కీళ్ల నొప్పి',
+                musclePain: 'కండరాల నొప్పి',
+                backPain: 'వెన్నునొప్పి',
+                neckPain: 'మెడ నొప్పి',
+                jointSwelling: 'కీళ్ల వాపు',
+                stiffness: 'బిగుతు',
+                muscleCramps: 'కండరాల తిమ్మిరి',
+                rash: 'దద్దుర్లు',
+                itching: 'దురద',
+                hives: 'ఉర్టికేరియా',
+                drySkin: 'పొడి చర్మం',
+                skinRedness: 'చర్మం ఎర్రబడడం',
+                skinDiscoloration: 'చర్మం రంగు మారడం',
+                woundsNotHealing: 'గాయాలు మానకపోవడం',
+                chills: 'చలి',
+                nightSweats: 'రాత్రి చెమటలు',
+                weightLoss: 'బరువు తగ్గడం',
+                weightGain: 'బరువు పెరగడం',
+                dehydration: 'నిర్జలీకరణం',
+                swollenLymphNodes: 'వాపు లింఫ్ నోడ్స్',
+                palpitations: 'గుండె దడ',
+                highBP: 'అధిక రక్తపోటు',
+                lowBP: 'తక్కువ రక్తపోటు',
+                swollenAnkles: 'చీలమండల వాపు',
+                frequentUrination: 'తరచూ మూత్రం',
+                painfulUrination: 'బాధాకరమైన మూత్రం',
+                bloodInUrine: 'మూత్రంలో రక్తం',
+                urgentUrination: 'అత్యవసర మూత్రం'
+            },
+            kn: {
+                patientLogin: 'ರೋಗಿಯ ಲಾಗಿನ್',
+                patientSubtitle: 'ನಿಮ್ಮ ಇಮೇಲ್/ಫೋನ್ ಮತ್ತು ಪಾಸ್‌ವರ್ಡ್‌ನೊಂದಿಗೆ ಲಾಗಿನ್ ಮಾಡಿ',
+                doctorLogin: 'ವೈದ್ಯರ ಲಾಗಿನ್',
+                doctorSubtitle: 'ನಿಮ್ಮ ಇಮೇಲ್/ಫೋನ್ ಮತ್ತು ಪಾಸ್‌ವರ್ಡ್‌ನೊಂದಿಗೆ ಲಾಗಿನ್ ಮಾಡಿ',
+                patientLoginBtn: 'ಲಾಗಿನ್',
+                doctorLoginBtn: 'ಲಾಗಿನ್',
+                demoPatients: 'ಡೆಮೊ ರೋಗಿಗಳು (ಇವುಗಳನ್ನು ಬಳಸಿ):',
+                demoDoctors: 'ಡೆಮೊ ವೈದ್ಯರು (ಇವುಗಳನ್ನು ಬಳಸಿ):',
+                logout: 'ಲಾಗೌಟ್',
+                totalVisits: 'ಒಟ್ಟು ಭೇಟಿಗಳು',
+                diagnoses: 'ರೋಗನಿರ್ಣಯಗಳು',
+                highRisk: 'ಹೆಚ್ಚಿನ ಅಪಾಯ',
+                today: 'ಇಂದು',
+                patientInfo: 'ರೋಗಿಯ ಮಾಹಿತಿ',
+                male: 'ಪುರುಷ',
+                female: 'ಮಹಿಳೆ',
+                other: 'ಇತರೆ',
+                selectDistrict: 'ಜಿಲ್ಲೆ ಆಯ್ಕೆಮಾಡಿ',
+                vitals: 'ನಿಮ್ಮ ಪ್ರಮುಖ ಅಂಶಗಳು',
+                bp: 'ರಕ್ತದೊತ್ತಡ',
+                temperature: 'ತಾಪಮಾನ',
+                height: 'ಎತ್ತರ',
+                weight: 'ತೂಕ',
+                symptomChecker: 'ರೋಗಲಕ್ಷಣ ಪರಿಶೀಲಕ (100+ ರೋಗಲಕ್ಷಣಗಳು)',
+                all: 'ಎಲ್ಲಾ',
+                respiratory: 'ಉಸಿರಾಟದ',
+                digestive: 'ಜೀರ್ಣಕಾರಿ',
+                neurological: 'ನರವೈಜ್ಞಾನಿಕ',
+                muscular: 'ಸ್ನಾಯು',
+                skin: 'ಚರ್ಮ',
+                cardiovascular: 'ಹೃದಯ',
+                general: 'ಸಾಮಾನ್ಯ',
+                urinary: 'ಮೂತ್ರ',
+                selectedSymptoms: 'ಆಯ್ದ ರೋಗಲಕ್ಷಣಗಳು:',
+                voiceTitle: 'ಧ್ವನಿ ರೋಗಲಕ್ಷಣ ರೆಕಾರ್ಡರ್',
+                voiceStatus: 'ಮೈಕ್ರೊಫೋನ್ ಕ್ಲಿಕ್ ಮಾಡಿ ಮತ್ತು ನಿಮ್ಮ ಭಾಷೆಯಲ್ಲಿ ಮಾತನಾಡಿ',
+                recognizedSpeech: 'ಗುರುತಿಸಲಾದ ಭಾಷಣ:',
+                clickMicrophone: 'ಮೈಕ್ರೊಫೋನ್ ಕ್ಲಿಕ್ ಮಾಡಿ ಮತ್ತು ಮಾತನಾಡಲು ಪ್ರಾರಂಭಿಸಿ...',
+                ready: 'ಸಿದ್ಧವಾಗಿದೆ',
+                analyze: 'ರೋಗಲಕ್ಷಣಗಳನ್ನು ವಿಶ್ಲೇಷಿಸಿ',
+                totalPatients: 'ಒಟ್ಟು ರೋಗಿಗಳು',
+                reports: 'ವರದಿಗಳು',
+                critical: 'ಗಂಭೀರ',
+                patientRecords: 'ರೋಗಿಯ ದಾಖಲೆಗಳು',
+                cough: 'ಕೆಮ್ಮು',
+                fever: 'ಜ್ವರ',
+                headache: 'ತಲೆನೋವು',
+                fatigue: 'ಆಯಾಸ',
+                bodyAche: 'ದೇಹ ನೋವು',
+                nausea: 'ವಾಕರಿಕೆ',
+                vomiting: 'ವಾಂತಿ',
+                diarrhea: 'ಅತಿಸಾರ',
+                abdominalPain: 'ಹೊಟ್ಟೆ ನೋವು',
+                shortnessOfBreath: 'ಉಸಿರಾಟದ ತೊಂದರೆ',
+                wheezing: 'ಉಬ್ಬಸ',
+                chestPain: 'ಎದೆ ನೋವು',
+                soreThroat: 'ಗಂಟಲು ನೋವು',
+                runnyNose: 'ಸ್ರವಿಸುವ ಮೂಗು',
+                sneezing: 'ಸೀನುವಿಕೆ',
+                nasalCongestion: 'ಮೂಗಿನ ದಟ್ಟಣೆ',
+                coughingBlood: 'ರಕ್ತದ ಕೆಮ್ಮು',
+                dryCough: 'ಒಣ ಕೆಮ್ಮು',
+                constipation: 'ಮಲಬದ್ಧತೆ',
+                bloating: 'ಉಬ್ಬರ',
+                heartburn: 'ಎದೆಯುರಿ',
+                lossOfAppetite: 'ಹಸಿವಿನ ಕೊರತೆ',
+                bloodInStool: 'ಮಲದಲ್ಲಿ ರಕ್ತ',
+                difficultySwallowing: 'ನುಂಗಲು ಕಷ್ಟ',
+                dizziness: 'ತಲೆತಿರುಗುವಿಕೆ',
+                confusion: 'ಗೊಂದಲ',
+                seizures: 'ಸೆಳವು',
+                tremors: 'ನಡುಕ',
+                numbness: 'ಮರಗಟ್ಟುವಿಕೆ',
+                weakness: 'ದೌರ್ಬಲ್ಯ',
+                memoryLoss: 'ನೆನಪಿನ ಶಕ್ತಿ ಕಳೆದುಕೊಳ್ಳುವುದು',
+                balanceProblems: 'ಸಮತೋಲನ ಸಮಸ್ಯೆಗಳು',
+                slurredSpeech: 'ತೊದಲುನುಡಿ',
+                jointPain: 'ಕೀಲು ನೋವು',
+                musclePain: 'ಸ್ನಾಯು ನೋವು',
+                backPain: 'ಬೆನ್ನು ನೋವು',
+                neckPain: 'ಕುತ್ತಿಗೆ ನೋವು',
+                jointSwelling: 'ಕೀಲು ಊತ',
+                stiffness: 'ಬಿಗಿತ',
+                muscleCramps: 'ಸ್ನಾಯು ಸೆಳೆತ',
+                rash: 'ದದ್ದು',
+                itching: 'ತುರಿಕೆ',
+                hives: 'ಜೇನುಗೂಡುಗಳು',
+                drySkin: 'ಒಣ ಚರ್ಮ',
+                skinRedness: 'ಚರ್ಮದ ಕೆಂಪಾಗುವಿಕೆ',
+                skinDiscoloration: 'ಚರ್ಮದ ಬಣ್ಣ ಬದಲಾವಣೆ',
+                woundsNotHealing: 'ಗಾಯಗಳು ವಾಸಿಯಾಗದೆ',
+                chills: 'ಶೀತ',
+                nightSweats: 'ರಾತ್ರಿ ಬೆವರುವಿಕೆ',
+                weightLoss: 'ತೂಕ ಇಳಿಕೆ',
+                weightGain: 'ತೂಕ ಹೆಚ್ಚಳ',
+                dehydration: 'ನಿರ್ಜಲೀಕರಣ',
+                swollenLymphNodes: 'ಊದಿದ ದುಗ್ಧರಸ ಗ್ರಂಥಿಗಳು',
+                palpitations: 'ಹೃದಯ ಬಡಿತ',
+                highBP: 'ಅಧಿಕ ರಕ್ತದೊತ್ತಡ',
+                lowBP: 'ಕಡಿಮೆ ರಕ್ತದೊತ್ತಡ',
+                swollenAnkles: 'ಕಣಕಾಲು ಊತ',
+                frequentUrination: 'ಆಗಾಗ ಮೂತ್ರ',
+                painfulUrination: 'ನೋವಿನ ಮೂತ್ರ',
+                bloodInUrine: 'ಮೂತ್ರದಲ್ಲಿ ರಕ್ತ',
+                urgentUrination: 'ತುರ್ತು ಮೂತ್ರ'
+            },
+            ml: {
+                patientLogin: 'രോഗി ലോഗിൻ',
+                patientSubtitle: 'നിങ്ങളുടെ ഇമെയിൽ/ഫോൺ, പാസ്‌വേഡ് എന്നിവ ഉപയോഗിച്ച് ലോഗിൻ ചെയ്യുക',
+                doctorLogin: 'ഡോക്ടർ ലോഗിൻ',
+                doctorSubtitle: 'നിങ്ങളുടെ ഇമെയിൽ/ഫോൺ, പാസ്‌വേഡ് എന്നിവ ഉപയോഗിച്ച് ലോഗിൻ ചെയ്യുക',
+                patientLoginBtn: 'ലോഗിൻ',
+                doctorLoginBtn: 'ലോഗിൻ',
+                demoPatients: 'ഡെമോ രോഗികൾ (ഇവ ഉപയോഗിക്കുക):',
+                demoDoctors: 'ഡെമോ ഡോക്ടർമാർ (ഇവ ഉപയോഗിക്കുക):',
+                logout: 'ലോഗൗട്ട്',
+                totalVisits: 'ആകെ സന്ദർശനങ്ങൾ',
+                diagnoses: 'രോഗനിർണയങ്ങൾ',
+                highRisk: 'ഉയർന്ന അപകടസാധ്യത',
+                today: 'ഇന്ന്',
+                patientInfo: 'രോഗിയുടെ വിവരങ്ങൾ',
+                male: 'പുരുഷൻ',
+                female: 'സ്ത്രീ',
+                other: 'മറ്റുള്ളവ',
+                selectDistrict: 'ജില്ല തിരഞ്ഞെടുക്കുക',
+                vitals: 'നിങ്ങളുടെ സുപ്രധാന അടയാളങ്ങൾ',
+                bp: 'രക്തസമ്മർദ്ദം',
+                temperature: 'താപനില',
+                height: 'ഉയരം',
+                weight: 'ഭാരം',
+                symptomChecker: 'രോഗലക്ഷണ പരിശോധകൻ (100+ രോഗലക്ഷണങ്ങൾ)',
+                all: 'എല്ലാം',
+                respiratory: 'ശ്വസന',
+                digestive: 'ദഹന',
+                neurological: 'ന്യൂറോളജിക്കൽ',
+                muscular: 'പേശീ',
+                skin: 'ചർമ്മം',
+                cardiovascular: 'ഹൃദയ',
+                general: 'പൊതുവായ',
+                urinary: 'മൂത്ര',
+                selectedSymptoms: 'തിരഞ്ഞെടുത്ത രോഗലക്ഷണങ്ങൾ:',
+                voiceTitle: 'ശബ്ദ രോഗലക്ഷണ റെക്കോർഡർ',
+                voiceStatus: 'മൈക്രോഫോണിൽ ക്ലിക്ക് ചെയ്ത് നിങ്ങളുടെ ഭാഷയിൽ സംസാരിക്കുക',
+                recognizedSpeech: 'തിരിച്ചറിഞ്ഞ സംസാരം:',
+                clickMicrophone: 'മൈക്രോഫോണിൽ ക്ലിക്ക് ചെയ്ത് സംസാരിക്കാൻ ആരംഭിക്കുക...',
+                ready: 'തയ്യാറാണ്',
+                analyze: 'രോഗലക്ഷണങ്ങൾ വിശകലനം ചെയ്യുക',
+                totalPatients: 'ആകെ രോഗികൾ',
+                reports: 'റിപ്പോർട്ടുകൾ',
+                critical: 'ഗുരുതരമായ',
+                patientRecords: 'രോഗിയുടെ രേഖകൾ',
+                cough: 'ചുമ',
+                fever: 'പനി',
+                headache: 'തലവേദന',
+                fatigue: 'ക്ഷീണം',
+                bodyAche: 'ശരീരവേദന',
+                nausea: 'ഓക്കാനം',
+                vomiting: 'ഛർദ്ദി',
+                diarrhea: 'വയറിളക്കം',
+                abdominalPain: 'വയറുവേദന',
+                shortnessOfBreath: 'ശ്വാസതടസ്സം',
+                wheezing: 'ശ്വാസംമുട്ടൽ',
+                chestPain: 'നെഞ്ചുവേദന',
+                soreThroat: 'തൊണ്ടവേദന',
+                runnyNose: 'മൂക്കൊലിപ്പ്',
+                sneezing: 'തുമ്മൽ',
+                nasalCongestion: 'മൂക്കടപ്പ്',
+                coughingBlood: 'രക്തം ചുമ',
+                dryCough: 'വരണ്ട ചുമ',
+                constipation: 'മലബന്ധം',
+                bloating: 'വയറുവീർക്കൽ',
+                heartburn: 'നെഞ്ചെരിച്ചിൽ',
+                lossOfAppetite: 'വിശപ്പില്ലായ്മ',
+                bloodInStool: 'മലത്തിൽ രക്തം',
+                difficultySwallowing: 'വിഴുങ്ങാൻ ബുദ്ധിമുട്ട്',
+                dizziness: 'തലകറക്കം',
+                confusion: 'ആശയക്കുഴപ്പം',
+                seizures: 'അപസ്മാരം',
+                tremors: 'വിറയൽ',
+                numbness: 'മരവിപ്പ്',
+                weakness: 'ബലഹീനത',
+                memoryLoss: 'ഓർമ്മക്കുറവ്',
+                balanceProblems: 'ബാലൻസ് പ്രശ്നങ്ങൾ',
+                slurredSpeech: 'വ്യക്തമല്ലാത്ത സംസാരം',
+                jointPain: 'സന്ധി വേദന',
+                musclePain: 'പേശി വേദന',
+                backPain: 'നടുവേദന',
+                neckPain: 'കഴുത്ത് വേദന',
+                jointSwelling: 'സന്ധി വീക്കം',
+                stiffness: 'കാഠിന്യം',
+                muscleCramps: 'പേശീവലിവ്',
+                rash: 'തടിപ്പ്',
+                itching: 'ചൊറിച്ചിൽ',
+                hives: 'തേനീച്ചക്കൂടുകൾ',
+                drySkin: 'വരണ്ട ചർമ്മം',
+                skinRedness: 'ചർമ്മത്തിൽ ചുവപ്പ്',
+                skinDiscoloration: 'ചർമ്മത്തിന്റെ നിറവ്യത്യാസം',
+                woundsNotHealing: 'മുറിവുകൾ ഉണങ്ങാതിരിക്കുക',
+                chills: 'വിറയൽ',
+                nightSweats: 'രാത്രി വിയർപ്പ്',
+                weightLoss: 'ശരീരഭാരം കുറയൽ',
+                weightGain: 'ശരീരഭാരം വർദ്ധിക്കൽ',
+                dehydration: 'നിർജ്ജലീകരണം',
+                swollenLymphNodes: 'വീർത്ത ലിംഫ് നോഡുകൾ',
+                palpitations: 'ഹൃദയമിടിപ്പ്',
+                highBP: 'ഉയർന്ന രക്തസമ്മർദ്ദം',
+                lowBP: 'കുറഞ്ഞ രക്തസമ്മർദ്ദം',
+                swollenAnkles: 'കണങ്കാൽ വീക്കം',
+                frequentUrination: 'ഇടയ്ക്കിടെ മൂത്രം',
+                painfulUrination: 'വേദനാജനകമായ മൂത്രം',
+                bloodInUrine: 'മൂത്രത്തിൽ രക്തം',
+                urgentUrination: 'അടിയന്തര മൂത്രം'
             }
         };
 
@@ -1715,6 +2276,61 @@
                 vomiting: ['vomiting', 'throw up'],
                 diarrhea: ['diarrhea', 'loose motion'],
                 abdominalPain: ['abdominal pain', 'stomach ache']
+            },
+            hi: {
+                cough: ['खांसी'],
+                fever: ['बुखार'],
+                headache: ['सिरदर्द'],
+                fatigue: ['थकान'],
+                bodyAche: ['शरीर दर्द'],
+                nausea: ['मतली'],
+                vomiting: ['उल्टी'],
+                diarrhea: ['दस्त'],
+                abdominalPain: ['पेट दर्द']
+            },
+            ta: {
+                cough: ['இருமல்'],
+                fever: ['காய்ச்சல்'],
+                headache: ['தலைவலி'],
+                fatigue: ['சோர்வு'],
+                bodyAche: ['உடல் வலி'],
+                nausea: ['குமட்டல்'],
+                vomiting: ['வாந்தி'],
+                diarrhea: ['வயிற்றுப்போக்கு'],
+                abdominalPain: ['வயிற்று வலி']
+            },
+            te: {
+                cough: ['దగ్గు'],
+                fever: ['జ్వరం'],
+                headache: ['తలనొప్పి'],
+                fatigue: ['అలసట'],
+                bodyAche: ['శరీర నొప్పి'],
+                nausea: ['వికారం'],
+                vomiting: ['వాంతులు'],
+                diarrhea: ['విరేచనాలు'],
+                abdominalPain: ['కడుపు నొప్పి']
+            },
+            kn: {
+                cough: ['ಕೆಮ್ಮು'],
+                fever: ['ಜ್ವರ'],
+                headache: ['ತಲೆನೋವು'],
+                fatigue: ['ಆಯಾಸ'],
+                bodyAche: ['ದೇಹ ನೋವು'],
+                nausea: ['ವಾಕರಿಕೆ'],
+                vomiting: ['ವಾಂತಿ'],
+                diarrhea: ['ಅತಿಸಾರ'],
+                abdominalPain: ['ಹೊಟ್ಟೆ ನೋವು']
+            },
+            ml: {
+                cough: ['ചുമ'],
+                fever: ['പനി'],
+                headache: ['തലവേദന'],
+                fatigue: ['ക്ഷീണം'],
+                bodyAche: ['ശരീരവേദന'],
+                nausea: ['ഓക്കാനം'],
+                vomiting: ['ഛർദ്ദി'],
+                diarrhea: ['വയറിളക്കം'],
+                abdominalPain: ['വയറുവേദന']
             }
         };
 
@@ -1731,11 +2347,12 @@
             document.getElementById('doctorPassword').value = '123456';
             
             updateLanguageBadge();
+            applyLanguage('en');
         });
 
         function loadDistricts() {
             const select = document.getElementById('district');
-            select.innerHTML = '<option value="">Select District</option>';
+            select.innerHTML = '<option value="">' + getTranslation('selectDistrict') + '</option>';
             districts.forEach(d => {
                 const option = document.createElement('option');
                 option.value = d;
@@ -1754,37 +2371,66 @@
             currentLanguage = lang;
             document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
-            
-            const t = translations[lang] || translations.en;
-            document.getElementById('symptomTitle').textContent = t.symptomTitle;
-            document.getElementById('voiceTitle').textContent = t.voiceTitle;
-            document.getElementById('analyzeBtn').textContent = t.analyzeBtn;
-            document.getElementById('voiceStatus').innerHTML = `<i class="fas fa-info-circle"></i> ${t.voiceStatus}`;
-            document.getElementById('typedSymptoms').placeholder = t.typeSymptoms;
-            
-            const tabs = document.querySelectorAll('.category-tab');
-            tabs[0].textContent = t.all;
-            tabs[1].textContent = t.respiratory;
-            tabs[2].textContent = t.digestive;
-            tabs[3].textContent = t.neurological;
-            tabs[4].textContent = t.muscular;
-            tabs[5].textContent = t.skin;
-            tabs[6].textContent = t.cardiovascular;
-            tabs[7].textContent = t.general;
-            tabs[8].textContent = t.urinary;
-            
+            applyLanguage(lang);
             updateLanguageBadge();
+            showToast('Language: ' + lang.toUpperCase());
+        }
+
+        function applyLanguage(lang) {
+            const t = translations[lang] || translations.en;
+            
+            // Update all elements with data-i18n attribute
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (t[key]) {
+                    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                        el.placeholder = t[key];
+                    } else if (el.tagName === 'OPTION') {
+                        el.textContent = t[key];
+                    } else {
+                        el.textContent = t[key];
+                    }
+                }
+            });
+
+            // Update specific elements by ID
+            document.getElementById('symptomTitle').textContent = t.symptomChecker;
+            document.getElementById('voiceTitle').textContent = t.voiceTitle;
+            document.getElementById('analyzeBtn').textContent = t.analyze;
+            document.getElementById('voiceStatus').innerHTML = `<i class="fas fa-info-circle"></i> ${t.voiceStatus}`;
+            
+            const typedSymptomsInput = document.getElementById('typedSymptoms');
+            if (typedSymptomsInput) {
+                typedSymptomsInput.placeholder = t.typeSymptoms || 'Type any symptoms manually (comma separated)';
+            }
+
+            // Update category tabs
+            const tabs = document.querySelectorAll('.category-tab');
+            if (tabs.length >= 9) {
+                tabs[0].textContent = t.all;
+                tabs[1].textContent = t.respiratory;
+                tabs[2].textContent = t.digestive;
+                tabs[3].textContent = t.neurological;
+                tabs[4].textContent = t.muscular;
+                tabs[5].textContent = t.skin;
+                tabs[6].textContent = t.cardiovascular;
+                tabs[7].textContent = t.general;
+                tabs[8].textContent = t.urinary;
+            }
+            
+            // Update symptoms display
             displaySymptoms(currentCategory);
             updateSymptomTags();
-            
-            showToast('Language: ' + lang.toUpperCase());
+        }
+
+        function getTranslation(key) {
+            return translations[currentLanguage]?.[key] || translations.en[key] || key;
         }
 
         function getSymptomName(symptomId) {
             const symptom = symptomsDB.find(s => s.id === symptomId);
             if (!symptom) return '';
-            const t = translations[currentLanguage] || translations.en;
-            return t[symptom.name] || symptom.name;
+            return getTranslation(symptom.name);
         }
 
         // ==================== SYMPTOMS ====================
@@ -1824,7 +2470,7 @@
         function updateSymptomTags() {
             const container = document.getElementById('symptomTags');
             if (selectedSymptoms.length === 0) {
-                container.innerHTML = '<p style="color:var(--gray);">No symptoms selected</p>';
+                container.innerHTML = '<p style="color:var(--gray);">' + getTranslation('selectedSymptoms') + '</p>';
                 return;
             }
             
@@ -1880,8 +2526,8 @@
                 recordBtn.classList.add('recording');
                 recordBtn.innerHTML = '<i class="fas fa-stop"></i>';
                 
-                document.getElementById('voiceStatus').innerHTML = `<i class="fas fa-spinner fa-pulse"></i> ${t.recording}`;
-                document.getElementById('recognizedText').innerHTML = 'Listening...';
+                document.getElementById('voiceStatus').innerHTML = `<i class="fas fa-spinner fa-pulse"></i> ${t.recording || 'Recording...'}`;
+                document.getElementById('recognizedText').innerHTML = t.recording ? 'Listening...' : 'Listening...';
                 document.getElementById('detectedLanguages').innerHTML = '<span class="lang-tag"><i class="fas fa-spinner fa-pulse"></i> Listening...</span>';
                 
                 seconds = 0;
@@ -1933,11 +2579,11 @@
                             ).join('');
                             document.getElementById('detectedLanguages').innerHTML = langTags;
                         } else {
-                            document.getElementById('detectedLanguages').innerHTML = '<span class="lang-tag"><i class="fas fa-check-circle"></i> Detected</span>';
+                            document.getElementById('detectedLanguages').innerHTML = '<span class="lang-tag"><i class="fas fa-check-circle"></i> ' + (t.ready || 'Ready') + '</span>';
                         }
                         
-                        document.getElementById('voiceStatus').innerHTML = `<i class="fas fa-check-circle"></i> ${t.completed}`;
-                        showToast('Voice captured successfully!');
+                        document.getElementById('voiceStatus').innerHTML = `<i class="fas fa-check-circle"></i> ${t.completed || 'Voice captured successfully!'}`;
+                        showToast(t.completed || 'Voice captured successfully!');
                     }
                 }, 3000);
             } else {
@@ -1994,7 +2640,6 @@
         }
 
         function socialLogin(provider, type) {
-            // Generate random email based on provider
             const randomNum = Math.floor(Math.random() * 1000);
             const email = `${provider}_user${randomNum}@example.com`;
             const name = type === 'patient' ? 
@@ -2068,14 +2713,14 @@
             showToast('Logged out');
         }
 
-        // ==================== AI DIAGNOSIS - NOW HANDLES ANY SYMPTOM ====================
+        // ==================== AI DIAGNOSIS ====================
         function analyzeHealth() {
             if (!currentPatient) {
                 showToast('Please login first', 'error');
                 return;
             }
 
-            // Get typed symptoms - THIS WILL NOW DIAGNOSE ANY SYMPTOM ENTERED
+            // Get typed symptoms
             const typedText = document.getElementById('typedSymptoms').value.toLowerCase();
             const typedSymptomsList = typedText.split(',').map(s => s.trim()).filter(s => s.length > 0);
             
@@ -2084,13 +2729,20 @@
             
             // Match typed symptoms against our symptom database
             typedSymptomsList.forEach(typedSymptom => {
-                // Try to find exact or partial matches in symptomsDB
-                const matches = symptomsDB.filter(s => 
-                    getSymptomName(s.id).toLowerCase().includes(typedSymptom) || 
-                    typedSymptom.includes(getSymptomName(s.id).toLowerCase())
-                );
-                
-                matches.forEach(match => matchedSymptomIds.add(match.id));
+                // Check against all languages
+                for (const [lang, patterns] of Object.entries(voicePatterns)) {
+                    for (const [symptomKey, keywords] of Object.entries(patterns)) {
+                        for (const keyword of keywords) {
+                            if (typedSymptom.includes(keyword.toLowerCase()) || keyword.toLowerCase().includes(typedSymptom)) {
+                                const symptom = symptomsDB.find(s => s.name === symptomKey);
+                                if (symptom) {
+                                    matchedSymptomIds.add(symptom.id);
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
             });
 
             // Convert Set back to array
@@ -2172,44 +2824,45 @@
         }
 
         function showGenericDiagnosis(typedSymptoms) {
+            const t = translations[currentLanguage] || translations.en;
             const results = document.getElementById('results');
             results.innerHTML = `
                 <div class="print-section">
-                    <h2 style="color: var(--primary); margin-bottom: 20px; text-align: center;">Symptom Analysis</h2>
+                    <h2 style="color: var(--primary); margin-bottom: 20px; text-align: center;">${t.diagnosisReport || 'Symptom Analysis'}</h2>
                     
                     <div style="margin-bottom: 30px; padding: 20px; background: var(--light); border-radius: 15px;">
-                        <h3 style="color: var(--primary); margin-bottom: 15px;">Patient Information</h3>
-                        <p><strong>Name:</strong> ${document.getElementById('fullName').value}</p>
-                        <p><strong>Age:</strong> ${document.getElementById('age').value}</p>
-                        <p><strong>Gender:</strong> ${document.getElementById('gender').value}</p>
-                        <p><strong>District:</strong> ${document.getElementById('district').value}</p>
-                        <p><strong>Date:</strong> ${new Date().toLocaleString()}</p>
+                        <h3 style="color: var(--primary); margin-bottom: 15px;">${t.patientInfo || 'Patient Information'}</h3>
+                        <p><strong>${t.name || 'Name'}:</strong> ${document.getElementById('fullName').value}</p>
+                        <p><strong>${t.age || 'Age'}:</strong> ${document.getElementById('age').value}</p>
+                        <p><strong>${t.gender || 'Gender'}:</strong> ${document.getElementById('gender').value}</p>
+                        <p><strong>${t.district || 'District'}:</strong> ${document.getElementById('district').value}</p>
+                        <p><strong>${t.date || 'Date'}:</strong> ${new Date().toLocaleString()}</p>
                     </div>
 
                     <div style="margin-bottom: 30px; padding: 20px; background: var(--light); border-radius: 15px;">
-                        <h3 style="color: var(--primary); margin-bottom: 15px;">Your Reported Symptoms</h3>
+                        <h3 style="color: var(--primary); margin-bottom: 15px;">${t.yourSymptoms || 'Your Reported Symptoms'}</h3>
                         <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;">
                             ${typedSymptoms.map(s => `<span style="background: var(--primary); color: white; padding: 5px 15px; border-radius: 20px;">${s}</span>`).join('')}
                         </div>
-                        <p style="margin: 15px 0;">Based on the symptoms you've described, please consult with a healthcare provider for an accurate diagnosis. These symptoms could be associated with various conditions.</p>
+                        <p style="margin: 15px 0;">${t.genericMessage || 'Based on the symptoms you\'ve described, please consult with a healthcare provider for an accurate diagnosis. These symptoms could be associated with various conditions.'}</p>
                     </div>
 
                     <div style="margin-bottom: 30px; padding: 20px; background: var(--light); border-radius: 15px;">
-                        <h3 style="color: var(--primary); margin-bottom: 15px;">General Recommendations</h3>
+                        <h3 style="color: var(--primary); margin-bottom: 15px;">${t.recommendations || 'General Recommendations'}</h3>
                         <ul>
-                            <li>Rest and stay hydrated</li>
-                            <li>Monitor your symptoms</li>
-                            <li>Consult a doctor if symptoms persist</li>
-                            <li>Keep track of any new symptoms</li>
+                            <li>${t.restAdvice || 'Rest and stay hydrated'}</li>
+                            <li>${t.monitorAdvice || 'Monitor your symptoms'}</li>
+                            <li>${t.doctorAdvice || 'Consult a doctor if symptoms persist'}</li>
+                            <li>${t.trackAdvice || 'Keep track of any new symptoms'}</li>
                         </ul>
                     </div>
                 </div>
                 <div style="display: flex; gap: 15px; margin-top: 30px;" class="no-print">
                     <button class="print-btn" onclick="window.print()">
-                        <i class="fas fa-print"></i> Print Report
+                        <i class="fas fa-print"></i> ${t.printReport || 'Print Report'}
                     </button>
                     <button class="close-btn" onclick="document.getElementById('results').style.display='none'">
-                        Close
+                        ${t.close || 'Close'}
                     </button>
                 </div>
             `;
@@ -2217,6 +2870,7 @@
         }
 
         function showResults(disease, allSymptoms, topMatches) {
+            const t = translations[currentLanguage] || translations.en;
             const matched = disease.symptoms.filter(id => allSymptoms.includes(id))
                 .map(id => getSymptomName(id));
             
@@ -2225,52 +2879,52 @@
             const results = document.getElementById('results');
             results.innerHTML = `
                 <div class="print-section">
-                    <h2 style="color: var(--primary); margin-bottom: 20px; text-align: center;">Medical Diagnosis Report</h2>
+                    <h2 style="color: var(--primary); margin-bottom: 20px; text-align: center;">${t.diagnosisReport || 'Medical Diagnosis Report'}</h2>
                     
                     <div style="margin-bottom: 30px; padding: 20px; background: var(--light); border-radius: 15px;">
-                        <h3 style="color: var(--primary); margin-bottom: 15px;">Patient Information</h3>
-                        <p><strong>Name:</strong> ${document.getElementById('fullName').value}</p>
-                        <p><strong>Age:</strong> ${document.getElementById('age').value}</p>
-                        <p><strong>Gender:</strong> ${document.getElementById('gender').value}</p>
-                        <p><strong>District:</strong> ${document.getElementById('district').value}</p>
-                        <p><strong>Date:</strong> ${new Date().toLocaleString()}</p>
+                        <h3 style="color: var(--primary); margin-bottom: 15px;">${t.patientInfo || 'Patient Information'}</h3>
+                        <p><strong>${t.name || 'Name'}:</strong> ${document.getElementById('fullName').value}</p>
+                        <p><strong>${t.age || 'Age'}:</strong> ${document.getElementById('age').value}</p>
+                        <p><strong>${t.gender || 'Gender'}:</strong> ${document.getElementById('gender').value}</p>
+                        <p><strong>${t.district || 'District'}:</strong> ${document.getElementById('district').value}</p>
+                        <p><strong>${t.date || 'Date'}:</strong> ${new Date().toLocaleString()}</p>
                     </div>
 
                     <div style="margin-bottom: 30px; padding: 20px; background: var(--light); border-radius: 15px;">
-                        <h3 style="color: var(--primary); margin-bottom: 15px;">Vitals</h3>
-                        <p><strong>Blood Pressure:</strong> ${document.getElementById('bloodPressure').value} mmHg</p>
-                        <p><strong>Temperature:</strong> ${document.getElementById('temperature').value}°F</p>
-                        <p><strong>Height:</strong> ${document.getElementById('height').value} cm</p>
-                        <p><strong>Weight:</strong> ${document.getElementById('weight').value} kg</p>
+                        <h3 style="color: var(--primary); margin-bottom: 15px;">${t.vitals || 'Vitals'}</h3>
+                        <p><strong>${t.bp || 'Blood Pressure'}:</strong> ${document.getElementById('bloodPressure').value} mmHg</p>
+                        <p><strong>${t.temperature || 'Temperature'}:</strong> ${document.getElementById('temperature').value}°F</p>
+                        <p><strong>${t.height || 'Height'}:</strong> ${document.getElementById('height').value} cm</p>
+                        <p><strong>${t.weight || 'Weight'}:</strong> ${document.getElementById('weight').value} kg</p>
                     </div>
 
                     <div style="margin-bottom: 30px; padding: 20px; background: var(--light); border-radius: 15px;">
-                        <h3 style="color: var(--primary); margin-bottom: 15px;">All Reported Symptoms</h3>
+                        <h3 style="color: var(--primary); margin-bottom: 15px;">${t.allSymptoms || 'All Reported Symptoms'}</h3>
                         <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;">
                             ${allSymptomNames.map(s => `<span style="background: var(--primary); color: white; padding: 5px 15px; border-radius: 20px;">${s}</span>`).join('')}
                         </div>
                     </div>
 
                     <div style="margin-bottom: 30px; padding: 20px; background: var(--light); border-radius: 15px;">
-                        <h3 style="color: var(--primary); margin-bottom: 15px;">Primary Diagnosis</h3>
+                        <h3 style="color: var(--primary); margin-bottom: 15px;">${t.primaryDiagnosis || 'Primary Diagnosis'}</h3>
                         <h4 style="color: var(--dark); margin-bottom: 10px;">${disease.name}</h4>
                         <span class="severity-badge severity-${disease.severity}" style="margin-bottom: 15px;">${disease.severity.toUpperCase()}</span>
                         <p style="margin: 15px 0;">${disease.description}</p>
                         
-                        <h4 style="color: var(--primary); margin: 15px 0 10px;">Matching Symptoms:</h4>
+                        <h4 style="color: var(--primary); margin: 15px 0 10px;">${t.matchingSymptoms || 'Matching Symptoms'}:</h4>
                         <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;">
                             ${matched.map(s => `<span style="background: var(--success); color: white; padding: 5px 15px; border-radius: 20px;">${s}</span>`).join('')}
                         </div>
                         
-                        <h4 style="color: var(--primary); margin: 15px 0 10px;">Medical Advice:</h4>
+                        <h4 style="color: var(--primary); margin: 15px 0 10px;">${t.advice || 'Medical Advice'}:</h4>
                         <ul>${disease.advice.map(a => `<li>${a}</li>`).join('')}</ul>
                         
-                        <h4 style="color: var(--primary); margin: 15px 0 10px;">Home Remedies:</h4>
+                        <h4 style="color: var(--primary); margin: 15px 0 10px;">${t.homeRemedies || 'Home Remedies'}:</h4>
                         <ul>${disease.homeRemedies.map(r => `<li>${r}</li>`).join('')}</ul>
                         
                         ${disease.severity === 'high' ? `
                             <div style="background: #fee2e2; padding: 20px; border-radius: 15px; margin: 20px 0;">
-                                <h4 style="color: var(--danger);">⚠️ Warning Signs - Consult Doctor Immediately</h4>
+                                <h4 style="color: var(--danger);">⚠️ ${t.warningSigns || 'Warning Signs'} - ${t.consultDoctor || 'Consult Doctor Immediately'}</h4>
                                 <ul style="color: var(--danger);">${disease.warningSigns.map(w => `<li>${w}</li>`).join('')}</ul>
                             </div>
                         ` : ''}
@@ -2278,10 +2932,10 @@
 
                     ${topMatches.length > 1 ? `
                         <div style="margin-bottom: 30px; padding: 20px; background: var(--light); border-radius: 15px;">
-                            <h3 style="color: var(--primary); margin-bottom: 15px;">Other Possible Conditions</h3>
+                            <h3 style="color: var(--primary); margin-bottom: 15px;">${t.otherPossibilities || 'Other Possible Conditions'}</h3>
                             ${topMatches.slice(1).map(m => `
                                 <div style="margin: 10px 0; padding: 10px; background: white; border-radius: 10px;">
-                                    <strong>${m.name}</strong> - ${m.score}% match (${m.matches} of ${m.total} symptoms)
+                                    <strong>${m.name}</strong> - ${m.score}% ${t.match || 'match'} (${m.matches} ${t.of || 'of'} ${m.total} ${t.symptoms || 'symptoms'})
                                 </div>
                             `).join('')}
                         </div>
@@ -2289,10 +2943,10 @@
                 </div>
                 <div style="display: flex; gap: 15px; margin-top: 30px;" class="no-print">
                     <button class="print-btn" onclick="window.print()">
-                        <i class="fas fa-print"></i> Print Report
+                        <i class="fas fa-print"></i> ${t.printReport || 'Print Report'}
                     </button>
                     <button class="close-btn" onclick="document.getElementById('results').style.display='none'">
-                        Close
+                        ${t.close || 'Close'}
                     </button>
                 </div>
             `;
@@ -2328,7 +2982,7 @@
             const container = document.getElementById('patientRecords');
             
             if (diagnoses.length === 0) {
-                container.innerHTML = '<p>No records yet</p>';
+                container.innerHTML = '<p>' + getTranslation('noRecords') + '</p>';
                 return;
             }
 
@@ -2344,32 +2998,32 @@
                         <span class="patient-date"><i class="fas fa-calendar"></i> ${new Date(d.date).toLocaleString()}</span>
                     </div>
                     <div class="patient-details">
-                        <p><i class="fas fa-stethoscope"></i> <strong>Diagnosis:</strong> ${d.diagnosis} <span class="severity-badge severity-${d.severity}" style="margin-left:10px;">${d.severity}</span></p>
-                        <p><i class="fas fa-notes-medical"></i> <strong>Symptoms:</strong> ${d.symptoms.join(', ')}</p>
-                        ${d.typedSymptoms ? `<p><i class="fas fa-pen"></i> <strong>Typed:</strong> ${d.typedSymptoms.join(', ')}</p>` : ''}
+                        <p><i class="fas fa-stethoscope"></i> <strong>${getTranslation('diagnosis') || 'Diagnosis'}:</strong> ${d.diagnosis} <span class="severity-badge severity-${d.severity}" style="margin-left:10px;">${d.severity}</span></p>
+                        <p><i class="fas fa-notes-medical"></i> <strong>${getTranslation('symptoms') || 'Symptoms'}:</strong> ${d.symptoms.join(', ')}</p>
+                        ${d.typedSymptoms ? `<p><i class="fas fa-pen"></i> <strong>${getTranslation('typed') || 'Typed'}:</strong> ${d.typedSymptoms.join(', ')}</p>` : ''}
                         ${d.vitals ? `
-                            <p><i class="fas fa-heartbeat"></i> <strong>Vitals:</strong> BP ${d.vitals.bloodPressure}, Temp ${d.vitals.temperature}°F</p>
+                            <p><i class="fas fa-heartbeat"></i> <strong>${getTranslation('vitals') || 'Vitals'}:</strong> BP ${d.vitals.bloodPressure}, Temp ${d.vitals.temperature}°F</p>
                         ` : ''}
-                        <p><i class="fas fa-venus-mars"></i> <strong>Gender:</strong> ${d.gender || 'N/A'} | <strong>Age:</strong> ${d.age || 'N/A'}</p>
+                        <p><i class="fas fa-venus-mars"></i> <strong>${getTranslation('gender') || 'Gender'}:</strong> ${d.gender || 'N/A'} | <strong>${getTranslation('age') || 'Age'}:</strong> ${d.age || 'N/A'}</p>
                     </div>
                     ${d.doctorAdvice ? `
                         <div class="advice-section">
-                            <strong><i class="fas fa-user-md"></i> Doctor's Advice:</strong>
+                            <strong><i class="fas fa-user-md"></i> ${getTranslation('doctorAdvice') || "Doctor's Advice"}:</strong>
                             <div class="advice-text">${d.doctorAdvice}</div>
                         </div>
                     ` : ''}
                     <div class="doctor-actions">
                         <button class="advice-btn" onclick="event.stopPropagation(); showAdviceForm('${d.id}')">
-                            <i class="fas fa-pen"></i> Add Advice
+                            <i class="fas fa-pen"></i> ${getTranslation('addAdvice') || 'Add Advice'}
                         </button>
                         <button class="print-record-btn" onclick="event.stopPropagation(); printPatientRecord('${d.id}')">
-                            <i class="fas fa-print"></i> Print
+                            <i class="fas fa-print"></i> ${getTranslation('print') || 'Print'}
                         </button>
                     </div>
                     <div id="advice-form-${d.id}" style="display: none; margin-top: 20px;">
-                        <textarea id="advice-text-${d.id}" rows="3" style="width:100%; padding:15px; border:2px solid var(--border); border-radius:15px; margin-bottom:10px;" placeholder="Write your medical advice..."></textarea>
-                        <button class="login-btn" onclick="saveAdvice('${d.id}')" style="width:auto; padding:10px 25px;">Save Advice</button>
-                        <button class="login-btn" onclick="cancelAdvice('${d.id}')" style="width:auto; padding:10px 25px; background:var(--gray);">Cancel</button>
+                        <textarea id="advice-text-${d.id}" rows="3" style="width:100%; padding:15px; border:2px solid var(--border); border-radius:15px; margin-bottom:10px;" placeholder="${getTranslation('writeAdvice') || 'Write your medical advice...'}"></textarea>
+                        <button class="login-btn" onclick="saveAdvice('${d.id}')" style="width:auto; padding:10px 25px;">${getTranslation('saveAdvice') || 'Save Advice'}</button>
+                        <button class="login-btn" onclick="cancelAdvice('${d.id}')" style="width:auto; padding:10px 25px; background:var(--gray);">${getTranslation('cancel') || 'Cancel'}</button>
                     </div>
                 `;
                 container.appendChild(div);
@@ -2396,7 +3050,7 @@
                 diagnosis.doctorAdvice = advice;
                 localStorage.setItem('diagnoses', JSON.stringify(diagnoses));
                 displayPatientRecords();
-                showToast('Advice saved successfully');
+                showToast(getTranslation('adviceSaved') || 'Advice saved successfully');
             }
         }
 

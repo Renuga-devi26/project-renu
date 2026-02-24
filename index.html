@@ -766,7 +766,42 @@
         .severity-medium { background: #fed7aa; color: #9a3412; }
         .severity-high { background: #fee2e2; color: #991b1b; }
 
-        /* Doctor Section with Advice */
+        .print-btn {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-right: 10px;
+        }
+
+        .print-btn:hover {
+            background: #0d9488;
+            transform: translateY(-2px);
+        }
+
+        .close-btn {
+            background: var(--gray);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .close-btn:hover {
+            background: #475569;
+            transform: translateY(-2px);
+        }
+
+        /* Doctor Section with Advice - Updated */
         .doctor-section {
             background: var(--light);
             border-radius: 20px;
@@ -787,6 +822,33 @@
         .patient-record:hover {
             border-color: var(--primary);
             transform: translateX(5px);
+        }
+
+        .patient-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .patient-name {
+            color: var(--primary);
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .patient-date {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .patient-details {
+            margin: 10px 0;
+        }
+
+        .patient-details p {
+            margin: 5px 0;
+            color: var(--dark);
         }
 
         .advice-section {
@@ -842,6 +904,16 @@
             transform: translateY(-2px);
         }
 
+        .print-record-btn {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .print-record-btn:hover {
+            background: #0d9488;
+            transform: translateY(-2px);
+        }
+
         .toast {
             position: fixed;
             bottom: 30px;
@@ -863,6 +935,27 @@
 
         .toast.error {
             border-left-color: var(--danger);
+        }
+
+        /* Print Styles */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .print-section, .print-section * {
+                visibility: visible;
+            }
+            .print-section {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                padding: 30px;
+                background: white;
+            }
+            .no-print {
+                display: none !important;
+            }
         }
 
         @media (max-width: 768px) {
@@ -1180,7 +1273,7 @@
         </div>
     </div>
 
-    <!-- DOCTOR APP with Advice Feature -->
+    <!-- DOCTOR APP with Advice Feature - Updated -->
     <div class="main-app" id="doctorApp">
         <div class="app-header">
             <div class="user-info">
@@ -2098,33 +2191,59 @@
             
             const results = document.getElementById('results');
             results.innerHTML = `
-                <h3 style="color:var(--primary); margin-bottom:20px;">Diagnosis Report</h3>
-                <div style="margin-bottom:20px;">
-                    <h4>${disease.name}</h4>
-                    <span class="severity-badge severity-${disease.severity}">${disease.severity.toUpperCase()}</span>
-                    <p style="margin-top:10px;">${disease.description}</p>
-                </div>
-                <div style="margin:20px 0;">
-                    <strong>✅ Matched Symptoms:</strong>
-                    <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
-                        ${matched.map(s => `<span style="background:var(--success); color:white; padding:5px 15px; border-radius:20px;">${s}</span>`).join('')}
+                <div class="print-section">
+                    <h2 style="color: var(--primary); margin-bottom: 20px; text-align: center;">Medical Diagnosis Report</h2>
+                    
+                    <div style="margin-bottom: 30px; padding: 20px; background: var(--light); border-radius: 15px;">
+                        <h3 style="color: var(--primary); margin-bottom: 15px;">Patient Information</h3>
+                        <p><strong>Name:</strong> ${document.getElementById('fullName').value}</p>
+                        <p><strong>Age:</strong> ${document.getElementById('age').value}</p>
+                        <p><strong>Gender:</strong> ${document.getElementById('gender').value}</p>
+                        <p><strong>District:</strong> ${document.getElementById('district').value}</p>
+                        <p><strong>Date:</strong> ${new Date().toLocaleString()}</p>
+                    </div>
+
+                    <div style="margin-bottom: 30px; padding: 20px; background: var(--light); border-radius: 15px;">
+                        <h3 style="color: var(--primary); margin-bottom: 15px;">Vitals</h3>
+                        <p><strong>Blood Pressure:</strong> ${document.getElementById('bloodPressure').value} mmHg</p>
+                        <p><strong>Temperature:</strong> ${document.getElementById('temperature').value}°F</p>
+                        <p><strong>Height:</strong> ${document.getElementById('height').value} cm</p>
+                        <p><strong>Weight:</strong> ${document.getElementById('weight').value} kg</p>
+                    </div>
+
+                    <div style="margin-bottom: 30px; padding: 20px; background: var(--light); border-radius: 15px;">
+                        <h3 style="color: var(--primary); margin-bottom: 15px;">Diagnosis</h3>
+                        <h4 style="color: var(--dark); margin-bottom: 10px;">${disease.name}</h4>
+                        <span class="severity-badge severity-${disease.severity}" style="margin-bottom: 15px;">${disease.severity.toUpperCase()}</span>
+                        <p style="margin: 15px 0;">${disease.description}</p>
+                        
+                        <h4 style="color: var(--primary); margin: 15px 0 10px;">Matching Symptoms:</h4>
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;">
+                            ${matched.map(s => `<span style="background: var(--success); color: white; padding: 5px 15px; border-radius: 20px;">${s}</span>`).join('')}
+                        </div>
+                        
+                        <h4 style="color: var(--primary); margin: 15px 0 10px;">Medical Advice:</h4>
+                        <ul>${disease.advice.map(a => `<li>${a}</li>`).join('')}</ul>
+                        
+                        <h4 style="color: var(--primary); margin: 15px 0 10px;">Home Remedies:</h4>
+                        <ul>${disease.homeRemedies.map(r => `<li>${r}</li>`).join('')}</ul>
+                        
+                        ${disease.severity === 'high' ? `
+                            <div style="background: #fee2e2; padding: 20px; border-radius: 15px; margin: 20px 0;">
+                                <h4 style="color: var(--danger);">⚠️ Warning Signs - Consult Doctor Immediately</h4>
+                                <ul style="color: var(--danger);">${disease.warningSigns.map(w => `<li>${w}</li>`).join('')}</ul>
+                            </div>
+                        ` : ''}
                     </div>
                 </div>
-                <div style="margin:20px 0;">
-                    <strong>📋 Advice:</strong>
-                    <ul>${disease.advice.map(a => `<li>${a}</li>`).join('')}</ul>
+                <div style="display: flex; gap: 15px; margin-top: 30px;" class="no-print">
+                    <button class="print-btn" onclick="window.print()">
+                        <i class="fas fa-print"></i> Print Report
+                    </button>
+                    <button class="close-btn" onclick="document.getElementById('results').style.display='none'">
+                        Close
+                    </button>
                 </div>
-                <div style="margin:20px 0;">
-                    <strong>🏠 Home Remedies:</strong>
-                    <ul>${disease.homeRemedies.map(r => `<li>${r}</li>`).join('')}</ul>
-                </div>
-                ${disease.severity === 'high' ? `
-                    <div style="background:#fee2e2; padding:20px; border-radius:20px; margin:20px 0;">
-                        <strong style="color:var(--danger);">⚠️ Consult Doctor Immediately</strong>
-                        <ul style="color:var(--danger);">${disease.warningSigns.map(w => `<li>${w}</li>`).join('')}</ul>
-                    </div>
-                ` : ''}
-                <button class="login-btn" onclick="document.getElementById('results').style.display='none'" style="width:auto; padding:10px 25px;">Close</button>
             `;
             results.style.display = 'block';
         }
@@ -2153,7 +2272,7 @@
             if (currentDoctor) updateDoctorStats();
         }
 
-        // ==================== DOCTOR with ADVICE ====================
+        // ==================== DOCTOR with ADVICE - Updated ====================
         function displayPatientRecords() {
             const container = document.getElementById('patientRecords');
             
@@ -2170,31 +2289,35 @@
                 const div = document.createElement('div');
                 div.className = 'patient-record';
                 div.innerHTML = `
-                    <div style="display: flex; justify-content: space-between; align-items: start; flex-wrap: wrap; gap: 15px;">
-                        <div>
-                            <h4>${d.patientName}</h4>
-                            <p><i class="fas fa-id-card"></i> ID: ${d.patientId} | ${d.patientEmail}</p>
-                            <p><i class="fas fa-calendar"></i> ${new Date(d.date).toLocaleString()}</p>
-                            <p><i class="fas fa-stethoscope"></i> Diagnosis: ${d.diagnosis} <span class="severity-badge severity-${d.severity}" style="margin-left:10px;">${d.severity}</span></p>
-                            <p><i class="fas fa-notes-medical"></i> Symptoms: ${d.symptoms.join(', ')}</p>
-                            ${d.vitals ? `
-                                <p><i class="fas fa-heartbeat"></i> Vitals: BP ${d.vitals.bloodPressure}, Temp ${d.vitals.temperature}°F, Ht ${d.vitals.height}cm, Wt ${d.vitals.weight}kg</p>
-                            ` : ''}
-                            ${d.doctorAdvice ? `
-                                <div class="advice-section">
-                                    <strong><i class="fas fa-user-md"></i> Doctor's Advice:</strong>
-                                    <div class="advice-text">${d.doctorAdvice}</div>
-                                </div>
-                            ` : ''}
+                    <div class="patient-header">
+                        <span class="patient-name"><i class="fas fa-user"></i> ${d.patientName}</span>
+                        <span class="patient-date"><i class="fas fa-calendar"></i> ${new Date(d.date).toLocaleString()}</span>
+                    </div>
+                    <div class="patient-details">
+                        <p><i class="fas fa-stethoscope"></i> <strong>Diagnosis:</strong> ${d.diagnosis} <span class="severity-badge severity-${d.severity}" style="margin-left:10px;">${d.severity}</span></p>
+                        <p><i class="fas fa-notes-medical"></i> <strong>Symptoms:</strong> ${d.symptoms.join(', ')}</p>
+                        ${d.vitals ? `
+                            <p><i class="fas fa-heartbeat"></i> <strong>Vitals:</strong> BP ${d.vitals.bloodPressure}, Temp ${d.vitals.temperature}°F, Ht ${d.vitals.height}cm, Wt ${d.vitals.weight}kg</p>
+                        ` : ''}
+                        <p><i class="fas fa-map-marker-alt"></i> <strong>District:</strong> ${d.district || 'N/A'}</p>
+                        <p><i class="fas fa-venus-mars"></i> <strong>Gender:</strong> ${d.gender || 'N/A'} | <strong>Age:</strong> ${d.age || 'N/A'}</p>
+                    </div>
+                    ${d.doctorAdvice ? `
+                        <div class="advice-section">
+                            <strong><i class="fas fa-user-md"></i> Doctor's Advice:</strong>
+                            <div class="advice-text">${d.doctorAdvice}</div>
                         </div>
-                        <div class="doctor-actions">
-                            <button class="advice-btn" onclick="event.stopPropagation(); showAdviceForm('${d.id}')">
-                                <i class="fas fa-pen"></i> Add Advice
-                            </button>
-                            <button class="view-btn" onclick="event.stopPropagation(); viewFullDetails('${d.id}')">
-                                <i class="fas fa-eye"></i> View
-                            </button>
-                        </div>
+                    ` : ''}
+                    <div class="doctor-actions">
+                        <button class="advice-btn" onclick="event.stopPropagation(); showAdviceForm('${d.id}')">
+                            <i class="fas fa-pen"></i> Add Advice
+                        </button>
+                        <button class="view-btn" onclick="event.stopPropagation(); viewFullDetails('${d.id}')">
+                            <i class="fas fa-eye"></i> View
+                        </button>
+                        <button class="print-record-btn" onclick="event.stopPropagation(); printPatientRecord('${d.id}')">
+                            <i class="fas fa-print"></i> Print
+                        </button>
                     </div>
                     <div id="advice-form-${d.id}" style="display: none; margin-top: 20px;">
                         <textarea id="advice-text-${d.id}" rows="3" style="width:100%; padding:15px; border:2px solid var(--border); border-radius:15px; margin-bottom:10px;" placeholder="Write your medical advice..."></textarea>
@@ -2237,8 +2360,6 @@
             let details = `PATIENT DETAILS\n`;
             details += `================\n\n`;
             details += `Name: ${diagnosis.patientName}\n`;
-            details += `ID: ${diagnosis.patientId}\n`;
-            details += `Email: ${diagnosis.patientEmail}\n`;
             details += `Age: ${diagnosis.age || 'N/A'}\n`;
             details += `Gender: ${diagnosis.gender || 'N/A'}\n`;
             details += `District: ${diagnosis.district || 'N/A'}\n\n`;
@@ -2262,6 +2383,71 @@
             }
             
             alert(details);
+        }
+
+        function printPatientRecord(diagnosisId) {
+            const diagnosis = diagnoses.find(d => d.id == diagnosisId);
+            if (!diagnosis) return;
+
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html>
+                <head>
+                    <title>Patient Record - ${diagnosis.patientName}</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; padding: 40px; }
+                        h1 { color: #2563eb; text-align: center; margin-bottom: 30px; }
+                        .section { margin-bottom: 30px; padding: 20px; background: #f8fafc; border-radius: 15px; }
+                        .section h2 { color: #2563eb; margin-bottom: 15px; }
+                        .severity-low { background: #dcfce7; color: #166534; padding: 5px 15px; border-radius: 20px; }
+                        .severity-medium { background: #fed7aa; color: #9a3412; padding: 5px 15px; border-radius: 20px; }
+                        .severity-high { background: #fee2e2; color: #991b1b; padding: 5px 15px; border-radius: 20px; }
+                        .advice { background: #f59e0b; color: white; padding: 15px; border-radius: 10px; }
+                        .footer { text-align: center; margin-top: 40px; color: #64748b; }
+                    </style>
+                </head>
+                <body>
+                    <h1>Medical Record - ${diagnosis.patientName}</h1>
+                    
+                    <div class="section">
+                        <h2>Patient Information</h2>
+                        <p><strong>Name:</strong> ${diagnosis.patientName}</p>
+                        <p><strong>Age:</strong> ${diagnosis.age || 'N/A'}</p>
+                        <p><strong>Gender:</strong> ${diagnosis.gender || 'N/A'}</p>
+                        <p><strong>District:</strong> ${diagnosis.district || 'N/A'}</p>
+                        <p><strong>Date:</strong> ${new Date(diagnosis.date).toLocaleString()}</p>
+                    </div>
+
+                    <div class="section">
+                        <h2>Vitals</h2>
+                        <p><strong>Blood Pressure:</strong> ${diagnosis.vitals?.bloodPressure || 'N/A'} mmHg</p>
+                        <p><strong>Temperature:</strong> ${diagnosis.vitals?.temperature || 'N/A'}°F</p>
+                        <p><strong>Height:</strong> ${diagnosis.vitals?.height || 'N/A'} cm</p>
+                        <p><strong>Weight:</strong> ${diagnosis.vitals?.weight || 'N/A'} kg</p>
+                    </div>
+
+                    <div class="section">
+                        <h2>Diagnosis</h2>
+                        <p><strong>Condition:</strong> ${diagnosis.diagnosis}</p>
+                        <p><strong>Severity:</strong> <span class="severity-${diagnosis.severity}">${diagnosis.severity.toUpperCase()}</span></p>
+                        <p><strong>Symptoms:</strong> ${diagnosis.symptoms.join(', ')}</p>
+                    </div>
+
+                    ${diagnosis.doctorAdvice ? `
+                        <div class="section advice">
+                            <h2 style="color: white;">Doctor's Advice</h2>
+                            <p>${diagnosis.doctorAdvice}</p>
+                        </div>
+                    ` : ''}
+
+                    <div class="footer">
+                        <p>Generated by RuralCare Pro on ${new Date().toLocaleString()}</p>
+                    </div>
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.print();
         }
 
         // ==================== TOAST ====================
